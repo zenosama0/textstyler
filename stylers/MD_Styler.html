@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cram Sheet — Study Notes Formatter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<style>
+  :root{
+    --paper:#F3F4EE;
+    --rule:#E1E4DA;
+    --ink:#212A38;
+    --muted:#6B7280;
+    --yellow:#FFD34D;
+    --teal:#2F9C95;
+    --coral:#E8556E;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 31px, var(--rule) 31px, var(--rule) 32px
+      ),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3', sans-serif;
+    min-height:100vh;
+  }
+
+  .app{ max-width:840px; margin:0 auto; padding:20px 20px 80px; }
+
+  /* Top bar */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; flex-wrap:wrap;
+    padding:18px 0 22px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark{
+    width:40px; height:40px; border-radius:10px;
+    background:var(--ink); color:var(--yellow);
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; flex-shrink:0;
+    transform:rotate(-4deg);
+  }
+  .brand h1{
+    font-family:'Fraunces', serif; font-weight:700; font-size:1.5rem;
+    margin:0; letter-spacing:-0.01em;
+  }
+  .brand p{ margin:2px 0 0; font-size:0.82rem; color:var(--muted); }
+
+  .actions{ display:flex; gap:8px; }
+  .btn{
+    font-family:'Source Sans 3', sans-serif; font-weight:600; font-size:0.85rem;
+    padding:9px 14px; border-radius:8px; border:1.5px solid var(--ink);
+    background:var(--card); color:var(--ink); cursor:pointer;
+    transition:transform .12s ease;
+  }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn:active{ transform:translateY(0); }
+  .btn-accent{ background:var(--ink); color:var(--yellow); }
+
+  /* Editor panel */
+  .editor-panel{
+    background:var(--card); border:1.5px solid var(--ink); border-radius:12px;
+    padding:16px; margin-bottom:20px;
+    box-shadow:4px 4px 0 var(--ink);
+  }
+  .editor-panel.hidden{ display:none; }
+  .editor-panel label{
+    display:block; font-size:0.78rem; font-weight:600; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--muted); margin-bottom:8px;
+  }
+  #mdInput{
+    width:100%; min-height:220px; resize:vertical;
+    font-family:'IBM Plex Mono', monospace; font-size:0.85rem; line-height:1.55;
+    border:1.5px solid var(--rule); border-radius:8px; padding:12px;
+    background:#FBFBF8; color:var(--ink);
+  }
+  #mdInput:focus{ outline:none; border-color:var(--teal); }
+  .editor-actions{
+    display:flex; align-items:center; gap:12px; margin-top:10px;
+  }
+  .hint{ font-size:0.78rem; color:var(--muted); }
+
+  /* Sheet / prose */
+  .sheet{
+    background:var(--card);
+    border:1.5px solid var(--ink);
+    border-radius:14px;
+    box-shadow:6px 6px 0 var(--ink);
+    padding:8px;
+  }
+  .prose{ padding:26px 26px 34px; }
+
+  .prose h1{
+    font-family:'Fraunces', serif; font-weight:700; font-size:2rem;
+    margin:0 0 4px; letter-spacing:-0.02em; line-height:1.15;
+  }
+  .prose > h1:first-child + p em,
+  .prose h1 + p{ color:var(--muted); font-size:0.95rem; margin-top:0; }
+
+  .prose h1::after{
+    content:""; display:block; width:64px; height:4px; margin-top:10px;
+    background:linear-gradient(90deg, var(--teal), var(--coral));
+    border-radius:4px;
+  }
+
+  .prose h2{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.3rem;
+    margin:34px 0 14px; padding:6px 14px;
+    display:inline-block; border-radius:6px 6px 6px 0;
+    color:#fff; position:relative;
+  }
+  .prose h2:nth-of-type(3n+1){ background:var(--teal); }
+  .prose h2:nth-of-type(3n+2){ background:var(--coral); }
+  .prose h2:nth-of-type(3n+3){ background:#3E5C76; }
+
+  .prose h3{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem;
+    margin:22px 0 10px; color:var(--ink);
+  }
+  .prose h3::before{ content:"▍ "; color:var(--teal); }
+
+  .prose p{ line-height:1.65; margin:10px 0; font-size:0.97rem; }
+
+  .prose strong{
+    background:linear-gradient(180deg, transparent 60%, var(--yellow) 60%);
+    padding:0 1px; font-weight:600;
+  }
+
+  .prose ul, .prose ol{ padding-left:1.3em; margin:10px 0; }
+  .prose li{ line-height:1.6; margin:5px 0; font-size:0.96rem; }
+  .prose ul > li::marker{ color:var(--coral); }
+  .prose ol > li::marker{ color:var(--teal); font-weight:600; }
+
+  .prose table{
+    width:100%; border-collapse:collapse; margin:16px 0;
+    font-size:0.88rem; border-radius:8px; overflow:hidden;
+    border:1px solid var(--rule);
+  }
+  .prose thead th{
+    background:var(--ink); color:var(--yellow); text-align:left;
+    padding:9px 12px; font-weight:600; font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem; letter-spacing:.02em;
+  }
+  .prose tbody td{
+    padding:9px 12px; border-top:1px solid var(--rule);
+    font-family:'IBM Plex Mono', monospace; font-size:0.83rem;
+  }
+  .prose tbody tr:nth-child(even){ background:#FAFAF6; }
+
+  .prose blockquote{
+    background:#FFF9E5; border:1.5px dashed var(--coral); border-radius:8px;
+    padding:12px 16px; margin:16px 4px; font-size:0.9rem;
+    color:#5c4a1f; transform:rotate(-0.4deg);
+  }
+  .prose blockquote p{ margin:0; }
+
+  .prose hr{
+    border:none; margin:30px 0;
+    background-image:radial-gradient(circle, var(--muted) 1.5px, transparent 1.5px);
+    background-size:10px 2px; background-repeat:repeat-x; height:2px;
+    opacity:.5;
+  }
+
+  .prose code{
+    font-family:'IBM Plex Mono', monospace; background:#EFF1EA;
+    padding:1px 6px; border-radius:4px; font-size:0.85em; color:#B14D5F;
+  }
+
+  footer.credit{
+    text-align:center; color:var(--muted); font-size:0.75rem; margin-top:18px;
+  }
+
+  @media (max-width:560px){
+    .brand h1{ font-size:1.25rem; }
+    .prose h1{ font-size:1.55rem; }
+    .prose{ padding:18px 16px 26px; }
+    .actions .btn{ padding:8px 10px; font-size:0.8rem; }
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .topbar, .editor-panel{ display:none !important; }
+    .sheet{ box-shadow:none; border:none; }
+    .prose h2{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .prose thead th{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .prose blockquote{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">✎</span>
+        <div>
+          <h1>Cram Sheet</h1>
+          <p>paste markdown → get exam-ready notes</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="toggleEditor" class="btn">Edit notes</button>
+        <button id="printBtn" class="btn btn-accent">Print / Save PDF</button>
+      </div>
+    </header>
+
+    <section id="editorPanel" class="editor-panel hidden">
+      <label for="mdInput">Paste your Markdown here (renders live below)</label>
+      <textarea id="mdInput" spellcheck="false"># Part A: Listening and Speaking
+
+## 1. Hearing vs Listening; Tips for Active/Effective Listening
+
+**Hearing** is a passive, physiological process — sound waves reaching the ear and being registered by the brain, without conscious effort. It happens automatically and continuously.
+
+**Listening** is an active, psychological process. It involves receiving, interpreting, evaluating, and responding to what is heard. It requires attention, concentration, and understanding of meaning — not just sound.
+
+| Hearing | Listening |
+|---|---|
+| Passive, involuntary | Active, voluntary |
+| Only physical (ears) | Physical + mental (ears + brain + attention) |
+| No effort needed | Requires focus and effort |
+| No understanding required | Involves understanding and interpretation |
+
+**Tips for Active/Effective Listening:**
+1. **Pay full attention** – Face the speaker, maintain eye contact, avoid distractions (phone, side conversations).
+2. **Show you are listening** – Use nods, appropriate facial expressions, and verbal cues like "I see," "go on."
+3. **Avoid interrupting** – Let the speaker finish their point before responding.
+4. **Don't judge prematurely** – Listen fully before forming opinions or conclusions.
+5. **Ask questions/clarify** – Paraphrase or ask for clarification to confirm understanding ("So you mean...?").
+6. **Give feedback** – Respond appropriately, showing you understood the message.
+7. **Listen for the main idea**, not just isolated words.
+8. **Control emotional reactions** – Stay open-minded even if you disagree.
+
+---
+
+## 2. Barriers to Active/Effective Listening
+
+1. **Physical barriers** – Noise, poor acoustics, bad connection (in calls), physical discomfort.
+2. **Psychological barriers** – Prejudice, preconceived notions, or bias toward the speaker or topic.
+3. **Physiological barriers** – Hearing impairment, fatigue, illness.
+4. **Language barriers** – Unfamiliar vocabulary, accent differences, jargon.
+5. **Attitudinal barriers** – Lack of interest, boredom, or a closed mind.
+6. **Emotional barriers** – Anger, stress, or personal problems affecting focus.
+7. **Selective listening** – Hearing only what one wants to hear and ignoring the rest.
+8. **Information overload** – Too much information at once, causing loss of focus.
+9. **Multitasking/Distractions** – Trying to listen while doing something else.
+10. **Cultural differences** – Different norms of communication causing misinterpretation.
+
+> Tip: To overcome these, minimize noise, stay open-minded, focus fully, and practice patience.
+
+---
+
+## 3. Ways to Improve One's English Speaking Skills
+
+1. **Practice daily** – Speak English regularly, even alone (self-talk, describing your day).
+2. **Read aloud** – Improves pronunciation, fluency, and intonation.
+3. **Build vocabulary** – Learn new words daily and use them in sentences.
+4. **Listen actively** – Watch English movies, news, podcasts to pick up natural expressions and accent.
+5. **Think in English** – Reduces the habit of translating from your native language.
+6. **Focus on pronunciation** – Practice difficult sounds; use dictionaries with audio.
+7. **Converse with others** – Join English-speaking groups, discussions, or language partners.
+8. **Don't fear mistakes** – Speak confidently even if imperfect; fluency comes with practice.
+9. **Record and review yourself** – Identify areas of improvement (grammar, pace, clarity).
+10. **Learn grammar in context** – Rather than isolated rules, learn through usage.
+11. **Use language learning apps/resources** for structured practice.
+
+---
+
+## 4. Effective Public Speaking Techniques
+
+1. **Know your audience** – Tailor content, tone, and language to who you're addressing.
+2. **Prepare and organize content** – Clear introduction, body, and conclusion.
+3. **Practice thoroughly** – Rehearse multiple times, ideally aloud and in front of others.
+4. **Use a confident tone and clear voice** – Vary pitch and pace to maintain interest; avoid monotone.
+5. **Maintain eye contact** – Builds connection and confidence with the audience.
+6. **Use body language effectively** – Natural gestures, good posture, purposeful movement.
+7. **Manage nervousness** – Deep breathing, positive visualization, and pausing when needed.
+8. **Use visual aids wisely** – Slides, charts, or props to support (not overwhelm) the message.
+9. **Engage the audience** – Ask questions, use stories/examples, encourage interaction.
+10. **Be concise and clear** – Avoid jargon; stick to the main point.
+11. **Have a strong opening and closing** – Hook attention at the start; end with a memorable takeaway.
+
+---
+
+# Part B: Grammar
+
+## 1. Avoiding Run-on Sentences, Comma Splices, and Fragments
+
+**Run-on Sentence:** Two or more independent clauses joined without proper punctuation or a conjunction.
+- ❌ *I love reading books I read every night.*
+- ✅ *I love reading books. I read every night.*
+- ✅ *I love reading books, and I read every night.*
+
+**How to fix run-ons:**
+- Split into two sentences using a period.
+- Join with a comma + coordinating conjunction (FANBOYS: for, and, nor, but, or, yet, so).
+- Join with a semicolon (;).
+- Use a subordinating conjunction to make one clause dependent.
+
+**Comma Splice:** Two independent clauses joined only by a comma, with no conjunction.
+- ❌ *She was tired, she went to sleep.*
+- ✅ *She was tired, so she went to sleep.*
+- ✅ *She was tired; she went to sleep.*
+- ✅ *She was tired. She went to sleep.*
+
+**How to fix comma splices:**
+- Replace the comma with a period or semicolon.
+- Add a coordinating conjunction after the comma.
+- Turn one clause into a dependent clause (e.g., "Because she was tired, she went to sleep.")
+
+**Sentence Fragment:** An incomplete sentence — missing a subject, verb, or complete thought; cannot stand alone.
+- ❌ *Because I was late.* (dependent clause with no main clause)
+- ❌ *Running to the store.* (no subject/main verb)
+- ✅ *Because I was late, I missed the bus.*
+- ✅ *I was running to the store.*
+
+**How to fix fragments:**
+- Attach the fragment to a related independent clause.
+- Add the missing subject or verb to make it a complete thought.
+
+> Summary Rule: A complete sentence needs at least one independent clause (subject + verb + complete thought). Combine ideas correctly using periods, semicolons, commas + conjunctions, or subordination — never just a comma alone between two full sentences.
+
+---
+
+## 2. Conditional Sentences: If Clauses and Wish
+
+Conditional sentences express a condition and its result, using **if-clauses**.
+
+**Zero Conditional** (general truths/facts): *If + present simple, present simple*
+- *If you heat water to 100°C, it boils.*
+
+**First Conditional** (real/possible future situations): *If + present simple, will + base verb*
+- *If it rains tomorrow, I will stay home.*
+
+**Second Conditional** (unreal/hypothetical present or future): *If + past simple, would + base verb*
+- *If I won the lottery, I would travel the world.*
+- *If I were you, I would apologize.* (note: "were" for all subjects in formal use)
+
+**Third Conditional** (unreal past — hypothetical situations that didn't happen): *If + past perfect, would have + past participle*
+- *If she had studied harder, she would have passed the exam.*
+
+**Mixed Conditional** (mixing past condition with present result, or vice versa):
+- *If I had saved money then, I would be rich now.*
+
+**Using "Wish"** – expresses a desire for something different from reality.
+
+1. **Wish + past simple** → regret about present situation
+   - *I wish I knew the answer.* (I don't know it now)
+2. **Wish + past perfect** → regret about past situation
+   - *I wish I had studied harder.* (I didn't study)
+3. **Wish + would + base verb** → wanting someone/something to change (often annoyance)
+   - *I wish you would stop shouting.*
+4. **Wish + were** (for hypothetical present, especially with "I"/"he"/"she")
+   - *I wish I were taller.*
+
+> Note: Both if-clauses and wish use backshifted (past) tenses to express unreality — a present wish uses past tense, and a past regret uses past perfect tense.
+</textarea>
+      <div class="editor-actions">
+        <button id="renderBtn" class="btn btn-accent">Render</button>
+        <span class="hint">Updates live as you type too — paste the cheat sheet text here to switch documents.</span>
+      </div>
+    </section>
+
+    <main class="sheet">
+      <article id="preview" class="prose"></article>
+    </main>
+
+    <footer class="credit">Formatted for last-minute revision. Good luck tomorrow.</footer>
+  </div>
+
+<script>
+  const input = document.getElementById('mdInput');
+  const preview = document.getElementById('preview');
+  const editorPanel = document.getElementById('editorPanel');
+
+  function debounce(fn, wait){
+    let t;
+    return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), wait); };
+  }
+
+  function render(){
+    try{
+      preview.innerHTML = marked.parse(input.value);
+    }catch(e){
+      preview.innerHTML = '<p style="color:#B14D5F">Could not render — check your Markdown formatting.</p>';
+    }
+  }
+
+  input.addEventListener('input', debounce(render, 200));
+  document.getElementById('renderBtn').addEventListener('click', render);
+
+  document.getElementById('toggleEditor').addEventListener('click', ()=>{
+    editorPanel.classList.toggle('hidden');
+  });
+
+  document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+
+  render();
+</script>
+</body>
+</html>
