@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reader — Minimal PDF Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<style>
+  :root{
+    --bg:#EDEDEA;
+    --dot:#DDDBD2;
+    --chrome:#FAFAF8;
+    --ink:#1B1C1E;
+    --muted:#8A8D91;
+    --line:#E1E1DD;
+    --accent:#2F5DE3;
+    --accent-soft:#E9EEFD;
+  }
+  [data-theme="dark"]{
+    --bg:#17181B;
+    --dot:#232529;
+    --chrome:#1D1F23;
+    --ink:#EDEDEE;
+    --muted:#8C9096;
+    --line:#2C2E33;
+    --accent:#6E93FF;
+    --accent-soft:#232C45;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; overflow:hidden; }
+  body{
+    font-family:'Inter', sans-serif; color:var(--ink);
+    background:
+      radial-gradient(var(--dot) 1px, transparent 1px) 0 0/20px 20px,
+      var(--bg);
+    display:flex; flex-direction:column; height:100vh;
+    transition:background .2s ease, color .2s ease;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    height:52px; flex-shrink:0; background:var(--chrome);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 14px; gap:10px; z-index:50;
+  }
+  .tb-group{ display:flex; align-items:center; gap:4px; }
+
+  .iconbtn{
+    width:34px; height:34px; border-radius:8px; border:none;
+    background:transparent; color:var(--ink); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .12s ease; flex-shrink:0;
+  }
+  .iconbtn svg{ width:18px; height:18px; }
+  .iconbtn:hover{ background:var(--line); }
+  .iconbtn.active{ background:var(--accent); color:#fff; }
+  .iconbtn:disabled{ opacity:.3; cursor:default; }
+  .iconbtn:disabled:hover{ background:transparent; }
+
+  .divider{ width:1px; height:22px; background:var(--line); margin:0 4px; }
+
+  .filename{
+    font-size:0.8rem; color:var(--muted); max-width:180px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+
+  .pagejump{
+    display:flex; align-items:center; gap:5px; font-size:0.82rem; color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .pagejump input{
+    width:38px; text-align:center; border:1px solid var(--line); border-radius:6px;
+    padding:4px 2px; font-family:'Inter',sans-serif; font-size:0.82rem; color:var(--ink);
+    background:var(--chrome);
+  }
+  .pagejump input:focus{ outline:none; border-color:var(--accent); }
+
+  /* ---------- Popovers ---------- */
+  .popover{
+    position:absolute; top:56px; background:var(--chrome);
+    border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,.16);
+    padding:14px; z-index:60; display:none; width:230px;
+  }
+  .popover.open{ display:block; }
+  .popover h4{
+    margin:0 0 10px; font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--muted); font-weight:600;
+  }
+  .filter-row{ display:flex; flex-direction:column; gap:4px; margin-bottom:12px; }
+  .filter-opt{
+    display:flex; align-items:center; gap:9px; padding:7px 9px; border-radius:7px;
+    cursor:pointer; font-size:0.85rem; border:1px solid transparent;
+  }
+  .filter-opt:hover{ background:var(--bg); }
+  .filter-opt.selected{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:600; }
+  .swatch{ width:16px; height:16px; border-radius:50%; border:1px solid var(--line); flex-shrink:0; }
+  .sw-none{ background:#fff; }
+  .sw-gray{ background:linear-gradient(135deg,#fff,#666); }
+  .sw-night{ background:#E8D9A0; }
+  .sw-invert{ background:#1c1c1c; }
+
+  .slider-row{ font-size:0.78rem; color:var(--muted); }
+  .slider-row label{ display:flex; justify-content:space-between; margin-bottom:4px; }
+  .slider-row input[type=range]{ width:100%; accent-color:var(--accent); }
+
+  .view-sub{
+    margin-top:10px; padding-top:10px; border-top:1px solid var(--line);
+  }
+  .view-sub .sub-label{
+    font-size:0.72rem; color:var(--muted); margin-bottom:6px; display:block;
+  }
+  .segmented{
+    display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden;
+  }
+  .segmented button{
+    flex:1; border:none; background:var(--chrome); color:var(--muted);
+    font-family:'Inter',sans-serif; font-size:0.8rem; padding:7px 0; cursor:pointer;
+  }
+  .segmented button + button{ border-left:1px solid var(--line); }
+  .segmented button.selected{ background:var(--accent); color:#fff; }
+
+  /* ---------- Body layout: sidebar + viewer ---------- */
+  .body-row{ flex:1; display:flex; min-height:0; }
+
+  .sidebar{
+    width:190px; flex-shrink:0; overflow-y:auto; overflow-x:hidden;
+    border-right:1px solid var(--line);
+    transition:width .2s ease, padding .2s ease, opacity .15s ease;
+    padding:14px 10px;
+  }
+  .sidebar.collapsed{ width:0; padding:14px 0; opacity:0; border-right-color:transparent; }
+  .sidebar-list{ display:flex; flex-direction:column; gap:10px; }
+  .thumb{ cursor:pointer; text-align:center; }
+  .thumb .thumb-canvas-wrap{
+    background:#fff; box-shadow:0 1px 6px rgba(0,0,0,.14); margin-bottom:4px;
+    border:2px solid transparent; border-radius:2px; min-height:40px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .thumb.current .thumb-canvas-wrap{ border-color:var(--accent); }
+  .thumb span{ font-size:0.7rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .thumb canvas{ display:block; max-width:100%; }
+
+  .viewer{
+    flex:1; overflow:auto; display:flex; align-items:flex-start;
+    justify-content:center; padding:36px 20px; min-width:0;
+  }
+  .page-wrap{ display:flex; gap:14px; align-items:flex-start; }
+  .page-slot{ background:#fff; box-shadow:0 2px 18px rgba(0,0,0,.16); line-height:0; }
+  .page-slot canvas{ display:block; }
+  .page-slot.blank{ box-shadow:none; background:transparent; }
+  #pageWrap{ transition:filter .15s ease; }
+
+  /* ---------- Empty state ---------- */
+  .empty{ margin:auto; text-align:center; color:var(--muted); max-width:340px; }
+  .empty .drop{
+    border:1.5px dashed var(--line); border-radius:16px; padding:50px 26px;
+    background:var(--chrome); cursor:pointer; transition:border-color .15s ease, background .15s ease;
+  }
+  .empty .drop:hover, .empty .drop.dragover{ border-color:var(--accent); background:var(--accent-soft); }
+  .empty .drop .glyph{ font-size:2rem; margin-bottom:10px; }
+  .empty h2{ font-size:1.05rem; margin:0 0 6px; color:var(--ink); }
+  .empty p{ font-size:0.85rem; margin:0; }
+
+  input[type=file]{ display:none; }
+
+  @media (max-width:640px){
+    .filename{ display:none; }
+    .page-wrap{ gap:8px; }
+    .sidebar{ position:absolute; z-index:40; background:var(--chrome); height:calc(100% - 52px); }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="tb-group">
+      <button class="iconbtn" id="openBtn" title="Open PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+      </button>
+      <span class="filename" id="fileName">No file open</span>
+    </div>
+
+    <div class="tb-group" id="navGroup" style="display:none;">
+      <button class="iconbtn" id="prevBtn" title="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="pagejump">
+        <input type="text" id="pageInput" value="1">
+        <span>/ <span id="pageCount">1</span></span>
+      </div>
+      <button class="iconbtn" id="nextBtn" title="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="tb-group" style="position:relative;">
+      <button class="iconbtn" id="zoomOutBtn" title="Zoom out">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="iconbtn" id="zoomResetBtn" title="Reset zoom" style="width:auto; padding:0 8px; font-size:0.75rem;">Fit</button>
+      <button class="iconbtn" id="zoomInBtn" title="Zoom in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="divider"></div>
+
+      <button class="iconbtn" id="sidebarBtn" title="Toggle page panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+
+      <div class="divider"></div>
+
+      <button class="iconbtn" id="singleBtn" title="Single page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="1.3"/></svg>
+      </button>
+      <button class="iconbtn" id="doubleBtn" title="Two-page spread">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="2" y="4" width="9" height="16" rx="1.1"/><rect x="13" y="4" width="9" height="16" rx="1.1"/></svg>
+      </button>
+
+      <div class="divider"></div>
+
+      <button class="iconbtn" id="filterBtn" title="Reading filters">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18z" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <button class="iconbtn" id="fullscreenBtn" title="Fullscreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3M16 3h3a2 2 0 012 2v3M8 21H5a2 2 0 01-2-2v-3M16 21h3a2 2 0 002-2v-3"/></svg>
+      </button>
+
+      <div class="popover" id="viewPopover">
+        <h4>Layout</h4>
+        <div class="filter-row" id="layoutOpts">
+          <div class="filter-opt selected" data-layout="single"><span class="swatch sw-none"></span>Single page</div>
+          <div class="filter-opt" data-layout="double"><span class="swatch sw-none"></span>Two-page spread</div>
+        </div>
+        <div class="view-sub" id="parityRow" style="display:none;">
+          <span class="sub-label">Left-hand page</span>
+          <div class="segmented">
+            <button id="oddLeftBtn" class="selected">Odd</button>
+            <button id="evenLeftBtn">Even</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="popover" id="filterPopover">
+        <h4>Reading filter</h4>
+        <div class="filter-row" id="filterOpts">
+          <div class="filter-opt selected" data-filter="none"><span class="swatch sw-none"></span>None</div>
+          <div class="filter-opt" data-filter="gray"><span class="swatch sw-gray"></span>Grayscale</div>
+          <div class="filter-opt" data-filter="night"><span class="swatch sw-night"></span>Night / warm</div>
+          <div class="filter-opt" data-filter="invert"><span class="swatch sw-invert"></span>Invert (read dark)</div>
+        </div>
+        <div class="slider-row">
+          <label><span>Brightness</span><span id="brightVal">100%</span></label>
+          <input type="range" id="brightSlider" min="50" max="150" value="100">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-row">
+    <div class="sidebar collapsed" id="sidebar">
+      <div class="sidebar-list" id="sidebarList"></div>
+    </div>
+
+    <div class="viewer" id="viewer">
+      <div class="empty" id="emptyState">
+        <div class="drop" id="dropZone">
+          <div class="glyph">＋</div>
+          <h2>Open a PDF</h2>
+          <p>Click to browse, or drag a file here</p>
+        </div>
+      </div>
+      <div id="pageWrap" class="page-wrap" style="display:none;"></div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" accept="application/pdf">
+
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+  // ---------- State ----------
+  let pdfDoc = null;
+  let currentPage = 1;
+  let numPages = 0;
+  let viewMode = 'single';       // 'single' | 'double'
+  let leftParity = 'odd';        // 'odd' | 'even' — which parity sits on the left in spreads
+  let zoom = 1;
+  let filterMode = 'none';       // 'none' | 'gray' | 'night' | 'invert'
+  let brightness = 100;
+  let sidebarBuilt = false;
+
+  const viewer = document.getElementById('viewer');
+  const pageWrap = document.getElementById('pageWrap');
+  const emptyState = document.getElementById('emptyState');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarList = document.getElementById('sidebarList');
+  const navGroup = document.getElementById('navGroup');
+  const pageInput = document.getElementById('pageInput');
+  const pageCount = document.getElementById('pageCount');
+  const fileNameEl = document.getElementById('fileName');
+
+  // ---------- File loading ----------
+  const fileInput = document.getElementById('fileInput');
+  document.getElementById('openBtn').addEventListener('click', () => fileInput.click());
+  document.getElementById('dropZone').addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+  const dropZone = document.getElementById('dropZone');
+  viewer.addEventListener('dragover', e => { e.preventDefault(); if (!pdfDoc) dropZone.classList.add('dragover'); });
+  viewer.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  viewer.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type === 'application/pdf') loadFile(file);
+  });
+
+  function loadFile(file){
+    fileNameEl.textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      const typedArray = new Uint8Array(ev.target.result);
+      pdfjsLib.getDocument({ data: typedArray }).promise.then(doc => {
+        pdfDoc = doc;
+        numPages = doc.numPages;
+        currentPage = 1;
+        sidebarBuilt = false;
+        sidebarList.innerHTML = '';
+        pageCount.textContent = numPages;
+        emptyState.style.display = 'none';
+        pageWrap.style.display = 'flex';
+        navGroup.style.display = 'flex';
+        renderCurrent();
+        buildSidebar();
+      }).catch(err => {
+        alert('Could not open this PDF. ' + (err && err.message ? err.message : ''));
+      });
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  // ---------- Dark mode (app theme) ----------
+  const darkBtn = document.getElementById('darkBtn');
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    darkBtn.classList.toggle('active', !isDark);
+  });
+
+  // ---------- Reading filters ----------
+  function currentFilterCSS(){
+    let base = '';
+    if (filterMode === 'gray')   base = 'grayscale(1)';
+    if (filterMode === 'night')  base = 'sepia(.55) saturate(1.15) hue-rotate(-8deg)';
+    if (filterMode === 'invert') base = 'invert(.92) hue-rotate(180deg) contrast(.95)';
+    return (base + ' brightness(' + brightness + '%)').trim();
+  }
+  function applyFilter(){
+    const css = currentFilterCSS();
+    pageWrap.style.filter = css;
+    sidebarList.style.filter = css;
+  }
+  document.querySelectorAll('#filterOpts .filter-opt').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('#filterOpts .filter-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      filterMode = el.dataset.filter;
+      applyFilter();
+    });
+  });
+  const brightSlider = document.getElementById('brightSlider');
+  brightSlider.addEventListener('input', () => {
+    brightness = brightSlider.value;
+    document.getElementById('brightVal').textContent = brightness + '%';
+    applyFilter();
+  });
+
+  // ---------- Layout (single/double + parity) ----------
+  function setLayout(mode){
+    viewMode = mode;
+    document.querySelectorAll('#layoutOpts .filter-opt').forEach(o => o.classList.toggle('selected', o.dataset.layout===mode));
+    document.getElementById('singleBtn').classList.toggle('active', mode==='single');
+    document.getElementById('doubleBtn').classList.toggle('active', mode==='double');
+    document.getElementById('parityRow').style.display = mode==='double' ? 'block' : 'none';
+    renderCurrent();
+  }
+  document.querySelectorAll('#layoutOpts .filter-opt').forEach(el => {
+    el.addEventListener('click', () => setLayout(el.dataset.layout));
+  });
+  document.getElementById('singleBtn').addEventListener('click', () => setLayout('single'));
+
+  const oddLeftBtn = document.getElementById('oddLeftBtn');
+  const evenLeftBtn = document.getElementById('evenLeftBtn');
+  oddLeftBtn.addEventListener('click', () => { leftParity='odd'; oddLeftBtn.classList.add('selected'); evenLeftBtn.classList.remove('selected'); renderCurrent(); });
+  evenLeftBtn.addEventListener('click', () => { leftParity='even'; evenLeftBtn.classList.add('selected'); oddLeftBtn.classList.remove('selected'); renderCurrent(); });
+
+  // ---------- Popovers ----------
+  const viewPopover = document.getElementById('viewPopover');
+  const filterPopover = document.getElementById('filterPopover');
+  function closePopovers(){ viewPopover.classList.remove('open'); filterPopover.classList.remove('open'); }
+  document.getElementById('doubleBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    setLayout('double');
+    const willOpen = !viewPopover.classList.contains('open');
+    closePopovers();
+    if (willOpen) viewPopover.classList.add('open');
+  });
+  document.getElementById('filterBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const willOpen = !filterPopover.classList.contains('open');
+    closePopovers();
+    if (willOpen) filterPopover.classList.add('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.popover') && !e.target.closest('#filterBtn')) filterPopover.classList.remove('open');
+    if (!e.target.closest('.popover') && !e.target.closest('#doubleBtn')) viewPopover.classList.remove('open');
+  });
+
+  // ---------- Sidebar toggle ----------
+  const sidebarBtn = document.getElementById('sidebarBtn');
+  sidebarBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    sidebarBtn.classList.toggle('active', !sidebar.classList.contains('collapsed'));
+  });
+  sidebar.addEventListener('transitionend', (e) => {
+    if (e.propertyName === 'width' && pdfDoc) renderCurrent();
+  });
+
+  // ---------- Zoom ----------
+  document.getElementById('zoomInBtn').addEventListener('click', () => { zoom = Math.min(zoom + 0.15, 3); renderCurrent(); });
+  document.getElementById('zoomOutBtn').addEventListener('click', () => { zoom = Math.max(zoom - 0.15, 0.4); renderCurrent(); });
+  document.getElementById('zoomResetBtn').addEventListener('click', () => { zoom = 1; renderCurrent(); });
+
+  // ---------- Fullscreen ----------
+  document.getElementById('fullscreenBtn').addEventListener('click', () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+    else document.exitFullscreen();
+  });
+
+  // ---------- Pairing logic ----------
+  function computePair(p){
+    let left, right;
+    if (leftParity === 'odd'){
+      left = (p % 2 === 1) ? p : p - 1;
+      right = (left + 1 <= numPages) ? left + 1 : null;
+    } else {
+      if (p === 1){ left = null; right = 1; }
+      else {
+        left = (p % 2 === 0) ? p : p - 1;
+        right = (left + 1 <= numPages) ? left + 1 : null;
+      }
+    }
+    return { left, right };
+  }
+
+  // ---------- Navigation ----------
+  document.getElementById('prevBtn').addEventListener('click', goPrev);
+  document.getElementById('nextBtn').addEventListener('click', goNext);
+  function goPrev(){
+    if (!pdfDoc) return;
+    if (viewMode === 'double'){
+      const { left } = computePair(currentPage);
+      const anchor = left || currentPage;
+      currentPage = Math.max(1, anchor - 2);
+    } else {
+      currentPage = Math.max(1, currentPage - 1);
+    }
+    renderCurrent();
+  }
+  function goNext(){
+    if (!pdfDoc) return;
+    if (viewMode === 'double'){
+      const { left, right } = computePair(currentPage);
+      const anchor = right || left || currentPage;
+      currentPage = Math.min(numPages, anchor + 1);
+    } else {
+      currentPage = Math.min(numPages, currentPage + 1);
+    }
+    renderCurrent();
+  }
+  pageInput.addEventListener('change', () => {
+    let p = parseInt(pageInput.value, 10);
+    if (isNaN(p)) p = currentPage;
+    currentPage = Math.min(Math.max(1, p), numPages);
+    renderCurrent();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (document.activeElement === pageInput) return;
+    if (!pdfDoc) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+    else if (e.key === 'Escape') { closePopovers(); }
+    else if (e.key === '1') setLayout('single');
+    else if (e.key === '2') setLayout('double');
+    else if (e.key === 's' || e.key === 'S') sidebarBtn.click();
+    else if (e.key === 'd' || e.key === 'D') darkBtn.click();
+  });
+
+  // ---------- Rendering ----------
+  function fitScale(viewport, maxW, maxH){
+    return Math.min(maxW / viewport.width, maxH / viewport.height);
+  }
+  function renderPageToCanvas(pageNum, container, maxW, maxH){
+    return pdfDoc.getPage(pageNum).then(page => {
+      const base = page.getViewport({ scale: 1 });
+      const scale = fitScale(base, maxW, maxH) * zoom;
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      container.appendChild(canvas);
+      return page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    });
+  }
+
+  function renderCurrent(){
+    if (!pdfDoc) return;
+    pageWrap.innerHTML = '';
+    pageInput.value = currentPage;
+
+    const availW = viewer.clientWidth - 40;
+    const availH = viewer.clientHeight - 72;
+
+    if (viewMode === 'single'){
+      const slot = document.createElement('div');
+      slot.className = 'page-slot';
+      pageWrap.appendChild(slot);
+      renderPageToCanvas(currentPage, slot, availW, availH);
+    } else {
+      const { left, right } = computePair(currentPage);
+      const halfW = (availW - 14) / 2;
+      if (left){
+        const slotL = document.createElement('div'); slotL.className = 'page-slot';
+        pageWrap.appendChild(slotL);
+        renderPageToCanvas(left, slotL, halfW, availH);
+      } else {
+        const blank = document.createElement('div'); blank.className = 'page-slot blank';
+        blank.style.width = halfW + 'px';
+        pageWrap.appendChild(blank);
+      }
+      if (right){
+        const slotR = document.createElement('div'); slotR.className = 'page-slot';
+        pageWrap.appendChild(slotR);
+        renderPageToCanvas(right, slotR, halfW, availH);
+      }
+    }
+    applyFilter();
+    highlightSidebar();
+  }
+
+  // ---------- Sidebar (thumbnails, collapsible, live alongside reading) ----------
+  function buildSidebar(){
+    if (sidebarBuilt) return;
+    sidebarBuilt = true;
+    sidebarList.innerHTML = '';
+    for (let i = 1; i <= numPages; i++){
+      const thumb = document.createElement('div');
+      thumb.className = 'thumb';
+      thumb.dataset.page = i;
+      const wrap = document.createElement('div');
+      wrap.className = 'thumb-canvas-wrap';
+      thumb.appendChild(wrap);
+      const label = document.createElement('span');
+      label.textContent = i;
+      thumb.appendChild(label);
+      sidebarList.appendChild(thumb);
+
+      thumb.addEventListener('click', () => {
+        currentPage = i;
+        renderCurrent();
+      });
+
+      pdfDoc.getPage(i).then(page => {
+        const base = page.getViewport({ scale: 1 });
+        const scale = 150 / base.width;
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        wrap.appendChild(canvas);
+        page.render({ canvasContext: canvas.getContext('2d'), viewport });
+      });
+    }
+    applyFilter();
+    highlightSidebar();
+  }
+  function highlightSidebar(){
+    sidebarList.querySelectorAll('.thumb').forEach(t => {
+      const p = parseInt(t.dataset.page, 10);
+      const isCurrent = viewMode === 'double'
+        ? (p === currentPage || p === computePair(currentPage).left || p === computePair(currentPage).right)
+        : p === currentPage;
+      t.classList.toggle('current', isCurrent);
+    });
+  }
+
+  window.addEventListener('resize', () => { if (pdfDoc) renderCurrent(); });
+</script>
+</body>
+</html>
