@@ -107,15 +107,9 @@
   .slider-row label{ display:flex; justify-content:space-between; margin-bottom:4px; }
   .slider-row input[type=range]{ width:100%; accent-color:var(--accent); }
 
-  .view-sub{
-    margin-top:10px; padding-top:10px; border-top:1px solid var(--line);
-  }
-  .view-sub .sub-label{
-    font-size:0.72rem; color:var(--muted); margin-bottom:6px; display:block;
-  }
-  .segmented{
-    display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden;
-  }
+  .view-sub{ margin-top:10px; padding-top:10px; border-top:1px solid var(--line); }
+  .view-sub .sub-label{ font-size:0.72rem; color:var(--muted); margin-bottom:6px; display:block; }
+  .segmented{ display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
   .segmented button{
     flex:1; border:none; background:var(--chrome); color:var(--muted);
     font-family:'Inter',sans-serif; font-size:0.8rem; padding:7px 0; cursor:pointer;
@@ -137,24 +131,42 @@
   .thumb{ cursor:pointer; text-align:center; }
   .thumb .thumb-canvas-wrap{
     background:#fff; box-shadow:0 1px 6px rgba(0,0,0,.14); margin-bottom:4px;
-    border:2px solid transparent; border-radius:2px; min-height:40px;
-    display:flex; align-items:center; justify-content:center;
+    border:2px solid transparent; border-radius:2px; min-height:70px;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    overflow:hidden;
   }
   .thumb.current .thumb-canvas-wrap{ border-color:var(--accent); }
   .thumb span{ font-size:0.7rem; color:var(--muted); font-variant-numeric:tabular-nums; }
   .thumb canvas{ display:block; max-width:100%; }
+  .thumb-canvas-wrap .dot{
+    width:5px; height:5px; border-radius:50%; background:var(--line);
+  }
 
   .viewer{
     flex:1; overflow:auto; display:flex; align-items:flex-start;
-    justify-content:center; padding:36px 20px; min-width:0;
+    justify-content:center; padding:36px 20px; min-width:0; position:relative;
   }
   .page-wrap{ display:flex; gap:14px; align-items:flex-start; }
-  .page-slot{ background:#fff; box-shadow:0 2px 18px rgba(0,0,0,.16); line-height:0; }
+  .page-slot{
+    background:#fff; box-shadow:0 2px 18px rgba(0,0,0,.16); line-height:0;
+    position:relative; min-width:60px; min-height:80px;
+  }
   .page-slot canvas{ display:block; }
   .page-slot.blank{ box-shadow:none; background:transparent; }
   #pageWrap{ transition:filter .15s ease; }
 
-  /* ---------- Empty state ---------- */
+  .spinner{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    background:#fff;
+  }
+  .spinner::after{
+    content:""; width:22px; height:22px; border-radius:50%;
+    border:2.5px solid var(--line); border-top-color:var(--accent);
+    animation:spin .7s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* ---------- Empty / loading state ---------- */
   .empty{ margin:auto; text-align:center; color:var(--muted); max-width:340px; }
   .empty .drop{
     border:1.5px dashed var(--line); border-radius:16px; padding:50px 26px;
@@ -164,6 +176,14 @@
   .empty .drop .glyph{ font-size:2rem; margin-bottom:10px; }
   .empty h2{ font-size:1.05rem; margin:0 0 6px; color:var(--ink); }
   .empty p{ font-size:0.85rem; margin:0; }
+
+  .loadbar-wrap{
+    display:none; width:220px; margin:16px auto 0; height:4px; border-radius:4px;
+    background:var(--line); overflow:hidden;
+  }
+  .loadbar-wrap.show{ display:block; }
+  .loadbar{ height:100%; width:0%; background:var(--accent); transition:width .15s ease; }
+  .loadpct{ font-size:0.75rem; color:var(--muted); margin-top:8px; }
 
   input[type=file]{ display:none; }
 
@@ -274,6 +294,10 @@
           <div class="glyph">＋</div>
           <h2>Open a PDF</h2>
           <p>Click to browse, or drag a file here</p>
+          <div class="loadbar-wrap" id="loadbarWrap">
+            <div class="loadbar" id="loadbar"></div>
+          </div>
+          <div class="loadpct" id="loadpct"></div>
         </div>
       </div>
       <div id="pageWrap" class="page-wrap" style="display:none;"></div>
@@ -290,11 +314,18 @@
   let currentPage = 1;
   let numPages = 0;
   let viewMode = 'single';       // 'single' | 'double'
-  let leftParity = 'odd';        // 'odd' | 'even' — which parity sits on the left in spreads
+  let leftParity = 'odd';        // 'odd' | 'even'
   let zoom = 1;
   let filterMode = 'none';       // 'none' | 'gray' | 'night' | 'invert'
   let brightness = 100;
   let sidebarBuilt = false;
+  let currentBlobUrl = null;
+  let activeRenderTasks = [];     // main-view render tasks, cancelled on navigation
+  const MAX_CANVAS_DIM = 2200;    // cap so huge scanned pages don't choke the canvas
+  const thumbObserver = new IntersectionObserver(onThumbVisible, { root: null, rootMargin: '400px 0px', threshold: 0.01 });
+  const thumbQueue = [];
+  let thumbActive = 0;
+  const THUMB_CONCURRENCY = 2;
 
   const viewer = document.getElementById('viewer');
   const pageWrap = document.getElementById('pageWrap');
@@ -305,11 +336,14 @@
   const pageInput = document.getElementById('pageInput');
   const pageCount = document.getElementById('pageCount');
   const fileNameEl = document.getElementById('fileName');
+  const loadbarWrap = document.getElementById('loadbarWrap');
+  const loadbar = document.getElementById('loadbar');
+  const loadpct = document.getElementById('loadpct');
 
-  // ---------- File loading ----------
+  // ---------- File loading (streamed — avoids reading huge files fully into memory up front) ----------
   const fileInput = document.getElementById('fileInput');
   document.getElementById('openBtn').addEventListener('click', () => fileInput.click());
-  document.getElementById('dropZone').addEventListener('click', () => fileInput.click());
+  document.getElementById('dropZone').addEventListener('click', (e) => { if (e.target.closest('.loadbar-wrap')) return; fileInput.click(); });
   fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
 
   const dropZone = document.getElementById('dropZone');
@@ -324,26 +358,45 @@
 
   function loadFile(file){
     fileNameEl.textContent = file.name;
-    const reader = new FileReader();
-    reader.onload = function(ev){
-      const typedArray = new Uint8Array(ev.target.result);
-      pdfjsLib.getDocument({ data: typedArray }).promise.then(doc => {
-        pdfDoc = doc;
-        numPages = doc.numPages;
-        currentPage = 1;
-        sidebarBuilt = false;
-        sidebarList.innerHTML = '';
-        pageCount.textContent = numPages;
-        emptyState.style.display = 'none';
-        pageWrap.style.display = 'flex';
-        navGroup.style.display = 'flex';
-        renderCurrent();
-        buildSidebar();
-      }).catch(err => {
-        alert('Could not open this PDF. ' + (err && err.message ? err.message : ''));
-      });
+    if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+    currentBlobUrl = URL.createObjectURL(file);
+
+    loadbarWrap.classList.add('show');
+    loadbar.style.width = '0%';
+    loadpct.textContent = 'Opening ' + (file.size / 1048576).toFixed(0) + ' MB…';
+
+    const loadingTask = pdfjsLib.getDocument({
+      url: currentBlobUrl,
+      rangeChunkSize: 1 << 20,      // 1MB chunks — only the bytes actually needed get fetched
+      disableAutoFetch: true,       // don't eagerly pull the whole file
+      disableStream: false
+    });
+
+    loadingTask.onProgress = (p) => {
+      if (p.total){
+        const pct = Math.min(100, Math.round((p.loaded / p.total) * 100));
+        loadbar.style.width = pct + '%';
+        loadpct.textContent = 'Loading… ' + pct + '%';
+      }
     };
-    reader.readAsArrayBuffer(file);
+
+    loadingTask.promise.then(doc => {
+      pdfDoc = doc;
+      numPages = doc.numPages;
+      currentPage = 1;
+      sidebarBuilt = false;
+      sidebarList.innerHTML = '';
+      pageCount.textContent = numPages;
+      emptyState.style.display = 'none';
+      pageWrap.style.display = 'flex';
+      navGroup.style.display = 'flex';
+      loadbarWrap.classList.remove('show');
+      renderCurrent();
+    }).catch(err => {
+      loadbarWrap.classList.remove('show');
+      loadpct.textContent = '';
+      alert('Could not open this PDF. ' + (err && err.message ? err.message : ''));
+    });
   }
 
   // ---------- Dark mode (app theme) ----------
@@ -423,11 +476,13 @@
     if (!e.target.closest('.popover') && !e.target.closest('#doubleBtn')) viewPopover.classList.remove('open');
   });
 
-  // ---------- Sidebar toggle ----------
+  // ---------- Sidebar toggle — thumbnails are only built the first time the panel opens ----------
   const sidebarBtn = document.getElementById('sidebarBtn');
   sidebarBtn.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
-    sidebarBtn.classList.toggle('active', !sidebar.classList.contains('collapsed'));
+    const isOpen = !sidebar.classList.contains('collapsed');
+    sidebarBtn.classList.toggle('active', isOpen);
+    if (isOpen && pdfDoc && !sidebarBuilt) buildSidebar();
   });
   sidebar.addEventListener('transitionend', (e) => {
     if (e.propertyName === 'width' && pdfDoc) renderCurrent();
@@ -504,25 +559,52 @@
     else if (e.key === 'd' || e.key === 'D') darkBtn.click();
   });
 
-  // ---------- Rendering ----------
+  // ---------- Rendering (main view) ----------
   function fitScale(viewport, maxW, maxH){
     return Math.min(maxW / viewport.width, maxH / viewport.height);
   }
+
   function renderPageToCanvas(pageNum, container, maxW, maxH){
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    container.appendChild(spinner);
+
     return pdfDoc.getPage(pageNum).then(page => {
       const base = page.getViewport({ scale: 1 });
-      const scale = fitScale(base, maxW, maxH) * zoom;
+      let scale = fitScale(base, maxW, maxH) * zoom;
+
+      // cap resolution — very high-DPI scans can otherwise produce multi-thousand-pixel
+      // canvases that stall rendering; this keeps things smooth without a visible quality hit
+      const rawW = base.width * scale, rawH = base.height * scale;
+      if (rawW > MAX_CANVAS_DIM || rawH > MAX_CANVAS_DIM){
+        scale *= Math.min(MAX_CANVAS_DIM / rawW, MAX_CANVAS_DIM / rawH);
+      }
+
       const viewport = page.getViewport({ scale });
       const canvas = document.createElement('canvas');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
       container.appendChild(canvas);
-      return page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+      const task = page.render({ canvasContext: canvas.getContext('2d'), viewport });
+      activeRenderTasks.push(task);
+
+      return task.promise.then(() => {
+        spinner.remove();
+      }).catch(err => {
+        spinner.remove();
+        if (!(err && err.name === 'RenderingCancelledException')) console.error(err);
+      });
     });
   }
 
   function renderCurrent(){
     if (!pdfDoc) return;
+
+    // cancel any renders still in flight from a previous page/zoom/resize before starting new ones
+    activeRenderTasks.forEach(t => { try{ t.cancel(); }catch(e){} });
+    activeRenderTasks = [];
+
     pageWrap.innerHTML = '';
     pageInput.value = currentPage;
 
@@ -556,9 +638,8 @@
     highlightSidebar();
   }
 
-  // ---------- Sidebar (thumbnails, collapsible, live alongside reading) ----------
+  // ---------- Sidebar (lazy thumbnails: built on first open, rendered only as they scroll into view) ----------
   function buildSidebar(){
-    if (sidebarBuilt) return;
     sidebarBuilt = true;
     sidebarList.innerHTML = '';
     for (let i = 1; i <= numPages; i++){
@@ -567,6 +648,7 @@
       thumb.dataset.page = i;
       const wrap = document.createElement('div');
       wrap.className = 'thumb-canvas-wrap';
+      wrap.innerHTML = '<span class="dot"></span>';
       thumb.appendChild(wrap);
       const label = document.createElement('span');
       label.textContent = i;
@@ -578,20 +660,44 @@
         renderCurrent();
       });
 
-      pdfDoc.getPage(i).then(page => {
+      thumbObserver.observe(thumb);
+    }
+    highlightSidebar();
+  }
+
+  function onThumbVisible(entries){
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const thumb = entry.target;
+      thumbObserver.unobserve(thumb);
+      thumbQueue.push(thumb);
+    });
+    drainThumbQueue();
+  }
+
+  function drainThumbQueue(){
+    while (thumbActive < THUMB_CONCURRENCY && thumbQueue.length){
+      const thumb = thumbQueue.shift();
+      thumbActive++;
+      const pageNum = parseInt(thumb.dataset.page, 10);
+      const wrap = thumb.querySelector('.thumb-canvas-wrap');
+      pdfDoc.getPage(pageNum).then(page => {
         const base = page.getViewport({ scale: 1 });
         const scale = 150 / base.width;
         const viewport = page.getViewport({ scale });
         const canvas = document.createElement('canvas');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
+        wrap.innerHTML = '';
         wrap.appendChild(canvas);
-        page.render({ canvasContext: canvas.getContext('2d'), viewport });
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      }).catch(()=>{}).finally(() => {
+        thumbActive--;
+        drainThumbQueue();
       });
     }
-    applyFilter();
-    highlightSidebar();
   }
+
   function highlightSidebar(){
     sidebarList.querySelectorAll('.thumb').forEach(t => {
       const p = parseInt(t.dataset.page, 10);
@@ -602,7 +708,12 @@
     });
   }
 
-  window.addEventListener('resize', () => { if (pdfDoc) renderCurrent(); });
+  // ---------- Debounced resize ----------
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { if (pdfDoc) renderCurrent(); }, 150);
+  });
 </script>
 </body>
 </html>
