@@ -1,5 +1,5 @@
 // Bump this when you change any cached file, so clients pick up the update
-const CACHE_NAME = 'stylers-cache-v1';
+const CACHE_NAME = 'stylers-cache-v3';
 
 // App shell — update this list when you add a new tool to /stylers
 const PRECACHE_URLS = [
@@ -31,15 +31,26 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Cache-first for same-origin app files, network-first fallback for everything else
-// (so CDN fonts/scripts still work when online, and cached copies serve when offline)
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
 
   const isSameOrigin = new URL(req.url).origin === self.location.origin;
+  const isPage = req.mode === 'navigate' || req.destination === 'document';
 
-  if (isSameOrigin){
+  if (isPage){
+    // Network-first for HTML — always tries to fetch the latest version first,
+    // so edits show up on next reload instead of being stuck behind a stale cache.
+    // Falls back to whatever's cached only when there's no connection.
+    event.respondWith(
+      fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+        return res;
+      }).catch(() => caches.match(req))
+    );
+  } else if (isSameOrigin){
+    // Cache-first for static assets (icons, manifest) — these rarely change
     event.respondWith(
       caches.match(req).then((cached) => {
         if (cached) return cached;
@@ -51,6 +62,7 @@ self.addEventListener('fetch', (event) => {
       })
     );
   } else {
+    // Cross-origin (fonts/CDN scripts): try network, fall back to cache offline
     event.respondWith(
       fetch(req).then((res) => {
         const copy = res.clone();
