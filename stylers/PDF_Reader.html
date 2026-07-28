@@ -47,6 +47,12 @@
     padding:0 14px; gap:10px; z-index:50;
   }
   .tb-group{ display:flex; align-items:center; gap:4px; }
+  .back-link{
+    display:flex; align-items:center; gap:4px;
+    font-family:'Inter', sans-serif; font-weight:600; font-size:0.8rem;
+    color:var(--muted); text-decoration:none; padding:0 4px;
+  }
+  .back-link:hover{ color:var(--accent); }
 
   .iconbtn{
     width:34px; height:34px; border-radius:8px; border:none;
@@ -198,6 +204,11 @@
 
   <div class="topbar">
     <div class="tb-group">
+      <a href="../index.html" class="back-link" title="Back to Stylers hub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M15 18l-6-6 6-6"/></svg>
+        Stylers
+      </a>
+      <div class="divider"></div>
       <button class="iconbtn" id="openBtn" title="Open PDF">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
       </button>
@@ -322,6 +333,14 @@
   let currentBlobUrl = null;
   let activeRenderTasks = [];     // main-view render tasks, cancelled on navigation
   const MAX_CANVAS_DIM = 2200;    // cap so huge scanned pages don't choke the canvas
+
+  // ---- Read-ahead cache: keeps rendered canvases for nearby pages so flipping feels instant ----
+  const PREFETCH_RANGE = 4;       // pages to keep ready on either side of the current page
+  const pageCache = new Map();    // pageNum -> { canvas, scaleKey }
+  let prefetchQueue = [];
+  let prefetchActive = 0;
+  const PREFETCH_CONCURRENCY = 1; // stay low-priority so it never competes with the visible page
+  let prefetchGeneration = 0;
   const thumbObserver = new IntersectionObserver(onThumbVisible, { root: null, rootMargin: '400px 0px', threshold: 0.01 });
   const thumbQueue = [];
   let thumbActive = 0;
@@ -386,6 +405,9 @@
       currentPage = 1;
       sidebarBuilt = false;
       sidebarList.innerHTML = '';
+      pageCache.clear();
+      prefetchQueue = [];
+      prefetchGeneration++;
       pageCount.textContent = numPages;
       emptyState.style.display = 'none';
       pageWrap.style.display = 'flex';
@@ -564,33 +586,55 @@
     return Math.min(maxW / viewport.width, maxH / viewport.height);
   }
 
-  function renderPageToCanvas(pageNum, container, maxW, maxH){
-    const spinner = document.createElement('div');
-    spinner.className = 'spinner';
-    container.appendChild(spinner);
+  function makeScaleKey(maxW, maxH){
+    return Math.round(maxW) + 'x' + Math.round(maxH) + '@' + zoom.toFixed(2);
+  }
 
+  // returns {maxW, maxH} — same math renderCurrent uses, shared with the prefetcher so
+  // cached pages are always rendered at the size they'll actually be displayed at
+  function computeRenderDims(){
+    const availW = viewer.clientWidth - 40;
+    const availH = viewer.clientHeight - 72;
+    if (viewMode === 'double') return { maxW: (availW - 14) / 2, maxH: availH };
+    return { maxW: availW, maxH: availH };
+  }
+
+  function renderPageCanvas(pageNum, maxW, maxH){
+    // low-level: always renders fresh, returns {canvas, task}
     return pdfDoc.getPage(pageNum).then(page => {
       const base = page.getViewport({ scale: 1 });
       let scale = fitScale(base, maxW, maxH) * zoom;
-
-      // cap resolution — very high-DPI scans can otherwise produce multi-thousand-pixel
-      // canvases that stall rendering; this keeps things smooth without a visible quality hit
       const rawW = base.width * scale, rawH = base.height * scale;
       if (rawW > MAX_CANVAS_DIM || rawH > MAX_CANVAS_DIM){
         scale *= Math.min(MAX_CANVAS_DIM / rawW, MAX_CANVAS_DIM / rawH);
       }
-
       const viewport = page.getViewport({ scale });
       const canvas = document.createElement('canvas');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
-      container.appendChild(canvas);
-
       const task = page.render({ canvasContext: canvas.getContext('2d'), viewport });
-      activeRenderTasks.push(task);
+      return { canvas, task };
+    });
+  }
 
+  function getOrRenderInto(pageNum, container, maxW, maxH){
+    const scaleKey = makeScaleKey(maxW, maxH);
+    const cached = pageCache.get(pageNum);
+    if (cached && cached.scaleKey === scaleKey){
+      container.appendChild(cached.canvas);   // already rendered — appears instantly
+      return Promise.resolve();
+    }
+
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    container.appendChild(spinner);
+
+    return renderPageCanvas(pageNum, maxW, maxH).then(({ canvas, task }) => {
+      activeRenderTasks.push(task);
       return task.promise.then(() => {
         spinner.remove();
+        container.appendChild(canvas);
+        pageCache.set(pageNum, { canvas, scaleKey });
       }).catch(err => {
         spinner.remove();
         if (!(err && err.name === 'RenderingCancelledException')) console.error(err);
@@ -608,21 +652,20 @@
     pageWrap.innerHTML = '';
     pageInput.value = currentPage;
 
-    const availW = viewer.clientWidth - 40;
-    const availH = viewer.clientHeight - 72;
+    const { maxW: availW, maxH: availH } = { maxW: viewer.clientWidth - 40, maxH: viewer.clientHeight - 72 };
 
     if (viewMode === 'single'){
       const slot = document.createElement('div');
       slot.className = 'page-slot';
       pageWrap.appendChild(slot);
-      renderPageToCanvas(currentPage, slot, availW, availH);
+      getOrRenderInto(currentPage, slot, availW, availH);
     } else {
       const { left, right } = computePair(currentPage);
       const halfW = (availW - 14) / 2;
       if (left){
         const slotL = document.createElement('div'); slotL.className = 'page-slot';
         pageWrap.appendChild(slotL);
-        renderPageToCanvas(left, slotL, halfW, availH);
+        getOrRenderInto(left, slotL, halfW, availH);
       } else {
         const blank = document.createElement('div'); blank.className = 'page-slot blank';
         blank.style.width = halfW + 'px';
@@ -631,11 +674,61 @@
       if (right){
         const slotR = document.createElement('div'); slotR.className = 'page-slot';
         pageWrap.appendChild(slotR);
-        renderPageToCanvas(right, slotR, halfW, availH);
+        getOrRenderInto(right, slotR, halfW, availH);
       }
     }
     applyFilter();
     highlightSidebar();
+
+    // let the visible page(s) get queued in the pdf.js worker first, then top up the read-ahead cache
+    setTimeout(schedulePrefetch, 60);
+  }
+
+  // ---------- Read-ahead prefetching ----------
+  function schedulePrefetch(){
+    if (!pdfDoc) return;
+    prefetchGeneration++;
+    const myGen = prefetchGeneration;
+
+    const { maxW, maxH } = computeRenderDims();
+    const scaleKey = makeScaleKey(maxW, maxH);
+
+    const wanted = [];
+    for (let d = -PREFETCH_RANGE; d <= PREFETCH_RANGE; d++){
+      const p = currentPage + d;
+      if (p >= 1 && p <= numPages) wanted.push(p);
+    }
+
+    prefetchQueue = wanted.filter(p => {
+      const cached = pageCache.get(p);
+      return !(cached && cached.scaleKey === scaleKey);
+    });
+
+    pruneCache(wanted);
+    drainPrefetch(myGen, maxW, maxH, scaleKey);
+  }
+
+  function pruneCache(wantedList){
+    const wantedSet = new Set(wantedList);
+    for (const key of pageCache.keys()){
+      if (!wantedSet.has(key)) pageCache.delete(key);
+    }
+  }
+
+  function drainPrefetch(gen, maxW, maxH, scaleKey){
+    if (gen !== prefetchGeneration) return; // superseded by a newer navigation
+    while (prefetchActive < PREFETCH_CONCURRENCY && prefetchQueue.length){
+      const p = prefetchQueue.shift();
+      prefetchActive++;
+      renderPageCanvas(p, maxW, maxH).then(({ canvas, task }) => {
+        return task.promise.then(() => {
+          if (gen === prefetchGeneration) pageCache.set(p, { canvas, scaleKey });
+        });
+      }).catch(() => {}).finally(() => {
+        prefetchActive--;
+        drainPrefetch(gen, maxW, maxH, scaleKey);
+      });
+    }
   }
 
   // ---------- Sidebar (lazy thumbnails: built on first open, rendered only as they scroll into view) ----------
