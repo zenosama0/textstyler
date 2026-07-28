@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cram Sheet - Study Notes Formatter (MD)</title>
+<title>Cram Sheet - Study Notes Formatter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
@@ -41,6 +41,13 @@
     padding:18px 0 22px;
   }
   .brand{ display:flex; align-items:center; gap:12px; }
+  .back-link{
+    display:flex; align-items:center; gap:4px;
+    font-family:'Source Sans 3', sans-serif; font-weight:600; font-size:0.8rem;
+    color:var(--muted); text-decoration:none; padding-right:12px;
+    border-right:1px solid var(--rule);
+  }
+  .back-link:hover{ color:var(--teal); }
   .brand-mark{
     width:40px; height:40px; border-radius:10px;
     background:var(--ink); color:var(--yellow);
@@ -199,6 +206,10 @@
   <div class="app">
     <header class="topbar">
       <div class="brand">
+        <a href="../index.html" class="back-link" title="Back to Stylers hub">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M15 18l-6-6 6-6"/></svg>
+          Stylers
+        </a>
         <span class="brand-mark">✎</span>
         <div>
           <h1>Cram Sheet</h1>
@@ -213,9 +224,7 @@
 
     <section id="editorPanel" class="editor-panel hidden">
       <label for="mdInput">Paste your Markdown here (renders live below)</label>
-      <textarea id="mdInput" spellcheck="false">> This is my old exam stuff, press edit note and paste your own note in MD format.
-        
-# Part A: Listening and Speaking
+      <textarea id="mdInput" spellcheck="false"># Part A: Listening and Speaking
 
 ## 1. Hearing vs Listening; Tips for Active/Effective Listening
 
@@ -366,7 +375,7 @@ Conditional sentences express a condition and its result, using **if-clauses**.
 </textarea>
       <div class="editor-actions">
         <button id="renderBtn" class="btn btn-accent">Render</button>
-        <span class="hint">Updates live as you type too — paste the cheat sheet text here to switch documents.</span>
+        <span class="hint">Updates live as you type too - paste the cheat sheet text here to switch documents.</span>
       </div>
     </section>
 
@@ -374,7 +383,7 @@ Conditional sentences express a condition and its result, using **if-clauses**.
       <article id="preview" class="prose"></article>
     </main>
 
-    <footer class="credit">Formatted for last-minute revision. I hope this helps whoever is looking at this :)</footer>
+    <footer class="credit">Wishing best of luck to whoever is using this :)</footer>
   </div>
 
 <script>
