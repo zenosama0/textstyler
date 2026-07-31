@@ -69,9 +69,9 @@
   }
   textarea:focus{ outline:none; border-color:var(--accent); }
 
-  .map-zone{ flex:1; position:relative; overflow:hidden; cursor:grab; }
+  .map-zone{ flex:1; position:relative; overflow:hidden; cursor:grab; touch-action:none; }
   .map-zone.dragging{ cursor:grabbing; }
-  .map-zone svg{ width:100%; height:100%; display:block; }
+  .map-zone svg{ width:100%; height:100%; display:block; touch-action:none; }
 
   .empty-hint{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
@@ -80,9 +80,24 @@
 
   .zoom-cluster{ display:flex; align-items:center; gap:2px; background:var(--card); border:1px solid var(--line); border-radius:9px; padding:2px; }
 
+  .done-btn{
+    display:none; position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+    z-index:50; background:var(--ink); color:var(--bg); border:none; border-radius:24px;
+    padding:12px 22px; font-family:'Inter',sans-serif; font-weight:700; font-size:0.88rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); align-items:center; gap:8px; cursor:pointer;
+  }
+  .done-btn svg{ width:16px; height:16px; }
+
   @media (max-width:720px){
-    .editor-panel{ position:absolute; z-index:35; height:calc(100% - 52px); }
+    .editor-panel{
+      position:absolute; inset:52px 0 0 0; width:100%; height:calc(100% - 52px);
+      z-index:35; padding:18px;
+    }
+    .editor-panel.collapsed{ width:100%; opacity:0; pointer-events:none; }
+    textarea{ min-height:calc(100vh - 210px); font-size:0.9rem; }
     .brand h1{ font-size:1rem; }
+    #editorToggle{ display:none; }
+    .done-btn.show{ display:flex; }
   }
 </style>
 </head>
@@ -152,6 +167,11 @@
     </div>
   </div>
 
+  <button class="done-btn" id="doneBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    View map
+  </button>
+
 <script>
   const TEXT_KEY = 'mindmap:lastOutline';
   const input = document.getElementById('input');
@@ -173,6 +193,27 @@
       try{ localStorage.setItem(TEXT_KEY, input.value); }catch(e){}
       buildMap();
     }, 400);
+  });
+
+  // Tab inserts an indent instead of jumping focus out of the textarea;
+  // Shift+Tab removes one level of indent from the current line
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    const start = input.selectionStart, end = input.selectionEnd;
+    const value = input.value;
+    if (e.shiftKey){
+      const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+      const twoSpaces = value.slice(lineStart, lineStart + 2) === '  ';
+      if (twoSpaces){
+        input.value = value.slice(0, lineStart) + value.slice(lineStart + 2);
+        input.selectionStart = input.selectionEnd = Math.max(lineStart, start - 2);
+      }
+    } else {
+      input.value = value.slice(0, start) + '  ' + value.slice(end);
+      input.selectionStart = input.selectionEnd = start + 2;
+    }
+    input.dispatchEvent(new Event('input'));
   });
 
   // ---------- Outline parsing (indentation-stack, tolerant of tabs/spaces) ----------
@@ -266,6 +307,7 @@
     circle.setAttribute('fill', colorFor(node.depth));
     g.appendChild(circle);
 
+    let textEl = null;
     if (node.text){
       const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       const facingRight = Math.cos(node.angle) >= 0;
@@ -278,9 +320,26 @@
       text.setAttribute('font-size', node.depth === 0 ? '17' : node.depth === 1 ? '14.5' : '13');
       text.textContent = node.text;
       g.appendChild(text);
+      textEl = text;
     }
 
     nodesG.appendChild(g);
+
+    // give the label an opaque backing so connector lines never visually cut through the text
+    // (has to happen after the node is in the live DOM so getBBox() returns real measurements)
+    if (textEl){
+      const bbox = textEl.getBBox();
+      const padX = 4, padY = 2;
+      const backing = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      backing.setAttribute('x', bbox.x - padX);
+      backing.setAttribute('y', bbox.y - padY);
+      backing.setAttribute('width', bbox.width + padX * 2);
+      backing.setAttribute('height', bbox.height + padY * 2);
+      backing.setAttribute('rx', 3);
+      backing.setAttribute('fill', 'var(--bg)');
+      g.insertBefore(backing, textEl);
+    }
+
     node.children.forEach(child => drawNode(child, node));
   }
 
@@ -343,10 +402,38 @@
 
   window.addEventListener('resize', resetView);
 
-  // ---------- Editor toggle ----------
-  document.getElementById('editorToggle').addEventListener('click', () => {
-    editorPanel.classList.toggle('collapsed');
+  // ---------- Editor toggle (desktop: sidebar toggle · mobile: full-screen edit/view swap) ----------
+  const isMobile = () => window.matchMedia('(max-width:720px)').matches;
+  const doneBtn = document.getElementById('doneBtn');
+
+  function openEditor(){
+    editorPanel.classList.remove('collapsed');
+    if (isMobile()){ doneBtn.classList.add('show'); input.focus(); }
+  }
+  function closeEditor(){
+    editorPanel.classList.add('collapsed');
+    doneBtn.classList.remove('show');
     setTimeout(resetView, 220);
+  }
+
+  document.getElementById('editorToggle').addEventListener('click', () => {
+    editorPanel.classList.contains('collapsed') ? openEditor() : closeEditor();
+  });
+  doneBtn.addEventListener('click', () => {
+    clearTimeout(debounceHandle);
+    try{ localStorage.setItem(TEXT_KEY, input.value); }catch(e){}
+    buildMap();
+    closeEditor();
+  });
+
+  // tapping the map itself opens the editor on mobile (a real drag/pan still works normally)
+  let pointerDownPos = null;
+  mapZone.addEventListener('pointerdown', (e) => { pointerDownPos = { x:e.clientX, y:e.clientY }; }, { capture:true });
+  mapZone.addEventListener('pointerup', (e) => {
+    if (!isMobile() || !pointerDownPos) return;
+    const moved = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
+    if (moved < 6 && editorPanel.classList.contains('collapsed')) openEditor();
+    pointerDownPos = null;
   });
 
   // ---------- PNG export ----------
@@ -410,6 +497,7 @@
   });
 
   // ---------- Init ----------
+  if (isMobile()) editorPanel.classList.add('collapsed');
   buildMap();
 </script>
 </body>
