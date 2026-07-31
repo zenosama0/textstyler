@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Read Aloud — Notes Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<style>
+  :root{
+    --bg:#EDEDEA; --dot:#DDDBD2; --chrome:#FAFAF8; --card:#FFFFFF;
+    --ink:#1B1C1E; --muted:#8A8D91; --line:#E1E1DD;
+    --accent:#2F5DE3; --accent-soft:#E9EEFD;
+  }
+  [data-theme="dark"]{
+    --bg:#17181B; --dot:#232529; --chrome:#1D1F23; --card:#202226;
+    --ink:#EDEDEE; --muted:#8C9096; --line:#2C2E33;
+    --accent:#6E93FF; --accent-soft:#232C45;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; overflow:hidden; }
+  body{
+    color:var(--ink); font-family:'Inter', sans-serif; display:flex; flex-direction:column; height:100vh;
+    background:radial-gradient(var(--dot) 1px, transparent 1px) 0 0/20px 20px, var(--bg);
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .topbar{
+    height:52px; background:var(--chrome); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; padding:0 16px; flex-shrink:0; position:relative; z-index:40;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark-link{ text-decoration:none; display:block; }
+  .brand-mark{
+    width:36px; height:36px; border-radius:9px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-mark-link:hover .brand-mark{ transform:scale(1.06); background:var(--ink); }
+  .brand h1{ font-family:'Fraunces', serif; font-weight:700; font-size:1.1rem; margin:0; }
+
+  .tb-actions{ display:flex; align-items:center; gap:4px; position:relative; }
+  .iconbtn{
+    width:34px; height:34px; border-radius:8px; border:none; background:transparent;
+    color:var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .iconbtn:hover{ background:var(--line); }
+  .iconbtn.active{ background:var(--accent); color:#fff; }
+  .iconbtn svg{ width:17px; height:17px; }
+
+  .popover{
+    position:absolute; top:44px; right:0; background:var(--chrome);
+    border:1px solid var(--line); border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.16);
+    padding:16px; z-index:60; display:none; width:250px;
+  }
+  .popover.open{ display:block; }
+  .popover h4{ margin:0 0 12px; font-size:0.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:600; }
+  .field{ margin-bottom:12px; font-size:0.82rem; }
+  .field label{ display:flex; justify-content:space-between; margin-bottom:5px; color:var(--muted); }
+  .field select{
+    width:100%; border:1px solid var(--line); border-radius:7px; padding:7px 8px;
+    background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.82rem;
+  }
+  .field input[type=range]{ width:100%; accent-color:var(--accent); }
+
+  .body-row{ flex:1; display:flex; min-height:0; }
+
+  .editor-panel{
+    width:280px; flex-shrink:0; border-right:1px solid var(--line); background:var(--chrome);
+    overflow-y:auto; padding:16px; transition:width .2s ease, padding .2s ease, opacity .15s ease;
+  }
+  .editor-panel.collapsed{ width:0; padding:16px 0; opacity:0; overflow:hidden; border-right-color:transparent; }
+  .editor-panel h3{ font-family:'Fraunces',serif; font-size:0.95rem; margin:0 0 4px; }
+  .editor-panel .hint{ font-size:0.78rem; color:var(--muted); margin:0 0 10px; line-height:1.5; }
+  textarea{
+    width:100%; min-height:260px; resize:vertical; font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem; line-height:1.55; border:1px solid var(--line); border-radius:8px;
+    padding:10px; background:var(--bg); color:var(--ink);
+  }
+  textarea:focus{ outline:none; border-color:var(--accent); }
+
+  .reading-pane{ flex:1; overflow-y:auto; padding:36px 24px; }
+  .reading-card{
+    max-width:640px; margin:0 auto; background:var(--card); border:1.5px solid var(--ink);
+    border-radius:16px; box-shadow:5px 5px 0 var(--line); padding:34px 38px;
+  }
+  .reading-card p{
+    font-size:1.05rem; line-height:1.85; margin:0 0 20px; cursor:pointer;
+    padding:4px 6px; border-radius:6px; transition:background .15s ease;
+  }
+  .reading-card p:hover{ background:var(--accent-soft); }
+  .reading-card p.active-para{ background:var(--accent-soft); }
+  .reading-card .sentence{ transition:background .15s ease, color .15s ease; border-radius:3px; }
+  .reading-card .sentence.active{ background:var(--accent); color:#fff; }
+  .reading-card .empty{ color:var(--muted); text-align:center; padding:40px 0; }
+
+  .transport{
+    flex-shrink:0; border-top:1px solid var(--line); background:var(--chrome);
+    display:flex; align-items:center; justify-content:center; gap:10px; padding:12px 16px;
+  }
+  .transport button{
+    border:1.5px solid var(--ink); background:var(--card); color:var(--ink); cursor:pointer;
+    border-radius:10px; display:flex; align-items:center; justify-content:center;
+  }
+  .transport .side-btn{ width:38px; height:38px; }
+  .transport .play-btn{ width:52px; height:52px; background:var(--ink); color:var(--bg); }
+  .transport svg{ width:18px; height:18px; }
+  .transport .play-btn svg{ width:20px; height:20px; }
+  .transport .progress{
+    font-family:'IBM Plex Mono',monospace; font-size:0.76rem; color:var(--muted);
+    min-width:70px; text-align:center;
+  }
+  .unsupported{ text-align:center; padding:60px 20px; color:var(--muted); max-width:340px; margin:auto; }
+  .unsupported h2{ font-family:'Fraunces',serif; color:var(--ink); }
+
+  @media (max-width:720px){
+    .editor-panel{ position:absolute; z-index:35; height:calc(100% - 52px - 66px); }
+    .reading-card{ padding:24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <a href="../index.html" class="brand-mark-link" title="Back to Stylers hub">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18.5 6a9 9 0 010 12"/></svg>
+        </span>
+      </a>
+      <h1>Read Aloud</h1>
+    </div>
+    <div class="tb-actions">
+      <button class="iconbtn" id="editorToggle" title="Toggle notes panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+      <button class="iconbtn" id="voiceBtn" title="Voice settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a4 4 0 00-4 4v6a4 4 0 008 0V5a4 4 0 00-4-4z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg>
+      </button>
+      <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+
+      <div class="popover" id="voicePopover">
+        <h4>Voice</h4>
+        <div class="field">
+          <select id="voiceSelect"></select>
+        </div>
+        <div class="field">
+          <label><span>Speed</span><span id="rateVal">1.0×</span></label>
+          <input type="range" id="rateSlider" min="0.5" max="2" step="0.1" value="1">
+        </div>
+        <div class="field">
+          <label><span>Pitch</span><span id="pitchVal">1.0</span></label>
+          <input type="range" id="pitchSlider" min="0" max="2" step="0.1" value="1">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-row">
+    <div class="editor-panel" id="editorPanel">
+      <h3>Paste your notes</h3>
+      <p class="hint">Markdown is fine — headings, bold, and lists all get read as plain sentences. Click any paragraph in the reading pane to start from there.</p>
+      <textarea id="input" spellcheck="false">## The Water Cycle
+
+**Evaporation** – the sun heats water in oceans, lakes, and rivers, turning it into water vapor that rises into the atmosphere.
+
+**Condensation** – as water vapor rises and cools, it turns back into tiny liquid droplets, forming clouds.
+
+**Precipitation** – when droplets in clouds combine and grow heavy enough, they fall back to Earth as rain, snow, sleet, or hail.
+
+**Collection** – water gathers in oceans, rivers, and lakes, or seeps into the ground as groundwater, and the cycle starts again.</textarea>
+    </div>
+
+    <div class="reading-pane" id="readingPane">
+      <div class="reading-card" id="readingCard"></div>
+    </div>
+  </div>
+
+  <div class="transport" id="transport">
+    <button class="side-btn" id="prevBtn" title="Previous paragraph">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 20L9 12l10-8v16z"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+    </button>
+    <button class="play-btn" id="playBtn" title="Play">
+      <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:none;"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    </button>
+    <button class="side-btn" id="nextBtn" title="Next paragraph">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4l10 8-10 8V4z"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+    </button>
+    <span class="progress" id="progressLabel">— / —</span>
+  </div>
+
+<script>
+  const SPEECH_OK = 'speechSynthesis' in window;
+  const TEXT_KEY = 'readaloud:lastText';
+  const PREF_KEY = 'readaloud:prefs';
+
+  const input = document.getElementById('input');
+  const readingCard = document.getElementById('readingCard');
+  const editorPanel = document.getElementById('editorPanel');
+
+  // ---------- Persistence ----------
+  function loadPrefs(){
+    try{ return Object.assign({ voice:null, rate:1, pitch:1 }, JSON.parse(localStorage.getItem(PREF_KEY))); }
+    catch(e){ return { voice:null, rate:1, pitch:1 }; }
+  }
+  function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); }catch(e){} }
+  function saveText(){ try{ localStorage.setItem(TEXT_KEY, input.value); }catch(e){} }
+
+  let prefs = loadPrefs();
+  const savedText = localStorage.getItem(TEXT_KEY);
+  if (savedText !== null && savedText.trim() !== '') input.value = savedText;
+
+  let debounceHandle;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceHandle);
+    debounceHandle = setTimeout(() => { saveText(); buildParagraphs(); }, 400);
+  });
+
+  // ---------- Markdown → clean paragraphs/sentences ----------
+  function markdownToPlainText(md){
+    const html = marked.parse(md || '');
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return (div.textContent || '').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  const sentenceRegex = /[^.!?]+[.!?]*(\s+|$)/g;
+
+  let paragraphs = [];   // [{ text, sentences:[{text,start,end}] }]
+
+  function buildParagraphs(){
+    const plain = markdownToPlainText(input.value);
+    const rawParas = plain.split(/\n\s*\n/).map(p => p.replace(/\n/g, ' ').trim()).filter(Boolean);
+    paragraphs = rawParas.map(text => {
+      const sentences = [];
+      let m;
+      sentenceRegex.lastIndex = 0;
+      while ((m = sentenceRegex.exec(text)) !== null){
+        const s = m[0].trim();
+        if (s) sentences.push({ text: s, start: m.index, end: m.index + m[0].length });
+        if (m.index === sentenceRegex.lastIndex) sentenceRegex.lastIndex++;
+      }
+      if (!sentences.length && text) sentences.push({ text, start: 0, end: text.length });
+      return { text, sentences };
+    });
+    renderReadingPane();
+    resetPlayback();
+  }
+
+  function renderReadingPane(){
+    readingCard.innerHTML = '';
+    if (!paragraphs.length){
+      readingCard.innerHTML = '<div class="empty">Paste some notes to get started.</div>';
+      return;
+    }
+    paragraphs.forEach((para, pi) => {
+      const p = document.createElement('p');
+      p.dataset.index = pi;
+      para.sentences.forEach((s, si) => {
+        const span = document.createElement('span');
+        span.className = 'sentence';
+        span.dataset.si = si;
+        span.textContent = s.text + ' ';
+        p.appendChild(span);
+      });
+      p.addEventListener('click', () => startFrom(pi));
+      readingCard.appendChild(p);
+    });
+  }
+
+  // ---------- Speech engine ----------
+  let currentParaIndex = -1;
+  let currentSentenceIndex = -1;
+  let isPlaying = false;
+  let isPaused = false;
+
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const pauseIcon = document.getElementById('pauseIcon');
+  const progressLabel = document.getElementById('progressLabel');
+
+  function syncPlayButton(){
+    const showPause = isPlaying && !isPaused;
+    playIcon.style.display = showPause ? 'none' : 'block';
+    pauseIcon.style.display = showPause ? 'block' : 'none';
+    progressLabel.textContent = paragraphs.length ? (currentParaIndex + 1) + ' / ' + paragraphs.length : '— / —';
+  }
+
+  function clearHighlights(){
+    readingCard.querySelectorAll('p.active-para').forEach(el => el.classList.remove('active-para'));
+    readingCard.querySelectorAll('.sentence.active').forEach(el => el.classList.remove('active'));
+  }
+
+  function highlight(paraIndex, sentenceIndex){
+    clearHighlights();
+    const p = readingCard.querySelector(`p[data-index="${paraIndex}"]`);
+    if (!p) return;
+    p.classList.add('active-para');
+    if (sentenceIndex >= 0){
+      const s = p.querySelector(`.sentence[data-si="${sentenceIndex}"]`);
+      if (s) s.classList.add('active');
+    }
+    p.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+
+  function speakParagraph(index){
+    if (!SPEECH_OK || index < 0 || index >= paragraphs.length){
+      isPlaying = false; isPaused = false; syncPlayButton(); clearHighlights();
+      return;
+    }
+    currentParaIndex = index;
+    const para = paragraphs[index];
+    const utter = new SpeechSynthesisUtterance(para.text);
+    const voices = speechSynthesis.getVoices();
+    const chosen = voices.find(v => v.name === prefs.voice) || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    if (chosen) utter.voice = chosen;
+    utter.rate = prefs.rate;
+    utter.pitch = prefs.pitch;
+
+    utter.onstart = () => { highlight(index, 0); };
+    utter.onboundary = (e) => {
+      if (e.name !== 'word' && e.name !== undefined) return;
+      const charIdx = e.charIndex || 0;
+      const si = para.sentences.findIndex(s => charIdx >= s.start && charIdx < s.end);
+      if (si !== -1 && si !== currentSentenceIndex){
+        currentSentenceIndex = si;
+        highlight(index, si);
+      }
+    };
+    utter.onend = () => {
+      if (!isPlaying) return; // stopped/cancelled elsewhere
+      currentSentenceIndex = -1;
+      if (index + 1 < paragraphs.length) speakParagraph(index + 1);
+      else { isPlaying = false; isPaused = false; syncPlayButton(); }
+    };
+    speechSynthesis.speak(utter);
+    syncPlayButton();
+  }
+
+  function startFrom(index){
+    speechSynthesis.cancel();
+    isPlaying = true; isPaused = false;
+    currentSentenceIndex = -1;
+    speakParagraph(index);
+  }
+
+  function resetPlayback(){
+    speechSynthesis.cancel();
+    isPlaying = false; isPaused = false;
+    currentParaIndex = -1; currentSentenceIndex = -1;
+    clearHighlights();
+    syncPlayButton();
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (!paragraphs.length) return;
+    if (!isPlaying){
+      startFrom(currentParaIndex >= 0 ? currentParaIndex : 0);
+    } else if (isPaused){
+      speechSynthesis.resume(); isPaused = false; syncPlayButton();
+    } else {
+      speechSynthesis.pause(); isPaused = true; syncPlayButton();
+    }
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (!paragraphs.length) return;
+    startFrom(Math.max(0, (currentParaIndex >= 0 ? currentParaIndex : 0) - 1));
+  });
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (!paragraphs.length) return;
+    startFrom(Math.min(paragraphs.length - 1, (currentParaIndex >= 0 ? currentParaIndex : -1) + 1));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (document.activeElement === input) return;
+    if (e.key === ' '){ e.preventDefault(); playBtn.click(); }
+  });
+
+  // ---------- Voice popover ----------
+  const voiceBtn = document.getElementById('voiceBtn');
+  const voicePopover = document.getElementById('voicePopover');
+  const voiceSelect = document.getElementById('voiceSelect');
+  const rateSlider = document.getElementById('rateSlider');
+  const pitchSlider = document.getElementById('pitchSlider');
+
+  voiceBtn.addEventListener('click', (e) => { e.stopPropagation(); voicePopover.classList.toggle('open'); });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.popover') && !e.target.closest('#voiceBtn')) voicePopover.classList.remove('open');
+  });
+
+  function populateVoices(){
+    const voices = speechSynthesis.getVoices();
+    if (!voices.length) return;
+    voiceSelect.innerHTML = '';
+    voices.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.name;
+      opt.textContent = v.name + ' (' + v.lang + ')';
+      if (v.name === prefs.voice) opt.selected = true;
+      voiceSelect.appendChild(opt);
+    });
+    if (!prefs.voice) prefs.voice = voiceSelect.value;
+  }
+  if (SPEECH_OK){
+    populateVoices();
+    speechSynthesis.onvoiceschanged = populateVoices;
+  }
+  voiceSelect.addEventListener('change', () => { prefs.voice = voiceSelect.value; savePrefs(); });
+  rateSlider.value = prefs.rate;
+  pitchSlider.value = prefs.pitch;
+  document.getElementById('rateVal').textContent = Number(prefs.rate).toFixed(1) + '×';
+  document.getElementById('pitchVal').textContent = Number(prefs.pitch).toFixed(1);
+  rateSlider.addEventListener('input', () => {
+    prefs.rate = parseFloat(rateSlider.value);
+    document.getElementById('rateVal').textContent = prefs.rate.toFixed(1) + '×';
+    savePrefs();
+  });
+  pitchSlider.addEventListener('input', () => {
+    prefs.pitch = parseFloat(pitchSlider.value);
+    document.getElementById('pitchVal').textContent = prefs.pitch.toFixed(1);
+    savePrefs();
+  });
+
+  // ---------- Editor toggle ----------
+  document.getElementById('editorToggle').addEventListener('click', () => {
+    editorPanel.classList.toggle('collapsed');
+  });
+
+  // ---------- Dark mode ----------
+  const darkBtn = document.getElementById('darkBtn');
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    darkBtn.classList.toggle('active', !isDark);
+  });
+
+  // ---------- Init ----------
+  if (!SPEECH_OK){
+    document.getElementById('transport').style.display = 'none';
+    readingCard.innerHTML = '<div class="unsupported"><h2>Not supported</h2><p>This browser doesn\'t support text-to-speech. Try Chrome, Edge, or Safari.</p></div>';
+  } else {
+    buildParagraphs();
+  }
+</script>
+</body>
+</html>
