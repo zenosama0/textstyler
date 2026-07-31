@@ -115,9 +115,24 @@
   .unsupported{ text-align:center; padding:60px 20px; color:var(--muted); max-width:340px; margin:auto; }
   .unsupported h2{ font-family:'Fraunces',serif; color:var(--ink); }
 
+  .done-btn{
+    display:none; position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+    z-index:50; background:var(--ink); color:var(--bg); border:none; border-radius:24px;
+    padding:12px 22px; font-family:'Inter',sans-serif; font-weight:700; font-size:0.88rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); align-items:center; gap:8px; cursor:pointer;
+  }
+  .done-btn svg{ width:16px; height:16px; }
+
   @media (max-width:720px){
-    .editor-panel{ position:absolute; z-index:35; height:calc(100% - 52px - 66px); }
+    .editor-panel{
+      position:absolute; inset:52px 0 0 0; width:100%;
+      height:calc(100% - 52px - 66px); z-index:35; padding:18px;
+    }
+    .editor-panel.collapsed{ width:100%; opacity:0; pointer-events:none; }
+    textarea{ min-height:calc(100vh - 260px); font-size:0.9rem; }
     .reading-card{ padding:24px 20px; }
+    #editorToggle{ display:none; }
+    .done-btn.show{ display:flex; }
   }
 </style>
 </head>
@@ -179,6 +194,11 @@
       <div class="reading-card" id="readingCard"></div>
     </div>
   </div>
+
+  <button class="done-btn" id="doneBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    Done
+  </button>
 
   <div class="transport" id="transport">
     <button class="side-btn" id="prevBtn" title="Previous paragraph">
@@ -268,7 +288,7 @@
         span.textContent = s.text + ' ';
         p.appendChild(span);
       });
-      p.addEventListener('click', () => startFrom(pi));
+      p.addEventListener('click', () => { isMobile() ? openEditor() : startFrom(pi); });
       readingCard.appendChild(p);
     });
   }
@@ -358,6 +378,12 @@
   }
 
   playBtn.addEventListener('click', () => {
+    if (isMobile() && !editorPanel.classList.contains('collapsed')){
+      clearTimeout(debounceHandle);
+      saveText();
+      buildParagraphs();
+      closeEditor();
+    }
     if (!paragraphs.length) return;
     if (!isPlaying){
       startFrom(currentParaIndex >= 0 ? currentParaIndex : 0);
@@ -425,9 +451,27 @@
     savePrefs();
   });
 
-  // ---------- Editor toggle ----------
+  // ---------- Editor toggle (desktop: sidebar toggle · mobile: full-screen edit/view swap) ----------
+  const isMobile = () => window.matchMedia('(max-width:720px)').matches;
+  const doneBtn = document.getElementById('doneBtn');
+
+  function openEditor(){
+    editorPanel.classList.remove('collapsed');
+    if (isMobile()){ doneBtn.classList.add('show'); input.focus(); }
+  }
+  function closeEditor(){
+    editorPanel.classList.add('collapsed');
+    doneBtn.classList.remove('show');
+  }
+
   document.getElementById('editorToggle').addEventListener('click', () => {
-    editorPanel.classList.toggle('collapsed');
+    editorPanel.classList.contains('collapsed') ? openEditor() : closeEditor();
+  });
+  doneBtn.addEventListener('click', () => {
+    clearTimeout(debounceHandle);
+    saveText();
+    buildParagraphs();
+    closeEditor();
   });
 
   // ---------- Dark mode ----------
