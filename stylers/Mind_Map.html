@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mind Map — Outline Visualizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDEDEA; --dot:#DDDBD2; --chrome:#FAFAF8; --card:#FFFFFF;
+    --ink:#1B1C1E; --muted:#8A8D91; --line:#E1E1DD;
+    --accent:#2F5DE3; --accent-soft:#E9EEFD;
+    --c1:#2F5DE3; --c2:#E8556E; --c3:#2F9C6E; --c4:#C98A2B;
+  }
+  [data-theme="dark"]{
+    --bg:#17181B; --dot:#232529; --chrome:#1D1F23; --card:#202226;
+    --ink:#EDEDEE; --muted:#8C9096; --line:#2C2E33;
+    --accent:#6E93FF; --accent-soft:#232C45;
+    --c1:#6E93FF; --c2:#F17187; --c3:#3FBE85; --c4:#E0A94B;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; overflow:hidden; }
+  body{
+    color:var(--ink); font-family:'Inter', sans-serif; display:flex; flex-direction:column; height:100vh;
+    background:radial-gradient(var(--dot) 1px, transparent 1px) 0 0/20px 20px, var(--bg);
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .topbar{
+    height:52px; background:var(--chrome); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; padding:0 16px; flex-shrink:0; z-index:40;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark-link{ text-decoration:none; display:block; }
+  .brand-mark{
+    width:36px; height:36px; border-radius:9px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-mark-link:hover .brand-mark{ transform:scale(1.06); background:var(--ink); }
+  .brand h1{ font-family:'Fraunces', serif; font-weight:700; font-size:1.1rem; margin:0; }
+
+  .tb-actions{ display:flex; align-items:center; gap:4px; }
+  .iconbtn{
+    width:34px; height:34px; border-radius:8px; border:none; background:transparent;
+    color:var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .iconbtn:hover{ background:var(--line); }
+  .iconbtn.active{ background:var(--accent); color:#fff; }
+  .iconbtn svg{ width:17px; height:17px; }
+  .divider{ width:1px; height:22px; background:var(--line); margin:0 4px; }
+
+  .body-row{ flex:1; display:flex; min-height:0; }
+
+  .editor-panel{
+    width:300px; flex-shrink:0; border-right:1px solid var(--line); background:var(--chrome);
+    overflow-y:auto; padding:16px; transition:width .2s ease, padding .2s ease, opacity .15s ease;
+  }
+  .editor-panel.collapsed{ width:0; padding:16px 0; opacity:0; overflow:hidden; border-right-color:transparent; }
+  .editor-panel h3{ font-family:'Fraunces',serif; font-size:0.95rem; margin:0 0 4px; }
+  .editor-panel .hint{ font-size:0.78rem; color:var(--muted); margin:0 0 10px; line-height:1.5; }
+  .editor-panel .hint code{ font-family:'IBM Plex Mono',monospace; background:var(--accent-soft); color:var(--accent); padding:1px 5px; border-radius:4px; }
+  textarea{
+    width:100%; min-height:320px; resize:vertical; font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem; line-height:1.6; border:1px solid var(--line); border-radius:8px;
+    padding:10px; background:var(--bg); color:var(--ink); tab-size:2;
+  }
+  textarea:focus{ outline:none; border-color:var(--accent); }
+
+  .map-zone{ flex:1; position:relative; overflow:hidden; cursor:grab; }
+  .map-zone.dragging{ cursor:grabbing; }
+  .map-zone svg{ width:100%; height:100%; display:block; }
+
+  .empty-hint{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--muted); font-size:0.9rem; text-align:center; pointer-events:none; padding:20px;
+  }
+
+  .zoom-cluster{ display:flex; align-items:center; gap:2px; background:var(--card); border:1px solid var(--line); border-radius:9px; padding:2px; }
+
+  @media (max-width:720px){
+    .editor-panel{ position:absolute; z-index:35; height:calc(100% - 52px); }
+    .brand h1{ font-size:1rem; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <a href="../index.html" class="brand-mark-link" title="Back to Stylers hub">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2.3"/><circle cx="19" cy="6" r="2.3"/><circle cx="19" cy="18" r="2.3"/><path d="M7 11l10-4M7 13l10 4"/></svg>
+        </span>
+      </a>
+      <h1>Mind Map</h1>
+    </div>
+    <div class="tb-actions">
+      <button class="iconbtn" id="editorToggle" title="Toggle outline panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+      <div class="divider"></div>
+      <div class="zoom-cluster">
+        <button class="iconbtn" id="zoomOutBtn" title="Zoom out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <button class="iconbtn" id="zoomResetBtn" title="Reset view" style="width:auto; padding:0 8px; font-size:0.72rem;">Reset</button>
+        <button class="iconbtn" id="zoomInBtn" title="Zoom in">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="divider"></div>
+      <button class="iconbtn" id="downloadBtn" title="Download as PNG">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5M5 21h14"/></svg>
+      </button>
+      <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="body-row">
+    <div class="editor-panel" id="editorPanel">
+      <h3>Paste your outline</h3>
+      <p class="hint">Indent with spaces or tabs to show hierarchy — like <code>- bullets</code> nested under a topic. Each indent level becomes a new branch.</p>
+      <textarea id="input" spellcheck="false">Cell Biology
+  Cell Membrane
+    Phospholipid bilayer
+    Selective permeability
+  Organelles
+    Nucleus
+      Stores DNA
+    Mitochondria
+      Produces ATP
+    Ribosomes
+      Builds proteins
+  Cell Division
+    Mitosis
+    Meiosis</textarea>
+    </div>
+
+    <div class="map-zone" id="mapZone">
+      <svg id="mapSvg">
+        <g id="viewport">
+          <g id="edges"></g>
+          <g id="nodes"></g>
+        </g>
+      </svg>
+      <div class="empty-hint" id="emptyHint">Paste an indented outline to see it mapped out.</div>
+    </div>
+  </div>
+
+<script>
+  const TEXT_KEY = 'mindmap:lastOutline';
+  const input = document.getElementById('input');
+  const editorPanel = document.getElementById('editorPanel');
+  const mapZone = document.getElementById('mapZone');
+  const svg = document.getElementById('mapSvg');
+  const viewport = document.getElementById('viewport');
+  const edgesG = document.getElementById('edges');
+  const nodesG = document.getElementById('nodes');
+  const emptyHint = document.getElementById('emptyHint');
+
+  const saved = localStorage.getItem(TEXT_KEY);
+  if (saved !== null && saved.trim() !== '') input.value = saved;
+
+  let debounceHandle;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceHandle);
+    debounceHandle = setTimeout(() => {
+      try{ localStorage.setItem(TEXT_KEY, input.value); }catch(e){}
+      buildMap();
+    }, 400);
+  });
+
+  // ---------- Outline parsing (indentation-stack, tolerant of tabs/spaces) ----------
+  function parseOutline(text){
+    const lines = text.split('\n').filter(l => l.trim() !== '');
+    const root = { text:'', children:[] };
+    const stack = [{ indent:-1, node:root }];
+    lines.forEach(raw => {
+      const leading = raw.match(/^(\s*)/)[1].replace(/\t/g, '  ');
+      const indent = leading.length;
+      const label = raw.trim().replace(/^[-*•]\s*/, '');
+      while (stack.length > 1 && stack[stack.length-1].indent >= indent) stack.pop();
+      const parent = stack[stack.length-1].node;
+      const node = { text: label, children: [] };
+      parent.children.push(node);
+      stack.push({ indent, node });
+    });
+    return root;
+  }
+
+  function countLeaves(node){
+    if (!node.children.length){ node._leaves = 1; return 1; }
+    node._leaves = node.children.reduce((sum, c) => sum + countLeaves(c), 0);
+    return node._leaves;
+  }
+
+  const RADIUS_STEP = 165;
+  function layout(node, angleStart, angleEnd, depth){
+    node.depth = depth;
+    node.angle = (angleStart + angleEnd) / 2;
+    node.radius = depth * RADIUS_STEP;
+    node.x = Math.cos(node.angle) * node.radius;
+    node.y = Math.sin(node.angle) * node.radius;
+    if (node.children.length){
+      let cursor = angleStart;
+      node.children.forEach(child => {
+        const span = (angleEnd - angleStart) * (child._leaves / node._leaves);
+        layout(child, cursor, cursor + span, depth + 1);
+        cursor += span;
+      });
+    }
+  }
+
+  function curvePath(parent, child){
+    const midR = (parent.radius + child.radius) / 2;
+    const c1x = Math.cos(parent.angle) * midR, c1y = Math.sin(parent.angle) * midR;
+    const c2x = Math.cos(child.angle) * midR, c2y = Math.sin(child.angle) * midR;
+    return `M ${parent.x},${parent.y} C ${c1x},${c1y} ${c2x},${c2y} ${child.x},${child.y}`;
+  }
+
+  const DEPTH_COLORS = ['var(--ink)', 'var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'];
+  function colorFor(depth){ return DEPTH_COLORS[depth % DEPTH_COLORS.length]; }
+
+  let centerNode = null;
+
+  function buildMap(){
+    const root = parseOutline(input.value);
+    if (!root.children.length){
+      edgesG.innerHTML = ''; nodesG.innerHTML = '';
+      emptyHint.style.display = 'flex';
+      return;
+    }
+    emptyHint.style.display = 'none';
+
+    centerNode = root.children.length === 1 ? root.children[0] : { text:'', children: root.children, isHub:true };
+    countLeaves(centerNode);
+    layout(centerNode, 0, Math.PI * 2, 0);
+
+    edgesG.innerHTML = '';
+    nodesG.innerHTML = '';
+    drawNode(centerNode, null);
+    resetView();
+  }
+
+  function drawNode(node, parent){
+    if (parent){
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', curvePath(parent, node));
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', colorFor(node.depth));
+      path.setAttribute('stroke-width', Math.max(1.4, 3 - node.depth * 0.4));
+      path.setAttribute('opacity', '0.55');
+      edgesG.appendChild(path);
+    }
+
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('transform', `translate(${node.x},${node.y})`);
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('r', node.isHub ? 7 : Math.max(4, 7 - node.depth));
+    circle.setAttribute('fill', colorFor(node.depth));
+    g.appendChild(circle);
+
+    if (node.text){
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      const facingRight = Math.cos(node.angle) >= 0;
+      text.setAttribute('x', facingRight ? 12 : -12);
+      text.setAttribute('text-anchor', facingRight ? 'start' : 'end');
+      text.setAttribute('dominant-baseline', 'middle');
+      text.setAttribute('fill', 'var(--ink)');
+      text.setAttribute('font-family', node.depth <= 1 ? "'Fraunces', serif" : "'Inter', sans-serif");
+      text.setAttribute('font-weight', node.depth === 0 ? '700' : node.depth === 1 ? '600' : '500');
+      text.setAttribute('font-size', node.depth === 0 ? '17' : node.depth === 1 ? '14.5' : '13');
+      text.textContent = node.text;
+      g.appendChild(text);
+    }
+
+    nodesG.appendChild(g);
+    node.children.forEach(child => drawNode(child, node));
+  }
+
+  // ---------- Pan & zoom ----------
+  let scale = 1, tx = 0, ty = 0;
+  let dragging = false, dragStartX = 0, dragStartY = 0, txStart = 0, tyStart = 0;
+
+  function applyTransform(){
+    viewport.setAttribute('transform', `translate(${tx},${ty}) scale(${scale})`);
+  }
+  function resetView(){
+    const rect = mapZone.getBoundingClientRect();
+    scale = 1;
+    tx = rect.width / 2;
+    ty = rect.height / 2;
+    applyTransform();
+  }
+
+  mapZone.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    mapZone.classList.add('dragging');
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    txStart = tx; tyStart = ty;
+    mapZone.setPointerCapture(e.pointerId);
+  });
+  mapZone.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    tx = txStart + (e.clientX - dragStartX);
+    ty = tyStart + (e.clientY - dragStartY);
+    applyTransform();
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(evt => {
+    mapZone.addEventListener(evt, () => { dragging = false; mapZone.classList.remove('dragging'); });
+  });
+
+  function zoomAt(clientX, clientY, factor){
+    const rect = mapZone.getBoundingClientRect();
+    const mx = clientX - rect.left, my = clientY - rect.top;
+    const newScale = Math.min(2.5, Math.max(0.3, scale * factor));
+    const vx = (mx - tx) / scale, vy = (my - ty) / scale;
+    tx = mx - vx * newScale;
+    ty = my - vy * newScale;
+    scale = newScale;
+    applyTransform();
+  }
+  mapZone.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    zoomAt(e.clientX, e.clientY, e.deltaY < 0 ? 1.1 : 0.9);
+  }, { passive:false });
+
+  document.getElementById('zoomInBtn').addEventListener('click', () => {
+    const r = mapZone.getBoundingClientRect();
+    zoomAt(r.left + r.width/2, r.top + r.height/2, 1.2);
+  });
+  document.getElementById('zoomOutBtn').addEventListener('click', () => {
+    const r = mapZone.getBoundingClientRect();
+    zoomAt(r.left + r.width/2, r.top + r.height/2, 0.83);
+  });
+  document.getElementById('zoomResetBtn').addEventListener('click', resetView);
+
+  window.addEventListener('resize', resetView);
+
+  // ---------- Editor toggle ----------
+  document.getElementById('editorToggle').addEventListener('click', () => {
+    editorPanel.classList.toggle('collapsed');
+    setTimeout(resetView, 220);
+  });
+
+  // ---------- PNG export ----------
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    if (!centerNode) return;
+    const bbox = viewport.getBBox();
+    const pad = 50;
+    const w = Math.max(200, bbox.width + pad * 2);
+    const h = Math.max(200, bbox.height + pad * 2);
+
+    const clone = svg.cloneNode(true);
+    clone.setAttribute('width', w);
+    clone.setAttribute('height', h);
+    clone.setAttribute('viewBox', `${bbox.x - pad} ${bbox.y - pad} ${w} ${h}`);
+    clone.querySelector('#viewport').removeAttribute('transform');
+
+    // resolve CSS variables to literal colors so the exported file renders correctly standalone
+    const styleVars = getComputedStyle(document.documentElement);
+    let styleStr = ':root{';
+    ['--ink','--c1','--c2','--c3','--c4'].forEach(v => { styleStr += `${v}:${styleVars.getPropertyValue(v)};`; });
+    styleStr += '}';
+    const styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    styleEl.textContent = styleStr;
+    clone.insertBefore(styleEl, clone.firstChild);
+
+    const bgColor = styleVars.getPropertyValue('--card').trim() || '#ffffff';
+    const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bgRect.setAttribute('x', bbox.x - pad); bgRect.setAttribute('y', bbox.y - pad);
+    bgRect.setAttribute('width', w); bgRect.setAttribute('height', h);
+    bgRect.setAttribute('fill', bgColor);
+    clone.querySelector('#viewport').insertBefore(bgRect, clone.querySelector('#viewport').firstChild);
+
+    const svgString = new XMLSerializer().serializeToString(clone);
+    const blob = new Blob([svgString], { type:'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const scaleF = 2;
+      canvas.width = w * scaleF; canvas.height = h * scaleF;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(scaleF, scaleF);
+      ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(pngBlob => {
+        const link = document.createElement('a');
+        link.download = 'mindmap.png';
+        link.href = URL.createObjectURL(pngBlob);
+        link.click();
+      });
+    };
+    img.src = url;
+  });
+
+  // ---------- Dark mode ----------
+  const darkBtn = document.getElementById('darkBtn');
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    darkBtn.classList.toggle('active', !isDark);
+  });
+
+  // ---------- Init ----------
+  buildMap();
+</script>
+</body>
+</html>
