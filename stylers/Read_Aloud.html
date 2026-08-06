@@ -154,6 +154,9 @@
       <button class="iconbtn" id="voiceBtn" title="Voice settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a4 4 0 00-4 4v6a4 4 0 008 0V5a4 4 0 00-4-4z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4"/></svg>
       </button>
+      <button class="iconbtn" id="translateBtn" title="Translate notes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 010 18M12 3a13 13 0 000 18"/></svg>
+      </button>
       <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
         <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
@@ -171,6 +174,32 @@
           <label><span>Pitch</span><span id="pitchVal">1.0</span></label>
           <input type="range" id="pitchSlider" min="0" max="2" step="0.1" value="1">
         </div>
+      </div>
+
+      <div class="popover" id="translatePopover" style="width:260px;">
+        <h4>Translate notes</h4>
+        <div class="field">
+          <label style="margin-bottom:5px; display:block;">Target language</label>
+          <select id="targetLangSelect"></select>
+        </div>
+        <div class="field">
+          <label style="margin-bottom:5px; display:block;">LibreTranslate endpoint</label>
+          <select id="endpointSelect">
+            <option value="https://translate.astian.org/translate">translate.astian.org (free)</option>
+            <option value="https://libretranslate.de/translate">libretranslate.de (free)</option>
+            <option value="custom">Custom / self-hosted…</option>
+          </select>
+        </div>
+        <div class="field" id="customEndpointField" style="display:none;">
+          <input type="text" id="customEndpointInput" placeholder="https://your-instance/translate" style="width:100%; border:1px solid var(--line); border-radius:7px; padding:7px 8px; background:var(--bg); color:var(--ink); font-size:0.8rem;">
+        </div>
+        <div class="field">
+          <label style="margin-bottom:5px; display:block;">API key (optional)</label>
+          <input type="text" id="apiKeyInput" placeholder="leave blank if not needed" style="width:100%; border:1px solid var(--line); border-radius:7px; padding:7px 8px; background:var(--bg); color:var(--ink); font-size:0.8rem;">
+        </div>
+        <button id="translateGoBtn" style="width:100%; margin-top:6px; padding:9px; border-radius:8px; border:1.5px solid var(--ink); background:var(--ink); color:var(--bg); font-family:'Inter',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer;">Translate</button>
+        <p id="translateStatus" style="font-size:0.74rem; color:var(--muted); margin:8px 0 0; min-height:14px;"></p>
+        <p style="font-size:0.7rem; color:var(--muted); margin:6px 0 0; line-height:1.4;">Uses free public LibreTranslate mirrors — availability isn't guaranteed. Replaces the notes text in place.</p>
       </div>
     </div>
   </div>
@@ -412,10 +441,14 @@
   const voiceSelect = document.getElementById('voiceSelect');
   const rateSlider = document.getElementById('rateSlider');
   const pitchSlider = document.getElementById('pitchSlider');
+  const translateBtn = document.getElementById('translateBtn');
+  const translatePopover = document.getElementById('translatePopover');
 
-  voiceBtn.addEventListener('click', (e) => { e.stopPropagation(); voicePopover.classList.toggle('open'); });
+  voiceBtn.addEventListener('click', (e) => { e.stopPropagation(); translatePopover.classList.remove('open'); voicePopover.classList.toggle('open'); });
+  translateBtn.addEventListener('click', (e) => { e.stopPropagation(); voicePopover.classList.remove('open'); translatePopover.classList.toggle('open'); });
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.popover') && !e.target.closest('#voiceBtn')) voicePopover.classList.remove('open');
+    if (!e.target.closest('.popover') && !e.target.closest('#translateBtn')) translatePopover.classList.remove('open');
   });
 
   function populateVoices(){
@@ -449,6 +482,93 @@
     prefs.pitch = parseFloat(pitchSlider.value);
     document.getElementById('pitchVal').textContent = prefs.pitch.toFixed(1);
     savePrefs();
+  });
+
+  // ---------- Translate (LibreTranslate) ----------
+  const TRANSLATE_KEY = 'readaloud:translatePrefs';
+  const TRANSLATE_LANGS = [
+    ['en','English'],['es','Spanish'],['fr','French'],['de','German'],['it','Italian'],
+    ['pt','Portuguese'],['ru','Russian'],['zh','Chinese'],['ja','Japanese'],['ko','Korean'],
+    ['ar','Arabic'],['hi','Hindi'],['nl','Dutch'],['pl','Polish'],['tr','Turkish'],
+    ['vi','Vietnamese'],['sv','Swedish'],['el','Greek'],['id','Indonesian'],['cs','Czech'],
+    ['uk','Ukrainian'],['ro','Romanian'],['hu','Hungarian'],['fi','Finnish'],['da','Danish'],['th','Thai']
+  ];
+
+  function loadTPrefs(){
+    try{ return Object.assign({ endpoint:'https://translate.astian.org/translate', customEndpoint:'', apiKey:'', targetLang:'es' }, JSON.parse(localStorage.getItem(TRANSLATE_KEY))); }
+    catch(e){ return { endpoint:'https://translate.astian.org/translate', customEndpoint:'', apiKey:'', targetLang:'es' }; }
+  }
+  function saveTPrefs(){ try{ localStorage.setItem(TRANSLATE_KEY, JSON.stringify(tPrefs)); }catch(e){} }
+  let tPrefs = loadTPrefs();
+
+  const targetLangSelect = document.getElementById('targetLangSelect');
+  const endpointSelect = document.getElementById('endpointSelect');
+  const customEndpointField = document.getElementById('customEndpointField');
+  const customEndpointInput = document.getElementById('customEndpointInput');
+  const apiKeyInput = document.getElementById('apiKeyInput');
+  const translateStatus = document.getElementById('translateStatus');
+
+  TRANSLATE_LANGS.forEach(([code, name]) => {
+    const opt = document.createElement('option');
+    opt.value = code; opt.textContent = name;
+    if (code === tPrefs.targetLang) opt.selected = true;
+    targetLangSelect.appendChild(opt);
+  });
+  const knownEndpoints = ['https://translate.astian.org/translate', 'https://libretranslate.de/translate'];
+  if (knownEndpoints.includes(tPrefs.endpoint)){
+    endpointSelect.value = tPrefs.endpoint;
+  } else if (tPrefs.endpoint){
+    endpointSelect.value = 'custom';
+    customEndpointField.style.display = 'block';
+    customEndpointInput.value = tPrefs.endpoint;
+  }
+  apiKeyInput.value = tPrefs.apiKey || '';
+
+  targetLangSelect.addEventListener('change', () => { tPrefs.targetLang = targetLangSelect.value; saveTPrefs(); });
+  endpointSelect.addEventListener('change', () => {
+    customEndpointField.style.display = endpointSelect.value === 'custom' ? 'block' : 'none';
+    if (endpointSelect.value !== 'custom'){ tPrefs.endpoint = endpointSelect.value; saveTPrefs(); }
+  });
+  customEndpointInput.addEventListener('input', () => { tPrefs.endpoint = customEndpointInput.value.trim(); saveTPrefs(); });
+  apiKeyInput.addEventListener('input', () => { tPrefs.apiKey = apiKeyInput.value.trim(); saveTPrefs(); });
+
+  document.getElementById('translateGoBtn').addEventListener('click', async () => {
+    const endpoint = endpointSelect.value === 'custom' ? customEndpointInput.value.trim() : endpointSelect.value;
+    if (!endpoint){ translateStatus.textContent = 'Enter an endpoint URL first.'; return; }
+    if (!input.value.trim()){ translateStatus.textContent = 'Nothing to translate yet.'; return; }
+
+    const goBtn = document.getElementById('translateGoBtn');
+    goBtn.disabled = true;
+    translateStatus.textContent = 'Translating…';
+
+    try{
+      const body = { q: input.value, source: 'auto', target: tPrefs.targetLang, format: 'text' };
+      if (tPrefs.apiKey) body.api_key = tPrefs.apiKey;
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error('Request failed (' + res.status + ')');
+      const data = await res.json();
+      if (!data.translatedText) throw new Error('Unexpected response from server');
+
+      input.value = data.translatedText;
+      saveText();
+      buildParagraphs();
+
+      // try to switch to a voice matching the new language
+      const voices = speechSynthesis.getVoices();
+      const match = voices.find(v => v.lang.toLowerCase().startsWith(tPrefs.targetLang));
+      if (match){ prefs.voice = match.name; savePrefs(); populateVoices(); }
+
+      translateStatus.textContent = 'Translated ✓';
+      setTimeout(() => { translateStatus.textContent = ''; }, 2500);
+    } catch(err){
+      translateStatus.textContent = 'Translation failed — try a different mirror or check the endpoint.';
+    } finally {
+      goBtn.disabled = false;
+    }
   });
 
   // ---------- Editor toggle (desktop: sidebar toggle · mobile: full-screen edit/view swap) ----------
