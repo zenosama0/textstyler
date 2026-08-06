@@ -185,8 +185,9 @@
         <div class="field">
           <label style="margin-bottom:5px; display:block;">LibreTranslate endpoint</label>
           <select id="endpointSelect">
-            <option value="https://translate.astian.org/translate">translate.astian.org (free)</option>
-            <option value="https://libretranslate.de/translate">libretranslate.de (free)</option>
+            <option value="https://translate.fedilab.app/translate">translate.fedilab.app (free)</option>
+            <option value="https://translate.cutie.dating/translate">translate.cutie.dating (free)</option>
+            <option value="https://libretranslate.com/translate">libretranslate.com (needs API key)</option>
             <option value="custom">Custom / self-hosted…</option>
           </select>
         </div>
@@ -495,11 +496,16 @@
   ];
 
   function loadTPrefs(){
-    try{ return Object.assign({ endpoint:'https://translate.astian.org/translate', customEndpoint:'', apiKey:'', targetLang:'es' }, JSON.parse(localStorage.getItem(TRANSLATE_KEY))); }
-    catch(e){ return { endpoint:'https://translate.astian.org/translate', customEndpoint:'', apiKey:'', targetLang:'es' }; }
+    try{ return Object.assign({ endpoint:'https://translate.fedilab.app/translate', customEndpoint:'', apiKey:'', targetLang:'es' }, JSON.parse(localStorage.getItem(TRANSLATE_KEY))); }
+    catch(e){ return { endpoint:'https://translate.fedilab.app/translate', customEndpoint:'', apiKey:'', targetLang:'es' }; }
   }
   function saveTPrefs(){ try{ localStorage.setItem(TRANSLATE_KEY, JSON.stringify(tPrefs)); }catch(e){} }
   let tPrefs = loadTPrefs();
+  const deadEndpoints = ['https://translate.astian.org/translate', 'https://libretranslate.de/translate'];
+  if (deadEndpoints.includes(tPrefs.endpoint)){
+    tPrefs.endpoint = 'https://translate.fedilab.app/translate';
+    saveTPrefs();
+  }
 
   const targetLangSelect = document.getElementById('targetLangSelect');
   const endpointSelect = document.getElementById('endpointSelect');
@@ -514,7 +520,7 @@
     if (code === tPrefs.targetLang) opt.selected = true;
     targetLangSelect.appendChild(opt);
   });
-  const knownEndpoints = ['https://translate.astian.org/translate', 'https://libretranslate.de/translate'];
+  const knownEndpoints = ['https://translate.fedilab.app/translate', 'https://translate.cutie.dating/translate', 'https://libretranslate.com/translate'];
   if (knownEndpoints.includes(tPrefs.endpoint)){
     endpointSelect.value = tPrefs.endpoint;
   } else if (tPrefs.endpoint){
@@ -549,9 +555,13 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      if (!res.ok) throw new Error('Request failed (' + res.status + ')');
+      if (!res.ok){
+        let detail = '';
+        try{ const errJson = await res.json(); detail = errJson.error || ''; }catch(e){}
+        throw new Error(`HTTP ${res.status}${detail ? ' — ' + detail : ''}`);
+      }
       const data = await res.json();
-      if (!data.translatedText) throw new Error('Unexpected response from server');
+      if (!data.translatedText) throw new Error('Unexpected response shape from server');
 
       input.value = data.translatedText;
       saveText();
@@ -565,7 +575,10 @@
       translateStatus.textContent = 'Translated ✓';
       setTimeout(() => { translateStatus.textContent = ''; }, 2500);
     } catch(err){
-      translateStatus.textContent = 'Translation failed — try a different mirror or check the endpoint.';
+      const isNetworkErr = err instanceof TypeError;
+      translateStatus.textContent = isNetworkErr
+        ? "Couldn't reach that mirror (blocked, down, or a CORS restriction) — try another mirror."
+        : 'Translation failed: ' + err.message;
     } finally {
       goBtn.disabled = false;
     }
