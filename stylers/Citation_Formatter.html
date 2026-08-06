@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citations — Bibliography Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDEDEA; --dot:#DDDBD2; --chrome:#FAFAF8; --card:#FFFFFF;
+    --ink:#1B1C1E; --muted:#8A8D91; --line:#E1E1DD;
+    --accent:#2F5DE3; --accent-soft:#E9EEFD;
+  }
+  [data-theme="dark"]{
+    --bg:#17181B; --dot:#232529; --chrome:#1D1F23; --card:#202226;
+    --ink:#EDEDEE; --muted:#8C9096; --line:#2C2E33;
+    --accent:#6E93FF; --accent-soft:#232C45;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    min-height:100vh; color:var(--ink); font-family:'Inter', sans-serif;
+    background:radial-gradient(var(--dot) 1px, transparent 1px) 0 0/20px 20px, var(--bg);
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .topbar{
+    height:52px; background:var(--chrome); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; padding:0 16px;
+    position:sticky; top:0; z-index:40;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark-link{ text-decoration:none; display:block; }
+  .brand-mark{
+    width:36px; height:36px; border-radius:9px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-mark-link:hover .brand-mark{ transform:scale(1.06); background:var(--ink); }
+  .brand h1{ font-family:'Fraunces', serif; font-weight:700; font-size:1.1rem; margin:0; }
+
+  .iconbtn{
+    width:34px; height:34px; border-radius:8px; border:none; background:transparent;
+    color:var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .iconbtn:hover{ background:var(--line); }
+  .iconbtn svg{ width:17px; height:17px; }
+
+  .wrap{ max-width:720px; margin:0 auto; padding:26px 20px 70px; }
+
+  .style-row{ display:flex; gap:8px; margin-bottom:16px; }
+  .style-row button{
+    flex:1; padding:10px; border-radius:10px; border:1.5px solid var(--ink);
+    background:var(--chrome); color:var(--ink); font-family:'Inter',sans-serif;
+    font-weight:700; font-size:0.85rem; cursor:pointer;
+  }
+  .style-row button.selected{ background:var(--ink); color:var(--bg); }
+
+  .type-row{ display:flex; gap:6px; margin-bottom:18px; }
+  .type-row button{
+    flex:1; padding:8px; border-radius:9px; border:1px solid var(--line);
+    background:var(--card); color:var(--muted); font-family:'Inter',sans-serif;
+    font-weight:600; font-size:0.8rem; cursor:pointer;
+  }
+  .type-row button.selected{ background:var(--accent-soft); color:var(--accent); border-color:var(--accent); }
+
+  .form-card{
+    background:var(--card); border:1.5px solid var(--ink); border-radius:14px;
+    padding:20px; box-shadow:4px 4px 0 var(--line); margin-bottom:18px;
+  }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .form-field{ display:flex; flex-direction:column; gap:5px; }
+  .form-field.full{ grid-column:1 / -1; }
+  .form-field label{ font-size:0.74rem; color:var(--muted); font-weight:600; }
+  .form-field input{
+    border:1px solid var(--line); border-radius:8px; padding:9px 10px;
+    font-family:'Inter',sans-serif; font-size:0.88rem; background:var(--bg); color:var(--ink);
+  }
+  .form-field input:focus{ outline:none; border-color:var(--accent); }
+
+  .preview-card{
+    background:var(--accent-soft); border:1px solid var(--accent); border-radius:12px;
+    padding:16px 18px; margin-bottom:14px; font-size:0.94rem; line-height:1.6;
+  }
+  .preview-card .label{
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--accent); margin-bottom:8px; display:block;
+  }
+  .preview-card .cite{ font-family:'Inter',sans-serif; }
+  .preview-card .cite i{ font-style:italic; }
+
+  .add-row{ display:flex; gap:10px; margin-bottom:26px; }
+  .btn{
+    flex:1; padding:12px; border-radius:10px; border:1.5px solid var(--ink);
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.88rem; cursor:pointer;
+    background:var(--chrome); color:var(--ink); display:flex; align-items:center;
+    justify-content:center; gap:7px;
+  }
+  .btn-accent{ background:var(--ink); color:var(--bg); }
+  .btn svg{ width:15px; height:15px; }
+
+  .biblio-header{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;
+  }
+  .biblio-header h2{ font-family:'Fraunces',serif; font-size:1.05rem; margin:0; }
+  .biblio-header button{
+    font-size:0.78rem; color:var(--muted); background:none; border:none; cursor:pointer; text-decoration:underline;
+  }
+  .biblio-list{ display:flex; flex-direction:column; gap:10px; }
+  .biblio-row{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:13px 15px; font-size:0.88rem; line-height:1.55; display:flex; gap:12px; align-items:flex-start;
+  }
+  .biblio-row .txt{ flex:1; }
+  .biblio-row .row-actions{ display:flex; gap:4px; flex-shrink:0; }
+  .biblio-row button{
+    width:26px; height:26px; border:none; background:transparent; color:var(--muted);
+    border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .biblio-row button:hover{ background:var(--line); }
+  .biblio-row button svg{ width:14px; height:14px; }
+  .biblio-empty{ text-align:center; color:var(--muted); font-size:0.85rem; padding:24px 0; }
+
+  @media (max-width:520px){
+    .form-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <a href="../index.html" class="brand-mark-link" title="Back to Stylers hub">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M9 13h6M9 17h6M9 9h2"/></svg>
+        </span>
+      </a>
+      <h1>Citations</h1>
+    </div>
+    <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </div>
+
+  <div class="wrap">
+
+    <div class="style-row" id="styleRow">
+      <button class="selected" data-style="apa">APA 7</button>
+      <button data-style="mla">MLA 9</button>
+      <button data-style="chicago">Chicago</button>
+    </div>
+
+    <div class="type-row" id="typeRow">
+      <button class="selected" data-type="website">Website</button>
+      <button data-type="book">Book</button>
+      <button data-type="journal">Journal Article</button>
+    </div>
+
+    <div class="form-card">
+      <div class="form-grid" id="formGrid"></div>
+    </div>
+
+    <div class="preview-card">
+      <span class="label">Preview</span>
+      <div class="cite" id="previewCite">Fill in the fields above to generate a citation.</div>
+    </div>
+
+    <div class="add-row">
+      <button class="btn" id="copyBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <button class="btn btn-accent" id="addBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add to bibliography
+      </button>
+    </div>
+
+    <div class="biblio-header">
+      <h2>Bibliography</h2>
+      <button id="clearBiblioBtn">Clear all</button>
+    </div>
+    <div class="biblio-list" id="biblioList"></div>
+
+  </div>
+
+<script>
+  const BIBLIO_KEY = 'citations:bibliography';
+  const FIELD_KEY = 'citations:lastFields';
+
+  const FIELDS = {
+    website: [
+      { id:'author', label:'Author (First Last)', full:false },
+      { id:'pageTitle', label:'Page Title', full:true },
+      { id:'siteName', label:'Site Name', full:false },
+      { id:'year', label:'Year', full:false },
+      { id:'month', label:'Month', full:false },
+      { id:'day', label:'Day', full:false },
+      { id:'url', label:'URL', full:true }
+    ],
+    book: [
+      { id:'author', label:'Author (First Last)', full:false },
+      { id:'title', label:'Book Title', full:true },
+      { id:'edition', label:'Edition (optional)', full:false },
+      { id:'city', label:'City', full:false },
+      { id:'publisher', label:'Publisher', full:false },
+      { id:'year', label:'Year', full:false }
+    ],
+    journal: [
+      { id:'author', label:'Author (First Last)', full:false },
+      { id:'articleTitle', label:'Article Title', full:true },
+      { id:'journalName', label:'Journal Name', full:true },
+      { id:'volume', label:'Volume', full:false },
+      { id:'issue', label:'Issue', full:false },
+      { id:'year', label:'Year', full:false },
+      { id:'pages', label:'Pages (e.g. 12-34)', full:false },
+      { id:'urlOrDoi', label:'URL or DOI (optional)', full:true }
+    ]
+  };
+
+  let style = 'apa';
+  let type = 'website';
+  let bibliography = [];
+  try{ bibliography = JSON.parse(localStorage.getItem(BIBLIO_KEY)) || []; }catch(e){ bibliography = []; }
+
+  let allFieldValues = {};
+  try{ allFieldValues = JSON.parse(localStorage.getItem(FIELD_KEY)) || {}; }catch(e){ allFieldValues = {}; }
+
+  const formGrid = document.getElementById('formGrid');
+  const previewCite = document.getElementById('previewCite');
+
+  // ---------- Name helpers ----------
+  function splitAuthors(raw){
+    return raw.split(/,|;| and /i).map(s => s.trim()).filter(Boolean);
+  }
+  function nameParts(full){
+    const bits = full.trim().split(/\s+/);
+    const last = bits.pop() || '';
+    return { first: bits.join(' '), last };
+  }
+  function initials(first){
+    return first.split(/\s+/).filter(Boolean).map(n => n[0].toUpperCase() + '.').join(' ');
+  }
+
+  function formatAuthorsAPA(raw){
+    const names = splitAuthors(raw);
+    if (!names.length || !names[0]) return '';
+    const fmt = n => { const { first, last } = nameParts(n); return last + (first ? ', ' + initials(first) : ''); };
+    if (names.length === 1) return fmt(names[0]);
+    if (names.length === 2) return fmt(names[0]) + ', & ' + fmt(names[1]);
+    return fmt(names[0]) + ', et al.';
+  }
+  function formatAuthorsMLA(raw){
+    const names = splitAuthors(raw);
+    if (!names.length || !names[0]) return '';
+    const fmtFirst = n => { const { first, last } = nameParts(n); return last + (first ? ', ' + first : ''); };
+    const fmtRest = n => n;
+    if (names.length === 1) return fmtFirst(names[0]) + '.';
+    if (names.length === 2) return fmtFirst(names[0]) + ', and ' + fmtRest(names[1]) + '.';
+    return fmtFirst(names[0]) + ', et al.';
+  }
+  function formatAuthorsChicago(raw){
+    return formatAuthorsMLA(raw); // bibliography-style formatting is effectively the same shape
+  }
+
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  // ---------- Citation builders ----------
+  function buildCitation(v){
+    if (style === 'apa') return buildAPA(v);
+    if (style === 'mla') return buildMLA(v);
+    return buildChicago(v);
+  }
+
+  function buildAPA(v){
+    const a = formatAuthorsAPA(v.author || '');
+    if (type === 'website'){
+      const date = v.year ? `(${v.year}${v.month ? ', ' + v.month + (v.day ? ' ' + v.day : '') : ''}).` : '(n.d.).';
+      return `${a ? a + ' ' : ''}${date} ${v.pageTitle || '[Page title]'}. ${v.siteName ? v.siteName + '. ' : ''}${v.url || ''}`.trim();
+    }
+    if (type === 'book'){
+      const ed = v.edition ? ` (${v.edition} ed.)` : '';
+      return `${a ? a + ' ' : ''}${v.year ? '(' + v.year + ').' : ''} <i>${v.title || '[Title]'}${ed}</i>. ${v.publisher || ''}`.trim();
+    }
+    const vol = v.volume ? `<i>${v.volume}</i>` : '';
+    const iss = v.issue ? `(${v.issue})` : '';
+    return `${a ? a + ' ' : ''}${v.year ? '(' + v.year + ').' : ''} ${v.articleTitle || '[Article title]'}. <i>${v.journalName || '[Journal]'}</i>${vol ? ', ' + vol : ''}${iss}${v.pages ? ', ' + v.pages : ''}. ${v.urlOrDoi || ''}`.trim();
+  }
+
+  function buildMLA(v){
+    const a = formatAuthorsMLA(v.author || '');
+    if (type === 'website'){
+      const date = [v.day, v.month, v.year].filter(Boolean).join(' ');
+      return `${a ? a + ' ' : ''}"${v.pageTitle || '[Page title]'}." <i>${v.siteName || '[Site name]'}</i>${date ? ', ' + date : ''}${v.url ? ', ' + v.url + '.' : '.'}`.trim();
+    }
+    if (type === 'book'){
+      return `${a ? a + ' ' : ''}<i>${v.title || '[Title]'}</i>${v.edition ? ', ' + v.edition + ' ed.' : ''}. ${v.publisher || ''}${v.year ? ', ' + v.year : ''}.`.trim();
+    }
+    return `${a ? a + ' ' : ''}"${v.articleTitle || '[Article title]'}." <i>${v.journalName || '[Journal]'}</i>${v.volume ? ', vol. ' + v.volume : ''}${v.issue ? ', no. ' + v.issue : ''}${v.year ? ', ' + v.year : ''}${v.pages ? ', pp. ' + v.pages : ''}.`.trim();
+  }
+
+  function buildChicago(v){
+    const a = formatAuthorsChicago(v.author || '');
+    if (type === 'website'){
+      const date = [v.month, v.day, v.year].filter(Boolean).join(' ');
+      return `${a ? a + ' ' : ''}"${v.pageTitle || '[Page title]'}." <i>${v.siteName || '[Site name]'}</i>. ${date ? date + '. ' : ''}${v.url || ''}`.trim();
+    }
+    if (type === 'book'){
+      return `${a ? a + ' ' : ''}<i>${v.title || '[Title]'}</i>${v.edition ? ', ' + v.edition + ' ed.' : ''}. ${v.city ? v.city + ': ' : ''}${v.publisher || ''}${v.year ? ', ' + v.year : ''}.`.trim();
+    }
+    return `${a ? a + ' ' : ''}"${v.articleTitle || '[Article title]'}." <i>${v.journalName || '[Journal]'}</i>${v.volume ? ' ' + v.volume : ''}${v.issue ? ', no. ' + v.issue : ''}${v.year ? ' (' + v.year + ')' : ''}${v.pages ? ': ' + v.pages : ''}.`.trim();
+  }
+
+  // ---------- Form rendering ----------
+  function currentFieldValues(){
+    const inputs = formGrid.querySelectorAll('input');
+    const v = {};
+    inputs.forEach(inp => v[inp.dataset.id] = inp.value.trim());
+    return v;
+  }
+
+  function saveFieldValues(){
+    allFieldValues[type] = currentFieldValues();
+    try{ localStorage.setItem(FIELD_KEY, JSON.stringify(allFieldValues)); }catch(e){}
+  }
+
+  function renderForm(){
+    formGrid.innerHTML = '';
+    const saved = allFieldValues[type] || {};
+    FIELDS[type].forEach(f => {
+      const wrap = document.createElement('div');
+      wrap.className = 'form-field' + (f.full ? ' full' : '');
+      const label = document.createElement('label');
+      label.textContent = f.label;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.dataset.id = f.id;
+      input.value = saved[f.id] || '';
+      input.addEventListener('input', () => { updatePreview(); saveFieldValues(); });
+      wrap.appendChild(label);
+      wrap.appendChild(input);
+      formGrid.appendChild(wrap);
+    });
+    updatePreview();
+  }
+
+  function updatePreview(){
+    const v = currentFieldValues();
+    const hasAny = Object.values(v).some(Boolean);
+    previewCite.innerHTML = hasAny ? buildCitation(v) : 'Fill in the fields above to generate a citation.';
+  }
+
+  document.getElementById('styleRow').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    style = btn.dataset.style;
+    document.querySelectorAll('#styleRow button').forEach(b => b.classList.toggle('selected', b === btn));
+    updatePreview();
+  });
+  document.getElementById('typeRow').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    saveFieldValues();
+    type = btn.dataset.type;
+    document.querySelectorAll('#typeRow button').forEach(b => b.classList.toggle('selected', b === btn));
+    renderForm();
+  });
+
+  // ---------- Bibliography ----------
+  function saveBiblio(){ try{ localStorage.setItem(BIBLIO_KEY, JSON.stringify(bibliography)); }catch(e){} }
+
+  function renderBiblio(){
+    const list = document.getElementById('biblioList');
+    list.innerHTML = '';
+    if (!bibliography.length){
+      list.innerHTML = '<div class="biblio-empty">No sources added yet.</div>';
+      return;
+    }
+    const sorted = bibliography.slice().sort((a, b) => a.text.localeCompare(b.text));
+    sorted.forEach(entry => {
+      const row = document.createElement('div');
+      row.className = 'biblio-row';
+      row.innerHTML = `
+        <div class="txt">${entry.text}</div>
+        <div class="row-actions">
+          <button title="Copy" data-copy="${entry.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </button>
+          <button title="Delete" data-del="${entry.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>`;
+      list.appendChild(row);
+    });
+    list.querySelectorAll('button[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const entry = bibliography.find(b => b.id === btn.dataset.copy);
+        if (entry) copyText(entry.text.replace(/<\/?i>/g, ''));
+      });
+    });
+    list.querySelectorAll('button[data-del]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        bibliography = bibliography.filter(b => b.id !== btn.dataset.del);
+        saveBiblio();
+        renderBiblio();
+      });
+    });
+  }
+
+  function copyText(text){
+    navigator.clipboard?.writeText(text).catch(() => {});
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    copyText(previewCite.textContent);
+  });
+  document.getElementById('addBtn').addEventListener('click', () => {
+    const v = currentFieldValues();
+    if (!Object.values(v).some(Boolean)) return;
+    bibliography.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2), text: buildCitation(v) });
+    saveBiblio();
+    renderBiblio();
+  });
+  document.getElementById('clearBiblioBtn').addEventListener('click', () => {
+    if (!bibliography.length) return;
+    if (confirm('Clear the entire bibliography?')){
+      bibliography = [];
+      saveBiblio();
+      renderBiblio();
+    }
+  });
+
+  // ---------- Dark mode ----------
+  const darkBtn = document.getElementById('darkBtn');
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+
+  // ---------- Init ----------
+  renderForm();
+  renderBiblio();
+</script>
+</body>
+</html>
