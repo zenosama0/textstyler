@@ -20,6 +20,10 @@
     --focus:#2F5DE3;
     --break:#2F9C6E;
     --break-soft:#E4F5EC;
+    --heat-1:#C9D3F7;
+    --heat-2:#9AACF0;
+    --heat-3:#6B84E8;
+    --heat-4:#2F5DE3;
   }
   [data-theme="dark"]{
     --bg:#17181B;
@@ -32,6 +36,10 @@
     --accent:#6E93FF;
     --accent-soft:#232C45;
     --focus:#6E93FF;
+    --heat-1:#2B3660;
+    --heat-2:#3C4C8C;
+    --heat-3:#5170C4;
+    --heat-4:#6E93FF;
     --break:#3FBE85;
     --break-soft:#1B2C24;
   }
@@ -175,6 +183,22 @@
   .bar.today{ background:var(--accent); }
   .bar-col span{ font-size:0.66rem; color:var(--muted); }
 
+  .heatmap-scroll{ overflow-x:auto; padding-bottom:2px; }
+  .heatmap-grid{
+    display:grid; grid-auto-flow:column; grid-template-rows:repeat(7, 11px);
+    gap:3px; width:max-content;
+  }
+  .hm-cell{ width:11px; height:11px; border-radius:2px; background:var(--line); }
+  .hm-cell[data-level="1"]{ background:var(--heat-1); }
+  .hm-cell[data-level="2"]{ background:var(--heat-2); }
+  .hm-cell[data-level="3"]{ background:var(--heat-3); }
+  .hm-cell[data-level="4"]{ background:var(--heat-4); }
+  .heatmap-legend{
+    display:flex; align-items:center; gap:4px; margin-top:10px;
+    font-size:0.7rem; color:var(--muted);
+  }
+  .heatmap-legend .hm-cell{ width:10px; height:10px; }
+
   /* ---------- History ---------- */
   .history-toggle{
     display:flex; align-items:center; justify-content:space-between; cursor:pointer;
@@ -289,6 +313,22 @@
     <div class="chart-card">
       <h3>Last 7 days</h3>
       <div class="bars" id="bars"></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Study heatmap</h3>
+      <div class="heatmap-scroll">
+        <div class="heatmap-grid" id="heatmapGrid"></div>
+      </div>
+      <div class="heatmap-legend">
+        <span>Less</span>
+        <span class="hm-cell" data-level="0"></span>
+        <span class="hm-cell" data-level="1"></span>
+        <span class="hm-cell" data-level="2"></span>
+        <span class="hm-cell" data-level="3"></span>
+        <span class="hm-cell" data-level="4"></span>
+        <span>More</span>
+      </div>
     </div>
 
     <div class="history-toggle" id="historyToggle">
@@ -616,7 +656,41 @@
       barsEl.appendChild(col);
     });
 
+    renderHeatmap(byDate);
     renderHistory();
+  }
+
+  function renderHeatmap(byDate){
+    const grid = document.getElementById('heatmapGrid');
+    grid.innerHTML = '';
+
+    const WEEKS = 14;
+    const today = new Date();
+    const end = new Date(today);
+    end.setDate(end.getDate() + (6 - end.getDay())); // roll forward to this week's Saturday
+    const start = new Date(end);
+    start.setDate(start.getDate() - (WEEKS * 7 - 1));
+    while (start.getDay() !== 0) start.setDate(start.getDate() - 1); // back up to a Sunday
+
+    const maxVal = Math.max(1, ...Object.values(byDate));
+    const todayStr = localDateStr(today);
+    let cursor = new Date(start);
+
+    while (cursor <= end){
+      const ds = localDateStr(cursor);
+      const val = byDate[ds] || 0;
+      const level = val > 0 ? Math.min(4, Math.max(1, Math.ceil((val / maxVal) * 4))) : 0;
+
+      const cell = document.createElement('div');
+      cell.className = 'hm-cell';
+      cell.dataset.level = level;
+      const dateLabel = cursor.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+      cell.title = dateLabel + (ds === todayStr ? ' (today)' : '') + ' — ' + (val ? fmtMinutes(val) : 'no sessions');
+      if (cursor > today) cell.style.visibility = 'hidden';
+      grid.appendChild(cell);
+
+      cursor.setDate(cursor.getDate() + 1);
+    }
   }
 
   // ---------- History ----------
