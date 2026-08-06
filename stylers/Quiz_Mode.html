@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Mode — Multiple Choice Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<style>
+  :root{
+    --bg:#EDEDEA; --dot:#DDDBD2; --chrome:#FAFAF8; --card:#FFFFFF;
+    --ink:#1B1C1E; --muted:#8A8D91; --line:#E1E1DD;
+    --accent:#2F5DE3; --accent-soft:#E9EEFD;
+    --good:#2F9C6E; --good-soft:#E4F5EC;
+    --bad:#E8556E; --bad-soft:#FBE7EA;
+  }
+  [data-theme="dark"]{
+    --bg:#17181B; --dot:#232529; --chrome:#1D1F23; --card:#202226;
+    --ink:#EDEDEE; --muted:#8C9096; --line:#2C2E33;
+    --accent:#6E93FF; --accent-soft:#232C45;
+    --good:#3FBE85; --good-soft:#1B2C24;
+    --bad:#F17187; --bad-soft:#301E22;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    min-height:100vh; color:var(--ink); font-family:'Inter', sans-serif;
+    background:radial-gradient(var(--dot) 1px, transparent 1px) 0 0/20px 20px, var(--bg);
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .topbar{
+    height:52px; background:var(--chrome); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; padding:0 16px;
+    position:sticky; top:0; z-index:40;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-mark-link{ text-decoration:none; display:block; }
+  .brand-mark{
+    width:36px; height:36px; border-radius:9px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-mark-link:hover .brand-mark{ transform:scale(1.06); background:var(--ink); }
+  .brand h1{ font-family:'Fraunces', serif; font-weight:700; font-size:1.1rem; margin:0; }
+  .iconbtn{
+    width:34px; height:34px; border-radius:8px; border:none; background:transparent;
+    color:var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .iconbtn:hover{ background:var(--line); }
+  .iconbtn svg{ width:17px; height:17px; }
+
+  .wrap{ max-width:640px; margin:0 auto; padding:26px 20px 70px; }
+
+  .panel{
+    background:var(--chrome); border:1.5px solid var(--ink); border-radius:12px;
+    padding:18px; box-shadow:4px 4px 0 var(--line); margin-bottom:22px;
+  }
+  .panel h2{ font-family:'Fraunces',serif; font-size:1.05rem; margin:0 0 4px; }
+  .panel .hint{ font-size:0.82rem; color:var(--muted); margin:0 0 12px; line-height:1.5; }
+  .panel .hint code{ font-family:'IBM Plex Mono',monospace; background:var(--accent-soft); color:var(--accent); padding:1px 5px; border-radius:4px; }
+  textarea{
+    width:100%; min-height:180px; resize:vertical; font-family:'IBM Plex Mono', monospace;
+    font-size:0.84rem; line-height:1.55; border:1.5px solid var(--line); border-radius:8px;
+    padding:12px; background:var(--bg); color:var(--ink);
+  }
+  textarea:focus{ outline:none; border-color:var(--accent); }
+  .panel-actions{ display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+  .deck-count{ font-size:0.82rem; color:var(--muted); }
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.85rem;
+    padding:9px 16px; border-radius:9px; border:1.5px solid var(--ink);
+    background:var(--chrome); color:var(--ink); cursor:pointer;
+  }
+  .btn-accent{ background:var(--ink); color:var(--bg); }
+
+  .empty{ text-align:center; padding:50px 20px; color:var(--muted); }
+  .empty h2{ font-family:'Fraunces',serif; color:var(--ink); font-size:1.2rem; margin:0 0 8px; }
+
+  .quiz{ display:none; }
+  .quiz.active{ display:block; }
+  .quiz-bar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; font-size:0.8rem; color:var(--muted); }
+  .quiz-bar .score{ font-family:'IBM Plex Mono',monospace; color:var(--ink); font-weight:600; }
+  .progress-track{ flex:1; height:5px; background:var(--line); border-radius:4px; margin:0 14px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--accent); width:0%; transition:width .2s ease; }
+
+  .question-card{
+    background:var(--card); border:1.5px solid var(--ink); border-radius:16px;
+    box-shadow:5px 5px 0 var(--line); padding:28px 26px; margin-bottom:18px;
+  }
+  .q-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--muted); margin-bottom:10px; display:block;
+  }
+  .q-text{ font-size:1.1rem; font-weight:600; line-height:1.5; margin-bottom:20px; }
+  .q-text p{ margin:0; }
+
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .option{
+    text-align:left; border:1.5px solid var(--line); border-radius:11px;
+    padding:13px 16px; background:var(--card); color:var(--ink);
+    font-family:'Inter',sans-serif; font-size:0.92rem; cursor:pointer; line-height:1.45;
+    display:flex; align-items:center; gap:10px; transition:border-color .15s ease, background .15s ease;
+  }
+  .option:hover:not(.locked){ border-color:var(--accent); background:var(--accent-soft); }
+  .option .letter{
+    width:24px; height:24px; border-radius:50%; border:1.5px solid var(--line); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .option.correct{ background:var(--good-soft); border-color:var(--good); }
+  .option.correct .letter{ background:var(--good); border-color:var(--good); color:#fff; }
+  .option.wrong{ background:var(--bad-soft); border-color:var(--bad); }
+  .option.wrong .letter{ background:var(--bad); border-color:var(--bad); color:#fff; }
+
+  .next-row{ display:flex; justify-content:flex-end; margin-top:16px; }
+  .next-row button{
+    padding:11px 20px; border-radius:10px; border:1.5px solid var(--ink);
+    background:var(--ink); color:var(--bg); font-family:'Inter',sans-serif;
+    font-weight:700; font-size:0.86rem; cursor:pointer; display:none; align-items:center; gap:7px;
+  }
+  .next-row button.show{ display:flex; }
+
+  .results{ display:none; text-align:center; padding:40px 20px; }
+  .results.active{ display:block; }
+  .results h2{ font-family:'Fraunces',serif; font-size:1.3rem; margin:0 0 6px; }
+  .results .score-big{ font-family:'Fraunces',serif; font-weight:700; font-size:3rem; color:var(--accent); margin:12px 0 4px; }
+  .results .sub{ color:var(--muted); font-size:0.9rem; margin-bottom:22px; }
+  .results-actions{ display:flex; gap:10px; justify-content:center; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <a href="../index.html" class="brand-mark-link" title="Back to Stylers hub">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 .5c0 1.7-2.5 2-2.5 3.5"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>
+        </span>
+      </a>
+      <h1>Quiz Mode</h1>
+    </div>
+    <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </div>
+
+  <div class="wrap">
+
+    <div class="panel">
+      <h2>Paste your notes</h2>
+      <p class="hint">
+        Same format as Flashcards: <code>**Term** – definition</code> lines get picked up automatically,
+        and <code>Front :: Back</code> lines work too. Need at least 4 cards for full multiple-choice questions.
+      </p>
+      <textarea id="input" spellcheck="false">**Mitosis** – cell division that produces two genetically identical daughter cells, used for growth and repair.
+**Meiosis** – cell division that produces four genetically unique gametes with half the chromosome number.
+**Mitochondria** – the organelle that produces ATP through cellular respiration.
+**Ribosomes** – organelles that build proteins by translating mRNA.
+**Nucleus** – the organelle that stores DNA and controls the cell's activities.
+**Cell membrane** – the selectively permeable barrier that controls what enters and exits the cell.</textarea>
+      <div class="panel-actions">
+        <span class="deck-count" id="deckCount"></span>
+        <button class="btn btn-accent" id="buildBtn">Start quiz</button>
+      </div>
+    </div>
+
+    <div class="empty" id="emptyState">
+      <h2>No questions yet</h2>
+      <p>Paste some notes above and hit "Start quiz."</p>
+    </div>
+
+    <div class="quiz" id="quizStage">
+      <div class="quiz-bar">
+        <span id="qPosition">Question 1 of 1</span>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="score">Score: <span id="scoreVal">0</span>/<span id="scoreTotal">0</span></span>
+      </div>
+
+      <div class="question-card">
+        <span class="q-tag">Question</span>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="options"></div>
+      </div>
+
+      <div class="next-row">
+        <button id="nextBtn">
+          Next question
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="results" id="resultsStage">
+      <h2>Quiz complete</h2>
+      <div class="score-big" id="finalScore">0%</div>
+      <div class="sub" id="finalSub">0 of 0 correct</div>
+      <div class="results-actions">
+        <button class="btn" id="retryAllBtn">Retry all</button>
+        <button class="btn btn-accent" id="retryMissedBtn">Retry missed only</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // ---------- Parsing (same scheme as Flashcards) ----------
+  function parseCards(text){
+    const cards = [];
+    const seen = new Set();
+    const add = (front, back) => {
+      front = front.trim(); back = back.trim();
+      const key = front.toLowerCase();
+      if (front && back && !seen.has(key)){ cards.push({ front, back }); seen.add(key); }
+    };
+    const lines = text.split('\n');
+    lines.forEach(line => {
+      const m = line.match(/^\s*(?:[-*]\s+)?(.+?)\s*::\s*(.+?)\s*$/);
+      if (m) add(m[1], m[2]);
+    });
+    for (let i = 0; i < lines.length; i++){
+      const qm = lines[i].match(/^\s*Q[:.]\s*(.+)$/i);
+      if (qm){
+        for (let j = i + 1; j < Math.min(i + 4, lines.length); j++){
+          const am = lines[j].match(/^\s*A[:.]\s*(.+)$/i);
+          if (am){ add(qm[1], am[1]); break; }
+        }
+      }
+    }
+    const boldDef = /\*\*(.+?)\*\*\s*[–—:-]\s*(.+)/g;
+    let m;
+    while ((m = boldDef.exec(text)) !== null) add(m[1], m[2]);
+    return cards;
+  }
+
+  function shuffle(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function renderInline(md){
+    try { return marked.parseInline(md); } catch(e){ return md; }
+  }
+
+  // ---------- State ----------
+  const input = document.getElementById('input');
+  const deckCount = document.getElementById('deckCount');
+  const emptyState = document.getElementById('emptyState');
+  const quizStage = document.getElementById('quizStage');
+  const resultsStage = document.getElementById('resultsStage');
+
+  let deck = [];
+  let questions = [];   // [{ card, options:[texts], correctIndex }]
+  let order = [];       // indices into questions, current run order
+  let qi = 0;            // pointer into order
+  let score = 0;
+  let missed = [];       // question indices answered wrong this run
+  let locked = false;
+
+  function buildQuestions(cardList){
+    return cardList.map(card => {
+      const distractorPool = cardList.filter(c => c !== card).map(c => c.back);
+      const distractors = shuffle(distractorPool).slice(0, Math.min(3, distractorPool.length));
+      const options = shuffle([card.back, ...distractors]);
+      return { card, options, correctIndex: options.indexOf(card.back) };
+    });
+  }
+
+  function startQuiz(cardList){
+    questions = buildQuestions(cardList);
+    order = shuffle(questions.map((_, i) => i));
+    qi = 0; score = 0; missed = [];
+    document.getElementById('scoreTotal').textContent = order.length;
+    emptyState.style.display = 'none';
+    resultsStage.classList.remove('active');
+    quizStage.classList.add('active');
+    showQuestion();
+  }
+
+  document.getElementById('buildBtn').addEventListener('click', () => {
+    deck = parseCards(input.value);
+    deckCount.textContent = deck.length ? deck.length + ' card' + (deck.length===1?'':'s') + ' found' : '';
+    if (deck.length < 2){
+      quizStage.classList.remove('active');
+      resultsStage.classList.remove('active');
+      emptyState.style.display = 'block';
+      emptyState.querySelector('h2').textContent = deck.length ? 'Need at least 2 cards' : 'No questions yet';
+      emptyState.querySelector('p').textContent = deck.length ? 'Add a couple more terms to build a quiz.' : 'Paste some notes above and hit "Start quiz."';
+      return;
+    }
+    startQuiz(deck);
+  });
+
+  function showQuestion(){
+    locked = false;
+    const q = questions[order[qi]];
+    document.getElementById('qPosition').textContent = `Question ${qi + 1} of ${order.length}`;
+    document.getElementById('progressFill').style.width = ((qi) / order.length) * 100 + '%';
+    document.getElementById('scoreVal').textContent = score;
+    document.getElementById('qText').innerHTML = renderInline(q.card.front);
+
+    const optionsEl = document.getElementById('options');
+    optionsEl.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${renderInline(opt)}</span>`;
+      btn.addEventListener('click', () => selectOption(i, btn));
+      optionsEl.appendChild(btn);
+    });
+    document.getElementById('nextBtn').classList.remove('show');
+  }
+
+  function selectOption(i, btn){
+    if (locked) return;
+    locked = true;
+    const q = questions[order[qi]];
+    const options = document.querySelectorAll('.option');
+    options.forEach(o => o.classList.add('locked'));
+    options[q.correctIndex].classList.add('correct');
+    if (i === q.correctIndex){
+      score++;
+    } else {
+      btn.classList.add('wrong');
+      missed.push(order[qi]);
+    }
+    document.getElementById('scoreVal').textContent = score;
+    document.getElementById('nextBtn').classList.add('show');
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    qi++;
+    if (qi >= order.length){
+      finishQuiz();
+    } else {
+      showQuestion();
+    }
+  });
+
+  function finishQuiz(){
+    document.getElementById('progressFill').style.width = '100%';
+    quizStage.classList.remove('active');
+    resultsStage.classList.add('active');
+    const pct = Math.round((score / order.length) * 100);
+    document.getElementById('finalScore').textContent = pct + '%';
+    document.getElementById('finalSub').textContent = `${score} of ${order.length} correct`;
+    document.getElementById('retryMissedBtn').style.display = missed.length ? 'flex' : 'none';
+  }
+
+  document.getElementById('retryAllBtn').addEventListener('click', () => startQuiz(deck));
+  document.getElementById('retryMissedBtn').addEventListener('click', () => {
+    const missedCards = [...new Set(missed)].map(i => questions[i].card);
+    if (missedCards.length < 2){
+      startQuiz(deck); // not enough missed cards to quiz alone — fall back to full deck
+    } else {
+      startQuiz(missedCards);
+    }
+  });
+
+  // ---------- Dark mode ----------
+  const darkBtn = document.getElementById('darkBtn');
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+</script>
+</body>
+</html>
