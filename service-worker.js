@@ -1,5 +1,5 @@
 // Bump this when you change any cached file, so clients pick up the update
-const CACHE_NAME = 'stylers-cache-v4';
+const CACHE_NAME = 'stylers-cache-v5';
 
 // App shell — update this list when you add a new tool to /stylers
 const PRECACHE_URLS = [
@@ -11,6 +11,8 @@ const PRECACHE_URLS = [
   './stylers/Flashcards.html',
   './stylers/Read_Aloud.html',
   './stylers/Mind_Map.html',
+  './stylers/Citation_Formatter.html',
+  './stylers/Quiz_Mode.html',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-192-maskable.png',
