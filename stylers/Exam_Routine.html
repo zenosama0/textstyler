@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Routine — Schedule Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  /* ---------- Suite chrome (matches the rest of the hub) ---------- */
+  :root{
+    --bg:#EDEDEA; --dot:#DDDBD2; --chrome:#FAFAF8; --card:#FFFFFF;
+    --ink:#1B1C1E; --muted:#8A8D91; --line:#E1E1DD;
+    --accent:#2F5DE3; --accent-soft:#E9EEFD;
+  }
+  [data-theme="dark"]{
+    --bg:#17181B; --dot:#232529; --chrome:#1D1F23; --card:#202226;
+    --ink:#EDEDEE; --muted:#8C9096; --line:#2C2E33;
+    --accent:#6E93FF; --accent-soft:#232C45;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; overflow:hidden; }
+  body{
+    color:var(--ink); font-family:'Inter', sans-serif; display:flex; flex-direction:column; height:100vh;
+    background:radial-gradient(var(--dot) 1px, transparent 1px) 0 0/20px 20px, var(--bg);
+    transition:background .2s ease, color .2s ease;
+  }
+
+  .topbar{
+    height:52px; background:var(--chrome); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; padding:0 14px; flex-shrink:0; z-index:40;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .brand-mark-link{ text-decoration:none; display:block; flex-shrink:0; }
+  .brand-mark{
+    width:36px; height:36px; border-radius:9px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .brand-mark svg{ width:18px; height:18px; }
+  .brand-mark-link:hover .brand-mark{ transform:scale(1.06); background:var(--ink); }
+  .brand h1{ font-family:'Fraunces', serif; font-weight:700; font-size:1.05rem; margin:0; white-space:nowrap; }
+
+  .tb-actions{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .iconbtn{
+    width:34px; height:34px; border-radius:8px; border:none; background:transparent;
+    color:var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .iconbtn:hover{ background:var(--line); }
+  .iconbtn svg{ width:17px; height:17px; }
+  .export-btn{
+    display:flex; align-items:center; gap:6px; padding:0 12px; height:34px; border-radius:8px;
+    border:1.5px solid var(--ink); background:var(--chrome); color:var(--ink); cursor:pointer;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.78rem; white-space:nowrap;
+  }
+  .export-btn.primary{ background:var(--ink); color:var(--bg); }
+  .export-btn svg{ width:14px; height:14px; }
+  .divider{ width:1px; height:22px; background:var(--line); margin:0 2px; }
+
+  .body-row{ flex:1; display:flex; min-height:0; }
+
+  .editor-panel{
+    width:320px; flex-shrink:0; border-right:1px solid var(--line); background:var(--chrome);
+    overflow-y:auto; padding:16px; transition:width .2s ease, padding .2s ease, opacity .15s ease;
+  }
+  .editor-panel.collapsed{ width:0; padding:16px 0; opacity:0; overflow:hidden; border-right-color:transparent; }
+
+  .field-group{ margin-bottom:16px; }
+  .field-group label{ display:block; font-size:0.72rem; font-weight:600; color:var(--muted); margin-bottom:5px; }
+  .field-group input[type=text]{
+    width:100%; border:1px solid var(--line); border-radius:7px; padding:8px 10px;
+    font-family:'Inter',sans-serif; font-size:0.86rem; background:var(--bg); color:var(--ink);
+  }
+  .field-group input:focus{ outline:none; border-color:var(--accent); }
+
+  .mode-row{ display:flex; border:1px solid var(--line); border-radius:9px; overflow:hidden; margin-bottom:16px; }
+  .mode-row button{
+    flex:1; border:none; background:var(--card); color:var(--muted); padding:9px 0;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.8rem; cursor:pointer;
+  }
+  .mode-row button.selected{ background:var(--accent); color:#fff; }
+
+  .entries{ display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
+  .entry-row{
+    background:var(--card); border:1px solid var(--line); border-radius:10px; padding:10px;
+  }
+  .entry-top{ display:flex; gap:6px; margin-bottom:6px; }
+  .entry-top input[type=date], .entry-top input[type=time]{
+    border:1px solid var(--line); border-radius:6px; padding:6px 6px; font-size:0.76rem;
+    background:var(--bg); color:var(--ink); font-family:'IBM Plex Mono',monospace; min-width:0;
+  }
+  .entry-top input[type=date]{ flex:1.3; }
+  .entry-top input[type=time]{ flex:1; }
+  .entry-bottom{ display:flex; gap:6px; align-items:center; }
+  .entry-bottom input[type=text]{
+    flex:1; border:1px solid var(--line); border-radius:6px; padding:7px 8px; font-size:0.84rem;
+    background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif;
+  }
+  .entry-actions{ display:flex; gap:2px; flex-shrink:0; }
+  .entry-actions button{
+    width:24px; height:24px; border:none; background:transparent; color:var(--muted);
+    border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .entry-actions button:hover{ background:var(--line); }
+  .entry-actions button svg{ width:13px; height:13px; }
+  .entry-actions button.del:hover{ color:#E8556E; }
+
+  .add-entry-btn{
+    width:100%; padding:10px; border-radius:9px; border:1.5px dashed var(--line);
+    background:transparent; color:var(--muted); font-family:'Inter',sans-serif;
+    font-weight:600; font-size:0.82rem; cursor:pointer; margin-bottom:18px;
+  }
+  .add-entry-btn:hover{ border-color:var(--accent); color:var(--accent); }
+
+  textarea{
+    width:100%; min-height:200px; resize:vertical; font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem; line-height:1.6; border:1px solid var(--line); border-radius:8px;
+    padding:10px; background:var(--bg); color:var(--ink); margin-bottom:8px;
+  }
+  textarea:focus{ outline:none; border-color:var(--accent); }
+  .hint{ font-size:0.74rem; color:var(--muted); line-height:1.5; margin:0 0 16px; }
+  .hint code{ font-family:'IBM Plex Mono',monospace; background:var(--accent-soft); color:var(--accent); padding:1px 4px; border-radius:4px; }
+  .parse-warning{ font-size:0.76rem; color:#E8556E; margin:-6px 0 14px; }
+
+  .poster-viewport{
+    flex:1; overflow:auto; display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .poster-scale-wrap{ flex-shrink:0; }
+  .poster-scale-inner{ transform-origin:top left; }
+
+  .done-btn{
+    display:none; position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
+    z-index:50; background:var(--ink); color:var(--bg); border:none; border-radius:24px;
+    padding:12px 22px; font-family:'Inter',sans-serif; font-weight:700; font-size:0.88rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); align-items:center; gap:8px; cursor:pointer;
+  }
+  .done-btn svg{ width:16px; height:16px; }
+
+  @media (max-width:820px){
+    .editor-panel{
+      position:absolute; inset:52px 0 0 0; width:100%; height:calc(100% - 52px);
+      z-index:35; padding:18px;
+    }
+    .editor-panel.collapsed{ width:100%; opacity:0; pointer-events:none; }
+    #editorToggle{ display:none; }
+    .done-btn.show{ display:flex; }
+    .brand h1{ display:none; }
+    .export-btn span{ display:none; }
+    .export-btn{ width:34px; padding:0; justify-content:center; }
+  }
+
+  /* ---------- Poster (the exportable artifact — fixed 1080x1080, its own design language) ---------- */
+  #poster{
+    width:1080px; height:1080px; flex-shrink:0; position:relative;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(201,166,107,0.07), transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(181,83,60,0.10), transparent 45%),
+      #14202B;
+    font-family:'Inter', sans-serif;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  #poster::before{
+    content:""; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(246,241,231,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(246,241,231,0.028) 1px, transparent 1px);
+    background-size:27px 27px; pointer-events:none;
+  }
+  #poster .p-header{ position:relative; padding:56px 72px 28px 72px; }
+  #poster .p-eyebrow{
+    font-family:'Space Mono', monospace; font-size:15px; letter-spacing:0.32em;
+    text-transform:uppercase; color:#C9A66B; margin-bottom:14px;
+  }
+  #poster .p-title{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:58px;
+    color:#F6F1E7; line-height:1.02; letter-spacing:-0.01em;
+  }
+  #poster .p-subtitle{
+    font-family:'Space Mono', monospace; font-size:16px; color:rgba(246,241,231,0.5);
+    margin-top:12px; letter-spacing:0.04em;
+  }
+  #poster .p-rule{ height:1px; margin:0 72px; background:linear-gradient(90deg, rgba(201,166,107,0.6), rgba(201,166,107,0.05)); }
+  #poster .p-tickets{
+    position:relative; flex:1; display:flex; flex-direction:column; justify-content:center;
+    gap:22px; padding:30px 72px 56px 72px;
+  }
+  #poster .p-ticket{
+    position:relative; display:flex; align-items:stretch; background:#F6F1E7;
+    border-radius:14px; box-shadow:0 14px 30px -12px rgba(0,0,0,0.45); overflow:hidden; flex-shrink:0;
+  }
+  #poster .p-ticket-main{ flex:1; display:grid; grid-template-columns:40px 1fr; align-items:center; padding:24px 34px; }
+  #poster .p-ticket-num{ font-family:'Space Mono', monospace; font-size:14px; color:rgba(20,32,43,0.32); letter-spacing:0.1em; }
+  #poster .p-ticket-subject{ display:flex; flex-direction:column; gap:8px; }
+  #poster .p-subject-date{ font-family:'Space Mono', monospace; font-weight:700; font-size:20px; color:#B5533C; letter-spacing:0.06em; }
+  #poster .p-subject-name{ font-family:'Playfair Display', serif; font-weight:700; font-size:25px; color:#1B2430; letter-spacing:-0.01em; }
+  #poster .p-ticket-stub{
+    position:relative; width:172px; flex-shrink:0; background:#1B2430;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  }
+  #poster .p-ticket-stub::before{
+    content:""; position:absolute; left:-9px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; background:#14202B; border-radius:50%;
+  }
+  #poster .p-perf{
+    position:absolute; left:0; top:0; bottom:0; width:1px;
+    background-image:linear-gradient(rgba(20,32,43,0.35) 60%, transparent 0%);
+    background-size:1px 10px; background-repeat:repeat-y;
+  }
+  #poster .p-stub-time{ font-family:'Space Mono', monospace; font-weight:700; font-size:24px; color:#F6F1E7; letter-spacing:0.02em; }
+  #poster .p-stub-label{ font-family:'Space Mono', monospace; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:#C9A66B; text-align:center; padding:0 8px; }
+  #poster .p-footer{
+    position:relative; display:flex; justify-content:space-between; align-items:center;
+    padding:0 72px 44px 72px; font-family:'Space Mono', monospace; font-size:13px;
+    color:rgba(246,241,231,0.38); letter-spacing:0.08em;
+  }
+  #poster .p-footer .dot{ color:#C9A66B; margin:0 10px; }
+
+  /* density tiers — keep everything inside the fixed 1080x1080 frame as entries grow */
+  #poster.density-cozy .p-tickets{ gap:14px; padding-top:22px; }
+  #poster.density-cozy .p-ticket-main{ padding:18px 30px; }
+  #poster.density-cozy .p-subject-name{ font-size:21px; }
+  #poster.density-cozy .p-stub-time{ font-size:20px; }
+
+  #poster.density-compact .p-tickets{ gap:9px; padding-top:16px; }
+  #poster.density-compact .p-ticket-main{ padding:13px 26px; }
+  #poster.density-compact .p-subject-name{ font-size:18px; }
+  #poster.density-compact .p-subject-date{ font-size:17px; }
+  #poster.density-compact .p-stub-time{ font-size:17px; }
+  #poster.density-compact .p-ticket-stub{ width:150px; }
+
+  #poster.density-dense .p-tickets{ gap:6px; padding-top:10px; }
+  #poster.density-dense .p-ticket-main{ padding:9px 22px; }
+  #poster.density-dense .p-subject-name{ font-size:15px; }
+  #poster.density-dense .p-subject-date{ font-size:14px; }
+  #poster.density-dense .p-stub-time{ font-size:14px; }
+  #poster.density-dense .p-stub-label{ font-size:9px; }
+  #poster.density-dense .p-ticket-stub{ width:130px; }
+  #poster.density-dense .p-ticket-num{ display:none; }
+  #poster.density-dense .p-ticket-main{ grid-template-columns:1fr; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <a href="../index.html" class="brand-mark-link" title="Back to Stylers hub">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        </span>
+      </a>
+      <h1>Exam Routine</h1>
+    </div>
+    <div class="tb-actions">
+      <button class="iconbtn" id="editorToggle" title="Toggle panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+      <div class="divider"></div>
+      <button class="export-btn" id="exportPngBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>PNG</span>
+      </button>
+      <button class="export-btn primary" id="exportPdfBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M9 15h6M9 11h2"/></svg>
+        <span>PDF</span>
+      </button>
+      <div class="divider"></div>
+      <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="body-row">
+    <div class="editor-panel" id="editorPanel">
+
+      <div class="field-group">
+        <label>Title</label>
+        <input type="text" id="titleInput" placeholder="Exam Routine">
+      </div>
+      <div class="field-group">
+        <label>Subtitle</label>
+        <input type="text" id="subtitleInput" placeholder="auto — from entry dates">
+      </div>
+      <div class="field-group">
+        <label>Footer message</label>
+        <input type="text" id="footerInput" placeholder="GOOD LUCK · STUDY WELL">
+      </div>
+
+      <div class="mode-row" id="modeRow">
+        <button class="selected" data-mode="form">Form</button>
+        <button data-mode="text">Text</button>
+      </div>
+
+      <div id="formMode">
+        <div class="entries" id="entriesList"></div>
+        <button class="add-entry-btn" id="addEntryBtn">+ Add exam</button>
+      </div>
+
+      <div id="textMode" style="display:none;">
+        <p class="hint">
+          One exam per line: <code>date | time or time range | subject</code>.
+          Dates work best as <code>YYYY-MM-DD</code>. Times can be <code>2:30 PM - 4:00 PM</code> or just <code>8:30 AM</code>.
+        </p>
+        <textarea id="textInput" spellcheck="false"></textarea>
+        <div class="parse-warning" id="parseWarning" style="display:none;"></div>
+      </div>
+
+    </div>
+
+    <div class="poster-viewport" id="posterViewport">
+      <div class="poster-scale-wrap" id="posterScaleWrap">
+        <div class="poster-scale-inner" id="posterScaleInner">
+          <div id="poster">
+            <div class="p-header">
+              <div class="p-eyebrow" id="pEyebrow">Admit &nbsp;·&nbsp; Exam Term</div>
+              <div class="p-title" id="pTitle">Exam Routine</div>
+              <div class="p-subtitle" id="pSubtitle"></div>
+            </div>
+            <div class="p-rule"></div>
+            <div class="p-tickets" id="pTickets"></div>
+            <div class="p-footer">
+              <div id="pPapers">0 PAPERS</div>
+              <div id="pFooterMsg">GOOD LUCK<span class="dot">·</span>STUDY WELL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="done-btn" id="doneBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    View poster
+  </button>
+
+<script>
+  const STORAGE_KEY = 'examroutine:data';
+
+  const defaultEntries = [
+    { date:'2026-08-16', start:'14:30', end:'16:00', subject:'Digital Logic Design' },
+    { date:'2026-08-18', start:'11:30', end:'', subject:'Statistics' },
+    { date:'2026-08-20', start:'08:30', end:'', subject:'Management' },
+    { date:'2026-08-22', start:'08:30', end:'', subject:'Economics' }
+  ];
+
+  let state = {
+    title: 'Exam Routine',
+    subtitle: '',
+    footer: '',
+    mode: 'form',
+    entries: defaultEntries
+  };
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && saved.entries && saved.entries.length) state = Object.assign(state, saved);
+  }catch(e){}
+
+  function persist(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  // ---------- Time/date formatting ----------
+  function to12Hour(hhmm){
+    if (!hhmm) return '';
+    const [h, m] = hhmm.split(':').map(Number);
+    const meridiem = h >= 12 ? 'PM' : 'AM';
+    const h12 = ((h + 11) % 12) + 1;
+    return `${h12}:${String(m).padStart(2,'0')} ${meridiem}`;
+  }
+  function stubParts(start, end){
+    if (!start) return { big:'--:--', label:'' };
+    const [h, m] = start.split(':').map(Number);
+    const meridiem = h >= 12 ? 'PM' : 'AM';
+    const h12 = ((h + 11) % 12) + 1;
+    const big = `${h12}:${String(m).padStart(2,'0')}`;
+    let label = meridiem;
+    if (end){
+      const [eh, em] = end.split(':').map(Number);
+      const eMeridiem = eh >= 12 ? 'PM' : 'AM';
+      const eH12 = ((eh + 11) % 12) + 1;
+      label = `${meridiem} – ${eH12}:${String(em).padStart(2,'0')} ${eMeridiem}`;
+    }
+    return { big, label };
+  }
+  function ticketDateLabel(dateStr){
+    if (!dateStr) return '';
+    const d = new Date(dateStr + 'T00:00:00');
+    if (isNaN(d)) return '';
+    const weekday = d.toLocaleDateString('en-US', { weekday:'short' }).toUpperCase();
+    const day = d.getDate();
+    const month = d.toLocaleDateString('en-US', { month:'short' }).toUpperCase();
+    return `${weekday} · ${day} ${month} ${d.getFullYear()}`;
+  }
+  function autoSubtitle(entries){
+    const dates = entries.map(e => e.date).filter(Boolean).sort();
+    if (!dates.length) return '';
+    const first = new Date(dates[0] + 'T00:00:00');
+    const last = new Date(dates[dates.length - 1] + 'T00:00:00');
+    if (dates[0] === dates[dates.length - 1]){
+      return first.toLocaleDateString('en-US', { day:'numeric', month:'long', year:'numeric' });
+    }
+    const sameMonth = first.getMonth() === last.getMonth() && first.getFullYear() === last.getFullYear();
+    if (sameMonth){
+      return `${first.getDate()} – ${last.toLocaleDateString('en-US',{day:'numeric', month:'long', year:'numeric'})}`;
+    }
+    return `${first.toLocaleDateString('en-US',{day:'numeric',month:'short'})} – ${last.toLocaleDateString('en-US',{day:'numeric',month:'short',year:'numeric'})}`;
+  }
+
+  // ---------- Poster rendering ----------
+  function densityClass(n){
+    if (n <= 4) return '';
+    if (n <= 6) return 'density-cozy';
+    if (n <= 9) return 'density-compact';
+    return 'density-dense';
+  }
+
+  function renderPoster(){
+    const poster = document.getElementById('poster');
+    poster.className = densityClass(state.entries.length);
+
+    document.getElementById('pTitle').textContent = state.title || 'Exam Routine';
+    document.getElementById('pSubtitle').textContent = state.subtitle || autoSubtitle(state.entries);
+    document.getElementById('pFooterMsg').innerHTML = (state.footer || 'GOOD LUCK · STUDY WELL')
+      .split('·').map(s => s.trim()).join('<span class="dot">·</span>');
+    document.getElementById('pPapers').textContent = state.entries.length + (state.entries.length === 1 ? ' PAPER' : ' PAPERS');
+
+    const ticketsEl = document.getElementById('pTickets');
+    ticketsEl.innerHTML = '';
+    state.entries.forEach((e, i) => {
+      const { big, label } = stubParts(e.start, e.end);
+      const ticket = document.createElement('div');
+      ticket.className = 'p-ticket';
+      ticket.innerHTML = `
+        <div class="p-ticket-main">
+          <div class="p-ticket-num">${String(i+1).padStart(2,'0')}</div>
+          <div class="p-ticket-subject">
+            <div class="p-subject-date">${ticketDateLabel(e.date)}</div>
+            <div class="p-subject-name">${escapeHtml(e.subject || 'Untitled')}</div>
+          </div>
+        </div>
+        <div class="p-ticket-stub">
+          <div class="p-perf"></div>
+          <div class="p-stub-time">${big}</div>
+          <div class="p-stub-label">${label}</div>
+        </div>`;
+      ticketsEl.appendChild(ticket);
+    });
+
+    updateScale();
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  // ---------- Scale-to-fit ----------
+  function updateScale(){
+    const container = document.getElementById('posterViewport');
+    const wrap = document.getElementById('posterScaleWrap');
+    const inner = document.getElementById('posterScaleInner');
+    const availW = container.clientWidth - 40;
+    const availH = container.clientHeight - 40;
+    const scale = Math.min(1, availW / 1080, availH / 1080);
+    inner.style.transform = `scale(${scale})`;
+    wrap.style.width = (1080 * scale) + 'px';
+    wrap.style.height = (1080 * scale) + 'px';
+  }
+  window.addEventListener('resize', updateScale);
+
+  // ---------- Top fields ----------
+  const titleInput = document.getElementById('titleInput');
+  const subtitleInput = document.getElementById('subtitleInput');
+  const footerInput = document.getElementById('footerInput');
+  titleInput.value = state.title;
+  subtitleInput.value = state.subtitle;
+  footerInput.value = state.footer;
+  [titleInput, subtitleInput, footerInput].forEach(el => {
+    el.addEventListener('input', () => {
+      state.title = titleInput.value;
+      state.subtitle = subtitleInput.value;
+      state.footer = footerInput.value;
+      persist();
+      renderPoster();
+    });
+  });
+
+  // ---------- Form mode ----------
+  const entriesList = document.getElementById('entriesList');
+
+  function renderEntries(){
+    entriesList.innerHTML = '';
+    state.entries.forEach((entry, i) => {
+      const row = document.createElement('div');
+      row.className = 'entry-row';
+      row.innerHTML = `
+        <div class="entry-top">
+          <input type="date" value="${entry.date || ''}" data-field="date">
+          <input type="time" value="${entry.start || ''}" data-field="start" title="Start time">
+          <input type="time" value="${entry.end || ''}" data-field="end" title="End time (optional)">
+        </div>
+        <div class="entry-bottom">
+          <input type="text" value="${escapeHtml(entry.subject || '')}" data-field="subject" placeholder="Subject name">
+          <div class="entry-actions">
+            <button data-act="up" title="Move up">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+            <button data-act="down" title="Move down">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <button data-act="del" class="del" title="Delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>`;
+
+      row.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', () => {
+          state.entries[i][inp.dataset.field] = inp.value;
+          persist();
+          renderPoster();
+        });
+      });
+      row.querySelector('[data-act="del"]').addEventListener('click', () => {
+        state.entries.splice(i, 1);
+        persist(); renderEntries(); renderPoster();
+      });
+      row.querySelector('[data-act="up"]').addEventListener('click', () => {
+        if (i === 0) return;
+        [state.entries[i-1], state.entries[i]] = [state.entries[i], state.entries[i-1]];
+        persist(); renderEntries(); renderPoster();
+      });
+      row.querySelector('[data-act="down"]').addEventListener('click', () => {
+        if (i === state.entries.length - 1) return;
+        [state.entries[i+1], state.entries[i]] = [state.entries[i], state.entries[i+1]];
+        persist(); renderEntries(); renderPoster();
+      });
+
+      entriesList.appendChild(row);
+    });
+  }
+
+  document.getElementById('addEntryBtn').addEventListener('click', () => {
+    state.entries.push({ date:'', start:'', end:'', subject:'' });
+    persist(); renderEntries(); renderPoster();
+  });
+
+  // ---------- Text mode ----------
+  const textInput = document.getElementById('textInput');
+  const parseWarning = document.getElementById('parseWarning');
+
+  function entriesToText(list){
+    return list.map(e => {
+      const timeStr = e.end ? `${to12Hour(e.start)} - ${to12Hour(e.end)}` : to12Hour(e.start);
+      return `${e.date || 'YYYY-MM-DD'} | ${timeStr || '--:--'} | ${e.subject || 'Untitled'}`;
+    }).join('\n');
+  }
+
+  function parseTimeTo24(str){
+    str = (str || '').trim();
+    const m = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+    if (!m) return '';
+    let h = parseInt(m[1], 10);
+    const min = parseInt(m[2], 10);
+    const mer = m[3] ? m[3].toUpperCase() : null;
+    if (mer === 'PM' && h !== 12) h += 12;
+    if (mer === 'AM' && h === 12) h = 0;
+    return String(h).padStart(2,'0') + ':' + String(min).padStart(2,'0');
+  }
+
+  function parseTextMode(text){
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    const parsed = [];
+    const errorLines = [];
+    lines.forEach((line, i) => {
+      const parts = line.split('|').map(s => s.trim());
+      if (parts.length < 3){ errorLines.push(i + 1); return; }
+      const [dateRaw, timeRaw, subject] = parts;
+      const dateObj = new Date(dateRaw);
+      if (isNaN(dateObj)){ errorLines.push(i + 1); return; }
+      const y = dateObj.getFullYear(), mo = String(dateObj.getMonth()+1).padStart(2,'0'), da = String(dateObj.getDate()).padStart(2,'0');
+      const dateStr = `${y}-${mo}-${da}`;
+      const timeParts = timeRaw.split(/-|–|\bto\b/i).map(s => s.trim()).filter(Boolean);
+      const start = parseTimeTo24(timeParts[0]);
+      const end = timeParts[1] ? parseTimeTo24(timeParts[1]) : '';
+      if (!start){ errorLines.push(i + 1); return; }
+      parsed.push({ date: dateStr, start, end, subject: subject || 'Untitled' });
+    });
+    return { parsed, errorLines };
+  }
+
+  let textDebounce;
+  textInput.addEventListener('input', () => {
+    clearTimeout(textDebounce);
+    textDebounce = setTimeout(() => {
+      const { parsed, errorLines } = parseTextMode(textInput.value);
+      if (errorLines.length){
+        parseWarning.style.display = 'block';
+        parseWarning.textContent = `Couldn't read line${errorLines.length>1?'s':''} ${errorLines.join(', ')} — check the format.`;
+      } else {
+        parseWarning.style.display = 'none';
+      }
+      if (parsed.length){
+        state.entries = parsed;
+        persist();
+        renderPoster();
+      }
+    }, 400);
+  });
+
+  // ---------- Mode switching ----------
+  const formModeEl = document.getElementById('formMode');
+  const textModeEl = document.getElementById('textMode');
+
+  document.getElementById('modeRow').addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const newMode = btn.dataset.mode;
+    if (newMode === state.mode) return;
+
+    if (newMode === 'text'){
+      textInput.value = entriesToText(state.entries);
+      parseWarning.style.display = 'none';
+      formModeEl.style.display = 'none';
+      textModeEl.style.display = 'block';
+    } else {
+      const { parsed } = parseTextMode(textInput.value);
+      if (parsed.length) state.entries = parsed;
+      renderEntries();
+      formModeEl.style.display = 'block';
+      textModeEl.style.display = 'none';
+    }
+    state.mode = newMode;
+    persist();
+    document.querySelectorAll('#modeRow button').forEach(b => b.classList.toggle('selected', b === btn));
+  });
+
+  // ---------- Editor toggle (desktop sidebar · mobile full-screen swap) ----------
+  const editorPanel = document.getElementById('editorPanel');
+  const isMobile = () => window.matchMedia('(max-width:820px)').matches;
+  const doneBtn = document.getElementById('doneBtn');
+
+  function openEditor(){
+    editorPanel.classList.remove('collapsed');
+    if (isMobile()) doneBtn.classList.add('show');
+  }
+  function closeEditor(){
+    editorPanel.classList.add('collapsed');
+    doneBtn.classList.remove('show');
+    setTimeout(updateScale, 220);
+  }
+  document.getElementById('editorToggle').addEventListener('click', () => {
+    editorPanel.classList.contains('collapsed') ? openEditor() : closeEditor();
+  });
+  doneBtn.addEventListener('click', closeEditor);
+
+  let posterPointerDown = null;
+  document.getElementById('posterViewport').addEventListener('pointerdown', (e) => {
+    posterPointerDown = { x:e.clientX, y:e.clientY };
+  });
+  document.getElementById('posterViewport').addEventListener('pointerup', (e) => {
+    if (!isMobile() || !posterPointerDown) return;
+    const moved = Math.hypot(e.clientX - posterPointerDown.x, e.clientY - posterPointerDown.y);
+    if (moved < 6 && editorPanel.classList.contains('collapsed')) openEditor();
+    posterPointerDown = null;
+  });
+
+  // ---------- Export ----------
+  async function capturePoster(){
+    const inner = document.getElementById('posterScaleInner');
+    const prevTransform = inner.style.transform;
+    inner.style.transform = 'none';
+    if (document.fonts && document.fonts.ready) await document.fonts.ready;
+    const canvas = await html2canvas(document.getElementById('poster'), {
+      scale: 2, backgroundColor: null, useCORS: true
+    });
+    inner.style.transform = prevTransform;
+    return canvas;
+  }
+
+  document.getElementById('exportPngBtn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    try{
+      const canvas = await capturePoster();
+      const link = document.createElement('a');
+      link.download = 'exam-routine.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }catch(err){ alert('Export failed: ' + err.message); }
+    btn.disabled = false;
+  });
+
+  document.getElementById('exportPdfBtn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    try{
+      const canvas = await capturePoster();
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit:'px', format:[canvas.width, canvas.height] });
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, canvas.width, canvas.height);
+      pdf.save('exam-routine.pdf');
+    }catch(err){ alert('Export failed: ' + err.message); }
+    btn.disabled = false;
+  });
+
+  // ---------- Dark mode (chrome only — poster keeps its own fixed palette) ----------
+  const darkBtn = document.getElementById('darkBtn');
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+
+  // ---------- Init ----------
+  if (state.mode === 'text'){
+    document.querySelectorAll('#modeRow button').forEach(b => b.classList.toggle('selected', b.dataset.mode === 'text'));
+    formModeEl.style.display = 'none';
+    textModeEl.style.display = 'block';
+    textInput.value = entriesToText(state.entries);
+  }
+  if (isMobile()) editorPanel.classList.add('collapsed');
+  renderEntries();
+  renderPoster();
+</script>
+</body>
+</html>
