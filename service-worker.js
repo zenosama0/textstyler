@@ -1,6 +1,5 @@
 // Bump this when you change any cached file, so clients pick up the update
-const CACHE_NAME = 'stylers-cache-v7';
-
+const CACHE_NAME = 'stylers-cache-v9';
 // App shell — update this list when you add a new tool to /stylers
 const PRECACHE_URLS = [
   './index.html',
@@ -18,7 +17,6 @@ const PRECACHE_URLS = [
   './icons/icon-192-maskable.png',
   './icons/icon-512-maskable.png'
 ];
-
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -26,7 +24,6 @@ self.addEventListener('install', (event) => {
       .then(() => self.skipWaiting())
   );
 });
-
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -34,14 +31,11 @@ self.addEventListener('activate', (event) => {
     ).then(() => self.clients.claim())
   );
 });
-
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
-
   const isSameOrigin = new URL(req.url).origin === self.location.origin;
   const isPage = req.mode === 'navigate' || req.destination === 'document';
-
   if (isPage){
     // Network-first for HTML — always tries to fetch the latest version first,
     // so edits show up on next reload instead of being stuck behind a stale cache.
