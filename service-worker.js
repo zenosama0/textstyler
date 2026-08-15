@@ -1,5 +1,5 @@
 // Bump this when you change any cached file, so clients pick up the update
-const CACHE_NAME = 'stylers-cache-v6';
+const CACHE_NAME = 'stylers-cache-v7';
 
 // App shell — update this list when you add a new tool to /stylers
 const PRECACHE_URLS = [
