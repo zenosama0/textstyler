@@ -13,6 +13,25 @@
 <meta name="apple-mobile-web-app-title" content="Stylers">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  // Anti-flash theming: applied before first paint so returning visitors
+  // never see a flicker of the default light/indigo theme before their
+  // saved dark mode / accent color kicks in.
+  (function(){
+    try{
+      var t = localStorage.getItem('stylersHub_theme');
+      if(t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      var a = localStorage.getItem('stylersHub_accent');
+      if(a){
+        document.documentElement.style.setProperty('--accent', a);
+        var hex = a.replace('#','');
+        var r = parseInt(hex.substring(0,2),16), g = parseInt(hex.substring(2,4),16), b = parseInt(hex.substring(4,6),16);
+        var isDark = t === 'dark';
+        document.documentElement.style.setProperty('--accent-soft', 'rgba('+r+','+g+','+b+','+(isDark?0.22:0.14)+')');
+      }
+    }catch(e){}
+  })();
+</script>
 <style>
   :root{
     --bg:#F6F5F1;
@@ -74,6 +93,7 @@
     color:var(--ink);
     -webkit-user-select:none;
     user-select:none;
+    transition:background .2s ease, border-color .2s ease;
   }
   body.has-wco .titlebar{ display:flex; }
   body.has-wco{ padding-top:var(--titlebar-h); }
@@ -82,6 +102,7 @@
     width:14px; height:14px; border-radius:4px;
     background:var(--accent);
     flex-shrink:0;
+    transition:background .2s ease;
   }
   .titlebar .tb-title{ color:var(--ink); }
   .titlebar .tb-title span{ color:var(--muted); font-weight:400; }
@@ -102,6 +123,7 @@
     letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
     background:var(--accent-soft); padding:5px 10px; border-radius:20px;
     margin-bottom:16px;
+    transition:background .15s ease, color .15s ease;
   }
   .eyebrow::before{ content:"●"; font-size:0.6rem; }
 
@@ -119,12 +141,13 @@
     padding:10px 16px; border-radius:9px; border:1.5px solid var(--ink);
     background:var(--ink); color:var(--bg); cursor:pointer;
     box-shadow:3px 3px 0 var(--line); margin-top:2px;
+    transition:transform .15s ease, box-shadow .15s ease;
   }
   .install-btn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--accent); }
   .install-btn.show{ display:inline-flex; }
   .install-btn svg{ width:16px; height:16px; flex-shrink:0; }
 
-  .header-actions{ display:flex; align-items:flex-start; gap:8px; }
+  .header-actions{ display:flex; align-items:flex-start; gap:8px; position:relative; }
 
   .iconbtn{
     width:38px; height:38px; flex-shrink:0; border-radius:9px;
@@ -134,8 +157,55 @@
     transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
   }
   .iconbtn:hover{ transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--accent); border-color:var(--accent); }
+  .iconbtn:active{ transform:translate(0,0); box-shadow:2px 2px 0 var(--line); }
   .iconbtn svg{ width:17px; height:17px; }
   .iconbtn.active{ background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  /* ---------- Accent color popover ---------- */
+  .theme-wrap{ position:relative; }
+  .popover{
+    position:absolute; top:calc(100% + 8px); right:0; z-index:50;
+    min-width:236px; background:var(--card); border:1.5px solid var(--ink);
+    border-radius:12px; box-shadow:4px 4px 0 var(--line); padding:14px;
+    display:none; flex-direction:column; gap:10px;
+    animation:popIn .14s ease-out;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .popover.show{ display:flex; }
+  @keyframes popIn{ from{ opacity:0; transform:scale(.95) translateY(-4px); } to{ opacity:1; transform:scale(1) translateY(0); } }
+  .popover-label{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--muted);
+  }
+  .swatch-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .swatch{
+    width:28px; height:28px; border-radius:9px; border:1.5px solid var(--ink);
+    cursor:pointer; padding:0; position:relative; flex-shrink:0;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .swatch:hover{ transform:translateY(-2px); box-shadow:2px 2px 0 var(--line); }
+  .swatch.active::after{
+    content:""; position:absolute; inset:-4px; border-radius:11px; border:1.5px solid var(--ink);
+  }
+  .swatch.reset{
+    background:
+      linear-gradient(to bottom right, transparent calc(50% - 1px), var(--muted), transparent calc(50% + 1px)),
+      var(--card);
+  }
+  .swatch.custom-toggle{
+    background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--ink);
+    border-style:dashed;
+  }
+  .swatch.custom-toggle svg{ width:14px; height:14px; }
+  .custom-row{ display:none; gap:6px; }
+  .custom-row.show{ display:flex; }
+  .custom-row input{
+    flex:1; min-width:0; padding:7px 9px; border:1.5px solid var(--line); border-radius:7px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--ink); background:var(--bg);
+    outline:none; transition:border-color .12s ease;
+  }
+  .custom-row input:focus{ border-color:var(--accent); }
+  .custom-row input.invalid{ border-color:#E8467C; }
 
   .ios-hint{
     display:none; align-items:flex-start; gap:8px; font-size:0.8rem; color:var(--muted);
@@ -164,7 +234,7 @@
     gap:26px;
     min-height:150px;
     box-shadow:3px 3px 0 var(--line);
-    transition:transform .15s ease, box-shadow .15s ease;
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease, border-color .2s ease;
   }
   .card:hover{
     transform:translate(-2px,-2px);
@@ -195,6 +265,7 @@
     margin-top:auto;
     font-size:0.85rem; font-weight:600; color:var(--muted);
     display:flex; align-items:center; gap:6px;
+    transition:color .15s ease;
   }
   .go::after{ content:"→"; transition:transform .15s ease; }
   .card:hover .go::after{ transform:translateX(3px); }
@@ -248,6 +319,23 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5M5 21h14"/></svg>
             Install app
           </button>
+          <div class="theme-wrap">
+            <button class="iconbtn" id="paletteBtn" title="Accent color">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.1-.7-.4-1-.2-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.4-4-8-10-8z"/></svg>
+            </button>
+            <div class="popover" id="palettePopover">
+              <div class="popover-label">Accent color</div>
+              <div class="swatch-row" id="swatchRow">
+                <button class="swatch reset" id="resetSwatch" type="button" data-hex="" title="Theme default"></button>
+                <button class="swatch custom-toggle" id="customToggleBtn" type="button" title="Custom color">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+              <div class="custom-row" id="customRow">
+                <input type="text" id="customColorInput" placeholder="#4A3AFF or rgb(74,58,255)" spellcheck="false">
+              </div>
+            </div>
+          </div>
           <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
           </button>
@@ -344,13 +432,138 @@
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   if (isIOS && !isStandalone) iosHint.classList.add('show');
 
-  // ---------- Dark mode ----------
+  // ---------- Dark mode (persisted) ----------
+  // data-theme may already have been set by the anti-flash script in <head>
+  // if a saved preference exists; here we just wire up the toggle button.
   const darkBtn = document.getElementById('darkBtn');
+  function setDarkActive(){
+    darkBtn.classList.toggle('active', document.documentElement.getAttribute('data-theme') === 'dark');
+  }
+  setDarkActive();
   darkBtn.addEventListener('click', () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    darkBtn.classList.toggle('active', !isDark);
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('stylersHub_theme', next); }catch(e){}
+    setDarkActive();
+    refreshAccentVars(); // accent-soft opacity differs slightly per theme
   });
+
+  // ---------- Accent color system (persisted) ----------
+  const PRESET_ACCENTS = ['#4A3AFF', '#FF6B4A', '#12A594', '#E14C86', '#2E9E5B', '#E2A63A'];
+  let customAccentHex = null;
+  try{ customAccentHex = localStorage.getItem('stylersHub_accent') || null; }catch(e){}
+
+  function hexToRgb(hex){
+    hex = hex.replace('#','');
+    return { r: parseInt(hex.substring(0,2),16), g: parseInt(hex.substring(2,4),16), b: parseInt(hex.substring(4,6),16) };
+  }
+  function rgbToHex(r,g,b){
+    return '#' + [r,g,b].map(v => Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('').toUpperCase();
+  }
+  // Auto-detects hex ("#4A3AFF", "4A3AFF", "#48F") or rgb()/rgba() input.
+  function parseColorInput(str){
+    str = (str || '').trim();
+    if(!str) return null;
+    const rgbMatch = str.match(/^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*[\d.]+\s*)?\)$/i);
+    if(rgbMatch){
+      const r = +rgbMatch[1], g = +rgbMatch[2], b = +rgbMatch[3];
+      if(r > 255 || g > 255 || b > 255) return null;
+      return rgbToHex(r, g, b);
+    }
+    let hex = str.replace(/^#/, '');
+    if(/^[0-9a-f]{3}$/i.test(hex)) hex = hex.split('').map(c => c + c).join('');
+    if(/^[0-9a-f]{6}$/i.test(hex)) return '#' + hex.toUpperCase();
+    return null;
+  }
+  function refreshAccentVars(){
+    if(!customAccentHex){
+      document.documentElement.style.removeProperty('--accent');
+      document.documentElement.style.removeProperty('--accent-soft');
+      return;
+    }
+    const rgb = hexToRgb(customAccentHex);
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.style.setProperty('--accent', customAccentHex);
+    document.documentElement.style.setProperty('--accent-soft', `rgba(${rgb.r},${rgb.g},${rgb.b},${isDark ? 0.22 : 0.14})`);
+  }
+  function applyAccent(hex){
+    customAccentHex = hex;
+    try{
+      if(hex) localStorage.setItem('stylersHub_accent', hex);
+      else localStorage.removeItem('stylersHub_accent');
+    }catch(e){}
+    refreshAccentVars();
+    renderSwatchState();
+  }
+  refreshAccentVars();
+
+  const swatchRow = document.getElementById('swatchRow');
+  const customToggleBtn = document.getElementById('customToggleBtn');
+  const resetSwatch = document.getElementById('resetSwatch');
+
+  PRESET_ACCENTS.forEach(hex => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'swatch';
+    b.style.background = hex;
+    b.dataset.hex = hex;
+    b.title = hex;
+    b.addEventListener('click', () => applyAccent(hex));
+    swatchRow.insertBefore(b, customToggleBtn);
+  });
+  resetSwatch.addEventListener('click', () => applyAccent(null));
+
+  function renderSwatchState(){
+    swatchRow.querySelectorAll('.swatch:not(.custom-toggle)').forEach(el => {
+      const hex = el.dataset.hex || null;
+      el.classList.toggle('active', hex === customAccentHex);
+    });
+  }
+  renderSwatchState();
+
+  // Popover open/close + custom color input
+  const paletteBtn = document.getElementById('paletteBtn');
+  const palettePopover = document.getElementById('palettePopover');
+  const customRow = document.getElementById('customRow');
+  const customColorInput = document.getElementById('customColorInput');
+
+  paletteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    palettePopover.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+    if(!palettePopover.contains(e.target) && e.target !== paletteBtn){
+      palettePopover.classList.remove('show');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') palettePopover.classList.remove('show');
+  });
+  customToggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    customRow.classList.toggle('show');
+    if(customRow.classList.contains('show')){
+      customColorInput.value = customAccentHex || '';
+      customColorInput.focus();
+    }
+  });
+  function tryApplyCustom(){
+    const parsed = parseColorInput(customColorInput.value);
+    customColorInput.classList.toggle('invalid', !!customColorInput.value.trim() && !parsed);
+    if(parsed) applyAccent(parsed);
+  }
+  customColorInput.addEventListener('input', tryApplyCustom);
+  customColorInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){ e.preventDefault(); tryApplyCustom(); }
+  });
+
+  // If the saved accent isn't one of the presets, it was a custom value —
+  // pre-open the custom row so a returning visitor can see/edit it.
+  if(customAccentHex && !PRESET_ACCENTS.includes(customAccentHex)){
+    customRow.classList.add('show');
+    customColorInput.value = customAccentHex;
+  }
 
   // ---------- Custom title bar (Window Controls Overlay) ----------
   // Chromium on Windows can hand the OS caption area to the page itself
