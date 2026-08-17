@@ -17,13 +17,31 @@
     --card:#FFFFFF;
     --line:#E4E2D9;
     --taskbar-h:56px;
+    --taskbar-bg:rgba(246,245,241,0.72);
+    --titlebar-inactive:#F1EFE8;
+    --gutter-bg:#FAF9F5;
+  }
+  [data-theme="dark"]{
+    --bg:#1B1C20;
+    --dot:#2B2D33;
+    --ink:#ECE9E2;
+    --muted:#9A9C97;
+    --accent:#8A7CFF;
+    --accent-soft:#2A2550;
+    --card:#24262C;
+    --line:#34363D;
+    --taskbar-bg:rgba(24,25,29,0.62);
+    --titlebar-inactive:#202126;
+    --gutter-bg:#1F2024;
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; height:100%; overflow:hidden; }
   body{
     font-family:'Source Sans 3', sans-serif;
     color:var(--ink);
+    background:var(--bg);
     -webkit-font-smoothing:antialiased;
+    transition:background .2s ease, color .2s ease;
   }
   button{ font-family:inherit; }
 
@@ -33,6 +51,7 @@
     background:
       radial-gradient(var(--dot) 1px, transparent 1px) 0 0/22px 22px,
       var(--bg);
+    background-color:var(--bg);
     overflow:auto;
   }
   #iconLayer{
@@ -85,7 +104,7 @@
 
   .titlebar{
     flex-shrink:0; height:42px; display:flex; align-items:center; gap:10px;
-    padding:0 6px 0 12px; background:#F1EFE8; border-bottom:1px solid var(--line);
+    padding:0 6px 0 12px; background:var(--titlebar-inactive); border-bottom:1px solid var(--line);
     cursor:grab; touch-action:none;
   }
   .win.active .titlebar{ background:var(--card); }
@@ -151,8 +170,8 @@
   .gutter{
     width:44px; flex-shrink:0; padding:10px 6px 10px 0; text-align:right;
     font-family:'IBM Plex Mono', monospace; font-size:13px; line-height:20px;
-    color:var(--muted); background:#FAF9F5; overflow:hidden; user-select:none;
-    border-right:1px solid var(--line);
+    color:var(--muted); background:var(--gutter-bg); overflow:hidden; user-select:none;
+    border-right:1px solid var(--line); white-space:pre;
   }
   .code-input{
     flex:1; min-width:0; border:none; outline:none; resize:none;
@@ -183,9 +202,18 @@
   #taskbar{
     position:fixed; left:0; right:0; bottom:0; height:var(--taskbar-h); z-index:900;
     display:flex; align-items:center; gap:10px; padding:0 10px;
-    background:rgba(246,245,241,0.9); backdrop-filter:blur(10px);
+    background:var(--taskbar-bg);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
     border-top:1.5px solid var(--ink);
   }
+  #homeBtn{
+    width:38px; height:38px; flex-shrink:0; border-radius:9px;
+    border:1.5px solid var(--ink); background:var(--ink); color:var(--accent-soft);
+    display:flex; align-items:center; justify-content:center; font-size:1rem; cursor:pointer;
+    box-shadow:2px 2px 0 var(--line); text-decoration:none;
+  }
+  #homeBtn:hover{ transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--accent); background:var(--accent); color:#fff; }
   #startBtn{
     display:flex; align-items:center; gap:8px; flex-shrink:0;
     font-weight:600; font-size:0.84rem; padding:9px 14px; border-radius:9px;
@@ -214,6 +242,12 @@
   .task-icon.ext-js{ background:var(--accent); color:#fff; }
   .task-icon.ext-txt, .task-icon.ext-generic{ background:var(--bg); color:var(--muted); border:1.3px solid var(--line); }
   .task-label{ font-size:0.78rem; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #themeBtn{
+    width:34px; height:34px; flex-shrink:0; border-radius:8px; border:1.5px solid transparent;
+    background:transparent; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--ink); font-size:0.95rem;
+  }
+  #themeBtn:hover{ background:rgba(34,37,43,0.08); border-color:var(--line); }
   #clock{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink); flex-shrink:0; padding:0 4px; }
 
   #startMenu{
@@ -270,14 +304,17 @@
   <div id="windowLayer"></div>
 
   <div id="taskbar">
+    <a id="homeBtn" href="../index.html" title="Back to Stylers hub">✎</a>
     <button id="startBtn"><span class="dot">●</span>Stylers OS</button>
     <div id="taskWindows"></div>
+    <button id="themeBtn" title="Toggle dark mode">☾</button>
     <div id="clock">--:--</div>
   </div>
 
   <div id="startMenu" class="hidden">
     <button class="sm-item sm-newfile">+ New file</button>
     <button class="sm-item sm-newfolder">+ New folder</button>
+    <button class="sm-item sm-background">Change background</button>
     <button class="sm-item sm-reset">Reset desktop</button>
   </div>
 
@@ -1089,6 +1126,101 @@
     el.textContent = h + ':' + String(m).padStart(2,'0') + ' ' + ampm;
   }
 
+  /* ---------- Theme ---------- */
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    try{ localStorage.setItem('stylersOS_theme', theme); }catch(e){}
+    var btn = document.getElementById('themeBtn');
+    if(btn){
+      btn.textContent = theme === 'dark' ? '\u2600' : '\u263E';
+      btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    }
+  }
+  function loadTheme(){
+    var t = 'light';
+    try{ t = localStorage.getItem('stylersOS_theme') || 'light'; }catch(e){}
+    applyTheme(t);
+  }
+  function toggleTheme(){
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  }
+
+  /* ---------- Desktop background ---------- */
+  function applyBackgroundImage(url){
+    var d = document.getElementById('desktop');
+    d.style.backgroundImage = 'url("' + url + '")';
+    d.style.backgroundSize = 'cover';
+    d.style.backgroundPosition = 'center';
+    d.style.backgroundRepeat = 'no-repeat';
+  }
+  function clearBackgroundImage(){
+    var d = document.getElementById('desktop');
+    d.style.backgroundImage = '';
+    d.style.backgroundSize = '';
+    d.style.backgroundPosition = '';
+    d.style.backgroundRepeat = '';
+  }
+  function loadBackground(){
+    var url = null;
+    try{ url = localStorage.getItem('stylersOS_bg_url'); }catch(e){}
+    if(url) applyBackgroundImage(url);
+  }
+  function openBackgroundModal(){
+    var overlay = document.getElementById('modalOverlay');
+    var currentUrl = '';
+    try{ currentUrl = localStorage.getItem('stylersOS_bg_url') || ''; }catch(e){}
+    overlay.innerHTML =
+      '<div class="modal-box">' +
+        '<h3>Desktop background</h3>' +
+        '<p>Paste an image link to set a background that stays across visits, or upload a photo from this device for this session only.</p>' +
+        '<input id="bgUrlInput" type="text" placeholder="https://example.com/image.jpg" value="' + esc(currentUrl) + '">' +
+        '<div class="modal-actions" style="justify-content:space-between;margin-bottom:14px;">' +
+          '<button id="bgUploadBtn" class="btn small ghost">Upload image\u2026</button>' +
+          '<button id="bgResetBtn" class="btn small ghost">Reset to default</button>' +
+        '</div>' +
+        '<input id="bgFileInput" type="file" accept="image/*" style="display:none">' +
+        '<div class="modal-actions">' +
+          '<button id="bgCancel" class="btn ghost">Close</button>' +
+          '<button id="bgApply" class="btn primary">Save link</button>' +
+        '</div>' +
+      '</div>';
+    overlay.classList.remove('hidden');
+
+    function close(){ overlay.classList.add('hidden'); overlay.innerHTML=''; document.removeEventListener('keydown', onKey); }
+    function onKey(e){ if(e.key === 'Escape') close(); }
+    document.addEventListener('keydown', onKey);
+    overlay.addEventListener('click', function(e){ if(e.target === overlay) close(); });
+
+    document.getElementById('bgCancel').addEventListener('click', close);
+    document.getElementById('bgApply').addEventListener('click', function(){
+      var url = document.getElementById('bgUrlInput').value.trim();
+      if(url){
+        applyBackgroundImage(url);
+        try{ localStorage.setItem('stylersOS_bg_url', url); }catch(e){}
+      }
+      close();
+    });
+    document.getElementById('bgResetBtn').addEventListener('click', function(){
+      clearBackgroundImage();
+      try{ localStorage.removeItem('stylersOS_bg_url'); }catch(e){}
+      close();
+    });
+    document.getElementById('bgUploadBtn').addEventListener('click', function(){
+      document.getElementById('bgFileInput').click();
+    });
+    document.getElementById('bgFileInput').addEventListener('change', function(e){
+      var file = e.target.files && e.target.files[0];
+      if(!file) return;
+      var reader = new FileReader();
+      reader.onload = function(ev){
+        applyBackgroundImage(ev.target.result);
+        close();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   function initChrome(){
     var startBtn = document.getElementById('startBtn');
     var startMenu = document.getElementById('startMenu');
@@ -1096,6 +1228,8 @@
     document.addEventListener('click', function(){ startMenu.classList.add('hidden'); });
     startMenu.querySelector('.sm-newfile').addEventListener('click', function(e){ e.stopPropagation(); startMenu.classList.add('hidden'); createNewFile(fs); });
     startMenu.querySelector('.sm-newfolder').addEventListener('click', function(e){ e.stopPropagation(); startMenu.classList.add('hidden'); createNewFolder(fs); });
+    startMenu.querySelector('.sm-background').addEventListener('click', function(e){ e.stopPropagation(); startMenu.classList.add('hidden'); openBackgroundModal(); });
+    document.getElementById('themeBtn').addEventListener('click', function(e){ e.stopPropagation(); toggleTheme(); });
     startMenu.querySelector('.sm-reset').addEventListener('click', function(e){
       e.stopPropagation(); startMenu.classList.add('hidden');
       showModal({ title:'Reset desktop', message:'This deletes everything you\'ve created and restores the starter files. This can\'t be undone.', showInput:false, confirmLabel:'Reset' }).then(function(ok){
@@ -1125,12 +1259,22 @@
   }
 
   function init(){
+    loadTheme();
     loadFS();
     renderDesktopIcons();
     renderTaskbar();
+    loadBackground();
     initChrome();
     tickClock();
     setInterval(tickClock, 15000);
+
+    // Belt-and-braces: flush any pending debounced save immediately if the
+    // tab is closed, reloaded, or backgrounded, so file edits are never lost.
+    window.addEventListener('beforeunload', function(){ try{ saveFS(); }catch(e){} });
+    window.addEventListener('pagehide', function(){ try{ saveFS(); }catch(e){} });
+    document.addEventListener('visibilitychange', function(){
+      if(document.visibilityState === 'hidden'){ try{ saveFS(); }catch(e){} }
+    });
   }
 
   document.addEventListener('DOMContentLoaded', init);
