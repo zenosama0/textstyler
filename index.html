@@ -261,7 +261,7 @@
 
     <div id="grid" class="grid"></div>
 
-    <!--<footer>Add a new tool: drop the <code style="font-family:'IBM Plex Mono',monospace">.html</code> file in <code style="font-family:'IBM Plex Mono',monospace">/stylers</code> and add its filename to the list in <code style="font-family:'IBM Plex Mono',monospace">index.html</code>.</footer>-->
+    <footer>Add a new tool: drop the <code style="font-family:'IBM Plex Mono',monospace">.html</code> file in <code style="font-family:'IBM Plex Mono',monospace">/stylers</code> and add its filename to the list in <code style="font-family:'IBM Plex Mono',monospace">index.html</code>.</footer>
   </div>
 
 <script>
@@ -289,7 +289,7 @@
 
   const grid = document.getElementById('grid');
 
-  if (STYLERS.length === 0){
+  /*if (STYLERS.length === 0){
     grid.innerHTML = '<div class="empty">No stylers yet — add .html files to /stylers and list them in index.html.</div>';
   } else {
     STYLERS.forEach((file, i) => {
@@ -310,9 +310,9 @@
 
     const addCard = document.createElement('div');
     addCard.className = 'add-card';
-    addCard.innerHTML = 'Remember! Drop a new .html file in <code>/stylers</code>, then add its name to the list';
+    //addCard.innerHTML = 'Drop a new .html file in <code>/stylers</code>, then add its name to the list';
     grid.appendChild(addCard);
-  }
+  }*/
 
   // ---------- Install as app ----------
   const installBtn = document.getElementById('installBtn');
