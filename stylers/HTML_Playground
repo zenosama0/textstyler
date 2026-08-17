@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Playground - Stylers OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F5F1;
+    --dot:#DEDCD3;
+    --ink:#22252B;
+    --muted:#767A73;
+    --accent:#4A3AFF;
+    --accent-soft:#EDEBFF;
+    --card:#FFFFFF;
+    --line:#E4E2D9;
+    --taskbar-h:56px;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; height:100%; overflow:hidden; }
+  body{
+    font-family:'Source Sans 3', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  button{ font-family:inherit; }
+
+  /* ---------- Desktop ---------- */
+  #desktop{
+    position:fixed; left:0; right:0; top:0; bottom:var(--taskbar-h);
+    background:
+      radial-gradient(var(--dot) 1px, transparent 1px) 0 0/22px 22px,
+      var(--bg);
+    overflow:auto;
+  }
+  #iconLayer{
+    padding:26px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, 96px);
+    gap:6px 10px;
+    align-content:start;
+  }
+  .fs-icon{
+    width:96px; padding:10px 6px; border-radius:10px; text-align:center;
+    cursor:pointer; user-select:none; border:1.5px solid transparent;
+  }
+  .fs-icon:hover{ background:rgba(34,37,43,0.05); }
+  .fs-icon.selected{ background:var(--accent-soft); border-color:var(--accent); }
+  .fs-badge{
+    width:46px; height:46px; margin:0 auto 8px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:0.85rem;
+    letter-spacing:.01em;
+  }
+  .fs-badge.folder{ background:var(--accent-soft); color:var(--accent); }
+  .fs-badge.ext-html{ background:var(--ink); color:var(--bg); }
+  .fs-badge.ext-css{ background:var(--card); color:var(--ink); border:2px solid var(--ink); font-size:1.1rem; }
+  .fs-badge.ext-js{ background:var(--accent); color:#fff; font-size:0.72rem; }
+  .fs-badge.ext-txt, .fs-badge.ext-generic{ background:var(--bg); color:var(--muted); border:1.5px solid var(--line); font-size:0.62rem; }
+  .fs-name{
+    font-size:0.76rem; line-height:1.3; color:var(--ink);
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    word-break:break-word;
+  }
+  .empty-hint{
+    grid-column:1/-1; color:var(--muted); font-size:0.85rem;
+    border:1.5px dashed var(--line); border-radius:10px; padding:24px; text-align:center;
+  }
+
+  /* ---------- Windows ---------- */
+  #windowLayer{ position:fixed; left:0; right:0; top:0; bottom:var(--taskbar-h); pointer-events:none; }
+  .win{
+    position:absolute; pointer-events:auto; display:flex; flex-direction:column;
+  }
+  .win-inner{
+    height:100%; display:flex; flex-direction:column; overflow:hidden;
+    border-radius:12px; border:1.5px solid var(--ink); background:var(--bg);
+    box-shadow:3px 3px 0 var(--line);
+  }
+  .win.active .win-inner{ border-color:var(--accent); box-shadow:5px 5px 0 var(--accent-soft); }
+  .win.maximized .win-inner{ border-radius:0; box-shadow:none; }
+  .win.maximized .rz{ display:none; }
+
+  .titlebar{
+    flex-shrink:0; height:42px; display:flex; align-items:center; gap:10px;
+    padding:0 6px 0 12px; background:#F1EFE8; border-bottom:1px solid var(--line);
+    cursor:grab; touch-action:none;
+  }
+  .win.active .titlebar{ background:var(--card); }
+  .win-icon{
+    width:24px; height:24px; border-radius:7px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:0.62rem;
+  }
+  .win-icon.folder{ background:var(--accent-soft); color:var(--accent); }
+  .win-icon.ext-html{ background:var(--ink); color:var(--bg); }
+  .win-icon.ext-css{ background:var(--card); color:var(--ink); border:1.5px solid var(--ink); }
+  .win-icon.ext-js{ background:var(--accent); color:#fff; }
+  .win-icon.ext-txt, .win-icon.ext-generic{ background:var(--bg); color:var(--muted); border:1.5px solid var(--line); }
+  .win-title{
+    flex:1; font-weight:600; font-size:0.85rem; color:var(--ink);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; user-select:none;
+  }
+  .win.active .win-title{ color:var(--ink); }
+  .win:not(.active) .win-title{ color:var(--muted); }
+  .win-controls{ display:flex; gap:2px; flex-shrink:0; }
+  .wc{
+    width:38px; height:30px; border:none; background:transparent; border-radius:6px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink);
+  }
+  .wc svg{ width:10px; height:10px; stroke:currentColor; stroke-width:1.3; fill:none; }
+  .wc:hover{ background:rgba(34,37,43,0.08); }
+  .wc.close:hover{ background:#E81123; color:#fff; }
+
+  .win-body{ flex:1; min-height:0; display:flex; flex-direction:column; }
+  .toolbar{
+    flex-shrink:0; display:flex; align-items:center; gap:8px;
+    padding:8px 10px; border-bottom:1px solid var(--line); background:rgba(34,37,43,0.02);
+  }
+  .ext-badge{
+    font-family:'IBM Plex Mono', monospace; font-size:0.66rem; font-weight:700;
+    padding:3px 8px; border-radius:5px; letter-spacing:.03em; flex-shrink:0;
+  }
+  .ext-badge.ext-html{ background:var(--ink); color:var(--bg); }
+  .ext-badge.ext-css{ background:var(--card); color:var(--ink); border:1.5px solid var(--ink); }
+  .ext-badge.ext-js{ background:var(--accent); color:#fff; }
+  .ext-badge.ext-txt, .ext-badge.ext-generic{ background:var(--bg); color:var(--muted); border:1.5px solid var(--line); }
+  .path-label{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .spacer{ flex:1; }
+  .btn{
+    font-weight:600; font-size:0.8rem; padding:7px 13px; border-radius:8px;
+    border:1.5px solid var(--ink); background:var(--card); color:var(--ink); cursor:pointer;
+  }
+  .btn:hover{ transform:translate(-1px,-1px); }
+  .btn.primary{ background:var(--ink); color:var(--bg); }
+  .btn.ghost{ background:transparent; }
+  .btn.small{ padding:5px 10px; font-size:0.74rem; border-radius:7px; }
+  .btn.run-btn, .btn.refresh-btn{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .live-toggle{
+    display:flex; align-items:center; gap:5px; font-size:0.76rem; color:var(--muted);
+    flex-shrink:0; user-select:none; cursor:pointer;
+  }
+  .live-toggle input{ accent-color:var(--accent); }
+
+  .editor-wrap{ flex:1; min-height:0; display:flex; background:var(--card); }
+  .gutter{
+    width:44px; flex-shrink:0; padding:10px 6px 10px 0; text-align:right;
+    font-family:'IBM Plex Mono', monospace; font-size:13px; line-height:20px;
+    color:var(--muted); background:#FAF9F5; overflow:hidden; user-select:none;
+    border-right:1px solid var(--line);
+  }
+  .code-input{
+    flex:1; min-width:0; border:none; outline:none; resize:none;
+    padding:10px 14px; font-family:'IBM Plex Mono', monospace; font-size:13px; line-height:20px;
+    background:var(--card); color:var(--ink); white-space:pre; overflow:auto;
+    tab-size:2;
+  }
+  .preview-wrap{ flex:1; min-height:0; background:#fff; }
+  .preview-frame{ width:100%; height:100%; border:none; display:block; }
+  .explorer-body{
+    flex:1; min-height:0; overflow:auto; padding:18px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(96px,1fr)); gap:12px 8px;
+    align-content:start;
+  }
+
+  /* ---------- Resize handles ---------- */
+  .rz{ position:absolute; z-index:2; }
+  .rz-n{ top:-4px; left:10px; right:10px; height:8px; cursor:ns-resize; }
+  .rz-s{ bottom:-4px; left:10px; right:10px; height:8px; cursor:ns-resize; }
+  .rz-e{ right:-4px; top:10px; bottom:10px; width:8px; cursor:ew-resize; }
+  .rz-w{ left:-4px; top:10px; bottom:10px; width:8px; cursor:ew-resize; }
+  .rz-ne{ top:-4px; right:-4px; width:14px; height:14px; cursor:nesw-resize; }
+  .rz-nw{ top:-4px; left:-4px; width:14px; height:14px; cursor:nwse-resize; }
+  .rz-se{ bottom:-4px; right:-4px; width:14px; height:14px; cursor:nwse-resize; }
+  .rz-sw{ bottom:-4px; left:-4px; width:14px; height:14px; cursor:nesw-resize; }
+
+  /* ---------- Taskbar ---------- */
+  #taskbar{
+    position:fixed; left:0; right:0; bottom:0; height:var(--taskbar-h); z-index:900;
+    display:flex; align-items:center; gap:10px; padding:0 10px;
+    background:rgba(246,245,241,0.9); backdrop-filter:blur(10px);
+    border-top:1.5px solid var(--ink);
+  }
+  #startBtn{
+    display:flex; align-items:center; gap:8px; flex-shrink:0;
+    font-weight:600; font-size:0.84rem; padding:9px 14px; border-radius:9px;
+    border:1.5px solid var(--ink); background:var(--ink); color:var(--bg); cursor:pointer;
+    box-shadow:2px 2px 0 var(--line);
+  }
+  #startBtn:hover{ transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--accent); }
+  #startBtn .dot{ font-size:0.6rem; color:var(--accent); }
+  #taskWindows{ flex:1; min-width:0; display:flex; gap:6px; overflow-x:auto; height:100%; align-items:center; }
+  #taskWindows::-webkit-scrollbar{ height:4px; }
+  .task-btn{
+    display:flex; align-items:center; gap:6px; max-width:190px; flex-shrink:0;
+    padding:6px 10px; border-radius:8px; border:1.5px solid transparent; background:transparent; cursor:pointer;
+  }
+  .task-btn:hover{ background:rgba(34,37,43,0.05); }
+  .task-btn.active{ border-color:var(--ink); background:var(--accent-soft); }
+  .task-btn.minimized{ opacity:0.5; }
+  .task-icon{
+    width:20px; height:20px; border-radius:6px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:0.56rem;
+  }
+  .task-icon.folder{ background:var(--accent-soft); color:var(--accent); }
+  .task-icon.ext-html{ background:var(--ink); color:var(--bg); }
+  .task-icon.ext-css{ background:var(--card); color:var(--ink); border:1.3px solid var(--ink); }
+  .task-icon.ext-js{ background:var(--accent); color:#fff; }
+  .task-icon.ext-txt, .task-icon.ext-generic{ background:var(--bg); color:var(--muted); border:1.3px solid var(--line); }
+  .task-label{ font-size:0.78rem; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #clock{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--ink); flex-shrink:0; padding:0 4px; }
+
+  #startMenu{
+    position:fixed; bottom:64px; left:10px; z-index:950; min-width:210px;
+    background:var(--card); border:1.5px solid var(--ink); border-radius:12px;
+    box-shadow:4px 4px 0 var(--line); padding:8px; display:flex; flex-direction:column; gap:2px;
+  }
+  #startMenu.hidden{ display:none; }
+  .sm-item{
+    text-align:left; padding:9px 10px; border-radius:8px; border:none; background:transparent;
+    font-size:0.84rem; color:var(--ink); cursor:pointer;
+  }
+  .sm-item:hover{ background:var(--accent-soft); color:var(--accent); }
+
+  /* ---------- Context menu ---------- */
+  #contextMenu{
+    position:fixed; z-index:960; min-width:170px;
+    background:var(--card); border:1.5px solid var(--ink); border-radius:10px;
+    box-shadow:3px 3px 0 var(--line); padding:6px; display:flex; flex-direction:column; gap:1px;
+  }
+  #contextMenu.hidden{ display:none; }
+  .ctx-item{
+    text-align:left; padding:8px 10px; border-radius:7px; border:none; background:transparent;
+    font-size:0.82rem; color:var(--ink); cursor:pointer;
+  }
+  .ctx-item:hover{ background:var(--accent-soft); color:var(--accent); }
+
+  /* ---------- Modal ---------- */
+  #modalOverlay{
+    position:fixed; inset:0; z-index:1000; background:rgba(20,20,20,0.35);
+    backdrop-filter:blur(2px); display:flex; align-items:center; justify-content:center;
+  }
+  #modalOverlay.hidden{ display:none; }
+  .modal-box{
+    width:min(380px, 90vw); background:var(--card); border:1.5px solid var(--ink);
+    border-radius:14px; padding:22px 24px; box-shadow:6px 6px 0 var(--line);
+  }
+  .modal-box h3{ font-family:'Fraunces', serif; font-weight:600; font-size:1.15rem; margin:0 0 8px; }
+  .modal-box p{ color:var(--muted); font-size:0.85rem; margin:0 0 14px; line-height:1.5; }
+  .modal-box input{
+    width:100%; padding:10px 12px; border:1.5px solid var(--line); border-radius:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.85rem; margin-bottom:16px; outline:none; color:var(--ink);
+  }
+  .modal-box input:focus{ border-color:var(--accent); }
+  .modal-actions{ display:flex; justify-content:flex-end; gap:8px; }
+</style>
+</head>
+<body>
+
+  <div id="desktop">
+    <div id="iconLayer"></div>
+  </div>
+
+  <div id="windowLayer"></div>
+
+  <div id="taskbar">
+    <button id="startBtn"><span class="dot">●</span>Stylers OS</button>
+    <div id="taskWindows"></div>
+    <div id="clock">--:--</div>
+  </div>
+
+  <div id="startMenu" class="hidden">
+    <button class="sm-item sm-newfile">+ New file</button>
+    <button class="sm-item sm-newfolder">+ New folder</button>
+    <button class="sm-item sm-reset">Reset desktop</button>
+  </div>
+
+  <div id="contextMenu" class="hidden"></div>
+  <div id="modalOverlay" class="hidden"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var TASKBAR_H = 56;
+
+  /* ================= Starter content ================= */
+  var WELCOME_HTML =
+'<!DOCTYPE html>\n' +
+'<html>\n' +
+'<head>\n' +
+'<meta charset="UTF-8">\n' +
+'<title>Welcome</title>\n' +
+'<style>\n' +
+'  body{ font-family: sans-serif; background:#F6F5F1; color:#22252B; padding:40px; }\n' +
+'  h1{ font-family: Georgia, serif; }\n' +
+'  button{ padding:10px 16px; border-radius:8px; border:1px solid #22252B; background:#4A3AFF; color:#fff; cursor:pointer; }\n' +
+'</style>\n' +
+'</head>\n' +
+'<body>\n' +
+'  <h1>Welcome to the Live Playground</h1>\n' +
+'  <p>Edit this file on the left and the preview on the right updates as you type.</p>\n' +
+'  <p>CSS and JS can live right inside this file, like above and below \u2014 or in their own files (see the Multi-File Demo folder).</p>\n' +
+'  <button id="btn">Click me</button>\n' +
+'  <p id="out"></p>\n' +
+'  <script>\n' +
+'    document.getElementById("btn").addEventListener("click", function(){\n' +
+'      document.getElementById("out").textContent = "Hello from inline JS! " + new Date().toLocaleTimeString();\n' +
+'    });\n' +
+'  <\/script>\n' +
+'</body>\n' +
+'</html>\n';
+
+  var DEMO_INDEX =
+'<!DOCTYPE html>\n' +
+'<html>\n' +
+'<head>\n' +
+'<meta charset="UTF-8">\n' +
+'<title>Multi-File Demo</title>\n' +
+'<link rel="stylesheet" href="style.css">\n' +
+'</head>\n' +
+'<body>\n' +
+'  <h1>Multi-file linking works too</h1>\n' +
+'  <p>This page pulls in <code>style.css</code> and <code>script.js</code> by filename \u2014 rename them however you like, just keep the tags below pointing at the right names.</p>\n' +
+'  <button id="go">Run script.js</button>\n' +
+'  <p id="msg"></p>\n' +
+'  <script src="script.js"><\/script>\n' +
+'</body>\n' +
+'</html>\n';
+
+  var DEMO_CSS =
+'body{\n' +
+'  font-family: sans-serif;\n' +
+'  background: #22252B;\n' +
+'  color: #F6F5F1;\n' +
+'  padding: 40px;\n' +
+'}\n' +
+'button{\n' +
+'  padding: 10px 16px;\n' +
+'  border-radius: 8px;\n' +
+'  border: none;\n' +
+'  background: #4A3AFF;\n' +
+'  color: #fff;\n' +
+'  cursor: pointer;\n' +
+'}\n';
+
+  var DEMO_JS =
+'document.getElementById("go").addEventListener("click", function(){\n' +
+'  document.getElementById("msg").textContent = "script.js is linked and running.";\n' +
+'});\n';
+
+  var FILE_TEMPLATES = {
+    html: '<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<title>New Page</title>\n</head>\n<body>\n  <h1>Hello!</h1>\n</body>\n</html>\n',
+    css: '/* styles */\nbody{\n  font-family: sans-serif;\n}\n',
+    js: '// script\nconsole.log("Hello from JS");\n'
+  };
+
+  /* ================= Filesystem ================= */
+  var fs = null;
+
+  function uid(){ return 'id' + Math.random().toString(36).slice(2,9) + Date.now().toString(36).slice(-4); }
+
+  function defaultFS(){
+    return {
+      id:'root', name:'Root', type:'folder', children:[
+        { id:uid(), name:'Welcome.html', type:'file', ext:'html', content:WELCOME_HTML },
+        { id:uid(), name:'Multi-File Demo', type:'folder', children:[
+          { id:uid(), name:'index.html', type:'file', ext:'html', content:DEMO_INDEX },
+          { id:uid(), name:'style.css', type:'file', ext:'css', content:DEMO_CSS },
+          { id:uid(), name:'script.js', type:'file', ext:'js', content:DEMO_JS }
+        ]}
+      ]
+    };
+  }
+
+  function saveFS(){ try{ localStorage.setItem('stylersOS_fs_v1', JSON.stringify(fs)); }catch(e){} }
+  function loadFS(){
+    var raw = null;
+    try{ raw = localStorage.getItem('stylersOS_fs_v1'); }catch(e){}
+    if(raw){ try{ fs = JSON.parse(raw); return; }catch(e){} }
+    fs = defaultFS();
+  }
+
+  function findNode(id, node){
+    node = node || fs;
+    if(node.id === id) return node;
+    if(node.type === 'folder'){
+      for(var i=0;i<node.children.length;i++){
+        var r = findNode(id, node.children[i]);
+        if(r) return r;
+      }
+    }
+    return null;
+  }
+  function findParent(id, node){
+    node = node || fs;
+    if(node.type === 'folder'){
+      for(var i=0;i<node.children.length;i++){
+        if(node.children[i].id === id) return node;
+        var r = findParent(id, node.children[i]);
+        if(r) return r;
+      }
+    }
+    return null;
+  }
+  function sortFn(a,b){
+    if(a.type !== b.type) return a.type === 'folder' ? -1 : 1;
+    return a.name.localeCompare(b.name, undefined, {sensitivity:'base'});
+  }
+  function iconMeta(node){
+    if(node.type === 'folder') return {label:'DIR', cls:'folder'};
+    var ext = (node.ext || '').toLowerCase();
+    if(ext === 'html') return {label:'<>', cls:'ext-html'};
+    if(ext === 'css') return {label:'#', cls:'ext-css'};
+    if(ext === 'js') return {label:'JS', cls:'ext-js'};
+    if(ext === 'txt') return {label:'TXT', cls:'ext-txt'};
+    return {label:'?', cls:'ext-generic'};
+  }
+  function getPathLabel(id){
+    var node = findNode(id);
+    if(!node) return '';
+    var names = [node.name];
+    var cur = node;
+    while(true){
+      var p = findParent(cur.id);
+      if(!p || p.id === 'root') break;
+      names.unshift(p.name);
+      cur = p;
+    }
+    return names.join(' / ');
+  }
+  function getSiblings(fileId){
+    var parent = findParent(fileId) || fs;
+    return parent.children.filter(function(c){ return c.type === 'file'; });
+  }
+  function collectIds(node, acc){
+    acc = acc || {files:[], folders:[]};
+    if(node.type === 'folder'){
+      acc.folders.push(node.id);
+      node.children.forEach(function(c){ collectIds(c, acc); });
+    } else {
+      acc.files.push(node.id);
+    }
+    return acc;
+  }
+  function esc(s){
+    return (s + '').replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  /* ================= Preview resolution ================= */
+  function resolvePreviewHTML(node){
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(node.content || '', 'text/html');
+    var siblings = getSiblings(node.id);
+    doc.querySelectorAll('link[rel="stylesheet"][href]').forEach(function(link){
+      var href = link.getAttribute('href');
+      if(/^https?:|^\/\//i.test(href)) return;
+      var clean = href.replace(/^\.\//, '');
+      var f = siblings.filter(function(s){ return s.name === clean; })[0];
+      if(f){
+        var style = doc.createElement('style');
+        style.textContent = f.content || '';
+        link.replaceWith(style);
+      }
+    });
+    doc.querySelectorAll('script[src]').forEach(function(script){
+      var src = script.getAttribute('src');
+      if(/^https?:|^\/\//i.test(src)) return;
+      var clean = src.replace(/^\.\//, '');
+      var f = siblings.filter(function(s){ return s.name === clean; })[0];
+      if(f){
+        var ns = doc.createElement('script');
+        ns.textContent = f.content || '';
+        script.replaceWith(ns);
+      }
+    });
+    return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+  }
+
+  /* ================= Window state ================= */
+  var windows = [];
+  var zTop = 100;
+  var activeId = null;
+  var cascadeCount = 0;
+
+  function desktopBounds(){ return { w: window.innerWidth, h: window.innerHeight - TASKBAR_H }; }
+  function nextCascadePos(){
+    var b = desktopBounds();
+    var x = 60 + (cascadeCount % 8) * 26;
+    var y = 30 + (cascadeCount % 8) * 26;
+    cascadeCount++;
+    return { x: Math.min(x, Math.max(20,b.w-320)), y: Math.min(y, Math.max(20,b.h-260)) };
+  }
+
+  function applyBounds(win){
+    if(!win.el) return;
+    win.el.style.left = win.x + 'px';
+    win.el.style.top = win.y + 'px';
+    win.el.style.width = win.w + 'px';
+    win.el.style.height = win.h + 'px';
+  }
+
+  function focusWindow(id){
+    var win = windows.filter(function(w){ return w.id===id; })[0];
+    if(!win) return;
+    if(win.minimized){ win.minimized = false; if(win.el) win.el.style.display = 'flex'; }
+    activeId = id;
+    win.z = ++zTop;
+    if(win.el) win.el.style.zIndex = win.z;
+    windows.forEach(function(w){ if(w.el) w.el.classList.toggle('active', w.id===id); });
+    renderTaskbar();
+  }
+  function restoreAndFocus(win){
+    if(win.minimized){ win.minimized = false; if(win.el) win.el.style.display = 'flex'; }
+    focusWindow(win.id);
+  }
+  function minimizeWindow(id){
+    var win = windows.filter(function(w){ return w.id===id; })[0];
+    if(!win) return;
+    win.minimized = true;
+    if(win.el) win.el.style.display = 'none';
+    if(activeId === id){
+      activeId = null;
+      var rest = windows.filter(function(w){ return !w.minimized; }).sort(function(a,b){ return b.z-a.z; })[0];
+      if(rest) focusWindow(rest.id); else renderTaskbar();
+    } else {
+      renderTaskbar();
+    }
+  }
+  function toggleMaximize(id){
+    var win = windows.filter(function(w){ return w.id===id; })[0];
+    if(!win) return;
+    var b = desktopBounds();
+    if(!win.maximized){
+      win.prev = { x:win.x, y:win.y, w:win.w, h:win.h };
+      win.maximized = true;
+      win.x = 0; win.y = 0; win.w = b.w; win.h = b.h;
+      if(win.el) win.el.classList.add('maximized');
+    } else {
+      win.maximized = false;
+      win.x = win.prev.x; win.y = win.prev.y; win.w = win.prev.w; win.h = win.prev.h;
+      if(win.el) win.el.classList.remove('maximized');
+    }
+    applyBounds(win);
+    focusWindow(id);
+  }
+  function closeWindow(id){
+    var idx = -1;
+    for(var i=0;i<windows.length;i++){ if(windows[i].id===id){ idx=i; break; } }
+    if(idx === -1) return;
+    var win = windows[idx];
+    if(win.el) win.el.remove();
+    windows.splice(idx,1);
+    if(activeId === id){
+      activeId = null;
+      var rest = windows.filter(function(w){ return !w.minimized; }).sort(function(a,b){ return b.z-a.z; })[0];
+      if(rest) focusWindow(rest.id);
+    }
+    renderTaskbar();
+  }
+  function closeWindowsForNode(node){
+    var ids = collectIds(node);
+    windows.slice().forEach(function(w){
+      if((w.type==='editor' || w.type==='preview') && ids.files.indexOf(w.fileId) !== -1) closeWindow(w.id);
+      if(w.type==='explorer' && ids.folders.indexOf(w.folderId) !== -1) closeWindow(w.id);
+    });
+  }
+  function updateWindowTitlesFor(nodeId){
+    windows.forEach(function(w){
+      if(w.fileId === nodeId || w.folderId === nodeId){
+        var node = findNode(nodeId);
+        if(node) w.title = node.name;
+        if(w.el){
+          var t = w.el.querySelector('.win-title'); if(t) t.textContent = w.title;
+          var p = w.el.querySelector('.path-label'); if(p) p.textContent = getPathLabel(nodeId);
+        }
+      }
+    });
+    renderTaskbar();
+  }
+
+  /* ---------- Drag & resize ---------- */
+  function wireDrag(win, titlebar){
+    titlebar.addEventListener('pointerdown', function(e){
+      if(e.target.closest('.wc')) return;
+      if(win.maximized) return;
+      focusWindow(win.id);
+      titlebar.setPointerCapture(e.pointerId);
+      var startX = e.clientX, startY = e.clientY;
+      var startPos = { x:win.x, y:win.y };
+      function onMove(ev){
+        var dx = ev.clientX-startX, dy = ev.clientY-startY;
+        var b = desktopBounds();
+        var nx = startPos.x + dx, ny = startPos.y + dy;
+        nx = Math.max(-(win.w-120), Math.min(b.w-120, nx));
+        ny = Math.max(0, Math.min(b.h-40, ny));
+        win.x = nx; win.y = ny;
+        applyBounds(win);
+      }
+      function onUp(){
+        titlebar.removeEventListener('pointermove', onMove);
+        titlebar.removeEventListener('pointerup', onUp);
+      }
+      titlebar.addEventListener('pointermove', onMove);
+      titlebar.addEventListener('pointerup', onUp);
+    });
+    titlebar.addEventListener('dblclick', function(e){
+      if(e.target.closest('.wc')) return;
+      toggleMaximize(win.id);
+    });
+  }
+  function wireResize(win, handle, dir){
+    handle.addEventListener('pointerdown', function(e){
+      e.stopPropagation(); e.preventDefault();
+      if(win.maximized) return;
+      focusWindow(win.id);
+      handle.setPointerCapture(e.pointerId);
+      var startX = e.clientX, startY = e.clientY;
+      var sb = { x:win.x, y:win.y, w:win.w, h:win.h };
+      function onMove(ev){
+        var dx = ev.clientX-startX, dy = ev.clientY-startY;
+        var x=sb.x, y=sb.y, w=sb.w, h=sb.h;
+        if(dir.indexOf('e')!==-1) w = Math.max(320, sb.w+dx);
+        if(dir.indexOf('s')!==-1) h = Math.max(220, sb.h+dy);
+        if(dir.indexOf('w')!==-1){ w = Math.max(320, sb.w-dx); x = sb.x+sb.w-w; }
+        if(dir.indexOf('n')!==-1){ h = Math.max(220, sb.h-dy); y = sb.y+sb.h-h; }
+        win.x=x; win.y=y; win.w=w; win.h=h;
+        applyBounds(win);
+      }
+      function onUp(){
+        handle.removeEventListener('pointermove', onMove);
+        handle.removeEventListener('pointerup', onUp);
+      }
+      handle.addEventListener('pointermove', onMove);
+      handle.addEventListener('pointerup', onUp);
+    });
+  }
+
+  /* ---------- Window builders ---------- */
+  function svgIcon(kind){
+    if(kind==='min') return '<svg viewBox="0 0 10 10"><line x1="1" y1="9" x2="9" y2="9"/></svg>';
+    if(kind==='max') return '<svg viewBox="0 0 10 10"><rect x="1.5" y="1.5" width="7" height="7"/></svg>';
+    return '<svg viewBox="0 0 10 10"><line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/></svg>';
+  }
+
+  function buildWindowEl(win){
+    var el = document.createElement('div');
+    el.className = 'win';
+    el.id = 'win-' + win.id;
+    el.style.left = win.x+'px'; el.style.top = win.y+'px';
+    el.style.width = win.w+'px'; el.style.height = win.h+'px'; el.style.zIndex = win.z;
+
+    var iconCls, iconLabel;
+    if(win.type === 'explorer'){ iconCls='folder'; iconLabel='DIR'; }
+    else if(win.type === 'preview'){ iconCls='ext-html'; iconLabel='\u25B6'; }
+    else {
+      var node = findNode(win.fileId);
+      var meta = node ? iconMeta(node) : {label:'?',cls:'ext-generic'};
+      iconCls = meta.cls; iconLabel = meta.label;
+    }
+
+    el.innerHTML =
+      '<div class="win-inner">' +
+        '<div class="titlebar">' +
+          '<div class="win-icon ' + iconCls + '">' + esc(iconLabel) + '</div>' +
+          '<div class="win-title">' + esc(win.title) + '</div>' +
+          '<div class="win-controls">' +
+            '<button class="wc min" title="Minimize">' + svgIcon('min') + '</button>' +
+            '<button class="wc max" title="Maximize">' + svgIcon('max') + '</button>' +
+            '<button class="wc close" title="Close">' + svgIcon('close') + '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="win-body"></div>' +
+      '</div>' +
+      '<div class="rz rz-n" data-dir="n"></div>' +
+      '<div class="rz rz-s" data-dir="s"></div>' +
+      '<div class="rz rz-e" data-dir="e"></div>' +
+      '<div class="rz rz-w" data-dir="w"></div>' +
+      '<div class="rz rz-ne" data-dir="ne"></div>' +
+      '<div class="rz rz-nw" data-dir="nw"></div>' +
+      '<div class="rz rz-se" data-dir="se"></div>' +
+      '<div class="rz rz-sw" data-dir="sw"></div>';
+
+    document.getElementById('windowLayer').appendChild(el);
+    win.el = el;
+    var body = el.querySelector('.win-body');
+
+    if(win.type === 'editor') buildEditorBody(win, body);
+    else if(win.type === 'preview') buildPreviewBody(win, body);
+    else if(win.type === 'explorer') buildExplorerBody(win, body);
+
+    el.querySelector('.wc.min').addEventListener('click', function(e){ e.stopPropagation(); minimizeWindow(win.id); });
+    el.querySelector('.wc.max').addEventListener('click', function(e){ e.stopPropagation(); toggleMaximize(win.id); });
+    el.querySelector('.wc.close').addEventListener('click', function(e){ e.stopPropagation(); closeWindow(win.id); });
+    wireDrag(win, el.querySelector('.titlebar'));
+    Array.prototype.forEach.call(el.querySelectorAll('.rz'), function(h){ wireResize(win, h, h.getAttribute('data-dir')); });
+    el.addEventListener('pointerdown', function(){ focusWindow(win.id); });
+
+    return el;
+  }
+
+  function updateGutter(win){
+    var lines = win.textareaEl.value.split('\n').length;
+    var s = '';
+    for(var i=1;i<=lines;i++) s += i + '\n';
+    win.gutterEl.textContent = s;
+  }
+
+  function buildEditorBody(win, body){
+    var node = findNode(win.fileId);
+    if(!node) return;
+    var isHtml = node.ext === 'html';
+    body.innerHTML =
+      '<div class="toolbar">' +
+        '<span class="ext-badge ' + iconMeta(node).cls + '">' + esc(node.ext.toUpperCase()) + '</span>' +
+        '<span class="path-label">' + esc(getPathLabel(win.fileId)) + '</span>' +
+        '<div class="spacer"></div>' +
+        (isHtml ? '<button class="btn small run-btn">\u25B6 Run</button>' : '') +
+      '</div>' +
+      '<div class="editor-wrap">' +
+        '<div class="gutter">1</div>' +
+        '<textarea class="code-input" spellcheck="false" wrap="off"></textarea>' +
+      '</div>';
+
+    var textarea = body.querySelector('.code-input');
+    var gutter = body.querySelector('.gutter');
+    textarea.value = node.content || '';
+    win.textareaEl = textarea; win.gutterEl = gutter;
+    updateGutter(win);
+
+    textarea.addEventListener('input', function(){
+      var n = findNode(win.fileId);
+      if(!n) return;
+      n.content = textarea.value;
+      updateGutter(win);
+      scheduleSave();
+      scheduleFileEdited(win.fileId);
+    });
+    textarea.addEventListener('scroll', function(){ gutter.scrollTop = textarea.scrollTop; });
+    textarea.addEventListener('keydown', function(e){
+      if(e.key === 'Tab'){
+        e.preventDefault();
+        var s = textarea.selectionStart, en = textarea.selectionEnd;
+        textarea.value = textarea.value.slice(0,s) + '  ' + textarea.value.slice(en);
+        textarea.selectionStart = textarea.selectionEnd = s+2;
+        textarea.dispatchEvent(new Event('input'));
+      } else if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+        e.preventDefault();
+        saveFS();
+        onFileEdited(win.fileId);
+      }
+    });
+
+    if(isHtml){
+      body.querySelector('.run-btn').addEventListener('click', function(e){
+        e.stopPropagation();
+        var n = findNode(win.fileId);
+        if(n) openOrFocusPreview(n, true);
+      });
+    }
+  }
+
+  function buildPreviewBody(win, body){
+    body.innerHTML =
+      '<div class="toolbar">' +
+        '<span class="ext-badge ext-html">LIVE</span>' +
+        '<span class="path-label">' + esc(getPathLabel(win.fileId)) + '</span>' +
+        '<div class="spacer"></div>' +
+        '<label class="live-toggle"><input type="checkbox" class="live-cb" checked> Live</label>' +
+        '<button class="btn small refresh-btn">\u27F3 Refresh</button>' +
+      '</div>' +
+      '<div class="preview-wrap"><iframe class="preview-frame" sandbox="allow-scripts allow-forms allow-modals allow-popups"></iframe></div>';
+    win.iframeEl = body.querySelector('.preview-frame');
+    win.live = true;
+    body.querySelector('.live-cb').addEventListener('change', function(e){ win.live = e.target.checked; });
+    body.querySelector('.refresh-btn').addEventListener('click', function(e){ e.stopPropagation(); refreshPreviewWindow(win); });
+    refreshPreviewWindow(win);
+  }
+
+  function buildExplorerBody(win, body){
+    var node = findNode(win.folderId);
+    if(!node) return;
+    var parent = findParent(win.folderId);
+    var parentIsRoot = !parent || parent.id === 'root';
+    body.innerHTML =
+      '<div class="toolbar">' +
+        '<button class="btn small up-btn"' + (parentIsRoot ? ' disabled' : '') + '>\u2191 Up</button>' +
+        '<span class="path-label">' + esc(getPathLabel(win.folderId)) + '</span>' +
+        '<div class="spacer"></div>' +
+        '<button class="btn small new-file-btn">+ File</button>' +
+        '<button class="btn small new-folder-btn">+ Folder</button>' +
+      '</div>' +
+      '<div class="explorer-body"></div>';
+    win.bodyGridEl = body.querySelector('.explorer-body');
+    refreshExplorer(win);
+    if(!parentIsRoot){
+      body.querySelector('.up-btn').addEventListener('click', function(e){ e.stopPropagation(); openFolder(parent); });
+    }
+    body.querySelector('.new-file-btn').addEventListener('click', function(e){ e.stopPropagation(); createNewFile(node); });
+    body.querySelector('.new-folder-btn').addEventListener('click', function(e){ e.stopPropagation(); createNewFolder(node); });
+    win.bodyGridEl.addEventListener('contextmenu', function(e){
+      if(e.target === win.bodyGridEl){
+        e.preventDefault();
+        openBackgroundContextMenu(e.clientX, e.clientY, node);
+      }
+    });
+  }
+  function refreshExplorer(win){
+    var node = findNode(win.folderId);
+    if(node && win.bodyGridEl) renderIconGrid(win.bodyGridEl, node);
+  }
+
+  /* ---------- Icon grid (shared by desktop + explorer) ---------- */
+  function renderIconGrid(container, folderNode){
+    container.innerHTML = '';
+    var kids = folderNode.children.slice().sort(sortFn);
+    if(kids.length === 0){
+      container.innerHTML = '<div class="empty-hint">Empty \u2014 right-click to add a file or folder</div>';
+      return;
+    }
+    kids.forEach(function(node){
+      var meta = iconMeta(node);
+      var el = document.createElement('div');
+      el.className = 'fs-icon';
+      el.setAttribute('data-id', node.id);
+      el.innerHTML =
+        '<div class="fs-badge ' + meta.cls + '">' + esc(meta.label) + '</div>' +
+        '<div class="fs-name">' + esc(node.name) + '</div>';
+      el.addEventListener('dblclick', function(){ handleOpen(node); });
+      el.addEventListener('click', function(e){ e.stopPropagation(); selectIcon(el); });
+      el.addEventListener('contextmenu', function(e){
+        e.preventDefault(); e.stopPropagation();
+        selectIcon(el);
+        openIconContextMenu(e.clientX, e.clientY, node);
+      });
+      container.appendChild(el);
+    });
+  }
+  function selectIcon(el){
+    document.querySelectorAll('.fs-icon.selected').forEach(function(n){ n.classList.remove('selected'); });
+    el.classList.add('selected');
+  }
+  function clearSelection(){
+    document.querySelectorAll('.fs-icon.selected').forEach(function(n){ n.classList.remove('selected'); });
+  }
+  function renderDesktopIcons(){
+    renderIconGrid(document.getElementById('iconLayer'), fs);
+  }
+  function refreshFolderViews(folderId){
+    if(folderId === 'root') renderDesktopIcons();
+    windows.forEach(function(w){ if(w.type==='explorer' && w.folderId===folderId) refreshExplorer(w); });
+    renderTaskbar();
+  }
+
+  /* ---------- Open helpers ---------- */
+  function handleOpen(node){
+    if(node.type === 'folder') openFolder(node); else openFile(node);
+  }
+  function openFile(node){
+    var existing = windows.filter(function(w){ return w.type==='editor' && w.fileId===node.id; })[0];
+    if(existing){ restoreAndFocus(existing); return; }
+    var pos = nextCascadePos();
+    var win = { id:uid(), type:'editor', fileId:node.id, title:node.name, x:pos.x, y:pos.y, w:660, h:460, minimized:false, maximized:false, z:++zTop };
+    windows.push(win);
+    buildWindowEl(win);
+    focusWindow(win.id);
+    renderTaskbar();
+  }
+  function openFolder(node){
+    var existing = windows.filter(function(w){ return w.type==='explorer' && w.folderId===node.id; })[0];
+    if(existing){ restoreAndFocus(existing); return; }
+    var pos = nextCascadePos();
+    var win = { id:uid(), type:'explorer', folderId:node.id, title:node.name, x:pos.x, y:pos.y, w:560, h:400, minimized:false, maximized:false, z:++zTop };
+    windows.push(win);
+    buildWindowEl(win);
+    focusWindow(win.id);
+    renderTaskbar();
+  }
+  function openOrFocusPreview(node, forceRefresh){
+    var win = windows.filter(function(w){ return w.type==='preview' && w.fileId===node.id; })[0];
+    if(!win){
+      var pos = nextCascadePos();
+      win = { id:uid(), type:'preview', fileId:node.id, title:node.name, x:pos.x, y:pos.y, w:520, h:420, minimized:false, maximized:false, z:++zTop };
+      windows.push(win);
+      buildWindowEl(win);
+      renderTaskbar();
+    } else {
+      restoreAndFocus(win);
+      if(forceRefresh) refreshPreviewWindow(win);
+    }
+    focusWindow(win.id);
+  }
+  function refreshPreviewWindow(win){
+    var node = findNode(win.fileId);
+    if(!node || !win.iframeEl) return;
+    win.iframeEl.srcdoc = resolvePreviewHTML(node);
+  }
+
+  /* ---------- Live refresh scheduling ---------- */
+  var saveTimer = null;
+  function scheduleSave(){ clearTimeout(saveTimer); saveTimer = setTimeout(saveFS, 500); }
+  var editTimers = {};
+  function scheduleFileEdited(fileId){
+    clearTimeout(editTimers[fileId]);
+    editTimers[fileId] = setTimeout(function(){ onFileEdited(fileId); }, 300);
+  }
+  function onFileEdited(fileId){
+    var parent = findParent(fileId) || fs;
+    windows.forEach(function(w){
+      if(w.type === 'preview' && w.live !== false){
+        var wParent = findParent(w.fileId) || fs;
+        if(w.fileId === fileId || wParent.id === parent.id){
+          refreshPreviewWindow(w);
+        }
+      }
+    });
+  }
+
+  /* ---------- Taskbar ---------- */
+  function taskIcon(w){
+    if(w.type === 'explorer') return {cls:'folder', label:'DIR'};
+    if(w.type === 'preview') return {cls:'ext-html', label:'\u25B6'};
+    var node = findNode(w.fileId);
+    return node ? iconMeta(node) : {cls:'ext-generic', label:'?'};
+  }
+  function renderTaskbar(){
+    var wrap = document.getElementById('taskWindows');
+    wrap.innerHTML = windows.map(function(w){
+      var meta = taskIcon(w);
+      var cls = 'task-btn' + (w.id===activeId && !w.minimized ? ' active' : '') + (w.minimized ? ' minimized' : '');
+      return '<button class="' + cls + '" data-id="' + w.id + '">' +
+        '<span class="task-icon ' + meta.cls + '">' + esc(meta.label) + '</span>' +
+        '<span class="task-label">' + esc(w.title) + '</span>' +
+        '</button>';
+    }).join('');
+    Array.prototype.forEach.call(wrap.querySelectorAll('.task-btn'), function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.getAttribute('data-id');
+        var win = windows.filter(function(w){ return w.id===id; })[0];
+        if(!win) return;
+        if(win.minimized) restoreAndFocus(win);
+        else if(activeId === id) minimizeWindow(id);
+        else focusWindow(id);
+      });
+    });
+  }
+
+  /* ---------- Context menus ---------- */
+  function openIconContextMenu(x, y, node){
+    var items = [];
+    if(node.type === 'file'){
+      items.push({ label:'Open', action:function(){ handleOpen(node); } });
+      if(node.ext === 'html') items.push({ label:'\u25B6 Run / Preview', action:function(){ openOrFocusPreview(node, true); } });
+    } else {
+      items.push({ label:'Open', action:function(){ openFolder(node); } });
+    }
+    items.push({ label:'Rename', action:function(){ renameNode(node); } });
+    items.push({ label:'Delete', action:function(){ deleteNode(node); } });
+    renderContextMenu(x, y, items);
+  }
+  function openBackgroundContextMenu(x, y, folderNode){
+    renderContextMenu(x, y, [
+      { label:'New file', action:function(){ createNewFile(folderNode); } },
+      { label:'New folder', action:function(){ createNewFolder(folderNode); } }
+    ]);
+  }
+  function renderContextMenu(x, y, items){
+    var menu = document.getElementById('contextMenu');
+    menu.innerHTML = items.map(function(it, i){ return '<button class="ctx-item" data-i="' + i + '">' + esc(it.label) + '</button>'; }).join('');
+    menu.classList.remove('hidden');
+    menu.style.left = x + 'px'; menu.style.top = y + 'px';
+    requestAnimationFrame(function(){
+      var r = menu.getBoundingClientRect();
+      var vw = window.innerWidth, vh = window.innerHeight;
+      if(r.right > vw) menu.style.left = Math.max(8, vw - r.width - 8) + 'px';
+      if(r.bottom > vh) menu.style.top = Math.max(8, vh - r.height - 8) + 'px';
+    });
+    Array.prototype.forEach.call(menu.querySelectorAll('.ctx-item'), function(btn, i){
+      btn.addEventListener('click', function(e){ e.stopPropagation(); closeContextMenu(); items[i].action(); });
+    });
+    setTimeout(function(){ document.addEventListener('click', closeContextMenu, {once:true}); }, 0);
+  }
+  function closeContextMenu(){ document.getElementById('contextMenu').classList.add('hidden'); }
+
+  /* ---------- Modal ---------- */
+  function showModal(opts){
+    return new Promise(function(resolve){
+      var overlay = document.getElementById('modalOverlay');
+      var showInput = opts.showInput !== false;
+      overlay.innerHTML =
+        '<div class="modal-box">' +
+          '<h3>' + esc(opts.title || '') + '</h3>' +
+          (opts.message ? '<p>' + esc(opts.message) + '</p>' : '') +
+          (showInput ? '<input id="modalInput" type="text" value="' + esc(opts.defaultValue || '') + '">' : '') +
+          '<div class="modal-actions">' +
+            '<button id="modalCancel" class="btn ghost">Cancel</button>' +
+            '<button id="modalOk" class="btn primary">' + esc(opts.confirmLabel || 'OK') + '</button>' +
+          '</div>' +
+        '</div>';
+      overlay.classList.remove('hidden');
+      var input = document.getElementById('modalInput');
+      if(input){ input.focus(); input.select(); }
+      function onKey(e){
+        if(e.key === 'Escape'){ cleanup(null); }
+        else if(e.key === 'Enter' && (!input || document.activeElement===input)){ e.preventDefault(); cleanup(showInput ? (input.value.trim() || null) : true); }
+      }
+      function cleanup(v){
+        overlay.classList.add('hidden');
+        overlay.innerHTML = '';
+        document.removeEventListener('keydown', onKey);
+        resolve(v);
+      }
+      document.addEventListener('keydown', onKey);
+      document.getElementById('modalOk').addEventListener('click', function(){ cleanup(showInput ? (input.value.trim() || null) : true); });
+      document.getElementById('modalCancel').addEventListener('click', function(){ cleanup(null); });
+      overlay.addEventListener('click', function(e){ if(e.target === overlay) cleanup(null); });
+    });
+  }
+
+  /* ---------- FS mutations ---------- */
+  function createNewFile(folderNode){
+    showModal({ title:'New file', message:'Name your file, e.g. page.html, style.css, script.js', defaultValue:'untitled.html', confirmLabel:'Create' }).then(function(name){
+      if(!name) return;
+      if(folderNode.children.some(function(c){ return c.name.toLowerCase()===name.toLowerCase(); })){
+        showModal({ title:'Name taken', message:'A file or folder with that name already exists here.', showInput:false, confirmLabel:'OK' });
+        return;
+      }
+      var ext = (name.split('.').pop() || '').toLowerCase();
+      var node = { id:uid(), name:name, type:'file', ext:ext, content: FILE_TEMPLATES[ext] || '' };
+      folderNode.children.push(node);
+      saveFS();
+      refreshFolderViews(folderNode.id);
+      openFile(node);
+    });
+  }
+  function createNewFolder(folderNode){
+    showModal({ title:'New folder', defaultValue:'New Folder', confirmLabel:'Create' }).then(function(name){
+      if(!name) return;
+      if(folderNode.children.some(function(c){ return c.name.toLowerCase()===name.toLowerCase(); })){
+        showModal({ title:'Name taken', message:'A file or folder with that name already exists here.', showInput:false, confirmLabel:'OK' });
+        return;
+      }
+      folderNode.children.push({ id:uid(), name:name, type:'folder', children:[] });
+      saveFS();
+      refreshFolderViews(folderNode.id);
+    });
+  }
+  function renameNode(node){
+    showModal({ title:'Rename', defaultValue:node.name, confirmLabel:'Rename' }).then(function(name){
+      if(!name || name === node.name) return;
+      var parent = findParent(node.id);
+      if(parent.children.some(function(c){ return c.id!==node.id && c.name.toLowerCase()===name.toLowerCase(); })){
+        showModal({ title:'Name taken', message:'That name is already used in this folder.', showInput:false, confirmLabel:'OK' });
+        return;
+      }
+      node.name = name;
+      if(node.type === 'file') node.ext = (name.split('.').pop() || '').toLowerCase();
+      saveFS();
+      refreshFolderViews(parent.id);
+      updateWindowTitlesFor(node.id);
+    });
+  }
+  function deleteNode(node){
+    showModal({ title:'Delete', message:'Delete "' + node.name + '"? This can\'t be undone.', showInput:false, confirmLabel:'Delete' }).then(function(ok){
+      if(!ok) return;
+      var parent = findParent(node.id);
+      parent.children = parent.children.filter(function(c){ return c.id !== node.id; });
+      closeWindowsForNode(node);
+      saveFS();
+      refreshFolderViews(parent.id);
+    });
+  }
+
+  /* ---------- Start menu / taskbar / clock ---------- */
+  function tickClock(){
+    var el = document.getElementById('clock');
+    var d = new Date();
+    var h = d.getHours(), m = d.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12; if(h === 0) h = 12;
+    el.textContent = h + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+  }
+
+  function initChrome(){
+    var startBtn = document.getElementById('startBtn');
+    var startMenu = document.getElementById('startMenu');
+    startBtn.addEventListener('click', function(e){ e.stopPropagation(); startMenu.classList.toggle('hidden'); });
+    document.addEventListener('click', function(){ startMenu.classList.add('hidden'); });
+    startMenu.querySelector('.sm-newfile').addEventListener('click', function(e){ e.stopPropagation(); startMenu.classList.add('hidden'); createNewFile(fs); });
+    startMenu.querySelector('.sm-newfolder').addEventListener('click', function(e){ e.stopPropagation(); startMenu.classList.add('hidden'); createNewFolder(fs); });
+    startMenu.querySelector('.sm-reset').addEventListener('click', function(e){
+      e.stopPropagation(); startMenu.classList.add('hidden');
+      showModal({ title:'Reset desktop', message:'This deletes everything you\'ve created and restores the starter files. This can\'t be undone.', showInput:false, confirmLabel:'Reset' }).then(function(ok){
+        if(!ok) return;
+        windows.slice().forEach(function(w){ closeWindow(w.id); });
+        fs = defaultFS();
+        saveFS();
+        renderDesktopIcons();
+      });
+    });
+
+    document.getElementById('desktop').addEventListener('contextmenu', function(e){
+      if(e.target.closest('.fs-icon')) return;
+      e.preventDefault();
+      openBackgroundContextMenu(e.clientX, e.clientY, fs);
+    });
+    document.getElementById('desktop').addEventListener('click', function(e){
+      if(!e.target.closest('.fs-icon')) clearSelection();
+      closeContextMenu();
+    });
+
+    window.addEventListener('resize', function(){
+      windows.forEach(function(w){
+        if(w.maximized){ var b = desktopBounds(); w.w = b.w; w.h = b.h; applyBounds(w); }
+      });
+    });
+  }
+
+  function init(){
+    loadFS();
+    renderDesktopIcons();
+    renderTaskbar();
+    initChrome();
+    tickClock();
+    setInterval(tickClock, 15000);
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>
