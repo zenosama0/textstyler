@@ -7,6 +7,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script>
+  // Anti-flash theming: applied before first paint so returning visitors
+  // never see a flicker of the default light/teal theme before their
+  // saved dark mode / accent color kicks in.
+  (function(){
+    try{
+      var t = localStorage.getItem('mdStyler:theme');
+      if(t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      var a = localStorage.getItem('mdStyler:accent');
+      if(a){
+        document.documentElement.style.setProperty('--accent', a);
+      }
+    }catch(e){}
+  })();
+</script>
 <style>
   :root{
     --paper:#F3F4EE;
@@ -14,11 +29,47 @@
     --ink:#212A38;
     --muted:#6B7280;
     --yellow:#FFD34D;
-    --teal:#2F9C95;
-    --coral:#E8556E;
+    --accent:#2F9C95;
+    --accent-fill:#2F9C95;
+    --accent-2:#E8556E;
+    --accent-3:#3E5C76;
+    --accent-grad:#E8556E;
     --card:#FFFFFF;
+    --stamp:#212A38;
+    --stamp-fg:#FFD34D;
+    --note-bg:#FFF9E5;
+    --note-fg:#5c4a1f;
+    --code-bg:#EFF1EA;
+    --code-fg:#B14D5F;
+    --zebra:#FAFAF6;
+    --input-bg:#FBFBF8;
+  }
+  [data-theme="dark"]{
+    --paper:#1B1C17;
+    --rule:#2B2D26;
+    --ink:#ECEAE2;
+    --muted:#9A9C93;
+    --yellow:#FFD34D;
+    --accent:#3DBDB3;
+    --accent-fill:#3DBDB3;
+    --accent-2:#FF7A90;
+    --accent-3:#5C7C9C;
+    --accent-grad:#FF7A90;
+    --card:#222420;
+    --stamp:#FFD34D;
+    --stamp-fg:#1B1C17;
+    --note-bg:#332C16;
+    --note-fg:#F3D9A0;
+    --code-bg:#2A2C24;
+    --code-fg:#FF8FA3;
+    --zebra:#262820;
+    --input-bg:#1E201B;
   }
   *{box-sizing:border-box;}
+  ::selection{ background:var(--accent-fill); color:#fff; }
+  button:focus-visible, input:focus-visible, a:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px;
+  }
   html,body{margin:0;padding:0;}
   body{
     background:
@@ -30,6 +81,7 @@
     color:var(--ink);
     font-family:'Source Sans 3', sans-serif;
     min-height:100vh;
+    transition:background .2s ease, color .2s ease;
   }
 
   .app{ max-width:840px; margin:0 auto; padding:20px 20px 80px; }
@@ -44,35 +96,93 @@
   .brand-mark-link{ text-decoration:none; display:block; }
   .brand-mark{
     width:40px; height:40px; border-radius:10px;
-    background:var(--ink); color:var(--yellow);
+    background:var(--stamp); color:var(--stamp-fg);
     display:flex; align-items:center; justify-content:center;
     font-size:20px; flex-shrink:0;
     transform:rotate(-4deg);
-    transition:transform .15s ease, background .15s ease;
+    transition:transform .15s ease, background .15s ease, color .15s ease;
   }
-  .brand-mark-link:hover .brand-mark{ transform:rotate(-4deg) scale(1.06); background:var(--teal); }
+  .brand-mark-link:hover .brand-mark{ transform:rotate(-4deg) scale(1.06); background:var(--accent-fill); color:#fff; }
   .brand h1{
     font-family:'Fraunces', serif; font-weight:700; font-size:1.5rem;
     margin:0; letter-spacing:-0.01em;
   }
   .brand p{ margin:2px 0 0; font-size:0.82rem; color:var(--muted); }
 
-  .actions{ display:flex; gap:8px; }
+  .actions{ display:flex; align-items:center; gap:8px; position:relative; }
   .btn{
     font-family:'Source Sans 3', sans-serif; font-weight:600; font-size:0.85rem;
     padding:9px 14px; border-radius:8px; border:1.5px solid var(--ink);
     background:var(--card); color:var(--ink); cursor:pointer;
-    transition:transform .12s ease;
+    transition:transform .12s ease, background .15s ease, color .15s ease, border-color .15s ease;
   }
-  .btn:hover{ transform:translateY(-1px); }
+  .btn:hover{ transform:translateY(-1px); border-color:var(--accent); }
   .btn:active{ transform:translateY(0); }
-  .btn-accent{ background:var(--ink); color:var(--yellow); }
+  .btn-accent{ background:var(--stamp); color:var(--stamp-fg); border-color:var(--ink); }
+
+  /* ---------- Icon buttons (dark mode + accent color) ---------- */
+  .iconbtn{
+    width:38px; height:38px; flex-shrink:0; border-radius:8px;
+    border:1.5px solid var(--ink); background:var(--card); color:var(--ink);
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:transform .12s ease, background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .iconbtn:hover{ transform:translateY(-1px); border-color:var(--accent); }
+  .iconbtn:active{ transform:translateY(0); }
+  .iconbtn svg{ width:17px; height:17px; }
+  .iconbtn.active{ background:var(--accent-fill); border-color:var(--accent-fill); color:#fff; }
+
+  .theme-wrap{ position:relative; }
+  .popover{
+    position:absolute; top:calc(100% + 8px); right:0; z-index:50;
+    min-width:236px; background:var(--card); border:1.5px solid var(--ink);
+    border-radius:12px; box-shadow:4px 4px 0 var(--ink); padding:14px;
+    display:none; flex-direction:column; gap:10px;
+    animation:popIn .14s ease-out;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .popover.show{ display:flex; }
+  @keyframes popIn{ from{ opacity:0; transform:scale(.95) translateY(-4px); } to{ opacity:1; transform:scale(1) translateY(0); } }
+  .popover-label{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--muted);
+  }
+  .swatch-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .swatch{
+    width:28px; height:28px; border-radius:8px; border:1.5px solid var(--ink);
+    cursor:pointer; padding:0; position:relative; flex-shrink:0;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .swatch:hover{ transform:translateY(-2px); box-shadow:2px 2px 0 var(--rule); }
+  .swatch.active::after{
+    content:""; position:absolute; inset:-4px; border-radius:10px; border:1.5px solid var(--ink);
+  }
+  .swatch.reset{
+    background:
+      linear-gradient(to bottom right, transparent calc(50% - 1px), var(--muted), transparent calc(50% + 1px)),
+      var(--card);
+  }
+  .swatch.custom-toggle{
+    background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--ink);
+    border-style:dashed;
+  }
+  .swatch.custom-toggle svg{ width:14px; height:14px; }
+  .custom-row{ display:none; gap:6px; }
+  .custom-row.show{ display:flex; }
+  .custom-row input{
+    flex:1; min-width:0; padding:7px 9px; border:1.5px solid var(--rule); border-radius:7px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--ink); background:var(--input-bg);
+    outline:none; transition:border-color .12s ease;
+  }
+  .custom-row input:focus{ border-color:var(--accent); }
+  .custom-row input.invalid{ border-color:#D64550; }
 
   /* Editor panel */
   .editor-panel{
     background:var(--card); border:1.5px solid var(--ink); border-radius:12px;
     padding:16px; margin-bottom:20px;
     box-shadow:4px 4px 0 var(--ink);
+    transition:background .2s ease, border-color .2s ease;
   }
   .editor-panel.hidden{ display:none; }
   .editor-panel label{
@@ -83,9 +193,10 @@
     width:100%; min-height:220px; resize:vertical;
     font-family:'IBM Plex Mono', monospace; font-size:0.85rem; line-height:1.55;
     border:1.5px solid var(--rule); border-radius:8px; padding:12px;
-    background:#FBFBF8; color:var(--ink);
+    background:var(--input-bg); color:var(--ink);
+    transition:background .2s ease, border-color .15s ease, color .2s ease;
   }
-  #mdInput:focus{ outline:none; border-color:var(--teal); }
+  #mdInput:focus{ outline:none; border-color:var(--accent); }
   .editor-actions{
     display:flex; align-items:center; gap:12px; margin-top:10px;
   }
@@ -98,6 +209,7 @@
     border-radius:14px;
     box-shadow:6px 6px 0 var(--ink);
     padding:8px;
+    transition:background .2s ease, border-color .2s ease;
   }
   .prose{ padding:26px 26px 34px; }
 
@@ -110,7 +222,7 @@
 
   .prose h1::after{
     content:""; display:block; width:64px; height:4px; margin-top:10px;
-    background:linear-gradient(90deg, var(--teal), var(--coral));
+    background:linear-gradient(90deg, var(--accent), var(--accent-grad));
     border-radius:4px;
   }
 
@@ -120,15 +232,15 @@
     display:inline-block; border-radius:6px 6px 6px 0;
     color:#fff; position:relative;
   }
-  .prose h2:nth-of-type(3n+1){ background:var(--teal); }
-  .prose h2:nth-of-type(3n+2){ background:var(--coral); }
-  .prose h2:nth-of-type(3n+3){ background:#3E5C76; }
+  .prose h2:nth-of-type(3n+1){ background:var(--accent-fill); }
+  .prose h2:nth-of-type(3n+2){ background:var(--accent-2); }
+  .prose h2:nth-of-type(3n+3){ background:var(--accent-3); }
 
   .prose h3{
     font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem;
     margin:22px 0 10px; color:var(--ink);
   }
-  .prose h3::before{ content:"▍ "; color:var(--teal); }
+  .prose h3::before{ content:"▍ "; color:var(--accent); }
 
   .prose p{ line-height:1.65; margin:10px 0; font-size:0.97rem; }
 
@@ -139,8 +251,8 @@
 
   .prose ul, .prose ol{ padding-left:1.3em; margin:10px 0; }
   .prose li{ line-height:1.6; margin:5px 0; font-size:0.96rem; }
-  .prose ul > li::marker{ color:var(--coral); }
-  .prose ol > li::marker{ color:var(--teal); font-weight:600; }
+  .prose ul > li::marker{ color:var(--accent-2); }
+  .prose ol > li::marker{ color:var(--accent); font-weight:600; }
 
   .prose table{
     width:100%; border-collapse:collapse; margin:16px 0;
@@ -148,7 +260,7 @@
     border:1px solid var(--rule);
   }
   .prose thead th{
-    background:var(--ink); color:var(--yellow); text-align:left;
+    background:var(--stamp); color:var(--stamp-fg); text-align:left;
     padding:9px 12px; font-weight:600; font-family:'IBM Plex Mono', monospace;
     font-size:0.8rem; letter-spacing:.02em;
   }
@@ -156,12 +268,12 @@
     padding:9px 12px; border-top:1px solid var(--rule);
     font-family:'IBM Plex Mono', monospace; font-size:0.83rem;
   }
-  .prose tbody tr:nth-child(even){ background:#FAFAF6; }
+  .prose tbody tr:nth-child(even){ background:var(--zebra); }
 
   .prose blockquote{
-    background:#FFF9E5; border:1.5px dashed var(--coral); border-radius:8px;
+    background:var(--note-bg); border:1.5px dashed var(--accent-2); border-radius:8px;
     padding:12px 16px; margin:16px 4px; font-size:0.9rem;
-    color:#5c4a1f; transform:rotate(-0.4deg);
+    color:var(--note-fg); transform:rotate(-0.4deg);
   }
   .prose blockquote p{ margin:0; }
 
@@ -173,8 +285,8 @@
   }
 
   .prose code{
-    font-family:'IBM Plex Mono', monospace; background:#EFF1EA;
-    padding:1px 6px; border-radius:4px; font-size:0.85em; color:#B14D5F;
+    font-family:'IBM Plex Mono', monospace; background:var(--code-bg);
+    padding:1px 6px; border-radius:4px; font-size:0.85em; color:var(--code-fg);
   }
 
   footer.credit{
@@ -189,6 +301,20 @@
   }
 
   @media print{
+    /* Printed output always uses the light "cram sheet" palette, no
+       matter which theme/accent is active on screen — dark backgrounds
+       waste ink and dark-mode text is unreadable on white paper.
+       (The JS beforeprint/afterprint handlers below strip the inline
+       accent overrides so these resets can actually take effect.) */
+    :root, [data-theme="dark"]{
+      --paper:#fff; --rule:#E1E4DA; --ink:#212A38; --muted:#6B7280;
+      --yellow:#FFD34D; --accent:#2F9C95; --card:#fff;
+      --accent-fill:#2F9C95; --accent-2:#E8556E; --accent-3:#3E5C76; --accent-grad:#E8556E;
+      --stamp:#212A38; --stamp-fg:#FFD34D;
+      --note-bg:#FFF9E5; --note-fg:#5c4a1f;
+      --code-bg:#EFF1EA; --code-fg:#B14D5F;
+      --zebra:#FAFAF6; --input-bg:#FBFBF8;
+    }
     body{ background:#fff; }
     .topbar, .editor-panel{ display:none !important; }
     .sheet{ box-shadow:none; border:none; }
@@ -213,6 +339,26 @@
       <div class="actions">
         <button id="toggleEditor" class="btn">Edit notes</button>
         <button id="printBtn" class="btn btn-accent">Print / Save PDF</button>
+        <div class="theme-wrap">
+          <button class="iconbtn" id="paletteBtn" title="Accent color">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.1-.7-.4-1-.2-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.4-4-8-10-8z"/></svg>
+          </button>
+          <div class="popover" id="palettePopover">
+            <div class="popover-label">Accent color</div>
+            <div class="swatch-row" id="swatchRow">
+              <button class="swatch reset" id="resetSwatch" type="button" data-hex="" title="Theme default"></button>
+              <button class="swatch custom-toggle" id="customToggleBtn" type="button" title="Custom color">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <div class="custom-row" id="customRow">
+              <input type="text" id="customColorInput" placeholder="#2F9C95 or rgb(47,156,149)" spellcheck="false">
+            </div>
+          </div>
+        </div>
+        <button class="iconbtn" id="darkBtn" title="Toggle dark mode">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
       </div>
     </header>
 
@@ -420,6 +566,257 @@ Conditional sentences express a condition and its result, using **if-clauses**.
   document.getElementById('printBtn').addEventListener('click', ()=> window.print());
 
   render();
+
+  // ---------- Dark mode (persisted) ----------
+  // data-theme may already have been set by the anti-flash script in <head>
+  // if a saved preference exists; here we just wire up the toggle button.
+  const darkBtn = document.getElementById('darkBtn');
+  function setDarkActive(){
+    darkBtn.classList.toggle('active', document.documentElement.getAttribute('data-theme') === 'dark');
+  }
+  setDarkActive();
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try{ localStorage.setItem('mdStyler:theme', next); }catch(e){}
+    setDarkActive();
+    refreshAccentVar(); // tint ranges & the theme's own default accent differ per theme
+  });
+
+  // ---------- Accent color system (persisted) ----------
+  const PRESET_ACCENTS = ['#2F9C95', '#4A3AFF', '#E14C86', '#2E9E5B', '#E2A63A', '#3E5C76'];
+  let customAccentHex = null;
+  try{ customAccentHex = localStorage.getItem('mdStyler:accent') || null; }catch(e){}
+
+  function hexToRgb(hex){
+    hex = hex.replace('#','');
+    return { r: parseInt(hex.substring(0,2),16), g: parseInt(hex.substring(2,4),16), b: parseInt(hex.substring(4,6),16) };
+  }
+  function rgbToHex(r,g,b){
+    return '#' + [r,g,b].map(v => Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0')).join('').toUpperCase();
+  }
+  // Auto-detects hex ("#2F9C95", "2F9C95", "#2c9") or rgb()/rgba() input.
+  function parseColorInput(str){
+    str = (str || '').trim();
+    if(!str) return null;
+    const rgbMatch = str.match(/^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*[\d.]+\s*)?\)$/i);
+    if(rgbMatch){
+      const r = +rgbMatch[1], g = +rgbMatch[2], b = +rgbMatch[3];
+      if(r > 255 || g > 255 || b > 255) return null;
+      return rgbToHex(r, g, b);
+    }
+    let hex = str.replace(/^#/, '');
+    if(/^[0-9a-f]{3}$/i.test(hex)) hex = hex.split('').map(c => c + c).join('');
+    if(/^[0-9a-f]{6}$/i.test(hex)) return '#' + hex.toUpperCase();
+    return null;
+  }
+
+  // ---- Color theory: derive a full palette from a single accent hex ----
+  // Rather than fixed preset colors for headings/gradients, every
+  // secondary color on the page is computed from whichever accent the
+  // user picked (preset or custom), by rotating hue around the color
+  // wheel and clamping saturation/lightness into a range that stays
+  // legible for its role (white text on a fill, a border on paper, etc).
+  function hexToHsl(hex){
+    const {r,g,b} = hexToRgb(hex);
+    const rn = r/255, gn = g/255, bn = b/255;
+    const max = Math.max(rn,gn,bn), min = Math.min(rn,gn,bn);
+    let h, s, l = (max+min)/2;
+    if(max === min){ h = s = 0; }
+    else{
+      const d = max - min;
+      s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+      switch(max){
+        case rn: h = (gn-bn)/d + (gn < bn ? 6 : 0); break;
+        case gn: h = (bn-rn)/d + 2; break;
+        default: h = (rn-gn)/d + 4;
+      }
+      h *= 60;
+    }
+    return { h, s: s*100, l: l*100 };
+  }
+  function hslToHex(h,s,l){
+    h = ((h % 360) + 360) % 360; s = s/100; l = l/100;
+    const c = (1-Math.abs(2*l-1)) * s;
+    const x = c * (1 - Math.abs((h/60) % 2 - 1));
+    const m = l - c/2;
+    let r,g,b;
+    if(h < 60){ r=c; g=x; b=0; }
+    else if(h < 120){ r=x; g=c; b=0; }
+    else if(h < 180){ r=0; g=c; b=x; }
+    else if(h < 240){ r=0; g=x; b=c; }
+    else if(h < 300){ r=x; g=0; b=c; }
+    else{ r=c; g=0; b=x; }
+    return rgbToHex((r+m)*255, (g+m)*255, (b+m)*255);
+  }
+  function clamp(v, min, max){ return Math.min(max, Math.max(min, v)); }
+  // WCAG-style relative luminance / contrast ratio against white text, so
+  // fills that need white text on top (heading chips) stay legible no
+  // matter which hue the user picks — HSL "lightness" alone isn't a
+  // reliable proxy for perceived brightness (yellow/cyan read far
+  // lighter than blue/red at the same L), so this checks real contrast.
+  function relLuminance(hex){
+    const { r, g, b } = hexToRgb(hex);
+    const lin = v => { v /= 255; return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); };
+    return 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(b);
+  }
+  function contrastWithWhite(hex){ return 1.05 / (relLuminance(hex) + 0.05); }
+  // Rotate hue by an offset and clamp saturation/lightness into a range
+  // tuned for a specific UI role, so any input hue still looks intentional.
+  // When minContrastWhite is given, keep darkening until real contrast
+  // against white text clears that ratio (falls back on plain clamping
+  // for roles that don't carry white text, like the gradient bar).
+  function harmonize(hex, hueOffset, range, minContrastWhite){
+    const { h, s, l } = hexToHsl(hex);
+    const nh = h + hueOffset;
+    const ns = clamp(s, range.minS, range.maxS);
+    let nl = clamp(l, range.minL, range.maxL);
+    let result = hslToHex(nh, ns, nl);
+    if(minContrastWhite){
+      let guard = 0;
+      while(contrastWithWhite(result) < minContrastWhite && nl > 4 && guard < 40){
+        nl -= 2;
+        result = hslToHex(nh, ns, nl);
+        guard++;
+      }
+    }
+    return result;
+  }
+  // Solid, saturated fills meant to sit behind white text (heading chips).
+  const RANGE_FILL = { minS:55, maxS:80, minL:36, maxL:50 };
+  const MIN_CONTRAST_WHITE = 4.5;
+  // A little more freedom for the thin gradient bar under h1 — it never
+  // carries text, so it doesn't need the contrast guard.
+  const RANGE_GRAD = { minS:50, maxS:85, minL:38, maxL:58 };
+  // Pale washes / readable-on-wash text for blockquotes & inline code —
+  // these need to flip from light-tint-on-light-text to
+  // dark-tint-on-light-text depending on the active theme.
+  function tintRanges(isDark){
+    return isDark
+      ? { bg:{minS:28,maxS:45,minL:16,maxL:22}, fg:{minS:35,maxS:55,minL:76,maxL:86} }
+      : { bg:{minS:22,maxS:42,minL:90,maxL:95}, fg:{minS:45,maxS:65,minL:22,maxL:32} };
+  }
+  const ACCENT_VARS = ['--accent','--accent-fill','--accent-2','--accent-3','--accent-grad','--note-bg','--note-fg','--code-bg','--code-fg'];
+
+  // Split-complementary scheme: the base accent (0°), plus two colors
+  // 150°/210° around the wheel from it (i.e. ±30° from its true
+  // complement). That trio reads as "designed together" for the three
+  // rotating heading colors, while the h1 underline gradient goes all
+  // the way to the true 180° complement for maximum contrast/pop.
+  function applyPalette(accentHex){
+    const root = document.documentElement.style;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const t = tintRanges(isDark);
+
+    root.setProperty('--accent-fill', harmonize(accentHex, 0, RANGE_FILL, MIN_CONTRAST_WHITE));
+    root.setProperty('--accent-2', harmonize(accentHex, 150, RANGE_FILL, MIN_CONTRAST_WHITE));
+    root.setProperty('--accent-3', harmonize(accentHex, 210, RANGE_FILL, MIN_CONTRAST_WHITE));
+    root.setProperty('--accent-grad', harmonize(accentHex, 180, RANGE_GRAD));
+    root.setProperty('--note-bg', harmonize(accentHex, 150, t.bg));
+    root.setProperty('--note-fg', harmonize(accentHex, 150, t.fg));
+    root.setProperty('--code-bg', harmonize(accentHex, 210, t.bg));
+    root.setProperty('--code-fg', harmonize(accentHex, 210, t.fg));
+  }
+  function effectiveAccent(){
+    if(customAccentHex) return customAccentHex;
+    const cs = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    return cs || '#2F9C95';
+  }
+  function refreshAccentVar(){
+    if(customAccentHex){
+      document.documentElement.style.setProperty('--accent', customAccentHex);
+    } else {
+      document.documentElement.style.removeProperty('--accent');
+    }
+    applyPalette(effectiveAccent());
+  }
+  function applyAccent(hex){
+    customAccentHex = hex;
+    try{
+      if(hex) localStorage.setItem('mdStyler:accent', hex);
+      else localStorage.removeItem('mdStyler:accent');
+    }catch(e){}
+    refreshAccentVar();
+    renderSwatchState();
+  }
+  refreshAccentVar();
+
+  // Printing should always use the plain light "cram sheet" palette
+  // (see the @media print reset) — but that reset can't win against the
+  // inline custom properties we set above, so strip them just for the
+  // print pass and put them back once it's done.
+  window.addEventListener('beforeprint', () => {
+    ACCENT_VARS.forEach(p => document.documentElement.style.removeProperty(p));
+  });
+  window.addEventListener('afterprint', () => { refreshAccentVar(); });
+
+  const swatchRow = document.getElementById('swatchRow');
+  const customToggleBtn = document.getElementById('customToggleBtn');
+  const resetSwatch = document.getElementById('resetSwatch');
+
+  PRESET_ACCENTS.forEach(hex => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'swatch';
+    b.style.background = hex;
+    b.dataset.hex = hex;
+    b.title = hex;
+    b.addEventListener('click', () => applyAccent(hex));
+    swatchRow.insertBefore(b, customToggleBtn);
+  });
+  resetSwatch.addEventListener('click', () => applyAccent(null));
+
+  function renderSwatchState(){
+    swatchRow.querySelectorAll('.swatch:not(.custom-toggle)').forEach(el => {
+      const hex = el.dataset.hex || null;
+      el.classList.toggle('active', hex === customAccentHex);
+    });
+  }
+  renderSwatchState();
+
+  // Popover open/close + custom color input
+  const paletteBtn = document.getElementById('paletteBtn');
+  const palettePopover = document.getElementById('palettePopover');
+  const customRow = document.getElementById('customRow');
+  const customColorInput = document.getElementById('customColorInput');
+
+  paletteBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    palettePopover.classList.toggle('show');
+  });
+  document.addEventListener('click', (e) => {
+    if(!palettePopover.contains(e.target) && e.target !== paletteBtn){
+      palettePopover.classList.remove('show');
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') palettePopover.classList.remove('show');
+  });
+  customToggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    customRow.classList.toggle('show');
+    if(customRow.classList.contains('show')){
+      customColorInput.value = customAccentHex || '';
+      customColorInput.focus();
+    }
+  });
+  function tryApplyCustom(){
+    const parsed = parseColorInput(customColorInput.value);
+    customColorInput.classList.toggle('invalid', !!customColorInput.value.trim() && !parsed);
+    if(parsed) applyAccent(parsed);
+  }
+  customColorInput.addEventListener('input', tryApplyCustom);
+  customColorInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){ e.preventDefault(); tryApplyCustom(); }
+  });
+
+  // If the saved accent isn't one of the presets, it was a custom value —
+  // pre-open the custom row so a returning visitor can see/edit it.
+  if(customAccentHex && !PRESET_ACCENTS.includes(customAccentHex)){
+    customRow.classList.add('show');
+    customColorInput.value = customAccentHex;
+  }
 </script>
 </body>
 </html>
