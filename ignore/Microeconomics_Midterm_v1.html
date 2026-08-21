@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ECO461 Economics Exam — Complete Study Guide</title>
+<meta name="description" content="Source-faithful ECO461 economics study guide based on the supplied Microeconomics lecture PDF, with recreated diagrams and a complete ECO461 Problem Set 2 answer sheet." />
+<script>
+window.MathJax = {
+  tex: {inlineMath: [['\\(','\\)'], ['$', '$']], displayMath: [['\\[','\\]'], ['$$','$$']]},
+  svg: {fontCache: 'global'}
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#142033;--muted:#667085;--line:#dfe5ec;--accent:#176b87;--accent2:#0f5972;--soft:#eaf5f8;--soft2:#f3f7fa;--warn:#fff5d9;--good:#eaf8ef;--shadow:0 8px 26px rgba(18,35,52,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}.wrap{display:flex;min-height:100vh}.sidebar{width:260px;background:#fff;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;overflow:auto;padding:22px 16px}.brand{font-weight:800;font-size:18px;line-height:1.2;margin-bottom:3px}.brand small{display:block;font-weight:500;font-size:12px;color:var(--muted);margin-top:6px}.nav-title{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 10px 8px}.nav a{display:block;text-decoration:none;color:#344054;padding:8px 10px;border-radius:9px;font-size:13px}.nav a:hover{background:var(--soft);color:var(--accent2)}main{width:min(1050px,100%);margin:0 auto;padding:28px 32px 60px}.topbar{display:flex;align-items:center;gap:10px;position:sticky;top:12px;z-index:10;margin-bottom:22px}.topbar .search{flex:1}.search input{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#fff;font-size:14px;box-shadow:var(--shadow)}button,.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer;text-decoration:none;font-size:13px}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn:hover{transform:translateY(-1px)}.mobile-nav{display:none;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}.hero{background:linear-gradient(135deg,#fff 0%,#eef7f9 100%);border:1px solid var(--line);border-radius:20px;padding:34px 34px 30px;box-shadow:var(--shadow)}h1{font-size:clamp(30px,5vw,50px);line-height:1.05;margin:0 0 10px;letter-spacing:-.03em}h2{font-size:28px;line-height:1.2;margin:38px 0 16px}h3{font-size:20px;margin:24px 0 10px}h4{font-size:15px;margin:18px 0 8px}.sub{color:var(--muted);font-size:16px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.pill{display:inline-flex;align-items:center;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#475467;font-size:12px;font-weight:700}.section{margin-top:28px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;box-shadow:0 5px 18px rgba(18,35,52,.045);margin:15px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.def strong{color:var(--accent2)}.formula{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:center;margin:12px 0}.source{font-size:12px;color:var(--muted);margin-top:12px}.note{background:var(--soft);border-left:4px solid var(--accent);padding:13px 15px;border-radius:8px;margin:14px 0}.warn{background:var(--warn);border-left-color:#cf9b1c}.good{background:var(--good);border-left-color:#2a9d63}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}.table-wrap table{width:100%;border-collapse:collapse;min-width:520px}.table-wrap th,.table-wrap td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.table-wrap th{background:#f7fafc;font-weight:800}.table-wrap tr:last-child td{border-bottom:0}.toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.toc-grid a{color:var(--accent2);text-decoration:none;background:#fff;border:1px solid var(--line);padding:11px 12px;border-radius:11px;font-size:13px}.toc-grid a:hover{background:var(--soft)}.chart{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px;overflow:hidden}.chart svg{width:100%;height:auto;display:block}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:12px;color:var(--muted)}.legend span{display:inline-flex;align-items:center;gap:5px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.answer{background:#fbfdff;border:1px solid #d8e7ed;border-radius:14px;padding:18px;margin:14px 0}.answer h4{margin-top:0;color:var(--accent2)}.step{padding:10px 0;border-bottom:1px dashed var(--line)}.step:last-child{border-bottom:0}.muted{color:var(--muted)}ul.tight,ol.tight{margin-top:6px;margin-bottom:6px;padding-left:20px}.footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.no-print{}.chapter-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.chapter-tag{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}details{border:1px solid var(--line);border-radius:11px;padding:10px 13px;background:#fff;margin:10px 0}summary{cursor:pointer;font-weight:750}.small{font-size:13px}.kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f2f4f7;border:1px solid var(--line);padding:2px 5px;border-radius:5px;font-size:.85em}.ps-note{background:#fff8e8;border:1px solid #ecd88c;padding:14px;border-radius:12px}.hidden{display:none}
+@media(max-width:900px){.sidebar{display:none}.mobile-nav{display:block;margin-bottom:12px}main{padding:14px 13px 45px}.topbar{top:0;background:var(--bg);padding:4px 0 10px;margin:0 0 12px}.topbar .btn{padding:9px 10px}.grid,.grid3,.toc-grid{grid-template-columns:1fr}.hero{padding:24px 18px}.card{padding:16px}h2{font-size:24px;margin-top:30px}.chart{padding:7px}.table-wrap table{min-width:620px}}
+@media print{body{background:#fff;color:#111}.sidebar,.topbar,.mobile-nav,.no-print{display:none!important}main{width:100%;padding:0}.hero,.card,.chart,.answer{box-shadow:none;break-inside:avoid}.hero{border:0;padding:0 0 18px;background:#fff}.section{break-before:auto}a{color:inherit;text-decoration:none}.source{font-size:10px}.footer{margin-top:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside class="sidebar">
+  <div class="brand">ECO461 Study Guide<small>Source-faithful • Chapters 1–11</small></div>
+  <div class="nav-title">Guide</div>
+  <nav class="nav">
+    <a href="#home">Overview</a><a href="#ch1">Chapter 1 — Foundations</a><a href="#ch2">Chapter 2 — Economic Systems</a><a href="#ch3">Chapter 3 — PPF & Isoquants</a><a href="#ch4">Chapter 4 — Demand</a><a href="#ch5">Chapter 5 — Supply</a><a href="#ch6">Chapter 6 — Elasticity</a><a href="#ch7">Chapter 7 — Consumer Theory</a><a href="#ch8">Chapter 8 — Utility & Equilibrium</a><a href="#ch9">Chapter 9 — Producer Theory</a><a href="#ch10">Chapter 10 — Productivity & Stages</a><a href="#ch11">Chapter 11 — Diminishing Returns</a><a href="#ps2">Problem Set 2 — Answer Sheet</a>
+  </nav>
+  <div class="nav-title">Quick formulas</div>
+  <nav class="nav"><a href="#formulas">Formula sheet</a></nav>
+</aside>
+<main>
+  <div class="topbar no-print"><div class="search"><input id="search" type="search" placeholder="Search this guide… (e.g. opportunity cost, PED, MP)"/></div><button class="btn primary" onclick="exportPDF()">Export / Save PDF</button></div>
+  <select class="mobile-nav no-print" onchange="if(this.value) location.hash=this.value"><option value="">Jump to chapter…</option><option value="home">Overview</option><option value="ch1">Chapter 1</option><option value="ch2">Chapter 2</option><option value="ch3">Chapter 3</option><option value="ch4">Chapter 4</option><option value="ch5">Chapter 5</option><option value="ch6">Chapter 6</option><option value="ch7">Chapter 7</option><option value="ch8">Chapter 8</option><option value="ch9">Chapter 9</option><option value="ch10">Chapter 10</option><option value="ch11">Chapter 11</option><option value="ps2">Problem Set 2</option><option value="formulas">Formula sheet</option></select>
+
+<section id="home" class="hero">
+  <div class="chapter-tag">ECO461 • Introduction to Economics</div>
+  <h1>Economics Exam<br/>Complete Study Guide</h1>
+  <p class="sub">A compact, source-faithful rewrite of the supplied <em>Microeconomics</em> lecture PDF, organized as Chapters 1–11, with the lecture graphs recreated as lightweight SVG diagrams and a fully worked answer sheet for <strong>ECO461_Problem_Set_2.pdf</strong>.</p>
+  <div class="meta"><span class="pill">Lectures 1–6</span><span class="pill">Lectures 7–8</span><span class="pill">Lectures 9–11</span><span class="pill">MathJax</span><span class="pill">Mobile-friendly</span><span class="pill">Print → PDF</span></div>
+  <div class="note warn"><strong>Source boundary:</strong> the lecture PDF contains Lectures 1–6, Lecture 7 &amp; 8, and Lecture 9–11. It does <strong>not</strong> contain a dedicated cost lecture or explicit/implicit-cost section. Those definitions are therefore marked in the Problem Set 2 answers as <em>prerequisite material needed to answer the sample, not claims taken from the lecture PDF</em>.</div>
+</section>
+
+<section class="section card">
+<h3>How to use this on exam day</h3>
+<div class="toc-grid"><a href="#formulas">1. Memorize formulas</a><a href="#ch4">2. Know shift vs movement</a><a href="#ch6">3. Know elasticity cutoffs</a><a href="#ch7">4. Know TU/MU relationships</a><a href="#ch9">5. Practice TP/MP/AP</a><a href="#ps2">6. Do Problem Set 2</a></div>
+</section>
+
+<section id="ch1" class="section">
+<div class="chapter-head"><div><div class="chapter-tag">Lecture 1</div><h2>Chapter 1 — Foundations of Economics</h2></div></div>
+<div class="grid">
+<div class="card def"><h3>What is Economics?</h3><p>Economics is the study of how people and societies make choices when resources are limited but wants are unlimited. Because we cannot have everything we want, we must choose.</p><p class="muted">Source example: with Tk 500, you can buy a book or go out to eat.</p></div>
+<div class="card def"><h3>Micro vs Macro</h3><p><strong>Microeconomics:</strong> households, firms, specific markets, supply, demand, prices and resource distribution.</p><p><strong>Macroeconomics:</strong> economy-wide inflation, unemployment and economic growth.</p></div>
+</div>
+<div class="grid">
+<div class="card"><h3>Trade-offs</h3><p>To get one thing we like, we usually have to give up another thing we like. The lecture uses <strong>Guns vs Butter</strong>: more defense spending leaves fewer consumer goods.</p><h4>Efficiency vs Equality</h4><p><strong>Efficiency</strong> is the size of the economic pie; <strong>equality</strong> is how the pie is divided among people.</p></div>
+<div class="card"><h3>Opportunity Cost</h3><p>The opportunity cost of an item is what you give up to get that item — specifically, the <strong>next best alternative</strong>, not all alternatives.</p><div class="note">School example: time spent attending school cannot be spent earning wages at a job. The forgone earnings are an opportunity cost.</div></div>
+</div>
+<div class="grid">
+<div class="card"><h3>Scarcity</h3><p><strong>Scarcity = limited resources vs unlimited wants.</strong></p><p>Resources named in the lecture: time, money, land, labor and capital.</p><p>Scarcity forces choice; choice creates opportunity cost.</p></div>
+<div class="card"><h3>Marginal Analysis</h3><p>Rational people think at the margin. A <strong>marginal change</strong> is a small incremental adjustment to a plan.</p><div class="formula">Take an action when \(MB &gt; MC\).</div><p>Rational people systematically and purposefully do the best they can to achieve their objectives.</p></div>
+</div>
+<div class="grid">
+<div class="card"><h3>Three Basic Economic Decisions</h3><ol class="tight"><li><strong>What to produce?</strong> — PPF</li><li><strong>How to produce?</strong> — Isoquant</li><li><strong>For whom to produce?</strong> — distribution of output</li></ol></div>
+<div class="card"><h3>Positive vs Normative</h3><p><strong>Positive:</strong> descriptive; a claim about what the world is; can be examined with evidence.</p><p><strong>Normative:</strong> prescriptive; a claim about what the world ought to be; involves value judgments.</p></div>
+</div>
+<div class="card"><h3>Graphs + Short Run / Long Run</h3><p>Graphs show relationships between variables. Convention in the lecture: X-axis = independent variable; Y-axis = dependent variable. Common economic graphs include demand, supply, cost and production possibility curves.</p><p><strong>Short run:</strong> at least one production factor is fixed. <strong>Long run:</strong> all production factors are variable.</p></div>
+<div class="source">Source: supplied lecture PDF, Lecture 1.</div>
+</section>
+
+<section id="ch2" class="section">
+<div class="chapter-tag">Lecture 2</div><h2>Chapter 2 — Economic Systems &amp; the 10 Principles</h2>
+<div class="card"><h3>Economic System</h3><p>An economic system is the way a society organizes production, distribution and consumption. It answers: <strong>What to produce? How to produce? For whom to produce?</strong></p></div>
+<div class="grid2 grid">
+<div class="card"><h3>Traditional Economy</h3><p>Decisions are based on customs, traditions and cultural beliefs. Production is mainly for self-consumption; technology is simple and barter may be used.</p><p><strong>Advantages:</strong> strong social relationships, stability, less competition/stress.</p><p><strong>Disadvantages:</strong> low productivity, slow growth, lower living standards, limited occupation/income choices.</p></div>
+<div class="card"><h3>Command / Planned Economy</h3><p>Government makes major production and distribution decisions. It owns most land, factories and resources; prices are fixed by government.</p><p><strong>Advantages:</strong> can reduce inequality, mobilize resources quickly, provide basic goods.</p><p><strong>Disadvantages:</strong> weak incentives, shortages/surpluses, inefficiency and bureaucracy.</p></div>
+<div class="card"><h3>Market Economy</h3><p>Individuals and private firms make major decisions. Prices, markets, profits/losses and incentives guide activity. A completely hands-off version is called <em>laissez-faire</em>.</p><p><strong>Advantages:</strong> efficiency, innovation, consumer choice, growth.</p><p><strong>Disadvantages:</strong> inequality, possible monopoly power, instability.</p></div>
+<div class="card"><h3>Mixed Economy</h3><p>Private individuals and government both play important roles. Most modern countries are described by the lecture as mixed economies.</p><p><strong>Advantages:</strong> balances efficiency and welfare, limits extreme inequality, protects consumers/workers.</p><p><strong>Disadvantages:</strong> intervention can create inefficiency, bureaucracy and policy conflicts.</p></div>
+</div>
+<div class="card"><h3>The 10 Principles of Economics</h3><ol class="tight">
+<li>People face trade-offs.</li><li>The cost of something is what you give up to get it.</li><li>Rational people think at the margin.</li><li>People respond to incentives.</li><li>Trade can make everyone better off.</li><li>Markets are usually a good way to organize economic activity.</li><li>Governments can sometimes improve market outcomes.</li><li>A country’s standard of living depends on its ability to produce goods and services (productivity).</li><li>Prices rise when the government prints too much money.</li><li>Society faces a short-run trade-off between inflation and unemployment.</li></ol></div>
+</section>
+
+<section id="ch3" class="section">
+<div class="chapter-tag">Lecture 3</div><h2>Chapter 3 — Inputs, Outputs, PPF &amp; Isoquants</h2>
+<div class="grid">
+<div class="card"><h3>Inputs / Factors of Production</h3><p><strong>Land:</strong> natural resources. <strong>Labor:</strong> human time spent in production. <strong>Capital:</strong> durable goods produced to produce other goods.</p><p><strong>Output:</strong> useful goods or services produced.</p></div>
+<div class="card"><h3>What to Produce? — PPF</h3><p>A <strong>Production Possibilities Frontier (PPF)</strong> shows the maximum possible combinations of two goods an economy/business can produce with limited resources and current technology.</p></div>
+</div>
+<div class="grid">
+<div class="card"><h3>PPF assumptions in the lecture</h3><ul class="tight"><li>Only two goods.</li><li>Same resources are used for both.</li><li>Quantity and quality of resources stay constant.</li><li>Technology stays constant.</li><li>Resources are fully employed.</li><li>Efficient production methods are used.</li></ul></div>
+<div class="card"><h3>How to read a point</h3><p><strong>On PPF:</strong> efficient and attainable.</p><p><strong>Below PPF:</strong> attainable but inefficient; resources are underutilized.</p><p><strong>Above PPF:</strong> unattainable/infeasible given current scarcity.</p></div>
+</div>
+<div class="grid">
+<div class="chart"><h3>Recreated PPF — Guns &amp; Butter</h3><svg viewBox="0 0 620 360" role="img" aria-label="PPF diagram showing guns and butter"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><path d="M75 60 Q 200 90 315 155 T 555 295" fill="none" stroke="#176b87" stroke-width="4"/><circle cx="170" cy="95" r="6" fill="#176b87"/><circle cx="360" cy="190" r="6" fill="#176b87"/><circle cx="470" cy="250" r="6" fill="#176b87"/><text x="285" y="325" text-anchor="middle" fill="#344054" font-size="14">Butter (civilian spending)</text><text x="18" y="180" transform="rotate(-90 18 180)" text-anchor="middle" fill="#344054" font-size="14">Guns (military spending)</text><text x="90" y="65" fill="#176b87" font-size="13">Maximum guns</text><text x="455" y="292" fill="#176b87" font-size="13">Maximum butter</text><text x="178" y="91" fill="#344054" font-size="12">Efficient</text><text x="400" y="150" fill="#667085" font-size="12">Attainable frontier</text></svg><div class="source">Recreated from the source lecture’s guns-and-butter PPF discussion; source gives 15,000 guns at zero butter and 5 million pounds of butter at zero guns.</div></div>
+<div class="chart"><h3>PPF rotation</h3><svg viewBox="0 0 620 360" aria-label="PPF rotation diagram"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><path d="M75 72 Q 220 105 555 292" fill="none" stroke="#98a2b3" stroke-width="3" stroke-dasharray="7 6"/><path d="M75 145 Q 260 150 555 292" fill="none" stroke="#176b87" stroke-width="4"/><text x="310" y="327" text-anchor="middle" fill="#344054" font-size="13">Good 2</text><text x="18" y="180" transform="rotate(-90 18 180)" text-anchor="middle" fill="#344054" font-size="13">Good 1</text><text x="235" y="78" fill="#667085" font-size="12">Original PPF</text><text x="245" y="138" fill="#176b87" font-size="12">Rotated PPF</text></svg><div class="source">Rotation occurs when productive capacity/technology changes for only one of the two goods.</div></div>
+</div>
+<div class="card"><h3>How to Produce?</h3><p>Choose the most efficient technology and combination of labor, land, capital and entrepreneurship. The lecture contrasts:</p><div class="grid"><div><strong>Labor-intensive</strong><p>High use of labor; generally chosen when labor is cheap or abundant.</p></div><div><strong>Capital-intensive</strong><p>Heavy reliance on machinery/technology; preferred when capital is cheaper than labor.</p></div></div></div>
+<div class="grid">
+<div class="chart"><h3>Recreated Isoquant</h3><svg viewBox="0 0 620 360" aria-label="Isoquant diagram"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><path d="M100 70 Q 190 130 300 220 Q 375 270 510 290" fill="none" stroke="#176b87" stroke-width="4"/><circle cx="160" cy="112" r="6" fill="#176b87"/><circle cx="450" cy="282" r="6" fill="#176b87"/><text x="310" y="327" text-anchor="middle" fill="#344054" font-size="13">Labor</text><text x="18" y="180" transform="rotate(-90 18 180)" text-anchor="middle" fill="#344054" font-size="13">Capital</text><text x="390" y="220" fill="#176b87" font-size="13">Same output (e.g. TPP = 500)</text><text x="133" y="103" fill="#344054" font-size="12">A: labor-intensive</text><text x="396" y="300" fill="#344054" font-size="12">D: capital-intensive</text></svg><div class="source">Source states: point A = 1 capital + 10 labor; point D = 4 capital + 1 labor. Isoquant is downward-sloping and convex to the origin.</div></div>
+<div class="card"><h3>Isoquant map</h3><p>Different isoquants represent different output levels. Source example: initially <strong>q = 275</strong>, then <strong>q = 375</strong>, then <strong>q = 450</strong>; higher output shifts the isoquant outward/right.</p><p><strong>For whom to produce?</strong> concerns how limited goods/services are distributed based on income, purchasing power or need.</p></div>
+</div>
+</section>
+
+<section id="ch4" class="section">
+<div class="chapter-tag">Lecture 4 • Mankiw Chapter 4 reference</div><h2>Chapter 4 — Markets &amp; Demand</h2>
+<div class="card"><h3>Market &amp; Perfect Competition</h3><p>A market is a group of buyers and sellers of a good/service. A perfectly competitive market has identical goods and many buyers and sellers, so no single participant can influence market price; buyers and sellers are <strong>price takers</strong>.</p></div>
+<div class="grid">
+<div class="card"><h3>Demand</h3><p><strong>Quantity demanded:</strong> the amount buyers are willing and able to purchase.</p><p><strong>Law of demand:</strong> other things equal, when price rises, quantity demanded falls; when price falls, quantity demanded rises.</p><p>The demand curve slopes downward.</p></div>
+<div class="chart"><h3>Recreated demand curve</h3><svg viewBox="0 0 620 360" aria-label="Downward sloping demand curve"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><path d="M120 75 Q 280 145 520 285" fill="none" stroke="#176b87" stroke-width="4"/><text x="310" y="330" text-anchor="middle" fill="#344054" font-size="13">Quantity demanded</text><text x="20" y="175" transform="rotate(-90 20 175)" text-anchor="middle" fill="#344054" font-size="13">Price</text><text x="445" y="270" fill="#176b87" font-size="13">D</text></svg><div class="source">Source graph convention: price on vertical axis, quantity demanded on horizontal axis.</div></div>
+</div>
+<div class="card"><h3>Demand schedule + market demand</h3><p>The lecture’s Catherine example: free → 12 cones; Tk/$1 → 10 cones; as price rises, quantity demanded falls; at $6, Catherine buys zero. <strong>Market demand is the sum of individual demands.</strong></p></div>
+<div class="grid">
+<div class="card"><h3>Demand shifters</h3><ul class="tight"><li><strong>Income:</strong> normal good → income ↑, demand ↑; inferior good → income ↑, demand ↓.</li><li><strong>Prices of related goods:</strong> substitutes and complements.</li><li><strong>Tastes.</strong></li><li><strong>Expectations.</strong></li><li><strong>Number of buyers.</strong></li></ul></div>
+<div class="card"><h3>Movement vs shift</h3><div class="table-wrap"><table><thead><tr><th>Change</th><th>Result</th></tr></thead><tbody><tr><td>Price of the good itself</td><td>Movement along demand curve</td></tr><tr><td>Income</td><td>Demand curve shifts</td></tr><tr><td>Price of related goods</td><td>Demand curve shifts</td></tr><tr><td>Tastes</td><td>Demand curve shifts</td></tr><tr><td>Expectations</td><td>Demand curve shifts</td></tr><tr><td>Number of buyers</td><td>Demand curve shifts</td></tr></tbody></table></div></div>
+</div>
+<div class="card"><h3>Source scenario drill</h3><div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Result in source</th></tr></thead><tbody><tr><td>Coffee price falls Tk 300 → 250</td><td>Movement; quantity demanded increases</td></tr><tr><td>Coffee price rises Tk 300 → 350</td><td>Movement; quantity demanded decreases</td></tr><tr><td>Income increases; coffee is normal</td><td>Demand shifts right</td></tr><tr><td>Tea price rises; tea is substitute</td><td>Coffee demand shifts right</td></tr><tr><td>Sugar price rises; sugar is complement</td><td>Coffee demand shifts left</td></tr><tr><td>Doctors announce health benefits</td><td>Demand shifts right</td></tr><tr><td>Population increases</td><td>Demand shifts right</td></tr><tr><td>Expected coffee price rises next month</td><td>Demand shifts right today</td></tr></tbody></table></div></div>
+</section>
+
+<section id="ch5" class="section">
+<div class="chapter-tag">Lecture 5</div><h2>Chapter 5 — Supply &amp; Market Equilibrium</h2>
+<div class="grid">
+<div class="card"><h3>Supply</h3><p><strong>Quantity supplied:</strong> amount sellers are willing and able to sell.</p><p><strong>Law of supply:</strong> other things equal, price ↑ → quantity supplied ↑; price ↓ → quantity supplied ↓.</p></div>
+<div class="chart"><h3>Recreated supply curve</h3><svg viewBox="0 0 620 360" aria-label="Upward sloping supply curve"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><path d="M120 285 Q 280 160 520 75" fill="none" stroke="#176b87" stroke-width="4"/><text x="310" y="330" text-anchor="middle" fill="#344054" font-size="13">Quantity supplied</text><text x="20" y="175" transform="rotate(-90 20 175)" text-anchor="middle" fill="#344054" font-size="13">Price</text><text x="488" y="78" fill="#176b87" font-size="13">S</text></svg><div class="source">Supply curve slopes upward in the source because higher price means greater quantity supplied.</div></div>
+</div>
+<div class="card"><h3>Supply shifters</h3><ul class="tight"><li><strong>Input prices:</strong> higher input prices reduce supply.</li><li><strong>Technology:</strong> cost-reducing technology raises supply.</li><li><strong>Expectations:</strong> expected future price rises can reduce current supply.</li><li><strong>Number of sellers:</strong> fewer sellers reduce market supply.</li></ul></div>
+<div class="card"><h3>Market supply</h3><p>Market supply is the sum of individual supplies. The source describes horizontal addition of individual supply curves: at any price, add quantities supplied by each seller.</p></div>
+<div class="grid">
+<div class="card"><h3>Equilibrium</h3><p>Equilibrium occurs where <strong>quantity supplied = quantity demanded</strong>. The price is the equilibrium price / market-clearing price; the quantity is the equilibrium quantity.</p></div>
+<div class="card"><h3>Surplus vs shortage</h3><p><strong>Surplus:</strong> price above equilibrium → quantity supplied exceeds quantity demanded.</p><p><strong>Shortage:</strong> price below equilibrium → quantity demanded exceeds quantity supplied.</p></div>
+</div>
+<div class="chart"><h3>Recreated market equilibrium</h3><svg viewBox="0 0 620 380" aria-label="Supply demand equilibrium"><line x1="70" y1="320" x2="570" y2="320" stroke="#667085"/><line x1="70" y1="320" x2="70" y2="40" stroke="#667085"/><path d="M110 80 Q 290 155 520 295" fill="none" stroke="#176b87" stroke-width="4"/><path d="M110 295 Q 290 165 520 75" fill="none" stroke="#344054" stroke-width="4"/><line x1="315" y1="320" x2="315" y2="154" stroke="#98a2b3" stroke-dasharray="6 6"/><line x1="70" y1="154" x2="315" y2="154" stroke="#98a2b3" stroke-dasharray="6 6"/><circle cx="315" cy="154" r="6" fill="#176b87"/><text x="330" y="150" fill="#176b87" font-size="13">E</text><text x="530" y="285" fill="#176b87" font-size="13">D</text><text x="525" y="82" fill="#344054" font-size="13">S</text><text x="315" y="345" text-anchor="middle" fill="#344054" font-size="13">Equilibrium quantity</text><text x="22" y="154" text-anchor="middle" transform="rotate(-90 22 154)" fill="#344054" font-size="13">Equilibrium price</text></svg></div>
+</section>
+
+<section id="ch6" class="section">
+<div class="chapter-tag">Lecture 6</div><h2>Chapter 6 — Elasticity</h2>
+<div class="card"><h3>What is elasticity?</h3><p>Elasticity measures the responsiveness of one economic variable to changes in another. The lecture emphasizes <strong>percentage changes</strong> rather than absolute changes.</p></div>
+<div class="grid">
+<div class="card"><h3>Price Elasticity of Demand (PED)</h3><p>Measures how much quantity demanded responds to a change in the price of the same good.</p><div class="formula">\( PED = \left|\frac{\%\,\Delta Q_d}{\%\,\Delta P}\right| \)</div><p><strong>|PED| &gt; 1:</strong> elastic &nbsp; <strong>|PED| = 1:</strong> unit elastic &nbsp; <strong>|PED| &lt; 1:</strong> inelastic.</p></div>
+<div class="card"><h3>PED determinants</h3><ul class="tight"><li>Availability of close substitutes.</li><li>Necessities vs luxuries.</li><li>Time horizon: demand is more elastic in the long run.</li></ul></div>
+</div>
+<div class="card"><h3>Midpoint method — source worked example</h3><p>Source example: P₁ = 10, P₂ = 12; Q₁ = 100, Q₂ = 80.</p><div class="formula">\(PED = \frac{\Delta Q / ((Q_1+Q_2)/2)}{\Delta P / ((P_1+P_2)/2)} = 1\)</div><p>The source ignores the negative sign when interpreting PED.</p></div>
+<div class="grid">
+<div class="card"><h3>Income Elasticity of Demand (YED)</h3><div class="formula">\( YED = \frac{\%\,\Delta Q_d}{\%\,\Delta Income} \)</div><p><strong>YED &gt; 1:</strong> luxury/normal; <strong>0 &lt; YED &lt; 1:</strong> necessity/normal; <strong>YED = 0:</strong> neutral; <strong>YED &lt; 0:</strong> inferior.</p></div>
+<div class="card"><h3>Cross-Price Elasticity (XED)</h3><div class="formula">\( XED = \frac{\%\,\Delta Q_x}{\%\,\Delta P_y} \)</div><p><strong>XED &gt; 0:</strong> substitutes; <strong>XED &lt; 0:</strong> complements; <strong>XED = 0:</strong> unrelated goods.</p></div>
+</div>
+<div class="card"><h3>Source worked examples</h3><p><strong>YED:</strong> income 1000 → 1100, quantity 50 → 55 gives YED = 1.0, unit income elastic.</p><p><strong>XED:</strong> tea price 10 → 12, coffee quantity 40 → 50 gives XED = +1.25; tea and coffee are substitutes.</p></div>
+</section>
+
+<section id="ch7" class="section">
+<div class="chapter-tag">Lecture 7 &amp; 8</div><h2>Chapter 7 — Consumer Theory &amp; Utility</h2>
+<div class="card"><h3>Consumer theory</h3><p>Consumer theory explores how individuals make consumption decisions to maximize satisfaction within limits of income and market prices. The objective is the highest possible <strong>utility</strong>.</p></div>
+<div class="grid">
+<div class="card"><h3>Utility</h3><p>Utility is satisfaction or pleasure from consuming goods/services. It is subjective and may be represented analytically in hypothetical units called <em>utils</em>.</p><p><strong>Cardinal utility:</strong> utility is assigned numerical values; associated in the lecture with Marshall.</p><p><strong>Ordinal utility:</strong> utility cannot be measured numerically; preferences can be ranked. The lecture associates this approach with Hicks and Allen.</p></div>
+<div class="card"><h3>Total Utility (TU)</h3><p>TU = total satisfaction from consuming a given quantity.</p><div class="table-wrap"><table><thead><tr><th>Q</th><th>TU</th></tr></thead><tbody><tr><td>0</td><td>0</td></tr><tr><td>1</td><td>10</td></tr><tr><td>2</td><td>18</td></tr><tr><td>3</td><td>24</td></tr><tr><td>4</td><td>28</td></tr><tr><td>5</td><td>30</td></tr><tr><td>6</td><td>30</td></tr><tr><td>7</td><td>28</td></tr></tbody></table></div></div>
+</div>
+<div class="grid">
+<div class="chart"><h3>Recreated TU curve</h3><svg viewBox="0 0 620 360" aria-label="Total utility curve"><line x1="65" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="65" y1="300" x2="65" y2="45" stroke="#667085"/><polyline points="90,300 150,215 210,168 270,132 330,108 390,96 450,96 510,119" fill="none" stroke="#176b87" stroke-width="4"/><g fill="#176b87"><circle cx="90" cy="300" r="5"/><circle cx="150" cy="215" r="5"/><circle cx="210" cy="168" r="5"/><circle cx="270" cy="132" r="5"/><circle cx="330" cy="108" r="5"/><circle cx="390" cy="96" r="5"/><circle cx="450" cy="96" r="5"/><circle cx="510" cy="119" r="5"/></g><text x="310" y="332" text-anchor="middle" font-size="13" fill="#344054">Quantity</text><text x="18" y="175" transform="rotate(-90 18 175)" text-anchor="middle" font-size="13" fill="#344054">Total Utility</text></svg><div class="source">Source pattern: TU rises, reaches a maximum/saturation point at Q = 5–6, then declines at Q = 7.</div></div>
+<div class="card"><h3>Marginal Utility (MU)</h3><p>Marginal utility is the additional satisfaction from one more unit.</p><div class="formula">\( MU = \frac{\Delta TU}{\Delta Q} \)</div><p>Source values for Q = 1…5: MU = 10, 8, 6, 4, 2.</p><p><strong>Law of diminishing marginal utility:</strong> as consumption rises, the marginal utility from each additional unit decreases, holding other factors constant.</p></div>
+</div>
+</section>
+
+<section id="ch8" class="section">
+<div class="chapter-tag">Lecture 7 &amp; 8</div><h2>Chapter 8 — Indifference Curves, Budget Line &amp; Consumer Equilibrium</h2>
+<div class="grid">
+<div class="card"><h3>Indifference Curve (IC)</h3><p>An IC contains combinations of two goods giving the consumer the same satisfaction.</p><ul class="tight"><li>Downward sloping.</li><li>Convex to the origin due to diminishing MRS.</li><li>Higher IC = higher satisfaction.</li><li>ICs never intersect.</li></ul></div>
+<div class="card"><h3>Source examples</h3><p>Apple/Orange example: (2,4) and (3,2) both give utility 10.</p><p>Another IC schedule: X = 1,2,3,4,5 with Y = 10,7,5,4,3.5.</p></div>
+</div>
+<div class="grid">
+<div class="chart"><h3>Recreated IC map</h3><svg viewBox="0 0 620 360" aria-label="Indifference curve map"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><path d="M125 85 Q 250 130 500 250" fill="none" stroke="#98a2b3" stroke-width="3"/><path d="M115 140 Q 240 190 505 282" fill="none" stroke="#176b87" stroke-width="4"/><path d="M95 195 Q 235 245 490 300" fill="none" stroke="#c2d6de" stroke-width="3"/><text x="515" y="248" fill="#667085" font-size="12">IC₃</text><text x="510" y="281" fill="#176b87" font-size="12">IC₂</text><text x="495" y="304" fill="#98a2b3" font-size="12">IC₁</text><text x="315" y="330" text-anchor="middle" font-size="13" fill="#344054">Good X</text><text x="18" y="175" transform="rotate(-90 18 175)" text-anchor="middle" font-size="13" fill="#344054">Good Y</text></svg></div>
+<div class="card"><h3>Budget line</h3><p>The budget line shows all combinations of two goods the consumer can afford given income and prices. It is a straight line with a negative slope.</p><p>Source example: M = 100, Pₓ = 2, Pᵧ = 1 → X-intercept = 50 and Y-intercept = 100.</p><div class="formula">\( P_xX + P_yY = M \)</div></div>
+</div>
+<div class="card"><h3>Consumer equilibrium</h3><p>Consumer equilibrium is at the point where the <strong>highest attainable indifference curve is tangent to the budget line</strong>. There, satisfaction is maximized given the budget constraint.</p></div>
+</section>
+
+<section id="ch9" class="section">
+<div class="chapter-tag">Lecture 9–11 • source groups these lectures together</div><h2>Chapter 9 — Producer Theory &amp; Production Functions</h2>
+<div class="card"><h3>What is production?</h3><p>Production is the transformation of inputs such as labor, capital, land and technology into outputs (goods/services). The lecture states that the main objective is to maximize output or profit using limited resources efficiently.</p></div>
+<div class="grid">
+<div class="card"><h3>Four factors of production</h3><ul class="tight"><li><strong>Land:</strong> natural resources such as soil, water, minerals.</li><li><strong>Labor:</strong> human effort, physical and mental.</li><li><strong>Capital:</strong> machinery, tools, infrastructure.</li><li><strong>Entrepreneurship:</strong> decision-making, risk-taking, innovation.</li></ul></div>
+<div class="card"><h3>Production function</h3><p>A mathematical relationship showing how inputs are combined to produce output.</p><div class="formula">\( Q = f(L,K) \)</div><p>Q = output, L = labor, K = capital. The lecture assumes technology is constant when explaining this relationship.</p></div>
+</div>
+<div class="card"><h3>Fixed input vs variable input</h3><div class="grid"><div><strong>Fixed input:</strong> cannot be changed in the short run. Examples: machinery, factory building, land.</div><div><strong>Variable input:</strong> can be changed in the short run. Examples: labor, raw materials, electricity usage.</div></div></div>
+<div class="card"><h3>Short run vs long run production</h3><p><strong>Short run:</strong> at least one factor is fixed (usually capital), so firms adjust variable inputs such as labor.</p><div class="formula">\(Q=f(L,\bar K)\)</div><p><strong>Long run:</strong> all factors are variable, so firms can change scale. The lecture links this to <strong>returns to scale: increasing, constant, decreasing</strong>.</p></div>
+</section>
+
+<section id="ch10" class="section">
+<div class="chapter-tag">Lecture 9–11</div><h2>Chapter 10 — TP, MP, AP &amp; Production Stages</h2>
+<div class="grid">
+<div class="card"><h3>Total Product (TP)</h3><p>Total quantity of output produced using given inputs.</p></div>
+<div class="card"><h3>Marginal Product (MP)</h3><p>Additional output from one more unit of the variable input, usually labor, holding other inputs constant.</p><div class="formula">\( MP = \frac{\Delta TP}{\Delta L} \)</div></div>
+<div class="card"><h3>Average Product (AP)</h3><p>Output per unit of variable input.</p><div class="formula">\( AP = \frac{TP}{L} \)</div></div>
+</div>
+<div class="card"><h3>Source production-function table</h3><div class="table-wrap"><table><thead><tr><th>Labor L</th><th>Total Product TP</th><th>Marginal Product MP</th><th>Average Product AP</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>–</td><td>–</td></tr><tr><td>1</td><td>10</td><td>10</td><td>10</td></tr><tr><td>2</td><td>25</td><td>15</td><td>12.5</td></tr><tr><td>3</td><td>45</td><td>20</td><td>15</td></tr><tr><td>4</td><td>60</td><td>15</td><td>15</td></tr><tr><td>5</td><td>70</td><td>10</td><td>14</td></tr><tr><td>6</td><td>75</td><td>5</td><td>12.5</td></tr><tr><td>7</td><td>75</td><td>0</td><td>10.7</td></tr><tr><td>8</td><td>70</td><td>-5</td><td>8.75</td></tr></tbody></table></div></div>
+<div class="grid">
+<div class="chart"><h3>TP and MP — source-faithful recreation</h3><svg viewBox="0 0 620 470" aria-label="TP and MP curves"><line x1="55" y1="205" x2="570" y2="205" stroke="#667085"/><line x1="55" y1="205" x2="55" y2="40" stroke="#667085"/><polyline points="70,205 130,185 190,155 250,110 310,80 370,65 430,65 490,75 550,95" fill="none" stroke="#176b87" stroke-width="4"/><text x="310" y="28" text-anchor="middle" font-size="14" fill="#344054">Total Product</text><text x="310" y="225" text-anchor="middle" font-size="12" fill="#667085">Labor</text><line x1="55" y1="440" x2="570" y2="440" stroke="#667085"/><line x1="55" y1="440" x2="55" y2="255" stroke="#667085"/><polyline points="80,380 145,345 210,305 275,335 340,365 405,400 470,440 535,455" fill="none" stroke="#344054" stroke-width="4"/><line x1="55" y1="440" x2="570" y2="440" stroke="#98a2b3" stroke-dasharray="5 5"/><text x="310" y="252" text-anchor="middle" font-size="12" fill="#667085">Marginal Product</text><text x="310" y="465" text-anchor="middle" font-size="12" fill="#667085">Labor</text><text x="405" y="432" fill="#344054" font-size="12">MP = 0 at L=7</text></svg></div>
+<div class="card"><h3>How TP and MP move together</h3><ul class="tight"><li>When <strong>MP &gt; 0</strong>, TP rises.</li><li>When <strong>MP = 0</strong>, TP is at its maximum/flat point.</li><li>When <strong>MP &lt; 0</strong>, TP falls.</li></ul><p>This relationship is central to the source’s three stages of production.</p></div>
+</div>
+<div class="card"><h3>Three stages of production</h3><div class="table-wrap"><table><thead><tr><th>Stage</th><th>Source description</th><th>Key relationship</th><th>Conclusion</th></tr></thead><tbody><tr><td>1 — Increasing returns / Growth</td><td>TP rises at an increasing rate; MP rises; AP rises</td><td>MP &gt; AP; MP pulls AP upward</td><td>Not rational; resources underutilized</td></tr><tr><td>2 — Diminishing returns / Efficiency</td><td>TP rises at a decreasing rate; MP falls but remains positive; AP falls</td><td>MP &lt; AP; MP pulls AP downward</td><td>Rational stage</td></tr><tr><td>3 — Negative returns / Decline</td><td>TP starts decreasing; MP negative; AP falls</td><td>MP is negative, so TP falls</td><td>Irrational stage</td></tr></tbody></table></div></div>
+</section>
+
+<section id="ch11" class="section">
+<div class="chapter-tag">Lecture 9–11</div><h2>Chapter 11 — Law of Diminishing Marginal Returns</h2>
+<div class="card"><h3>Definition</h3><p>The law of diminishing returns states that as more units of a variable input such as labor are added to fixed inputs such as capital, the <strong>marginal product eventually decreases</strong>, holding technology constant.</p></div>
+<div class="grid">
+<div class="card"><h3>Conditions emphasized in the source</h3><ul class="tight"><li>At least one input is fixed (short run).</li><li>Technology remains unchanged.</li><li>Units of the variable input are homogeneous.</li></ul></div>
+<div class="card"><h3>Remember the stage logic</h3><p><strong>Stage 1:</strong> MP ↑, AP ↑, TP ↑↑.</p><p><strong>Stage 2:</strong> MP ↓ but positive, TP ↑, AP ↓.</p><p><strong>Stage 3:</strong> MP negative, TP ↓, AP ↓.</p><div class="note good"><strong>Source conclusion:</strong> Stage 2 is the efficient/rational stage.</div></div>
+</div>
+<div class="chart"><h3>Recreated diminishing-MP curve</h3><svg viewBox="0 0 620 360" aria-label="Diminishing marginal product curve"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="50" stroke="#667085"/><polyline points="90,70 145,105 200,138 255,170 310,200 365,225 420,250 475,270 530,288" fill="none" stroke="#176b87" stroke-width="4"/><text x="310" y="330" text-anchor="middle" font-size="13" fill="#344054">Quantity of labor</text><text x="18" y="175" transform="rotate(-90 18 175)" text-anchor="middle" font-size="13" fill="#344054">Marginal product of labor</text><text x="350" y="55" fill="#176b87" font-size="13">MP eventually decreases</text></svg></div>
+</section>
+
+<section id="formulas" class="section">
+<h2>Formula Sheet</h2>
+<div class="card"><div class="grid3">
+<div><h4>Marginal benefit / cost</h4><div class="formula">\(MB &gt; MC\)</div></div>
+<div><h4>Marginal Utility</h4><div class="formula">\(MU=\Delta TU/\Delta Q\)</div></div>
+<div><h4>Average Utility</h4><div class="formula">\(AU=TU/Q\)</div></div>
+<div><h4>Price elasticity</h4><div class="formula">\(PED=\left|\frac{\%\Delta Q_d}{\%\Delta P}\right|\)</div></div>
+<div><h4>Income elasticity</h4><div class="formula">\(YED=\frac{\%\Delta Q_d}{\%\Delta Income}\)</div></div>
+<div><h4>Cross-price elasticity</h4><div class="formula">\(XED=\frac{\%\Delta Q_x}{\%\Delta P_y}\)</div></div>
+<div><h4>Production function</h4><div class="formula">\(Q=f(L,K)\)</div></div>
+<div><h4>Short-run production</h4><div class="formula">\(Q=f(L,\bar K)\)</div></div>
+<div><h4>Marginal Product</h4><div class="formula">\(MP=\Delta TP/\Delta L\)</div></div>
+<div><h4>Average Product</h4><div class="formula">\(AP=TP/L\)</div></div>
+<div><h4>Budget line</h4><div class="formula">\(P_xX+P_yY=M\)</div></div>
+<div><h4>Elasticity cutoffs</h4><p class="small">PED &gt; 1 elastic; =1 unit elastic; &lt;1 inelastic. XED/YED benchmark is 0.</p></div>
+</div></div>
+</section>
+
+<section id="ps2" class="section">
+<div class="chapter-tag">ECO461 Problem Set 2</div><h2>Complete Answer Sheet — Sample Question</h2>
+<div class="ps-note"><strong>Reference note:</strong> The supplied Problem Set 2 asks about elasticity, production, costs, and definitions. The lecture source directly covers elasticity and production concepts, but it does not contain a dedicated cost lecture. Cost answers below are therefore clearly labeled as standard prerequisite definitions needed to complete the sample set.</div>
+
+<div class="card"><h3>Q1. Define the following terms</h3>
+<div class="grid">
+<div class="answer"><h4>Income Elasticity of Demand</h4><p>Measures how demand responds to a change in consumer income.</p><div class="formula">\(YED=\frac{\%\Delta Q_d}{\%\Delta Income}\)</div><p class="source">Chapter 6 — Elasticity.</p></div>
+<div class="answer"><h4>Unit elastic demand</h4><p>Demand for which the absolute value of price elasticity equals 1; quantity demanded changes proportionately to price.</p><p class="source">Chapter 6 — Elasticity.</p></div>
+<div class="answer"><h4>Total revenue</h4><p>Revenue earned from selling output. Standard prerequisite definition: \(TR=P\times Q\).</p><p class="source">Not defined in the supplied lecture PDF; included because Q1 asks for it.</p></div>
+<div class="answer"><h4>Elasticity of supply</h4><p>Standard prerequisite definition: responsiveness of quantity supplied to a change in price, measured by percentage change in quantity supplied divided by percentage change in price.</p><p class="source">The supplied PDF covers the law of supply but does not develop a supply-elasticity section.</p></div>
+<div class="answer"><h4>Ordinal Utility</h4><p>The consumer cannot measure utility numerically but can rank preferences. The lecture associates this approach with Hicks and Allen.</p><p class="source">Chapter 7/8 — Consumer Theory.</p></div>
+<div class="answer"><h4>Positive analysis</h4><p>Descriptive analysis: statements about how the world is that can be examined with evidence.</p><p class="source">Chapter 1 — Foundations.</p></div>
+<div class="answer"><h4>Cross-Price Elasticity of Demand</h4><p>Measures how quantity demanded of one good changes when the price of another good changes.</p><div class="formula">\(XED=\frac{\%\Delta Q_x}{\%\Delta P_y}\)</div><p class="source">Chapter 6 — Elasticity.</p></div>
+<div class="answer"><h4>ISO-Quant</h4><p>An isoquant shows combinations of two inputs that produce the same output. It is downward sloping and convex to the origin.</p><p class="source">Chapter 3 — PPF &amp; Isoquants.</p></div>
+<div class="answer"><h4>Market economy</h4><p>Individuals and private firms make major production/consumption decisions; prices, markets, profits/losses and incentives coordinate activity.</p><p class="source">Chapter 2 — Economic Systems.</p></div>
+<div class="answer"><h4>Production function</h4><p>A mathematical relationship between quantities of inputs and output.</p><div class="formula">\(Q=f(L,K)\)</div><p class="source">Chapter 9 — Producer Theory.</p></div>
+<div class="answer"><h4>Factors of production</h4><p>The lecture lists land, labor, capital and entrepreneurship.</p><p class="source">Chapter 9 — Producer Theory.</p></div>
+<div class="answer"><h4>Fixed input</h4><p>A factor that cannot be changed in the short run. Examples in the lecture: machinery, factory building, land.</p><p class="source">Chapter 9 — Producer Theory.</p></div>
+<div class="answer"><h4>Variable input</h4><p>A factor that can be changed in the short run. Examples: labor, raw materials, electricity usage.</p><p class="source">Chapter 9 — Producer Theory.</p></div>
+<div class="answer"><h4>Total Product</h4><p>Total quantity of output produced using given inputs.</p><p class="source">Chapter 10 — Productivity.</p></div>
+<div class="answer"><h4>Marginal Product</h4><p>Additional output from one more unit of a variable input, holding other inputs constant.</p><div class="formula">\(MP=\Delta TP/\Delta L\)</div><p class="source">Chapter 10 — Productivity.</p></div>
+<div class="answer"><h4>Average Product</h4><p>Output produced per unit of variable input.</p><div class="formula">\(AP=TP/L\)</div><p class="source">Chapter 10 — Productivity.</p></div>
+<div class="answer"><h4>Law of Diminishing Marginal Returns</h4><p>As more variable input is added to fixed input, marginal product eventually decreases, holding technology constant.</p><p class="source">Chapter 11 — Diminishing Returns.</p></div>
+<div class="answer"><h4>Returns to scale</h4><p>The long-run response of output when the scale of inputs is changed. The source names increasing, constant and decreasing returns to scale.</p><p class="source">Chapter 9 — Long-run production function.</p></div>
+<div class="answer"><h4>Explicit cost</h4><p>Standard prerequisite definition: a cost involving an actual monetary payment by the firm.</p><p class="source">Not covered in the supplied lecture PDF; included for Q1/Q5/Q6.</p></div>
+<div class="answer"><h4>Implicit cost</h4><p>Standard prerequisite definition: the opportunity cost of using resources owned by the firm/owner rather than in their next-best alternative.</p><p class="source">Not covered as a cost category in the supplied lecture PDF.</p></div>
+<div class="answer"><h4>Fixed Cost</h4><p>Standard prerequisite definition: cost that does not change with output in the short run.</p></div>
+<div class="answer"><h4>Variable Cost</h4><p>Standard prerequisite definition: cost that changes with the level of output.</p></div>
+<div class="answer"><h4>Total Cost</h4><p>Standard prerequisite definition: \(TC=FC+VC\).</p></div>
+</div></div>
+
+<div class="card"><h3>Q2. Price rises Tk 40 → Tk 60; quantity demanded falls 90 → 70</h3>
+<div class="answer"><h4>a) Which good is likely to have more elastic demand?</h4><p>The source identifies three important determinants of PED: <strong>close substitutes, necessity vs luxury, and time horizon</strong>. A good with many close substitutes is more likely to have elastic demand because consumers can switch away easily. Luxuries tend to be more elastic than necessities, and demand is generally more elastic in the long run.</p><p>For this sample, the supplied numbers tell us the demand response is inelastic; they do not identify a second good to compare directly. So the safest exam statement is: <strong>the more elastic good would be the one with more close substitutes (or a luxury / longer adjustment period).</strong></p><p class="source">Chapter 6 — Determinants of PED.</p></div>
+<div class="answer"><h4>b) Calculate PED</h4><div class="step"><strong>Step 1:</strong> ΔQ = 70 − 90 = −20; ΔP = 60 − 40 = 20.</div><div class="step"><strong>Step 2:</strong> Use the midpoint percentage changes: average Q = (90+70)/2 = 80; average P = (40+60)/2 = 50.</div><div class="step"><strong>Step 3:</strong> \(PED=\left|(-20/80)/(20/50)\right|=|(-0.25)/(0.40)|=0.625\).</div><div class="step"><strong>Interpretation:</strong> 0.625 &lt; 1, so demand is <strong>inelastic</strong>.</div><p class="source">Chapter 6 — Midpoint method and elasticity cutoffs.</p></div></div>
+
+<div class="card"><h3>Q3. Production table</h3><div class="table-wrap"><table><thead><tr><th>L</th><th>TP</th><th>MP = ΔTP/ΔL</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>–</td></tr><tr><td>1</td><td>10</td><td>10</td></tr><tr><td>2</td><td>24</td><td>14</td></tr><tr><td>3</td><td>44</td><td>20</td></tr><tr><td>4</td><td>56</td><td>12</td></tr><tr><td>5</td><td>64</td><td>8</td></tr><tr><td>6</td><td>70</td><td>6</td></tr><tr><td>7</td><td>70</td><td>0</td></tr><tr><td>8</td><td>67</td><td>-3</td></tr></tbody></table></div>
+<div class="answer"><h4>a) Marginal Production + curve interpretation</h4><p>Compute each MP from the change in TP when labor increases by one unit:</p><p>10, 14, 20, 12, 8, 6, 0, −3.</p><div class="chart"><svg viewBox="0 0 620 360" aria-label="Problem set 2 Q3 marginal product curve"><line x1="70" y1="300" x2="560" y2="300" stroke="#667085"/><line x1="70" y1="300" x2="70" y2="40" stroke="#667085"/><polyline points="90,205 155,160 220,95 285,145 350,175 415,195 480,235 545,270" fill="none" stroke="#176b87" stroke-width="4"/><text x="310" y="330" text-anchor="middle" font-size="13">Labor (L)</text><text x="18" y="170" transform="rotate(-90 18 170)" text-anchor="middle" font-size="13">MP</text><line x1="70" y1="235" x2="560" y2="235" stroke="#98a2b3" stroke-dasharray="6 6"/><text x="490" y="228" fill="#667085" font-size="12">MP=0</text></svg></div></div>
+<div class="answer"><h4>b) Relationship between TP and MP</h4><p><strong>L = 1–6:</strong> MP is positive, so TP keeps increasing.</p><p><strong>L = 7:</strong> MP = 0, so TP reaches its maximum of 70 and becomes flat.</p><p><strong>L = 8:</strong> MP = −3, so TP falls from 70 to 67.</p><p>Therefore, <strong>MP is the slope/change of TP</strong>. Positive MP corresponds to rising TP; zero MP corresponds to maximum TP; negative MP corresponds to falling TP.</p><p class="source">Chapter 10 — TP and MP relationship.</p></div></div>
+
+<div class="card"><h3>Q4. TP table with capital fixed</h3><div class="table-wrap"><table><thead><tr><th>L</th><th>TP</th><th>MP</th><th>AP</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>–</td><td>–</td></tr><tr><td>1</td><td>12</td><td>12</td><td>12</td></tr><tr><td>2</td><td>26</td><td>14</td><td>13</td></tr><tr><td>3</td><td>42</td><td>16</td><td>14</td></tr><tr><td>4</td><td>52</td><td>10</td><td>13</td></tr><tr><td>5</td><td>58</td><td>6</td><td>11.6</td></tr><tr><td>6</td><td>60</td><td>2</td><td>10</td></tr><tr><td>7</td><td>58</td><td>-2</td><td>8.29</td></tr></tbody></table></div>
+<div class="answer"><h4>a) MP and AP calculation</h4><p>\(MP=\Delta TP/\Delta L\), so the MP column is 12, 14, 16, 10, 6, 2, −2.</p><p>\(AP=TP/L\), so AP is 12, 13, 14, 13, 11.6, 10, and approximately 8.29.</p><p class="source">Chapter 10 — Productivity formulas.</p></div>
+<div class="answer"><h4>b) Where does MP start to decline?</h4><p>MP rises from 12 → 14 → 16 for L = 1, 2, 3. At <strong>the 4th worker</strong>, MP falls to 10. So diminishing marginal returns begins with the 4th worker (after the 3rd worker).</p><p>Interpretation: once more labor is added to the fixed capital, each additional worker contributes less extra output than the previous worker.</p><p class="source">Chapter 11 — Law of Diminishing Returns.</p></div>
+<div class="answer"><h4>c) When is TP maximized?</h4><p>TP is highest at <strong>L = 6</strong>, where TP = <strong>60</strong>. MP at that point is <strong>2</strong>.</p><p>Notice this is not the same as the source’s Q3-style table: here TP reaches 60 at L=6 and still has positive MP, so the next worker would make TP fall. The maximum discrete TP occurs at L=6.</p></div></div>
+
+<div class="card"><h3>Q5. Owner’s building + unpaid labor</h3>
+<div class="answer"><h4>a) Explicit vs implicit</h4><p><strong>Implicit costs:</strong> the building’s forgone rental income of <strong>Tk 15,000 per month</strong>, plus the opportunity cost of the owner’s unpaid full-time labor.</p><p><strong>Explicit costs:</strong> none are described in the question, so none can be identified from the information given.</p></div>
+<div class="answer"><h4>b) Why include implicit costs?</h4><p>Economists include implicit costs because economic cost is based on <strong>opportunity cost</strong>, not only cash payments. The owner gives up rent that the building could earn and gives up the wage she could earn from another job. Those forgone alternatives are real economic costs even though no money changes hands.</p><p class="source">Chapter 1 — Opportunity cost gives the underlying logic; the explicit/implicit cost labels themselves are prerequisite material for this problem set.</p></div></div>
+
+<div class="card"><h3>Q6. Cost table</h3><div class="table-wrap"><table><thead><tr><th>Q</th><th>FC</th><th>VC</th><th>TC</th><th>MC</th><th>AFC</th><th>AVC</th><th>ATC</th></tr></thead><tbody><tr><td>0</td><td>100</td><td>0</td><td>100</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>1</td><td>100</td><td>60</td><td>160</td><td>60</td><td>100</td><td>60</td><td>160</td></tr><tr><td>2</td><td>100</td><td>110</td><td>210</td><td>50</td><td>50</td><td>55</td><td>105</td></tr><tr><td>3</td><td>100</td><td>150</td><td>250</td><td>40</td><td>33.33</td><td>50</td><td>83.33</td></tr><tr><td>4</td><td>100</td><td>200</td><td>300</td><td>50</td><td>25</td><td>50</td><td>75</td></tr><tr><td>5</td><td>100</td><td>270</td><td>370</td><td>70</td><td>20</td><td>54</td><td>74</td></tr></tbody></table></div>
+<div class="answer"><h4>a) TC and MC</h4><p><strong>Total cost:</strong> \(TC=FC+VC\).</p><p>Therefore TC = 100, 160, 210, 250, 300, 370 for Q = 0…5.</p><p><strong>Marginal cost:</strong> change in total cost as output rises by one unit. Because FC is fixed, it is equivalently the change in VC here.</p><p>MC = 60, 50, 40, 50, 70 for Q = 1…5.</p></div>
+<div class="answer"><h4>b) AFC, AVC, ATC</h4><p>For Q &gt; 0:</p><div class="formula">\(AFC=FC/Q,\quad AVC=VC/Q,\quad ATC=TC/Q\)</div><p>From the table: AFC = 100, 50, 33.33, 25, 20; AVC = 60, 55, 50, 50, 54; ATC = 160, 105, 83.33, 75, 74.</p></div>
+<div class="answer"><h4>c) Lowest MC + interpretation</h4><p>MC is lowest at <strong>Q = 3</strong>, where MC = <strong>40</strong>.</p><p>This suggests the marginal-cost curve first slopes downward from Q=1 to Q=3, reaches a minimum at Q=3, and then slopes upward as output increases further. In other words, the discrete observations have a <strong>U-shaped pattern</strong>.</p><p class="source">Cost formulas are prerequisite material for this sample question; the supplied lecture PDF does not contain a dedicated cost-curves lecture.</p></div></div>
+
+<div class="card"><h3>Problem Set 2 — Fast revision map</h3><div class="table-wrap"><table><thead><tr><th>Question</th><th>Main chapter/topic</th><th>Key thing to remember</th></tr></thead><tbody><tr><td>Q1</td><td>Ch 6, Ch 3, Ch 9–11, plus cost prerequisites</td><td>Definitions + formulas</td></tr><tr><td>Q2</td><td>Ch 6 — PED</td><td>Midpoint method + elastic/inelastic cutoff</td></tr><tr><td>Q3</td><td>Ch 10 — TP &amp; MP</td><td>Positive MP → TP rises; zero MP → TP maximum; negative MP → TP falls</td></tr><tr><td>Q4</td><td>Ch 10–11 — MP/AP + diminishing returns</td><td>MP begins declining after its maximum</td></tr><tr><td>Q5</td><td>Ch 1 opportunity cost + cost prerequisite</td><td>Forgone alternatives are economic costs</td></tr><tr><td>Q6</td><td>Cost prerequisite</td><td>TC=FC+VC; average costs divide by Q; MC is change in TC</td></tr></tbody></table></div></div>
+</section>
+
+<div class="footer">
+<strong>Source fidelity:</strong> This guide is intentionally anchored to the supplied lecture PDF. Combined source sections “Lecture 7 &amp; 8” and “Lecture 9–11” are split into chapter headings for navigation, but their terminology and core statements are preserved. The lecture file has discussion placeholders rather than a formal exercise section, so the only complete exercise set answered here is the supplied <em>ECO461_Problem_Set_2.pdf</em>.<br/><br/>
+<strong>PDF export:</strong> Use the top-right <span class="kbd">Export / Save PDF</span> button, then choose “Save as PDF” in the browser print dialog. MathJax will typeset the formulas before printing.
+</div>
+</main>
+</div>
+<script>
+(function(){
+ const input=document.getElementById('search');
+ if(!input) return;
+ input.addEventListener('input',()=>{
+   const q=input.value.trim().toLowerCase();
+   const sections=[...document.querySelectorAll('main section[id]')];
+   sections.forEach(s=>{
+     if(!q){s.classList.remove('hidden');return;}
+     const hit=s.textContent.toLowerCase().includes(q);
+     s.classList.toggle('hidden',!hit);
+   });
+ });
+})();
+
+function exportPDF(){
+  const go=()=>window.print();
+  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise().then(go).catch(go); } else { go(); }
+}
+</script>
+</body>
+</html>
