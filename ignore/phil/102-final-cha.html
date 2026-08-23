@@ -1,7 +1,4 @@
-from pathlib import Path
-import textwrap, re
-
-html = r"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -818,10 +815,3 @@ html = r"""<!DOCTYPE html>
 </script>
 </body>
 </html>
-"""
-
-path = Path("/mnt/data/muslim_philosophy_complete_study_guide.html")
-path.write_text(html, encoding="utf-8")
-
-print(f"Created: {path}")
-print(f"Size: {path.stat().st_size/1024:.1f} KB")
