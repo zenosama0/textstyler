@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslim Philosophy - Comprehensive Exam Study Guide</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --card-border: #e5e7eb;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --secondary-bg: #f8fafc;
+            --highlight: #f0f9ff;
+            --highlight-border: #bae6fd;
+            --badge-bg: #e0f2fe;
+            --badge-text: #0369a1;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --accent: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --secondary-bg: #0f172a;
+            --highlight: #1e293b;
+            --highlight-border: #0369a1;
+            --badge-bg: #0369a1;
+            --badge-text: #e0f2fe;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        body.paper-texture {
+            background-color: #f7f4eb;
+            background-image: radial-gradient(#e2d9c8 0.75px, transparent 0.75px), radial-gradient(#e2d9c8 0.75px, #f7f4eb 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        body.dark-mode.paper-texture {
+            background-color: #111827;
+            background-image: radial-gradient(#1f2937 0.75px, transparent 0.75px), radial-gradient(#1f2937 0.75px, #111827 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            padding: 12px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .logo-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            background-color: var(--secondary-bg);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+        }
+
+        .nav-scroller {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 12px 0 4px 0;
+            margin-bottom: 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-scroller a {
+            display: inline-block;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .nav-scroller a:hover {
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .hero {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .badge {
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .qa-item {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--card-border);
+        }
+
+        .qa-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .answer {
+            font-size: 0.95rem;
+        }
+
+        .answer p {
+            margin-bottom: 10px;
+        }
+
+        .answer ul, .answer ol {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .answer li {
+            margin-bottom: 4px;
+        }
+
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+            min-width: 500px;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border: 1px solid var(--card-border);
+        }
+
+        th {
+            background-color: var(--secondary-bg);
+            font-weight: 700;
+        }
+
+        details {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 12px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            outline: none;
+            color: var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary:hover {
+            background-color: var(--highlight);
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .details-content {
+            padding: 16px;
+            font-size: 0.95rem;
+        }
+
+        .philosopher-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .philosopher-card {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        .philosopher-card h3 {
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .philosopher-card .era {
+            font-size: 0.75rem;
+            opacity: 0.75;
+            margin-bottom: 8px;
+        }
+
+        .philosopher-card ul {
+            margin-left: 16px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.3rem; }
+            .section-title { font-size: 1.15rem; }
+            .question { font-size: 0.98rem; }
+            .container { padding: 10px; }
+            .btn { padding: 5px 8px; font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-title">Islamic Philo Prep</div>
+            <div class="controls">
+                <button class="btn" onclick="toggleDarkMode()" id="themeBtn">🌙 Dark</button>
+                <button class="btn" onclick="togglePaper()" id="paperBtn">📜 Paper</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="nav-scroller">
+            <a href="#core-concepts">Core Concepts</a>
+            <a href="#pyq-5m">5-Mark PYQs</a>
+            <a href="#pyq-12.5m">12.5-Mark PYQs</a>
+            <a href="#philosophers">Key Philosophers</a>
+            <a href="#practice">Practice Drill</a>
+        </div>
+
+        <div class="hero">
+            <h1>Muslim Philosophy Exam Study Guide</h1>
+            <p>Based on <i>Muslim Philosophy</i> by Syed Abdul Hai and <i>History of Islamic Philosophy</i> by Majid Fakhry. Standard solutions for all previous year questions and practice questions.</p>
+        </div>
+
+        <!-- CORE CONCEPTS OVERVIEW -->
+        <div class="section-card" id="core-concepts">
+            <div class="section-title">
+                <span>1. Foundational Framework</span>
+                <span class="badge">Overview</span>
+            </div>
+            <div class="answer">
+                <p><b>Muslim Philosophy vs. Islamic Philosophy:</b></p>
+                <ul>
+                    <li><b>Muslim Philosophy:</b> Broader term encompassing all philosophical output produced by Muslim scholars or within Islamic civilization, including Hellenistic (Peripatetic/Mashsha'i), scientific, and socio-political thought.</li>
+                    <li><b>Islamic Philosophy:</b> Strictly refers to philosophy rooted directly in Islamic revelation (Quran and Sunnah), focused primarily on theological alignment (Kalam), divine unity, and prophetic revelation.</li>
+                </ul>
+                <p><b>Major Categorization of Schools:</b></p>
+                <ul>
+                    <li><b>Theological Schools (Kalam):</b> Mu'tazilites, Ash'arites, Maturidites, Tahawites, Jabrites, Qadarites, Murji'ites, Sifatiyas.</li>
+                    <li><b>Philosophical Schools (Falsafa/Mashsha'i):</b> Rationalist Hellenistic thinkers (Al-Kindi, Al-Farabi, Ibn Sina, Ibn Rushd).</li>
+                    <li><b>Political-Religious Movements:</b> Kharijites, Shia (Ithna Ashariya), Sunni.</li>
+                    <li><b>Mystical Tradition (Tasawwuf):</b> Sufi doctrines of divine love, self-annihilation (Fana), and spiritual path (Tariqah).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 5-MARK PREVIOUS YEAR QUESTIONS -->
+        <div class="section-card" id="pyq-5m">
+            <div class="section-title">
+                <span>2. Previous Year Questions (5 Marks)</span>
+                <span class="badge">Short Notes</span>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q1. Discuss different aspects of Islam as a complete code of life.</div>
+                <div class="answer">
+                    <p>Islam is categorized not merely as a set of personal rituals, but as a holistic system (<i>Din</i>) governing all spheres of human existence:</p>
+                    <ul>
+                        <li><b>Spiritual & Doctrinal (Aqidah):</b> Establishes monotheism (<i>Tawhid</i>), belief in prophets, scriptures, angels, and the Day of Judgment.</li>
+                        <li><b>Moral & Ethical (Akhlaq):</b> Regulates individual character, virtue, honesty, modesty, and social righteousness.</li>
+                        <li><b>Legal & Transactional (Mu'amalat):</b> Provides detailed Jurisprudence (<i>Fiqh</i>) for contracts, trade, marriage, inheritance, and criminal justice.</li>
+                        <li><b>Socio-Political (Siyasah):</b> Outlines principles of governance, justice (<i>'Adl</i>), consultation (<i>Shura</i>), and communal duty.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q2. Who are Murjias? Describe in short their standpoint on the status of Muslims who commit sin.</div>
+                <div class="answer">
+                    <p>The <b>Murji'as</b> (from <i>Irja</i>, meaning "postponement") emerged during the early political civil wars (Fitna) as a theological party advocating neutrality.</p>
+                    <ul>
+                        <li><b>Core Standpoint on Sinners:</b> In sharp contrast to the Kharijites (who declared grave sinners to be apostates/Kafir), the Murji'ites held that a Muslim who commits a grave sin (<i>Kabirah</i>) remains a true believer (<i>Mu'min</i>).</li>
+                        <li><b>Postponement of Judgment:</b> They argued that human action (<i>'Amal</i>) is secondary to internal faith (<i>Iman</i>). Therefore, the ultimate status of a grave sinner is postponed to Allah alone on the Day of Judgment.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q3. Who are the Ithna Ashariya (The Twelvers)?</div>
+                <div class="answer">
+                    <p>The <b>Ithna Ashariya</b> (Twelver Shia) represents the largest branch of Shi'ism.</p>
+                    <ul>
+                        <li><b>Definition:</b> They derive their name from their belief in twelve divinely ordained spiritual and political leaders (Imams) originating from the Prophet's family (<i>Ahl al-Bayt</i>), beginning with Ali ibn Abi Talib.</li>
+                        <li><b>Core Beliefs:</b> They hold that the 12th Imam, Muhammad al-Mahdi, entered a state of Occultation (<i>Ghaybah</i>) in 874 CE and will return before Judgment Day to restore justice.</li>
+                        <li><b>Doctrinal Pillars:</b> Absolute emphasis on divine justice (<i>'Adl</i>), the infallibility (<i>'Ismah</i>) of the Imams, and divine appointment (<i>Nass</i>) of leadership.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q4. Describe in short the classifications of different schools of thought in Muslim philosophy.</div>
+                <div class="answer">
+                    <p>Muslim philosophy and theology are broadly classified into four major intellectual traditions:</p>
+                    <ul>
+                        <li><b>Kalam (Scholastic Theology):</b> Rational defense of Islamic tenets. Divided into rationalist (Mu'tazilite) and orthodox-traditionalist schools (Ash'arite, Maturidite, Tahawite).</li>
+                        <li><b>Falsafa (Peripatetic Philosophy):</b> Greco-Arabic rationalism synthesized with monotheism (Al-Kindi, Al-Farabi, Ibn Sina, Ibn Rushd).</li>
+                        <li><b>Political-Theological Sects:</b> Factions emerging from early political succession disputes (Sunni, Shia, Kharijites).</li>
+                        <li><b>Tasawwuf (Sufi Mysticism):</b> Experiential, esoteric knowledge (<i>Irfan</i>) seeking direct proximity to God.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12.5-MARK PREVIOUS YEAR QUESTIONS -->
+        <div class="section-card" id="pyq-12.5m">
+            <div class="section-title">
+                <span>3. Previous Year Questions (12.5 Marks)</span>
+                <span class="badge">Broad Essays</span>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q1. Define Muslim philosophy. In this regard, analyze the definitions of Muslim philosophy given by various philosophers.</div>
+                <div class="answer">
+                    <p><b>1. Definition & Scope:</b> Muslim philosophy represents the systematic inquiry into metaphysics, epistemology, ethics, and theology conducted within Islamic civilization, utilizing both rational argumentation and divine revelation.</p>
+                    <p><b>2. Analytical Perspectives across Philosophers:</b></p>
+                    <ul>
+                        <li><b>Al-Kindi (First Arab Philosopher):</b> Defined philosophy as <i>"the knowledge of the reality of things according to human capacity."</i> He argued that truth is universal and harmonious with prophetic revelation.</li>
+                        <li><b>Al-Farabi (The Second Teacher):</b> Viewed philosophy as the highest intellectual discipline, providing absolute demonstrative proof (<i>Burhan</i>), whereas religion translates these ultimate truths into symbolic imagery for the masses.</li>
+                        <li><b>Ibn Sina (Avicenna):</b> Defined it as the perfection of the human soul through the conceptualization of things and verification of theoretical and practical truths.</li>
+                        <li><b>Ibn Rushd (Averroes):</b> Defined philosophy as the investigation of existing beings and their reflection as evidence of the Creator, asserting that Quranic mandate obligates Muslims to study philosophy.</li>
+                        <li><b>Syed Abdul Hai & Majid Fakhry (Modern Historians):</b> Emphasize that Muslim philosophy includes both purely rationalistic Hellenistic adaptations (<i>Falsafa</i>) and internal theological debates (<i>Kalam</i>).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q2. State the main points of differences among the political philosophy of Shia, Sunni and Kharijis.</div>
+                <div class="answer">
+                    <p>The early political split over the Caliphate after Prophet Muhammad's death shaped three distinct political doctrines:</p>
+                    <div class="comparison-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Sunni Political Theory</th>
+                                    <th>Shia Political Theory</th>
+                                    <th>Khariji Political Theory</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Source of Authority</b></td>
+                                    <td>Community consensus (<i>Ijma</i>) & Consultation (<i>Shura</i>).</td>
+                                    <td>Divine appointment (<i>Nass</i>) via Prophet.</td>
+                                    <td>Radical piety; strictly election by any righteous believers.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Qualifications of Ruler</b></td>
+                                    <td>Just Muslim, capable administrator, traditionally Qurayshi.</td>
+                                    <td>Direct descent from <i>Ahl al-Bayt</i> (Ali's lineage).</td>
+                                    <td>Any pious Muslim, even an Abyssinian slave.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Nature of Leader</b></td>
+                                    <td>Fallible, political protector of Islamic law.</td>
+                                    <td>Infallible (<i>Ma'sum</i>), possesses hidden spiritual knowledge.</td>
+                                    <td>Fallible; must be immediately deposed if he sins.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Rebellion/Dissent</b></td>
+                                    <td>Generally discouraged to prevent chaos (<i>Fitna</i>).</td>
+                                    <td>Legitimate under guidance of true Imam or quietism during Ghaybah.</td>
+                                    <td>Obligatory against any ruler who commits a grave sin.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q3. Compare between Mu'tazilite and Ash'arite views on 'Attributes of Allah', 'Beatific Vision' (Beautification of Allah), and 'Createdness of Quran' in the discussion of unity of Allah.</div>
+                <div class="answer">
+                    <p>The debate on <b>Tawhid</b> (Unity of God) formed the primary battleground between the rationalist Mu'tazilites and orthodox Ash'arites:</p>
+
+                    <p><b>1. Attributes of Allah (Sifat):</b></p>
+                    <ul>
+                        <li><b>Mu'tazilite View:</b> Denied distinct eternal attributes existing alongside God's essence. They argued that separate co-eternal attributes introduce polytheism (plurality of eternals). Allah knows by His Essence, not by an added attribute of Knowledge.</li>
+                        <li><b>Ash'arite View:</b> Maintained that Allah has real, co-eternal attributes (Knowledge, Power, Life, etc.) distinct from His Essence, yet inseparable from it.</li>
+                    </ul>
+
+                    <p><b>2. Beatific Vision (Ru'yat Allah):</b></p>
+                    <ul>
+                        <li><b>Mu'tazilite View:</b> Denied the physical or visual seeing of Allah in Paradise, arguing that visibility implies spatial direction, body, and distance, violating God's incorporeality. References in revelation are interpreted allegorically (metaphorical insight).</li>
+                        <li><b>Ash'arite View:</b> Affirmed that believers will see Allah in the Hereafter, but without spatial location, direction, or physical modality (<i>Bi-la Kayf</i> - without asking "how").</li>
+                    </ul>
+
+                    <p><b>3. Createdness of the Quran (Khalq al-Quran):</b></p>
+                    <ul>
+                        <li><b>Mu'tazilite View:</b> The Quran is the <i>created</i> word of God brought into existence in time. If the Quran were uncreated, it would exist as a second eternal entity alongside God.</li>
+                        <li><b>Ash'arite View:</b> The Quran is the uncreated, eternal speech of God (<i>Kalam Nafsi</i>). However, the physical ink, paper, and recited sounds are created in time.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q4. Discuss with comparison, the views of Jabriya and Qadariya on freedom of will.</div>
+                <div class="answer">
+                    <p>The debate on free will vs. predestination represents one of the earliest theological dilemmas in Islam:</p>
+
+                    <p><b>1. Jabriya (Absolute Determinism):</b></p>
+                    <ul>
+                        <li><b>Proponents:</b> Jahm ibn Safwan and followers.</li>
+                        <li><b>Doctrine:</b> Man possesses no free will, choice, or power whatsoever. Actions are entirely created and forced by Allah. Human responsibility is purely metaphorical—man acts as a feather swept by the wind. All events are strictly predestined.</li>
+                    </ul>
+
+                    <p><b>2. Qadariya (Absolute Free Will):</b></p>
+                    <ul>
+                        <li><b>Proponents:</b> Ma'bad al-Juhani, Ghaylan al-Dimashqi.</li>
+                        <li><b>Doctrine:</b> Man has absolute free will and power (<i>Qadar</i>) over his own actions. Allah does not predetermine human choices; individuals create their good and bad deeds independently, establishing true divine justice in reward and punishment.</li>
+                    </ul>
+
+                    <p><b>3. Synthesis (The Ash'arite Compromise - Kasb):</b></p>
+                    <ul>
+                        <li>Ash'arism later synthesized these extremes through the doctrine of <b>Kasb</b> (Acquisition): Allah creates the action and power, but human beings "acquire" moral responsibility through their conscious intention.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q5. Discuss the fundamental principles of Sufism. In this regard, describe the Sufi Path.</div>
+                <div class="answer">
+                    <p><b>1. Fundamental Principles of Sufism (Tasawwuf):</b></p>
+                    <ul>
+                        <li><b>Tawhid (Ultimate Unity):</b> Progression from verbal affirmation of God to experiencing divine presence in all existence (<i>Wahdat al-Wujud</i>).</li>
+                        <li><b>Zuhd (Asceticism) & Ihsan:</b> Purification of the inner self (<i>Tazkiyat al-Nafs</i>) and worshiping Allah as if seeing Him.</li>
+                        <li><b>Mahabbah (Divine Love):</b> Seeking God out of pure love rather than fear of Hell or desire for Paradise (e.g., Rabia al-Adawiyya).</li>
+                        <li><b>Fana and Baqa:</b> Annihilation of the individual ego (<i>Fana</i>) leading to eternal subsistence in divine consciousness (<i>Baqa</i>).</li>
+                    </ul>
+
+                    <p><b>2. The Sufi Path (Tariqah):</b> The spiritual journey consists of earned stages (<i>Maqamat</i>) and bestowed spiritual states (<i>Ahwal</i>):</p>
+                    <ul>
+                        <li><b>Taubah (Repentance):</b> Sincere turning away from worldly attachment and sin.</li>
+                        <li><b>Wara' (Watchfulness) & Zuhd:</b> Abstain from doubtful matters and material distractions.</li>
+                        <li><b>Faqr (Spiritual Poverty):</b> Recognizing total dependency upon Allah alone.</li>
+                        <li><b>Sabr (Patience) & Shukr (Gratitude):</b> Enduring tribulations and thanking God in all conditions.</li>
+                        <li><b>Tawakkul (Complete Trust):</b> Absolute reliance on divine providence.</li>
+                        <li><b>Rida (Contentment):</b> Joyful acceptance of God's divine decree.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q6. Explain and evaluate Al-Farabi's Political Philosophy.</div>
+                <div class="answer">
+                    <p><b>1. Overview:</b> Al-Farabi outlined his political philosophy principally in <i>Al-Madina al-Fadila</i> (The Virtuous City), synthesizing Plato's <i>Republic</i> with Islamic prophetic doctrine.</p>
+
+                    <p><b>2. The Virtuous City (Al-Madina al-Fadila):</b></p>
+                    <ul>
+                        <li><b>Organic Model:</b> Farabi compares the state to a healthy human body where organs function harmoniously under the leadership of the heart.</li>
+                        <li><b>The Ideal Ruler (First Chief):</b> Must be both a Supreme Philosopher and a Prophet. He receives divine illumination from the Active Intellect (<i>Al-'Aql al-Fa'al</i>) and possesses supreme intellect, moral perfection, and political governance skill.</li>
+                    </ul>
+
+                    <p><b>3. Imperfect / Ignorant Cities (Non-Ideal States):</b></p>
+                    <ul>
+                        <li><b>Madina al-Jahiliyya (Ignorant City):</b> Unaware of true spiritual happiness; pursues wealth, pleasure, or conquest.</li>
+                        <li><b>Madina al-Fasiqa (Immoral City):</b> Knows ultimate truth theoretically, but acts corruptly.</li>
+                        <li><b>Madina al-Dalla (Erring City):</b> Adopts false cosmological beliefs about God and higher realities.</li>
+                    </ul>
+
+                    <p><b>4. Evaluation:</b> Farabi successfully reconciled Greek political philosophy with Islamic governance, elevating philosophy to a public civil utility. Critics note his ideal ruler is practically unattainable in post-prophetic history.</p>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q7. Mention some important aspects of the philosophy of Ibn Sina, illustrate his views regarding the soul.</div>
+                <div class="answer">
+                    <p><b>1. Major Aspects of Ibn Sina's Philosophy:</b></p>
+                    <ul>
+                        <li><b>Metaphysics of Being:</b> Distinction between Necessary Being (<i>Wajib al-Wujud</i>—Allah) whose existence is essential to Its essence, and Contingent Being (<i>Mumkin al-Wujud</i>) which depends on an external cause.</li>
+                        <li><b>Emanationism:</b> Creation proceeds from God via necessary intellectual emanation across ten celestial intellects.</li>
+                    </ul>
+
+                    <p><b>2. Doctrine of the Soul (Nafs):</b></p>
+                    <ul>
+                        <li><b>Substantiality & Incorporeality:</b> The soul is an independent immaterial substance, not merely a physical form bound to the body. The body is an instrument used by the soul.</li>
+                        <li><b>The "Floating Man" Thought Experiment (Al-Insan al-Ta'ir):</b> Ibn Sina asks us to imagine a fully formed human created suspended in mid-air with eyes covered and limbs separated, receiving no sensory input. Even without sensory perception of his body, he remains directly aware of his own self/consciousness. This proves self-awareness is independent of physical sensation and body.</li>
+                        <li><b>Faculties of Soul:</b> Plant (vegetative), Animal (locomotive/perceptive), and Human (Rational—divided into Practical and Theoretical Intellect).</li>
+                        <li><b>Immortality:</b> The human rational soul survives bodily death, retaining individual selfhood.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEY PHILOSOPHERS QUICK REFERENCE -->
+        <div class="section-card" id="philosophers">
+            <div class="section-title">
+                <span>4. Philosopher Profiles</span>
+                <span class="badge">Eastern & Western</span>
+            </div>
+
+            <div class="philosopher-grid">
+                <div class="philosopher-card">
+                    <h3>Al-Kindi (801–873)</h3>
+                    <div class="era">Eastern • "Philosopher of the Arabs"</div>
+                    <ul>
+                        <li><b>Works:</b> <i>On First Philosophy</i></li>
+                        <li>Reconciled Greek philosophy with Islamic revelation.</li>
+                        <li>Defended creation ex nihilo.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Al-Farabi (872–950)</h3>
+                    <div class="era">Eastern • "The Second Teacher"</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Al-Madina al-Fadila</i></li>
+                        <li>Systematized Neoplatonic emanations.</li>
+                        <li>Synthesized Plato and Aristotle.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Ibn Sina (980–1037)</h3>
+                    <div class="era">Eastern • "Avicenna"</div>
+                    <ul>
+                        <li><b>Works:</b> <i>The Shifa</i>, <i>Canon of Medicine</i></li>
+                        <li>Floating Man argument for soul.</li>
+                        <li>Wajib al-Wujud (Necessary Being).</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Al-Ghazali (1058–1111)</h3>
+                    <div class="era">Eastern • "Algazel"</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Tahafut al-Falasifa</i>, <i>Ihya 'Ulum al-Din</i></li>
+                        <li>Critiqued philosophers on eternity, omniscience, resurrection.</li>
+                        <li>Revived Sufism into orthodoxy.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Ibn Bajjah (1085–1138)</h3>
+                    <div class="era">Western (Andalusia) • "Avempace"</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Governance of the Solitary</i></li>
+                        <li>Focused on the isolation of the philosopher in imperfect states.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Ibn Tufail (1110–1185)</h3>
+                    <div class="era">Western (Andalusia)</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Hayy ibn Yaqzan</i></li>
+                        <li>Philosophical novel showing truth discovered via pure reason matches revelation.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Ibn Rushd (1126–1198)</h3>
+                    <div class="era">Western (Andalusia) • "Averroes"</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Tahafut al-Tahafut</i>, <i>Fasl al-Maqal</i></li>
+                        <li>Defended philosophy against Al-Ghazali. Pure Aristotelianism.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Ibn Miskawayh (932–1030)</h3>
+                    <div class="era">Eastern Ethics Scholar</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Tahdhib al-Akhlaq</i></li>
+                        <li>Systematized Islamic ethical philosophy combining Aristotle and Islam.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Ibn Khaldun (1332–1406)</h3>
+                    <div class="era">North Africa • Father of Sociology</div>
+                    <ul>
+                        <li><b>Works:</b> <i>Muqaddimah</i></li>
+                        <li>Concepts of <i>'Asabiyyah</i> (Social Cohesion) and cyclic rise/fall of empires.</li>
+                    </ul>
+                </div>
+
+                <div class="philosopher-card">
+                    <h3>Allama Iqbal (1877–1938)</h3>
+                    <div class="era">Modern Thinker</div>
+                    <ul>
+                        <li><b>Works:</b> <i>The Reconstruction of Religious Thought in Islam</i></li>
+                        <li>Concept of <i>Khudi</i> (Selfhood), dynamic interpretation of Ijtihad.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRACTICE DRILL WITH HIDDEN ANSWERS -->
+        <div class="section-card" id="practice">
+            <div class="section-title">
+                <span>5. Interactive Practice Drill</span>
+                <span class="badge">Self-Testing</span>
+            </div>
+            <p style="font-size: 0.9rem; margin-bottom: 16px;">Test your preparation. Click on any question to reveal and verify the standard answer.</p>
+
+            <!-- Sample Q1 -->
+            <details>
+                <summary>Q1 (5 Marks): What were Al-Ghazali's 3 major condemnations of the philosophers in Tahafut al-Falasifa?</summary>
+                <div class="details-content">
+                    <p>In <i>Tahafut al-Falasifa</i> (Incoherence of the Philosophers), Al-Ghazali declared thinkers like Al-Farabi and Ibn Sina to have departed from Islam on 3 specific issues:</p>
+                    <ol>
+                        <li><b>Eternity of the World:</b> Philosophers asserted the universe was eternal, opposing the doctrine of creation ex nihilo.</li>
+                        <li><b>God's Knowledge of Particulars:</b> Philosophers held God knows universals, but not individual temporal particulars.</li>
+                        <li><b>Bodily Resurrection:</b> Philosophers claimed resurrection is purely spiritual, denying physical bodily resurrection.</li>
+                    </ol>
+                </div>
+            </details>
+
+            <!-- Sample Q2 -->
+            <details>
+                <summary>Q2 (5 Marks): Define the Sufi terms 'Fana' and 'Baqa'.</summary>
+                <div class="details-content">
+                    <p><b>Fana:</b> Spiritual annihilation or passing away of human ego, desires, and self-will into Divine consciousness.</p>
+                    <p><b>Baqa:</b> Spiritual subsistence or eternal abiding in Allah following Fana, where the mystic lives in the world guided fully by divine will.</p>
+                </div>
+            </details>
+
+            <!-- Sample Q3 -->
+            <details>
+                <summary>Q3 (12.5 Marks): Explain Ibn Khaldun's concept of 'Asabiyyah' and his theory of the rise and fall of civilizations.</summary>
+                <div class="details-content">
+                    <p><b>1. Definition of 'Asabiyyah:</b> Social solidarity, group cohesion, or tribal loyalty that binds communities together.</p>
+                    <p><b>2. Role in State Formation:</b> Nomadic tribes possess strong <i>'Asabiyyah</i> due to harsh desert conditions, allowing them to overcome weak urban dynasties and establish new empires.</p>
+                    <p><b>3. Five-Stage Cycle of Dynasties:</b></p>
+                    <ul>
+                        <li>Stage 1: Conquest through strong 'Asabiyyah.</li>
+                        <li>Stage 2: Consolidation of central royal authority.</li>
+                        <li>Stage 3: Prosperity, luxury, and cultural flourishing.</li>
+                        <li>Stage 4: Complacency, decay of 'Asabiyyah, and over-taxation.</li>
+                        <li>Stage 5: Extravagance, vulnerability, and eventual collapse to a new nomadic group with stronger 'Asabiyyah.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <!-- Sample Q4 -->
+            <details>
+                <summary>Q4 (12.5 Marks): Describe Allama Iqbal's philosophy of 'Khudi' (Selfhood) and his view on Ijtihad.</summary>
+                <div class="details-content">
+                    <p><b>1. Concept of Khudi (Selfhood):</b> Iqbal rejected passive mysticism that preaches self-effacement. Instead, he defined <i>Khudi</i> as dynamic, creative self-realization where human personality is strengthened through active engagement with reality.</p>
+                    <p><b>2. Principle of Movement (Ijtihad):</b> Iqbal termed <i>Ijtihad</i> the "principle of movement in the structure of Islam." He urged modern Muslims to re-open Ijtihad to reinterpret eternal Islamic principles in light of modern scientific and social advances, rejecting intellectual stagnation.</p>
+                </div>
+            </details>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeBtn').innerText = isDark ? '☀️ Light' : '🌙 Dark';
+        }
+
+        function togglePaper() {
+            document.body.classList.toggle('paper-texture');
+            const isPaper = document.body.classList.contains('paper-texture');
+            document.getElementById('paperBtn').innerText = isPaper ? '🚫 Plain' : '📜 Paper';
+        }
+    </script>
+</body>
+</html>
