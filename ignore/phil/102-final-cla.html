@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Muslim Philosophy — Exam Study Guide</title>
+<style>
+  :root {
+    --bg: #f7f4ef;
+    --surface: #ffffff;
+    --surface2: #f0ece4;
+    --border: #d8d0c4;
+    --text: #1a1612;
+    --text-muted: #6b5e50;
+    --accent: #5c4a32;
+    --accent2: #8b6f47;
+    --accent-light: #e8ddd0;
+    --tag-bg: #e8ddd0;
+    --tag-text: #5c4a32;
+    --mark4: #2d6a4f;
+    --mark12: #1d4e89;
+    --sample: #7b2d8b;
+    --reveal-btn: #5c4a32;
+    --answer-bg: #f0f7f4;
+    --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    --radius: 10px;
+    --font-display: 'Georgia', 'Times New Roman', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #12100e;
+    --surface: #1e1a16;
+    --surface2: #2a2420;
+    --border: #3a3028;
+    --text: #e8ddd0;
+    --text-muted: #9a8a78;
+    --accent: #c4a882;
+    --accent2: #a88860;
+    --accent-light: #2a2420;
+    --tag-bg: #3a2e22;
+    --tag-text: #c4a882;
+    --mark4: #52b788;
+    --mark12: #74a7d8;
+    --sample: #c084d4;
+    --reveal-btn: #c4a882;
+    --answer-bg: #1a2420;
+    --shadow: 0 1px 4px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+  }
+
+  body.paper::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 300px;
+  }
+  [data-theme="dark"] body.paper::before { opacity: 0.06; }
+
+  #app { position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 16px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+  }
+  .header-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .header-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: normal; color: var(--accent); letter-spacing: 0.01em; }
+  .header-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+  .toggles { display: flex; gap: 8px; flex-shrink: 0; }
+  .toggle-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    padding: 5px 9px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .toggle-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* NAV */
+  nav {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    padding: 0 12px;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    display: inline-block;
+    padding: 10px 13px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    vertical-align: top;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: var(--font-body);
+  }
+  .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .nav-btn:hover { color: var(--accent); }
+
+  /* MAIN */
+  main { padding: 16px 12px 60px; max-width: 800px; margin: 0 auto; }
+
+  /* SECTION */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    user-select: none;
+  }
+  .card-header:hover { background: var(--surface2); }
+  .card-chevron {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .card.open .card-chevron { transform: rotate(90deg); }
+  .card-title-wrap { flex: 1; min-width: 0; }
+  .card-q { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .card-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+  }
+  .tag.mark4 { background: #d4edda; color: var(--mark4); }
+  .tag.mark12 { background: #d1e4f6; color: var(--mark12); }
+  .tag.sample { background: #f3e5f7; color: var(--sample); }
+  [data-theme="dark"] .tag.mark4 { background: #1a3528; color: var(--mark4); }
+  [data-theme="dark"] .tag.mark12 { background: #15283a; color: var(--mark12); }
+  [data-theme="dark"] .tag.sample { background: #2a1a30; color: var(--sample); }
+
+  .card-body {
+    padding: 16px;
+    display: none;
+    font-size: 0.87rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .card.open .card-body { display: block; }
+
+  /* ANSWER CONTENT */
+  .answer h3 { font-family: var(--font-display); font-size: 0.95rem; color: var(--accent); margin: 18px 0 6px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  .answer h3:first-child { margin-top: 0; }
+  .answer h4 { font-size: 0.88rem; font-weight: 700; color: var(--accent2); margin: 12px 0 4px; }
+  .answer p { margin-bottom: 10px; }
+  .answer ul, .answer ol { padding-left: 20px; margin-bottom: 10px; }
+  .answer li { margin-bottom: 5px; }
+  .answer .key { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 0.84rem; }
+  .answer .exam-tip { background: #fff8e1; border-left: 3px solid #f9a825; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 0.83rem; color: #5a4000; }
+  [data-theme="dark"] .answer .exam-tip { background: #2a2200; border-color: #c8960a; color: #e0c060; }
+  .answer table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.82rem; overflow-x: auto; display: block; }
+  .answer table th { background: var(--surface2); padding: 7px 10px; border: 1px solid var(--border); font-weight: 700; text-align: left; color: var(--accent); }
+  .answer table td { padding: 7px 10px; border: 1px solid var(--border); vertical-align: top; }
+  .answer table tr:nth-child(even) td { background: var(--surface2); }
+
+  /* SAMPLE Q */
+  .sample-reveal-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: var(--reveal-btn);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: opacity 0.2s;
+  }
+  .sample-reveal-btn:hover { opacity: 0.85; }
+  .sample-answer { margin-top: 12px; padding: 14px; background: var(--answer-bg); border: 1px solid var(--border); border-radius: 8px; display: none; }
+  .sample-answer.shown { display: block; }
+
+  /* OVERVIEW TABLE */
+  .overview-grid { display: grid; gap: 12px; margin-top: 8px; }
+  .ov-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+  .ov-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .ov-card ul { padding-left: 18px; font-size: 0.82rem; color: var(--text-muted); }
+  .ov-card ul li { margin-bottom: 3px; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 20px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .intro-box {
+    background: var(--accent-light);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 0.83rem;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+  .intro-box strong { display: block; font-size: 0.9rem; margin-bottom: 4px; }
+</style>
+</head>
+<body id="bodyEl">
+<div id="app">
+
+<header>
+  <div class="header-top">
+    <div>
+      <div class="header-title">Muslim Philosophy</div>
+      <div class="header-sub">Complete Exam Study Guide</div>
+    </div>
+    <div class="toggles">
+      <button class="toggle-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+      <button class="toggle-btn" id="paperBtn" onclick="togglePaper()">📜 Paper</button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="showSection('overview',this)">Overview</button>
+  <button class="nav-btn" onclick="showSection('foundations',this)">Foundations</button>
+  <button class="nav-btn" onclick="showSection('schools',this)">Schools</button>
+  <button class="nav-btn" onclick="showSection('political',this)">Political</button>
+  <button class="nav-btn" onclick="showSection('sufism',this)">Sufism</button>
+  <button class="nav-btn" onclick="showSection('philosophers',this)">Philosophers</button>
+  <button class="nav-btn" onclick="showSection('prev',this)">Past Q&A</button>
+  <button class="nav-btn" onclick="showSection('sample',this)">Sample Q&A</button>
+</nav>
+
+<main>
+
+<!-- OVERVIEW -->
+<div class="section active" id="sec-overview">
+  <div class="intro-box">
+    <strong>📚 How to use this guide</strong>
+    Tap any question card to expand the full answer. Past exam Q&As are fully revealed. Sample questions are hidden — try to recall the answer yourself before revealing. Tags show marks: <span class="tag mark4">4 marks</span> <span class="tag mark12">12.5 marks</span> <span class="tag sample">sample</span>
+  </div>
+
+  <div class="section-label">Course Map</div>
+  <div class="overview-grid">
+    <div class="ov-card">
+      <h3>📌 Unit 1 — Foundations</h3>
+      <ul>
+        <li>Definition & nature of Muslim Philosophy</li>
+        <li>Sources & scope</li>
+        <li>Muslim vs Islamic Philosophy</li>
+        <li>Historical development</li>
+        <li>Islam as a complete code of life</li>
+      </ul>
+    </div>
+    <div class="ov-card">
+      <h3>📌 Unit 2 — Theological Schools</h3>
+      <ul>
+        <li>Qadarites & Jabarites (Free Will debate)</li>
+        <li>Mutazilites vs Asharites</li>
+        <li>Murji'as & Sifatiyas</li>
+        <li>Al-Tahawi & Al-Maturidi</li>
+      </ul>
+    </div>
+    <div class="ov-card">
+      <h3>📌 Unit 3 — Religious-Political Schools</h3>
+      <ul>
+        <li>Shia — Imama, Ithna Ashariya, Ismailis</li>
+        <li>Sunni — Political theology</li>
+        <li>Kharijis — Extremist position</li>
+      </ul>
+    </div>
+    <div class="ov-card">
+      <h3>📌 Unit 4 — Sufism</h3>
+      <ul>
+        <li>Origin & definition</li>
+        <li>Fundamental principles & doctrines</li>
+        <li>Sufi Path (Maqamat & Ahwal)</li>
+      </ul>
+    </div>
+    <div class="ov-card">
+      <h3>📌 Unit 5 — Philosophers</h3>
+      <ul>
+        <li>Al-Kindi, Al-Farabi, Ibn Sina</li>
+        <li>Al-Ghazali, Ibn Rushd, Ibn Khaldun</li>
+        <li>Ibn Tufayl, Ibn Bajjah, Ibn Maskawaih, Iqbal</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Key Vocabulary</div>
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap"><div class="card-q">Quick-reference glossary of key terms</div></div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <table>
+          <tr><th>Term</th><th>Meaning</th></tr>
+          <tr><td><strong>Kalam</strong></td><td>Islamic scholastic theology; rational defense of religious doctrine</td></tr>
+          <tr><td><strong>Falsafa</strong></td><td>Greek-inspired philosophical tradition in Islam</td></tr>
+          <tr><td><strong>Ijtihad</strong></td><td>Independent legal/intellectual reasoning</td></tr>
+          <tr><td><strong>Imama</strong></td><td>The institution of leadership/imamate — central to Shia thought</td></tr>
+          <tr><td><strong>Ijma</strong></td><td>Consensus of scholars — a source of Islamic law</td></tr>
+          <tr><td><strong>Sifat</strong></td><td>Attributes/qualities of Allah (central to Mutazilite-Asharite debate)</td></tr>
+          <tr><td><strong>Maqamat</strong></td><td>Stages/stations on the Sufi spiritual path (permanent attainments)</td></tr>
+          <tr><td><strong>Ahwal</strong></td><td>Spiritual states on the Sufi path (temporary divine gifts)</td></tr>
+          <tr><td><strong>Fana</strong></td><td>Sufi concept of annihilation of the ego in God</td></tr>
+          <tr><td><strong>Baqa</strong></td><td>Subsistence in God after fana</td></tr>
+          <tr><td><strong>Wajib al-Wujud</strong></td><td>Necessary Being — Ibn Sina's concept of God</td></tr>
+          <tr><td><strong>Mumkin al-Wujud</strong></td><td>Possible/contingent being — everything other than God</td></tr>
+          <tr><td><strong>Active Intellect</strong></td><td>Al-Farabi & Ibn Sina's cosmic intellect that illuminates human mind</td></tr>
+          <tr><td><strong>Asabiyyah</strong></td><td>Ibn Khaldun's concept of group cohesion/social solidarity</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOUNDATIONS -->
+<div class="section" id="sec-foundations">
+
+  <div class="section-label">Core Concept Questions</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Define Muslim Philosophy. Analyze the definitions given by various philosophers.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ Exam tip: Open with a concise definition, then attribute definitions to named scholars, then synthesize. This question is worth 12.5 marks — write at least 5–6 paragraphs.</div>
+        <h3>Introduction</h3>
+        <p>Muslim Philosophy refers to the philosophical thinking developed by Muslim thinkers who were influenced by Islamic revelation, Greek thought, and their own intellectual tradition. It is a broad discipline that encompasses theology (Kalam), metaphysics, ethics, political theory, and logic.</p>
+
+        <h3>Definitions by Various Philosophers</h3>
+        <h4>1. Syed Abdul Hai</h4>
+        <p>According to Syed Abdul Hai (the author of <em>Muslim Philosophy</em>), Muslim Philosophy is the systematic rational inquiry into the problems of existence, knowledge, and value conducted by thinkers who were Muslim by faith and culture. It is distinct from pure Islamic theology because it employs Greek-style rationalism while remaining rooted in Islamic values.</p>
+
+        <h4>2. Majid Fakhry</h4>
+        <p>Majid Fakhry, in his <em>History of Islamic Philosophy</em>, defines it as the intellectual tradition that emerged when Muslim scholars encountered Greek philosophical texts — especially Plato and Aristotle — and tried to reconcile rational philosophy with Quranic revelation. He distinguishes between <em>Falsafa</em> (Greek-inspired philosophy) and <em>Kalam</em> (theological reasoning).</p>
+
+        <h4>3. De Boer</h4>
+        <p>De Boer defines it as the philosophy that arose in the Islamic cultural world and was shaped by both the Islamic faith and Hellenistic learning. He sees it primarily as a transmission belt for Greek philosophy into medieval Europe.</p>
+
+        <h4>4. Max Horten</h4>
+        <p>Horten views Muslim Philosophy as an original intellectual achievement — not merely a translation of Greek ideas — where Muslim thinkers added their own insights on God, creation, soul, and ethics.</p>
+
+        <h4>5. M.M. Sharif</h4>
+        <p>In his <em>History of Muslim Philosophy</em>, Sharif defines it as "philosophy as pursued by men who are Muslims." This is deliberately broad — it includes all systematic rational thought by Muslim intellectuals regardless of whether it directly draws on Quranic texts.</p>
+
+        <h3>Nature of Muslim Philosophy</h3>
+        <ul>
+          <li><strong>Rational-Revelatory Synthesis:</strong> Muslim philosophy tries to harmonize reason (Aql) with revelation (Wahy).</li>
+          <li><strong>Eclectic yet original:</strong> It absorbed Greek, Persian, and Indian ideas but transformed them within an Islamic framework.</li>
+          <li><strong>Encyclopedic scope:</strong> It covered metaphysics, ethics, logic, political theory, natural science, and mysticism.</li>
+          <li><strong>Apologetic function:</strong> Early Muslim philosophers used philosophy to defend Islam against critics.</li>
+        </ul>
+
+        <h3>Sources of Muslim Philosophy</h3>
+        <ul>
+          <li><strong>The Quran</strong> — The primary divine source; philosophical reflection on its verses (Tafakkur).</li>
+          <li><strong>Hadith</strong> — Sayings and practices of Prophet Muhammad (PBUH).</li>
+          <li><strong>Greek Philosophy</strong> — Works of Plato, Aristotle, Plotinus (often mistakenly attributed to Aristotle as "Theology of Aristotle").</li>
+          <li><strong>Persian and Indian Traditions</strong> — Zoroastrian ethics, Indian logic and mathematics.</li>
+          <li><strong>Ijtihad</strong> — Independent reasoning of Muslim scholars.</li>
+        </ul>
+
+        <h3>Scope of Muslim Philosophy</h3>
+        <p>Muslim Philosophy covers: metaphysics (existence and being), epistemology (knowledge and its sources), ethics (moral conduct), political philosophy (ideal state and leadership), cosmology (origin and nature of the universe), and mysticism (relationship between man and God).</p>
+
+        <h3>Muslim Philosophy vs. Islamic Philosophy</h3>
+        <div class="key">
+          <strong>Key Distinction:</strong> "Islamic Philosophy" refers specifically to philosophy derived from and consistent with Islamic scriptural sources (Quran and Sunnah). "Muslim Philosophy" is broader — it includes all philosophical thought by Muslim thinkers, even when they engage with non-Islamic Greek or Persian ideas. All Islamic Philosophy is Muslim Philosophy, but not all Muslim Philosophy is strictly Islamic Philosophy.
+        </div>
+
+        <h3>Conclusion</h3>
+        <p>Muslim Philosophy is a rich and sophisticated intellectual tradition that cannot be reduced to mere imitation of Greek thought. It was a genuine creative enterprise through which Muslim thinkers grappled with ultimate questions of reality, God, soul, ethics, and politics — leaving a permanent mark on both Eastern and Western intellectual history.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Discuss different aspects of Islam as a complete code of life.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ Exam tip: For 4 marks, cover 4–5 distinct aspects with brief explanations. Be concise but precise.</div>
+        <h3>Islam as a Complete Code of Life (Deen)</h3>
+        <p>Islam is not merely a religion of ritual worship but a comprehensive <em>Deen</em> — a complete way of life that provides guidance for every dimension of human existence.</p>
+
+        <h4>1. Spiritual/Religious Dimension</h4>
+        <p>Islam prescribes the Five Pillars: Shahadah (declaration of faith), Salah (prayer five times daily), Zakat (charity), Sawm (fasting in Ramadan), and Hajj (pilgrimage). These maintain man's connection with Allah and purify the soul.</p>
+
+        <h4>2. Moral and Ethical Dimension</h4>
+        <p>Islam provides a detailed moral code based on Quran and Hadith. It promotes justice, honesty, compassion, and prohibits lying, oppression, and moral corruption. The Prophet Muhammad (PBUH) said: "I have been sent to perfect moral character."</p>
+
+        <h4>3. Social Dimension</h4>
+        <p>Islam regulates family life (marriage, divorce, inheritance), social relationships, and community obligations. It establishes clear rights for men, women, children, and the elderly.</p>
+
+        <h4>4. Legal Dimension (Shariah)</h4>
+        <p>The Shariah is the Islamic legal system derived from the Quran, Sunnah, Ijma (consensus), and Qiyas (analogy). It governs criminal law, civil law, trade, and personal conduct.</p>
+
+        <h4>5. Economic Dimension</h4>
+        <p>Islam forbids usury (Riba), promotes fair trade, mandates Zakat (2.5% of wealth for the poor), and encourages equitable distribution of wealth.</p>
+
+        <h4>6. Political Dimension</h4>
+        <p>Islam provides principles of governance based on Shura (consultation), justice, and accountability. The ruler is a trustee of the community, not an absolute sovereign.</p>
+
+        <div class="key">Conclusion: Islam addresses every sphere of life — spiritual, ethical, social, legal, economic, and political — making it a comprehensive and self-sufficient system for human civilization.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Describe the classifications of different schools of thought in Muslim Philosophy.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ Use a clear 3-category classification structure. This is a map question — breadth over depth.</div>
+        <h3>Classification of Schools in Muslim Philosophy</h3>
+        <p>Muslim philosophical schools can be classified into three broad categories:</p>
+
+        <h4>I. Theological/Philosophical Schools (Kalam Schools)</h4>
+        <p>These schools debated rational questions about God, free will, and faith:</p>
+        <ul>
+          <li><strong>Qadarites:</strong> Advocated free will — man creates his own actions.</li>
+          <li><strong>Jabarites (Jabrites):</strong> Advocated predestination — man is compelled by God.</li>
+          <li><strong>Mutazilites:</strong> Rationalist school emphasizing divine unity and justice.</li>
+          <li><strong>Asharites:</strong> Moderate predestinarian school; founded by Al-Ashari.</li>
+          <li><strong>Maturidis:</strong> School of Abu Mansur al-Maturidi; moderate between Mutazilites and Asharites.</li>
+          <li><strong>Tahawis:</strong> Followers of Imam al-Tahawi; a Hanafi theological school.</li>
+        </ul>
+
+        <h4>II. Religious-Political Schools</h4>
+        <p>These schools debated questions of legitimate political authority and community membership:</p>
+        <ul>
+          <li><strong>Sunnis:</strong> The majority; caliphate determined by election/consensus.</li>
+          <li><strong>Shia:</strong> Leadership must be from the Prophet's family (Ahl al-Bayt); Imam is divinely guided.</li>
+          <li><strong>Kharijis:</strong> Extremist view; any pious Muslim can be Caliph; sinners are apostates.</li>
+          <li><strong>Murji'as:</strong> Suspended judgment on sinners; faith alone determines Muslim identity.</li>
+        </ul>
+
+        <h4>III. Mystical/Spiritual School</h4>
+        <ul>
+          <li><strong>Sufis:</strong> Focus on inner spiritual development, love of God, and the quest for divine union (Fana). They developed a rich tradition of spiritual stations (Maqamat) and states (Ahwal).</li>
+        </ul>
+
+        <div class="key">Note: Additionally, we have the <em>Falsafa</em> tradition — philosophers like Al-Farabi and Ibn Sina who engaged directly with Greek philosophical methods.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Historical development of systematic philosophical thinking among Muslim intellectuals</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Historical Development of Muslim Philosophy</h3>
+        <h4>Phase 1: The Translation Movement (8th–9th Century CE)</h4>
+        <p>Under the Abbasid Caliph al-Mansur and especially Harun al-Rashid and al-Ma'mun, Greek texts (Aristotle, Plato, Galen, Euclid) were systematically translated into Arabic at the famous Bayt al-Hikmah (House of Wisdom) in Baghdad. This sparked systematic philosophical thinking among Muslims.</p>
+
+        <h4>Phase 2: The Founding Period (9th–10th Century)</h4>
+        <p>Al-Kindi (the "first Muslim philosopher") began synthesizing Greek and Islamic thought. Al-Farabi developed a comprehensive Neo-Platonic system and political philosophy. This period saw the birth of Kalam (scholastic theology) including the Mutazilites and Asharites.</p>
+
+        <h4>Phase 3: The Golden Age (10th–12th Century)</h4>
+        <p>Ibn Sina (Avicenna) produced encyclopedic works on metaphysics, medicine, and logic. Al-Ghazali launched a devastating critique of philosophers in <em>Tahafut al-Falasifa</em>. This period saw Muslim philosophy reach its greatest sophistication.</p>
+
+        <h4>Phase 4: Western Islamic Philosophy (11th–12th Century)</h4>
+        <p>In Muslim Spain (Al-Andalus): Ibn Bajjah, Ibn Tufayl, and Ibn Rushd (Averroes) produced major works. Ibn Rushd's commentaries on Aristotle were so important that he was called "The Commentator" in medieval Europe.</p>
+
+        <h4>Phase 5: Later Developments</h4>
+        <p>Ibn Khaldun (14th century) founded sociology and philosophy of history. Modern period: Allama Iqbal (20th century) developed a philosophy of the self (Khudi) integrating Islamic thought with Western philosophy.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SCHOOLS -->
+<div class="section" id="sec-schools">
+
+  <div class="section-label">Theological Schools — Free Will Debate</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Compare views of Jabariya (Compulsionists) and Qadariya (Free-Willists) on freedom of will.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ This is a comparison question — use a clear contrast structure. Cover origin, main argument, theological basis, and criticism of both. A comparison table at the end earns extra marks.</div>
+        <h3>Introduction: The Problem of Free Will in Islam</h3>
+        <p>One of the most fundamental debates in Muslim theology concerns human freedom and divine determination. The question is: Does God predetermine all human actions, or does man possess genuine free will? Two schools formed opposing positions: the <strong>Jabariya</strong> (Compulsionists) and the <strong>Qadariya</strong> (Free-Willists).</p>
+
+        <h3>The Jabariya (Jabrites) — Predestinarian School</h3>
+        <h4>Origin and Founders</h4>
+        <p>The term <em>Jabr</em> means compulsion or constraint. Jahm ibn Safwan (d. 746 CE) is the most prominent figure associated with extreme Jabarism. The school argued that humans have no real freedom — God alone is the agent of all actions.</p>
+        <h4>Main Doctrine</h4>
+        <ul>
+          <li>Man is like a feather in the wind — utterly passive and compelled by divine decree.</li>
+          <li>All human actions — good and evil — are created and determined by Allah.</li>
+          <li>Man's "will" is an illusion; there is only the will of God.</li>
+          <li>Human responsibility is thus minimized or eliminated — a person cannot truly be blamed for sin since God determined that sin.</li>
+        </ul>
+        <h4>Theological Basis</h4>
+        <p>The Jabariya cited Quranic verses such as: <em>"And God creates you and what you do"</em> (37:96) and <em>"You cannot will except what Allah wills"</em> (81:29). They interpreted divine omnipotence (Qudra) to mean absolute causation of all events including human acts.</p>
+        <h4>Types of Jabariya</h4>
+        <ul>
+          <li><strong>Extreme Jabariya (Jabr Mahd):</strong> Man has absolutely no will or power — represented by followers of Jahm ibn Safwan.</li>
+          <li><strong>Moderate Jabariya:</strong> Man has a form of acquired action (Kasb) but no real efficacy — this later influenced the Asharites.</li>
+        </ul>
+
+        <h3>The Qadariya — Free Will School</h3>
+        <h4>Origin and Founders</h4>
+        <p>The term <em>Qadar</em> in this context means the power/capacity of man (though later it paradoxically came to mean divine decree). Ma'bad al-Juhani (d. 699 CE) and Ghaylan al-Dimashqi are early figures. The Mutazilites later became the greatest defenders of this position.</p>
+        <h4>Main Doctrine</h4>
+        <ul>
+          <li>Man is the creator (khaliq) of his own actions through the free will God has given him.</li>
+          <li>Human beings have genuine moral agency — they can choose between good and evil.</li>
+          <li>Without genuine free will, moral accountability, divine reward, and divine punishment would be unjust.</li>
+          <li>God is just (Adl) — He would not command what He also prevents; so man must be free to obey or disobey.</li>
+        </ul>
+        <h4>Theological Basis</h4>
+        <p>The Qadariya cited verses like: <em>"Whoever does an atom's weight of good will see it, and whoever does an atom's weight of evil will see it"</em> (99:7-8). They argued divine justice (Adl) requires human freedom — God would be unjust to punish humans for actions He compelled them to perform.</p>
+
+        <h3>Comparison Table</h3>
+        <table>
+          <tr><th>Aspect</th><th>Jabariya</th><th>Qadariya</th></tr>
+          <tr><td>Core Position</td><td>Man is compelled; no real free will</td><td>Man has genuine free will</td></tr>
+          <tr><td>Agent of Action</td><td>God alone creates all acts</td><td>Man creates his own acts</td></tr>
+          <tr><td>Divine Attribute Emphasized</td><td>Divine Omnipotence (Qudra)</td><td>Divine Justice (Adl)</td></tr>
+          <tr><td>Moral Responsibility</td><td>Minimized — man cannot be blamed</td><td>Full — man is accountable</td></tr>
+          <tr><td>Key Quranic Support</td><td>"God creates you and what you do" (37:96)</td><td>"Each soul earns only what it deserves" (2:286)</td></tr>
+          <tr><td>Later Development</td><td>Influenced Asharite Kasb theory</td><td>Became central to Mutazilite thought</td></tr>
+          <tr><td>Political Implication</td><td>Quietism — accept rulers as God-ordained</td><td>Accountability of rulers is possible</td></tr>
+        </table>
+
+        <h3>Evaluation and Synthesis</h3>
+        <p>Both extremes faced serious objections. Extreme Jabarism makes divine punishment unjust. Extreme Qadarism seems to limit divine omnipotence. The Asharites (through the concept of <em>Kasb</em> or acquisition) and the Maturidis attempted a middle position: God creates the power to act, but man "acquires" the action through his own intention. This synthesis, while not fully satisfying all philosophical objections, became mainstream Sunni theology.</p>
+
+        <div class="key">Key Conclusion: The free will debate in Islam is not merely theological but deeply ethical and political. The Qadariya position supports moral responsibility and justice; the Jabariya supports radical divine sovereignty. The mainstream Sunni resolution lies between these extremes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Compare Mutazilite and Asharite views on: Attributes of Allah, Beatification, and Createdness of the Quran.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ This is a 3-part comparison question. Structure it clearly: do each sub-topic as its own section with M vs A comparison. Very high-value question.</div>
+
+        <h3>Introduction: Mutazilites and Asharites</h3>
+        <p>The <strong>Mutazilites</strong> (founded in Basra, 8th century, by Wasil ibn Ata after separating from Hasan al-Basri) were the rationalist school of Islamic theology. Their five principles were: Divine Unity (Tawhid), Divine Justice (Adl), Promise and Threat, the Intermediate Position, and Commanding Right and Forbidding Wrong. The <strong>Asharites</strong> were founded by Abu al-Hasan al-Ashari (874–936 CE) who was himself a former Mutazilite. They represent the mainstream Sunni theological tradition and tried to defend traditional doctrine using rational methods.</p>
+
+        <h3>I. Attributes of Allah (Sifat Allah)</h3>
+        <h4>Mutazilite View:</h4>
+        <p>The Mutazilites denied the reality of God's attributes as entities distinct from His essence. To them, affirming that God has real, eternal attributes (like Knowledge, Power, Life) separate from His essence would amount to <em>Shirk</em> (associating partners with God) — a form of polytheism. God's knowledge IS His essence; His power IS His essence. They were called <em>Mu'attila</em> (those who strip attributes) by their opponents. Their formula: God's attributes are identical to His essence — there is no real distinction.</p>
+        <h4>Asharite View:</h4>
+        <p>The Asharites affirmed that God has real, eternal attributes (Sifat) that are distinct from, yet inseparable from, His essence. These are seven core attributes: Life (Hayat), Knowledge (Ilm), Power (Qudra), Will (Irada), Hearing (Sama), Sight (Basar), and Speech (Kalam). They insisted these are real and eternal but rejected any comparison with human attributes — "without asking how" (bila kayf). The formula: attributes are neither identical to nor separate from the divine essence.</p>
+
+        <h3>II. Beatification/Vision of Allah (Ru'yat Allah)</h3>
+        <h4>Mutazilite View:</h4>
+        <p>The Mutazilites denied the possibility of seeing Allah in the afterlife. Their argument: seeing requires that the seen object occupies a direction or place (jiha), and God is beyond all spatial limitations. Since God cannot be in a direction, He cannot be seen. To claim otherwise would be to make God corporeal (having a body), which is an anthropomorphism they strongly rejected. They interpreted Quranic passages about "seeing" as metaphorical.</p>
+        <h4>Asharite View:</h4>
+        <p>The Asharites affirmed that believers will see Allah in Paradise as stated in the Quran (<em>"Faces that Day will be radiant, looking at their Lord"</em> — 75:22-23) and in Hadith. However, they denied that this seeing is like ordinary sensory perception that requires spatiality. God will be seen in a manner befitting His majesty — <em>bila kayf</em> (without asking how). The vision is real but its modality is beyond human understanding.</p>
+
+        <h3>III. Createdness of the Quran (Khalq al-Quran)</h3>
+        <h4>Mutazilite View:</h4>
+        <p>This was the Mutazilites' most famous and controversial position. They argued that the Quran is <strong>created</strong> (Makhluk) — it was brought into existence in time by God. Their reasoning: (a) The Quran is expressed in letters, sounds, and ink — all of which are temporal/created phenomena. (b) To say the Quran is eternal would be to place something alongside God as co-eternal, which violates divine unity (Tawhid). Under Caliph al-Ma'mun, the Mutazilite doctrine was enforced as state policy through the Mihna (Inquisition, 833–848 CE), and scholars who denied it were persecuted — including Imam Ahmad ibn Hanbal who suffered imprisonment and flogging for refusing to accept it.</p>
+        <h4>Asharite View:</h4>
+        <p>The Asharites distinguished between two senses of the Quran: (a) The <em>Kalam Nafsi</em> — the eternal divine speech that exists in God's essence, which is uncreated and eternal. (b) The <em>Kalam Lafzi</em> — the letters, sounds, words, and ink through which that eternal speech is expressed, which are created temporal phenomena. So the Quran as the literal word of God in His essence is eternal; the physical book and its linguistic expression are created. This distinction resolved the controversy for mainstream Sunni theology.</p>
+
+        <h3>Comparison Table</h3>
+        <table>
+          <tr><th>Issue</th><th>Mutazilites</th><th>Asharites</th></tr>
+          <tr><td>Attributes of God</td><td>Identical with essence; no separate attributes</td><td>Real but not separate from essence; eternal attributes affirmed</td></tr>
+          <tr><td>Vision of God</td><td>Impossible — would imply God has direction/place</td><td>Possible in afterlife but without modality (bila kayf)</td></tr>
+          <tr><td>Createdness of Quran</td><td>Quran is created — brought into existence in time</td><td>Eternal Kalam Nafsi; created Kalam Lafzi (expression)</td></tr>
+          <tr><td>Method</td><td>Pure reason takes precedence over tradition</td><td>Reason defends tradition; tradition takes precedence</td></tr>
+          <tr><td>Status Today</td><td>Minority position; historical importance</td><td>Mainstream Sunni theology</td></tr>
+        </table>
+
+        <div class="key">Key Insight: The Mutazilites prioritized divine unity and justice through radical rationalism. The Asharites preserved traditional doctrine while using rational tools — representing a synthesis that became the dominant Sunni theological orthodoxy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Who are the Murji'as? Describe their standpoint on the status of Muslims who commit sin.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>The Murji'as</h3>
+        <h4>Origin and Name</h4>
+        <p>The term <em>Murji'a</em> comes from the Arabic root <em>Arja'a</em> meaning "to defer" or "to postpone." They were an early Islamic theological school that emerged in the late 7th and early 8th centuries, partly as a response to the crisis caused by the first civil wars (Fitna) in the Muslim community.</p>
+
+        <h4>Historical Context</h4>
+        <p>The Murji'a arose in opposition to the Kharijites, who declared that grave sinners are no longer Muslims (apostates). The Murji'a took the opposite position — they refused to pass judgment on sinners and "deferred" (irja) that judgment to God.</p>
+
+        <h4>Main Doctrinal Position</h4>
+        <p>On the question of the status of a Muslim who commits a grave sin (kabira), the Murji'as held:</p>
+        <ul>
+          <li><strong>Faith (Iman) alone determines Muslim identity</strong> — not deeds. As long as a person believes in God and the Prophet, they remain a Muslim regardless of how grave their sins are.</li>
+          <li><strong>Suspension of judgment:</strong> They deferred judgment on sinners entirely to God on the Day of Judgment — humans cannot and should not declare another Muslim to be an unbeliever (Kafir).</li>
+          <li><strong>Sin does not nullify faith:</strong> A sinner retains the name "Muslim" and the full status of a believer. Sin and faith coexist.</li>
+          <li>The logical consequence: Even a ruler who is unjust or sinful must be obeyed, since he is still a Muslim — this made the Murji'a politically useful to Umayyad rulers.</li>
+        </ul>
+
+        <h4>Sub-groups</h4>
+        <ul>
+          <li><strong>Extreme Murji'a:</strong> Held that as long as one has faith, no sin can harm the soul at all.</li>
+          <li><strong>Moderate Murji'a (closer to Sunni position):</strong> Recognized that sins may be punished but ultimately God may forgive the faithful sinner.</li>
+        </ul>
+
+        <div class="key">Contrast with Kharijites: Kharijites said grave sinners are apostates (kafirs). Mutazilites said they occupy an intermediate position. Murji'as said they are full Muslims — judgment belongs only to God.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Al-Tahawi and Al-Maturidi — their theological positions</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Al-Tahawi (853–933 CE)</h3>
+        <p>Abu Ja'far al-Tahawi was an Egyptian Hanafi scholar. His <em>Aqida al-Tahawiyya</em> (Tahawite Creed) became one of the most widely accepted statements of Sunni belief. Key positions:</p>
+        <ul>
+          <li>Affirmed God's attributes without interpretation (Tafwid) — accepting them as stated without asking how.</li>
+          <li>Quran is the eternal uncreated word of God.</li>
+          <li>Believers will see God in the afterlife.</li>
+          <li>Human acts are created by God but acquired by humans (anticipating the Kasb concept).</li>
+          <li>Did not use extensive rationalist methodology — relied on scriptural tradition.</li>
+        </ul>
+        <h3>Al-Maturidi (853–944 CE)</h3>
+        <p>Abu Mansur al-Maturidi of Samarkand founded the Maturidi school, one of the two main Sunni theological schools (alongside Asharites). Key positions:</p>
+        <ul>
+          <li>Gave more scope to human reason than the Asharites — believed reason alone can establish God's existence and basic moral truths.</li>
+          <li>Affirmed divine attributes as real and eternal.</li>
+          <li>On free will: God creates the power (Qudra) but man exercises genuine choice (Ikhtiyar) — more room for human agency than Asharite Kasb.</li>
+          <li>The Quran is uncreated (eternal word of God) in its inner meaning (Kalam Nafsi).</li>
+          <li>Dominant theology in Hanafi-majority regions (Central Asia, South Asia, Turkey).</li>
+        </ul>
+        <div class="key">Al-Maturidi gave more autonomy to human reason; Al-Ashari gave more weight to transmitted authority. Both are recognized as orthodox Sunni theologians.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Who are the Sifatiyas? Explain their view on divine attributes.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>The Sifatiyas</h3>
+        <p>The <em>Sifatiyas</em> (from <em>Sifa</em> = attribute) are those who affirmed the reality of divine attributes — the opposite of the Mu'attila (deniers of attributes, i.e., Mutazilites). The Sifatiyas affirm that God genuinely possesses real, eternal attributes like Knowledge, Power, Life, Will, Hearing, Sight, and Speech.</p>
+        <h4>Main Positions</h4>
+        <ul>
+          <li>God's attributes are real and distinct from His essence, though not separate from it — they subsist in the divine essence.</li>
+          <li>Affirming attributes does not compromise Tawhid (divine unity) because the attributes are not separate beings — they are inseparable from God.</li>
+          <li>The Asharites represent the most sophisticated Sifatiya position.</li>
+        </ul>
+        <h4>Sub-groups within Sifatiyas</h4>
+        <ul>
+          <li><strong>Anthropomorphists (Mujassima/Mushabbiha):</strong> Extreme group that interpreted Quranic anthropomorphic expressions literally (God's hand, face, etc.), implying God has a body similar to humans. Considered heretical by mainstream scholars.</li>
+          <li><strong>Moderate Sifatiyas (Asharites, Maturidis):</strong> Affirm real attributes but deny any likeness to creation — <em>Laysa kamithlihi shay'</em> ("There is nothing like Him," 42:11). They use <em>bila kayf</em> — attributes are affirmed without asking how.</li>
+        </ul>
+        <div class="key">The Sifatiya-Mu'attila debate is essentially the Asharite-Mutazilite debate on divine attributes. Mainstream Sunni theology follows the Sifatiya position in its moderate Asharite/Maturidi form.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- POLITICAL SCHOOLS -->
+<div class="section" id="sec-political">
+
+  <div class="section-label">Religious-Political Schools</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">State the main points of difference in political philosophy of Shia, Sunni, and Kharijis.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ Compare all three on the same criteria: Who can be Caliph/Imam? How is the leader chosen? What are the leader's powers? What happens if the leader sins? This structured approach shows analytical depth.</div>
+
+        <h3>Introduction</h3>
+        <p>The question of political authority — who should lead the Muslim community after the Prophet Muhammad (PBUH) — was the most divisive issue in early Islamic history. It gave rise to three major religious-political traditions: Sunni, Shia, and Kharijis. Each has a distinctive political theology.</p>
+
+        <h3>I. Sunni Political Philosophy</h3>
+        <h4>Caliphate and Legitimacy</h4>
+        <p>The Sunnis believe that after the Prophet's death, leadership of the Muslim community (Caliphate) should be determined by <em>election or consensus (Ijma) of leading Muslims</em>. The Caliph need not be from any particular family — he should be a qualified, pious Muslim man, ideally from the Quraysh tribe.</p>
+        <h4>Key Principles</h4>
+        <ul>
+          <li><strong>Election/Bay'a:</strong> The Caliph is chosen through bay'a (pledge of allegiance) by community leaders (Ahl al-Hall wa al-Aqd — "those who bind and loose").</li>
+          <li><strong>Human institution:</strong> The Caliphate is a human political institution, not divinely appointed. The Prophet did not designate a successor — this was left to the community.</li>
+          <li><strong>Limited scope of authority:</strong> The Caliph's role is to implement the Shariah, defend the community, and maintain order. He is not infallible (Ma'sum).</li>
+          <li><strong>Legitimacy through function:</strong> Even an imperfect Caliph should generally be obeyed to prevent civil strife (Fitna) — scholars like Al-Mawardi developed a theory of de facto legitimacy.</li>
+          <li><strong>Shura (consultation):</strong> The ruler should consult scholars and community leaders.</li>
+        </ul>
+        <h4>On sinful rulers:</h4>
+        <p>Sunni mainstream position: obey even an unjust ruler to avoid chaos, unless he commands clear disobedience to God. Rebellion (Khuruj) against a Muslim ruler is generally forbidden.</p>
+
+        <h3>II. Shia Political Philosophy</h3>
+        <h4>Imama and Divine Appointment</h4>
+        <p>The Shia (from <em>Shi'at Ali</em> — "partisans of Ali") believe that leadership (Imama) must be held by a direct descendant of the Prophet through his daughter Fatima and cousin/son-in-law Ali ibn Abi Talib. This is not a human arrangement but a divine appointment.</p>
+        <h4>Key Principles</h4>
+        <ul>
+          <li><strong>Divine appointment (Nass):</strong> The Prophet designated Ali at Ghadir Khumm as his successor. Imams are appointed by God through the Prophet and each preceding Imam.</li>
+          <li><strong>Infallibility (Isma):</strong> The Imam is divinely protected from sin and error — he has perfect knowledge of religion and is the authoritative interpreter of the Quran and Sunnah.</li>
+          <li><strong>Spiritual authority:</strong> The Imam possesses esoteric (Batin) knowledge beyond ordinary understanding. Obedience to the Imam is a religious obligation.</li>
+          <li><strong>Political legitimacy:</strong> Any government not led by a legitimate Imam is, strictly speaking, illegitimate — though Shia jurists developed theories for navigating unjust political realities.</li>
+        </ul>
+        <h4>Ithna Ashariya (The Twelvers) — Most important Shia sub-group</h4>
+        <p>They recognize twelve Imams starting with Ali and ending with Muhammad al-Mahdi, who went into occultation (Ghayba) in 874 CE and is expected to return at the end of times. During occultation, authority is exercised by qualified jurists (Wilayat al-Faqih in modern Shia political theory).</p>
+
+        <h3>III. Kharijite Political Philosophy</h3>
+        <h4>Radical Egalitarianism</h4>
+        <p>The Kharijites (from <em>Kharaja</em> — "to go out/rebel") were the earliest extremist group, emerging when they abandoned Ali's camp during the Battle of Siffin (657 CE), objecting to arbitration. Their political philosophy is the most radical of the three.</p>
+        <h4>Key Principles</h4>
+        <ul>
+          <li><strong>Any pious Muslim can be Caliph:</strong> Leadership is not restricted to Quraysh tribe (against Sunni view) or the Prophet's family (against Shia view). Even a non-Arab slave can be Caliph if he is pious.</li>
+          <li><strong>Election by community:</strong> The Caliph is chosen by the community and can be deposed or killed if he commits sin.</li>
+          <li><strong>Grave sinners are apostates (Takfir):</strong> This is their most extreme position — anyone who commits a major sin leaves the fold of Islam entirely. This justified declaring war on other Muslims.</li>
+          <li><strong>"Judgment belongs only to God" (La Hukma illa lillah):</strong> This was their famous slogan, used to reject the arbitration at Siffin as illegitimate human compromise on a divine matter.</li>
+          <li><strong>Jihad against sinful rulers:</strong> It is an obligation to rebel against and fight an unjust or sinful Muslim ruler.</li>
+        </ul>
+
+        <h3>Comparative Table</h3>
+        <table>
+          <tr><th>Issue</th><th>Sunni</th><th>Shia</th><th>Kharijites</th></tr>
+          <tr><td>Who can lead?</td><td>Qualified Qurayshi Muslim</td><td>Descendant of Ali &amp; Fatima only</td><td>Any pious Muslim (even non-Arab slave)</td></tr>
+          <tr><td>Basis of legitimacy</td><td>Election / Bay'a / Consensus</td><td>Divine appointment (Nass)</td><td>Election + piety</td></tr>
+          <tr><td>Infallibility of leader</td><td>No — human and fallible</td><td>Yes — divinely protected (Isma)</td><td>No — can be deposed for sin</td></tr>
+          <tr><td>Status of grave sinner</td><td>Still a Muslim; God may forgive</td><td>Imam cannot sin; ordinary sinners judged by God</td><td>Grave sinner = apostate (kafir)</td></tr>
+          <tr><td>Response to unjust ruler</td><td>Generally obey to avoid Fitna</td><td>Ruler is illegitimate; patience until Imam's return</td><td>Obligatory to rebel and fight</td></tr>
+          <tr><td>Imam's nature</td><td>Political/administrative leader</td><td>Spiritual guide + political ruler; infallible</td><td>Simply a pious administrator</td></tr>
+        </table>
+
+        <div class="key">Historical significance: These three positions shaped the entire history of Islamic civilization — from the Sunni Abbasid Caliphate to Shia Fatimid and Safavid empires to Kharijite-influenced extremist movements throughout history.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Who are the Ithna Ashariya (The Twelvers)?</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Ithna Ashariya — The Twelver Shia</h3>
+        <p>The <em>Ithna Ashariya</em> (Arabic: اثنا عشرية, "the Twelvers") are the largest branch of Shia Islam — today comprising the majority of Shia Muslims, especially in Iran, Iraq, Bahrain, and significant minorities across the Muslim world.</p>
+
+        <h4>The Twelve Imams</h4>
+        <p>They recognize twelve Imams as the legitimate successors of the Prophet Muhammad (PBUH), all from his family (Ahl al-Bayt):</p>
+        <ol>
+          <li>Ali ibn Abi Talib (d. 661)</li>
+          <li>Hasan ibn Ali (d. 670)</li>
+          <li>Husayn ibn Ali (d. 680) — Martyred at Karbala</li>
+          <li>Ali ibn Husayn (Zayn al-Abidin, d. 713)</li>
+          <li>Muhammad al-Baqir (d. 733)</li>
+          <li>Ja'far al-Sadiq (d. 765)</li>
+          <li>Musa al-Kadhim (d. 799)</li>
+          <li>Ali al-Ridha (d. 818)</li>
+          <li>Muhammad al-Jawad (d. 835)</li>
+          <li>Ali al-Hadi (d. 868)</li>
+          <li>Hasan al-Askari (d. 874)</li>
+          <li>Muhammad al-Mahdi — the Hidden/Awaited Imam</li>
+        </ol>
+
+        <h4>The Occultation (Ghayba)</h4>
+        <p>The Twelfth Imam, Muhammad al-Mahdi, is believed to have gone into occultation (Ghayba) in 874 CE. The Minor Occultation (874–941 CE) was followed by the Major Occultation (941 CE to present). He is expected to return at the end of time to establish justice on earth.</p>
+
+        <h4>Key Theological Beliefs</h4>
+        <ul>
+          <li>Each Imam is divinely appointed, infallible (Ma'sum), and possesses esoteric knowledge.</li>
+          <li>Obedience to the Imam is a religious duty.</li>
+          <li>During the occultation, qualified jurists (Marja'iyya) exercise religious authority — in modern Iran, this developed into the Wilayat al-Faqih (Guardianship of the Jurist) doctrine of Ayatollah Khomeini.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUFISM -->
+<div class="section" id="sec-sufism">
+
+  <div class="section-label">Sufism — Mystical Tradition of Islam</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Discuss the fundamental principles of Sufism and describe the Sufi Path.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ High-value answer. Structure: definition → origin → fundamental principles → the Sufi Path (Maqamat and Ahwal) → major doctrines → conclusion.</div>
+
+        <h3>Definition and Origin of Sufism</h3>
+        <p>Sufism (<em>Tasawwuf</em>) is the inner, spiritual, and mystical dimension of Islam. The term is most likely derived from <em>Suf</em> (wool) — referring to the coarse woolen garments worn by early Muslim ascetics as a sign of renunciation of worldly pleasures. Sufis are those who pursue the inner reality (Haqiqa) behind the outer law (Shariah), seeking direct experiential knowledge of God (Ma'rifa) and ultimately union with the Divine.</p>
+        <p>Sufism emerged in the 8th century CE as a reaction to the increasing worldliness and materialism of the expanding Islamic empire. Early Sufis like Hasan al-Basri (d. 728), Rabia al-Adawiyya (d. 801 — the great female Sufi who introduced the concept of divine love), and Ibrahim ibn Adham emphasized asceticism, repentance, and love of God.</p>
+
+        <h3>Fundamental Principles/Doctrines of Sufism</h3>
+
+        <h4>1. Tawhid (Divine Unity) — The Metaphysical Foundation</h4>
+        <p>While orthodox Islam holds that God and creation are distinct, many Sufis — especially the monistic ones — developed doctrines of the oneness of being. Ibn Arabi's famous doctrine of <em>Wahdat al-Wujud</em> (Unity of Being) holds that ultimately there is only one reality — God — and everything else is a manifestation or "epiphany" (Tajalli) of the Divine. This is not pantheism but rather the understanding that no being has independent existence apart from God.</p>
+
+        <h4>2. Mahabbah (Divine Love)</h4>
+        <p>Love of God is the central motive of the Sufi path. Rabia al-Adawiyya is credited with transforming early Sufi asceticism (fear of God's punishment) into a path of love (love of God for His own sake, not for Paradise or out of fear of Hell). The Sufi aspires to be the beloved of God, and the lover who loses himself in the Beloved.</p>
+
+        <h4>3. Ma'rifa (Gnosis/Mystical Knowledge)</h4>
+        <p>Ma'rifa is direct, experiential knowledge of God — not merely intellectual or theological knowledge. It is a gift from God achieved through purification of the heart, spiritual discipline, and divine grace. The Sufi seeks to move from Ilm (ordinary knowledge) to Ma'rifa (experiential knowledge of God).</p>
+
+        <h4>4. Fana (Annihilation) and Baqa (Subsistence)</h4>
+        <p>Fana refers to the annihilation or extinction of the ego-self (Nafs) in the Divine. The individual self dissolves in the overwhelming reality of God. Baqa is the state that follows — subsistence in God — where the mystic continues to exist but his existence is entirely through and in God. Abu Yazid al-Bistami (d. 874) expressed this ecstatically; al-Junayd of Baghdad (d. 910) gave it a more sober formulation.</p>
+
+        <h4>5. Zuhd (Asceticism) and Tawakkul (Trust in God)</h4>
+        <p>Early Sufis emphasized renunciation of worldly attachments. The Sufi trusts entirely in God (Tawakkul), recognizing that all provision comes from Him. This is not laziness but a state of inner freedom from worldly anxiety.</p>
+
+        <h4>6. The Shaykh (Spiritual Master)</h4>
+        <p>The Sufi path cannot be traveled alone. Every seeker (Murid) must have a spiritual guide (Shaykh or Pir) who has already traversed the path. The Shaykh-Murid relationship is central to Sufi pedagogy — the disciple submits to the master's guidance as a patient to a physician.</p>
+
+        <h4>7. Dhikr (Remembrance of God)</h4>
+        <p>The practice of continually remembering and invoking God's name — based on the Quranic verse "Verily in the remembrance of God do hearts find rest" (13:28). Dhikr is the primary spiritual practice of most Sufi orders.</p>
+
+        <h3>The Sufi Path — Tariqah</h3>
+        <p>The Sufi journey is often described as moving through <em>Shariah</em> (the outer law), <em>Tariqah</em> (the inner path), and <em>Haqiqah</em> (the ultimate truth). The path involves progression through stages and states:</p>
+
+        <h4>A. Maqamat (Stations) — Permanent Spiritual Attainments</h4>
+        <p>Maqamat are stages that the Sufi achieves through sustained effort and discipline. They are permanent — once a station is achieved, it is not lost. Different Sufis enumerate different stations, but a common list includes:</p>
+        <ol>
+          <li><strong>Tawba (Repentance):</strong> The beginning — turning away from sin and toward God.</li>
+          <li><strong>Wara' (Scrupulousness):</strong> Avoiding all doubtful matters.</li>
+          <li><strong>Zuhd (Renunciation):</strong> Detachment from worldly things.</li>
+          <li><strong>Faqr (Spiritual Poverty):</strong> Total dependence on God; absence of ego.</li>
+          <li><strong>Sabr (Patience):</strong> Steadfast endurance of spiritual trials.</li>
+          <li><strong>Tawakkul (Trust in God):</strong> Absolute reliance on God's will.</li>
+          <li><strong>Ridha (Contentment):</strong> Complete contentment with God's decrees — even hardship is accepted with joy.</li>
+        </ol>
+
+        <h4>B. Ahwal (States) — Temporary Divine Gifts</h4>
+        <p>Ahwal (sing. Hal) are transient spiritual states that come and go as divine gifts — they cannot be achieved by effort alone but are bestowed by God's grace. They include:</p>
+        <ul>
+          <li><strong>Muraqaba:</strong> Watchful meditation — awareness of God's presence.</li>
+          <li><strong>Qurb:</strong> Nearness to God.</li>
+          <li><strong>Mahabbah:</strong> Intense divine love.</li>
+          <li><strong>Khawf and Raja':</strong> Fear of God and hope in His mercy.</li>
+          <li><strong>Shawq:</strong> Longing and yearning for God.</li>
+          <li><strong>Uns:</strong> Intimacy and familiarity with God.</li>
+          <li><strong>Hayba:</strong> Awe and reverence before God's majesty.</li>
+          <li><strong>Ghaybah:</strong> Absence — being so absorbed in God that one becomes unaware of the world.</li>
+        </ul>
+
+        <h3>Major Sufi Orders (Tariqas)</h3>
+        <p>From the 12th century onward, Sufism organized into formal brotherhoods (Tariqas): the Qadiriyya (founded by Abd al-Qadir al-Jilani), the Naqshbandiyya, the Chishtiyya (influential in South Asia), the Shadhiliyya, and the Mawlawiyya (the famous "whirling dervishes" of Rumi). Each has distinctive practices and spiritual lineages.</p>
+
+        <h3>Criticism and Response</h3>
+        <p>Sufism has been criticized by orthodox scholars (especially Hanbali and later Wahhabi scholars) for alleged innovations (Bid'a), saint veneration, and monistic doctrines. Sufis respond that their practices are rooted in Quran and Hadith and that Fana does not mean literal merger with God but annihilation of the ego.</p>
+
+        <div class="key">Conclusion: Sufism represents Islam's rich inner life — a tradition of love, discipline, and spiritual transformation that has produced great poets (Rumi, Hafiz), scholars, and saints, and has been a major force in the spread of Islam across the world.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PHILOSOPHERS -->
+<div class="section" id="sec-philosophers">
+
+  <div class="section-label">Muslim Philosophers — Life and Works</div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Al-Kindi — The First Muslim Philosopher</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Al-Kindi (c. 801–873 CE)</h3>
+        <h4>Life</h4>
+        <p>Abu Yusuf Ya'qub ibn Ishaq al-Kindi, known as the "Philosopher of the Arabs," was the first Muslim philosopher in the strict sense. Born in Kufa (Iraq) from an Arab noble family, he lived in Baghdad under the Abbasid caliphs al-Ma'mun and al-Mu'tasim, who patronized his work. He supervised the translation of Greek texts at the House of Wisdom (Bayt al-Hikmah).</p>
+        <h4>Works</h4>
+        <p>Al-Kindi wrote over 260 works on philosophy, mathematics, medicine, music, optics, and cryptography. His most important philosophical work is <em>On First Philosophy</em> (Fi al-Falsafa al-Ula) — the first Arabic philosophical treatise.</p>
+        <h4>Key Philosophical Contributions</h4>
+        <ul>
+          <li><strong>Harmony of Philosophy and Religion:</strong> He was the first to argue systematically that Greek philosophy and Islamic revelation are compatible — not contradictory.</li>
+          <li><strong>God as the First Cause:</strong> God is the True One (al-Haqq al-Awwal) — the ultimate cause of all existence, beyond all categories and attributes in the ordinary sense.</li>
+          <li><strong>Creation ex nihilo:</strong> Against the Aristotelian view of the eternity of the world, Al-Kindi insisted that the world was created from nothing (Huduth al-alam) — consistent with Islamic revelation.</li>
+          <li><strong>Intellect:</strong> He developed a theory of four intellects — an early version of the Aristotelian intellect doctrine that later thinkers like Al-Farabi and Ibn Sina would elaborate.</li>
+          <li><strong>Mathematics:</strong> Believed that mathematical knowledge is the gateway to philosophical knowledge.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Explain and evaluate Al-Farabi's Political Philosophy.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ This is a 12.5-mark answer. Structure: Life → Major works → Metaphysical basis of his politics → The Ideal City → The Philosopher-King/Imam → Types of cities → Critical evaluation.</div>
+
+        <h3>Al-Farabi — Life and Works</h3>
+        <p>Abu Nasr Muhammad al-Farabi (c. 870–950 CE) was born in Farab (in present-day Kazakhstan or Uzbekistan) and spent much of his life in Baghdad and Damascus. Considered the "Second Teacher" (<em>al-Mu'allim al-Thani</em>) after Aristotle, he was a profound logician, philosopher, political theorist, and musician. His major works include: <em>The Opinions of the Inhabitants of the Virtuous City</em> (Ara' Ahl al-Madina al-Fadila), <em>The Attainment of Happiness</em> (Tahsil al-Sa'ada), <em>The Political Regime</em> (Al-Siyasa al-Madaniyya), and <em>On the Perfect State</em>.</p>
+
+        <h3>Metaphysical Foundation of his Political Philosophy</h3>
+        <p>Al-Farabi's political philosophy cannot be understood without his metaphysics. He developed a Neo-Platonic emanation theory: from God (the First Cause, Pure Intellect) emanate ten celestial intellects in a hierarchical chain. The Tenth (Active) Intellect governs the terrestrial world and is the source of human intellectual illumination. This cosmic hierarchy mirrors the ideal social hierarchy.</p>
+
+        <h3>The Virtuous City (Al-Madina al-Fadila)</h3>
+        <p>Al-Farabi's most famous political concept is the <em>Madina Fadila</em> — the Virtuous/Ideal City. It is modeled on the healthy human body:</p>
+        <ul>
+          <li>Just as the body has organs each performing specific functions for the whole, the city has citizens each fulfilling their proper roles.</li>
+          <li>Just as the heart rules the body, the <strong>Philosopher-Ruler/Imam</strong> rules the city — as the supreme organ from which all order flows.</li>
+          <li>The Virtuous City is one organized for the achievement of true happiness — both worldly and otherworldly.</li>
+        </ul>
+
+        <h3>The Philosopher-King / Philosopher-Imam</h3>
+        <p>The ruler of the Virtuous City is the most important concept in Al-Farabi's political philosophy. He possesses twelve qualities (or conditions):</p>
+        <ul>
+          <li>Sound bodily constitution; naturally retentive memory; love of learning and truth; love of honesty and hatred of lies; disdain for sensual pleasures; love of justice and hatred of injustice; strong determination; love of noble character; disregard for wealth (for its own sake); love of justice; ability to guide people to the truth through persuasion; and physical courage.</li>
+        </ul>
+        <p>Crucially, the Philosopher-King must have his intellect connected to the Active Intellect (the Tenth Intellect) — receiving divine illumination. This makes him simultaneously a philosopher, a prophet-like figure, and a legislator. He is the supreme human through whom divine wisdom flows to the community.</p>
+        <p>Al-Farabi synthesizes Plato's Philosopher-King with the Islamic concept of the Prophet and Imam: the ideal ruler is one whose intellect receives revelation from the Active Intellect — which in Islamic terms is the angel Gabriel (the medium of revelation).</p>
+
+        <h3>Function of Religion and Philosophy</h3>
+        <p>Al-Farabi makes a striking distinction: <em>Philosophy</em> conveys truth through demonstrative proof (Burhan — for the intellectual elite). <em>Religion</em> conveys the same truth through symbols, images, and persuasion — accessible to the common people. Both serve the same goal of guiding humans to happiness. The prophet and the philosopher are, in ideal cases, the same person — or the philosopher is the successor to the prophet in guiding the community.</p>
+
+        <h3>Types of Cities (Imperfect Political Communities)</h3>
+        <p>Al-Farabi contrasts the Virtuous City with four types of deficient/wicked cities:</p>
+        <ol>
+          <li><strong>City of Necessity (Daruriyya):</strong> Organized merely for material survival and basic needs.</li>
+          <li><strong>City of Vileness (Nidhaliyya):</strong> Organized for wealth — dominated by money and material gain.</li>
+          <li><strong>City of Baseness (Khissa):</strong> Organized for sensual pleasure and licentiousness.</li>
+          <li><strong>City of Honor (Karama):</strong> Organized for domination and glory — where the ruler seeks fame.</li>
+          <li><strong>Tyrannical City (Taghallubiyya):</strong> Organized for conquest and subjugation of others.</li>
+          <li><strong>Democratic City (Jama'iyya):</strong> Allows each person to pursue their own ends — pluralistic but can contain both virtue and vice. Al-Farabi saw democracy as the best of the deficient cities because it can contain virtuous persons within it.</li>
+        </ol>
+
+        <h3>Critical Evaluation</h3>
+        <h4>Strengths:</h4>
+        <ul>
+          <li>Brilliant synthesis of Greek (Platonic-Aristotelian) political philosophy with Islamic thought.</li>
+          <li>Sophisticated theory of the relationship between religion and philosophy.</li>
+          <li>Recognition that political order requires both wisdom and popular legitimacy.</li>
+          <li>His classification of cities anticipates later political science.</li>
+        </ul>
+        <h4>Weaknesses/Criticism:</h4>
+        <ul>
+          <li>The ideal of a philosopher-prophet-ruler is utopian — history shows it rarely (if ever) exists.</li>
+          <li>The Neo-Platonic emanation metaphysics is philosophically problematic and not fully consistent with Islamic theology (particularly regarding creation).</li>
+          <li>Al-Ghazali criticized the overall philosophical project as insufficiently grounded in revelation.</li>
+          <li>The elitist distinction between philosophy (for the few) and religion (for the many) raises questions about equality and truth.</li>
+        </ul>
+
+        <div class="key">Historical Impact: Al-Farabi's political philosophy was enormously influential on Ibn Sina and through him on medieval European political thought. His synthesis of reason and revelation in political life remains a model of philosophical ambition.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Mention important aspects of Ibn Sina's philosophy. Illustrate his views on the soul.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span><span class="tag">Past Exam</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <div class="exam-tip">⚡ Two-part question: (1) Major aspects of his philosophy broadly, (2) His theory of the soul in detail. The soul section should be your focus — include the Flying Man argument.</div>
+
+        <h3>Ibn Sina — Life and Works</h3>
+        <p>Abu Ali al-Husayn ibn Sina (980–1037 CE), known in the West as Avicenna, was born near Bukhara (present-day Uzbekistan). A child prodigy who memorized the Quran by age 10 and mastered medicine by 18, he became the greatest philosopher-physician of the medieval world. His major works: <em>Kitab al-Shifa</em> (The Book of Healing — an encyclopedic work on logic, natural science, mathematics, and metaphysics), <em>Kitab al-Najat</em> (The Book of Salvation), and <em>Al-Qanun fi al-Tibb</em> (The Canon of Medicine — used as a medical textbook in Europe until the 17th century).</p>
+
+        <h3>Major Aspects of Ibn Sina's Philosophy</h3>
+        <h4>1. God — Necessary Being (Wajib al-Wujud)</h4>
+        <p>Ibn Sina's most celebrated metaphysical contribution is the distinction between <em>Wajib al-Wujud</em> (Necessary Being — God) and <em>Mumkin al-Wujud</em> (Possible/Contingent Being — everything else). God's essence entails His existence — He cannot not exist. All other beings are possible; they might or might not exist and require an external cause for their existence. This cosmological argument for God's existence was highly influential in medieval European philosophy (Thomas Aquinas adapted it).</p>
+        <h4>2. Emanation and Cosmology</h4>
+        <p>Following Al-Farabi, Ibn Sina developed a Neo-Platonic emanation scheme: from God (Pure Intellect, Pure Being) emanates a series of ten celestial intellects, each associated with a celestial sphere. The Tenth (Active) Intellect governs the terrestrial world — it is the universal mind that illuminates human intellects and is the source of all forms in the material world.</p>
+        <h4>3. Epistemology — Theory of Knowledge</h4>
+        <p>Ibn Sina developed a sophisticated theory of knowledge: the intellect progresses from potentiality to actuality through contact with the Active Intellect. His concept of "floating man" (see below) showed that self-awareness is primary and prior to all sensory knowledge.</p>
+        <h4>4. Prophecy and Religion</h4>
+        <p>The Prophet is the highest form of the philosopher — one whose intellect is directly illuminated by the Active Intellect without intermediary. Religion translates philosophical truth into symbolic, imaginative language for the masses.</p>
+
+        <h3>Ibn Sina's Theory of the Soul</h3>
+
+        <h4>Nature of the Soul</h4>
+        <p>Ibn Sina defined the soul as "the first perfection of a natural body possessing organs" — borrowing and modifying Aristotle's definition. The soul is the organizing principle that gives life and form to the body. However, Ibn Sina goes beyond Aristotle: for him, the soul is a spiritual (immaterial) substance that is <em>not</em> a property or form of the body — it has its own independent existence.</p>
+
+        <h4>The Flying/Floating Man Argument</h4>
+        <p>This is Ibn Sina's most famous thought experiment — a direct anticipation of Descartes' Cogito by six centuries:</p>
+        <div class="key">
+          Imagine a person created fully formed, floating in empty space, with eyes covered, unable to feel, hear, or touch anything — with no sensory input whatsoever. Even in this condition, that person would be aware of his own existence. This proves that the soul (the self) is not identical to the body or dependent on the senses for its self-awareness. The soul knows itself directly and immediately — without any mediation of the senses. Therefore, the soul is a distinct, self-subsisting substance.
+        </div>
+
+        <h4>Faculties (Powers) of the Soul</h4>
+        <p>Ibn Sina recognized three types of souls, each with its own faculties:</p>
+        <ul>
+          <li><strong>Vegetative Soul (Nabatiyya):</strong> Found in plants — powers of nutrition, growth, and reproduction.</li>
+          <li><strong>Animal Soul (Hayawaniyya):</strong> Found in animals and humans — powers of sensation (five external senses + internal senses) and voluntary movement.</li>
+          <li><strong>Rational/Human Soul (Insaniyya/Natiqah):</strong> Unique to humans — power of theoretical and practical intellect.</li>
+        </ul>
+
+        <h4>Internal Senses</h4>
+        <p>One of Ibn Sina's major contributions to psychology: he elaborated a theory of five internal senses (located in the brain's ventricles):</p>
+        <ol>
+          <li><strong>Common Sense (Hiss Mushtarak):</strong> Integrates data from the five external senses.</li>
+          <li><strong>Imagination (Khayaliyya):</strong> Retains images after the external object is absent.</li>
+          <li><strong>Compositive/Estimative Imagination:</strong> Combines and separates retained images.</li>
+          <li><strong>Estimation (Wahm):</strong> Perceives non-sensory intentions in sensory things (e.g., the wolf is dangerous — grasped by the sheep, not through senses alone).</li>
+          <li><strong>Memory (Dhakira):</strong> Stores the judgments of estimation.</li>
+        </ol>
+
+        <h4>Immortality of the Soul</h4>
+        <p>Ibn Sina argued that the rational soul is immortal because: (a) It is an immaterial substance that does not depend on the body for its existence (as proven by the Flying Man argument). (b) Immaterial substances cannot be destroyed — only material things composed of parts can decompose and perish. (c) The soul's activity (intellectual knowledge) transcends bodily functions — it does not use the body as an organ but rather the body as a tool. Therefore the soul survives the body's death.</p>
+
+        <div class="key">Ibn Sina's soul theory is one of the most sophisticated in medieval philosophy. His Flying Man argument, his theory of internal senses, and his proof of the soul's immortality were all enormously influential — both in the Islamic world and in medieval European scholasticism through Latin translations.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Al-Ghazali — Life, Works, and Philosophy</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Al-Ghazali (1058–1111 CE)</h3>
+        <h4>Life</h4>
+        <p>Abu Hamid Muhammad al-Ghazali, known in the West as Algazel, was born in Tus (Khorasan, present-day Iran). He studied in Nishapur under Al-Juwaini and was appointed head of the Nizamiyya Academy in Baghdad — the most prestigious academic post of his time — at just 34. After a profound spiritual crisis (1095 CE), he abandoned his position, underwent a Sufi spiritual journey of about 10 years, and returned to reconcile rationalism, orthodoxy, and mysticism. Died in Tus.</p>
+        <h4>Major Works</h4>
+        <ul>
+          <li><em>Tahafut al-Falasifa</em> (The Incoherence of the Philosophers) — devastating critique of Al-Farabi and Ibn Sina</li>
+          <li><em>Ihya Ulum al-Din</em> (Revival of the Religious Sciences) — encyclopedic work on Islamic ethics and mysticism</li>
+          <li><em>Deliverance from Error</em> (Al-Munqidh min al-Dalal) — his spiritual autobiography</li>
+          <li><em>The Incoherence of the Incoherence</em> — (answered later by Ibn Rushd)</li>
+        </ul>
+        <h4>Key Philosophical Positions</h4>
+        <ul>
+          <li><strong>Critique of Philosophy:</strong> In <em>Tahafut</em>, he identified 20 positions of the philosophers (mainly Al-Farabi and Ibn Sina) as erroneous, and 3 as outright heretical: (1) the eternity of the world, (2) God's knowledge does not extend to particulars, and (3) the bodily resurrection is impossible (philosophers said only the soul is immortal).</li>
+          <li><strong>Occasionalism:</strong> Al-Ghazali argued that there is no necessary causal connection between events in nature — God directly causes all events at every moment. Fire does not burn by its own nature; God creates burning whenever He wills.</li>
+          <li><strong>Sufism and Ethics:</strong> In <em>Ihya</em>, he provided a comprehensive ethical-mystical framework — the most influential work in Islamic spirituality. He reconciled Shariah (law) with Haqiqa (mystical truth).</li>
+          <li><strong>Epistemology:</strong> He prioritized mystical knowledge (Kashf/Dhawq) as the highest form of certainty — beyond both sense perception and rational demonstration.</li>
+        </ul>
+        <div class="key">Impact: Al-Ghazali is arguably the most influential Muslim thinker after the Prophet himself. He shaped orthodox Sunni theology, unified law and mysticism, and his critique of philosophy redirected Islamic intellectual history.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Ibn Rushd (Averroes) — The Commentator</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Ibn Rushd (1126–1198 CE)</h3>
+        <h4>Life</h4>
+        <p>Abu al-Walid Muhammad ibn Ahmad ibn Rushd, known in medieval Europe as Averroes, was born in Córdoba (Muslim Spain). He served as a judge (Qadi) and court physician to the Almohad rulers. Near the end of his life he was exiled due to political circumstances but was recalled before his death.</p>
+        <h4>Major Works</h4>
+        <ul>
+          <li>Extensive <em>Commentaries on Aristotle</em> (short, middle, and long commentaries) — earning him the title "The Commentator" in medieval Europe</li>
+          <li><em>Tahafut al-Tahafut</em> (The Incoherence of the Incoherence) — a point-by-point refutation of Al-Ghazali's critique of philosophy</li>
+          <li><em>Fasl al-Maqal</em> (The Decisive Treatise) — on the relationship between philosophy and religious law</li>
+        </ul>
+        <h4>Key Philosophical Positions</h4>
+        <ul>
+          <li><strong>Defense of Philosophy:</strong> In <em>Tahafut al-Tahafut</em>, he systematically rebutted Al-Ghazali's critique. He insisted that the study of philosophy is an Islamic religious obligation for those capable of it.</li>
+          <li><strong>Harmony of Philosophy and Religion:</strong> In <em>Fasl al-Maqal</em>, he argued philosophy and religion (Shariah) cannot contradict each other since both lead to truth. Apparent contradictions should be resolved through allegorical interpretation (Ta'wil).</li>
+          <li><strong>Eternal World:</strong> Against Al-Ghazali, he defended the Aristotelian view that the world is eternal (though created in a special sense).</li>
+          <li><strong>Intellect:</strong> Controversial view that the Active Intellect is a single universal intellect shared by all humans — which critics said implies the soul is not individually immortal.</li>
+        </ul>
+        <div class="key">European Impact: Ibn Rushd's Latin commentaries on Aristotle catalyzed the European scholastic tradition. Thomas Aquinas engaged deeply with "the Commentator." He played a crucial role in the European Renaissance of rational thought.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Ibn Khaldun — Sociology, Philosophy of History, and Asabiyyah</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Ibn Khaldun (1332–1406 CE)</h3>
+        <h4>Life</h4>
+        <p>Abd al-Rahman ibn Khaldun was born in Tunis to an Andalusian Arab family. He lived a turbulent political life serving various North African and Andalusian rulers, was repeatedly imprisoned and exiled, and eventually settled in Egypt as Chief Maliki Judge. He met Tamerlane (Timur) in 1401.</p>
+        <h4>Major Works</h4>
+        <p>His masterwork is the <em>Muqaddimah</em> (Introduction/Prolegomena) — the introduction to his universal history <em>Kitab al-Ibar</em>. The Muqaddimah is widely regarded as the founding text of sociology, historiography, and philosophy of history.</p>
+        <h4>Key Concepts</h4>
+        <ul>
+          <li><strong>Asabiyyah (Social Solidarity/Group Feeling):</strong> This is Ibn Khaldun's most famous concept. It refers to the bond of cohesion, solidarity, and collective identity that unites a social group — especially tribal or rural communities. Asabiyyah is the engine of history: strong Asabiyyah enables groups to conquer and establish dynasties; weakening Asabiyyah leads to decline and conquest by a new group with stronger Asabiyyah.</li>
+          <li><strong>Cyclical Theory of History:</strong> Dynasties (Dawla) follow a cyclical pattern of approximately 3–4 generations: (1) Rise through strong Asabiyyah and conquest; (2) Consolidation and prosperity; (3) Luxury and weakening of group feeling; (4) Decline and replacement by a new dynasty with stronger Asabiyyah.</li>
+          <li><strong>Philosophy of History:</strong> Ibn Khaldun insisted that historical causation operates through natural social laws — not through arbitrary divine intervention in human affairs. He was thus a pioneer of scientific history.</li>
+          <li><strong>Economic thought:</strong> He identified the importance of labor as the source of value, supply and demand effects on prices — anticipating modern economics.</li>
+        </ul>
+        <div class="key">Arnold Toynbee called the Muqaddimah "the greatest work of its kind that has ever yet been created by any mind in any time or place." Ibn Khaldun is rightly considered the father of sociology and historiography.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Ibn Tufayl — Hayy ibn Yaqzan and the Autodidact Philosopher</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Ibn Tufayl (c. 1105–1185 CE)</h3>
+        <h4>Life</h4>
+        <p>Abu Bakr Muhammad ibn Tufayl was born near Granada (Muslim Spain). He served as physician to the Almohad ruler Abu Ya'qub Yusuf and is credited with introducing Ibn Rushd to the court.</p>
+        <h4>Major Work: Hayy ibn Yaqzan</h4>
+        <p>His philosophical novel <em>Hayy ibn Yaqzan</em> is one of the most celebrated works in Islamic philosophy. It tells the story of Hayy — a child who grows up alone on a deserted island (either born spontaneously or raised by a doe) and, through pure natural reason and observation, arrives independently at all the truths of philosophy and even mystical knowledge of God — without any teacher, language, or revelation.</p>
+        <h4>Philosophical Message</h4>
+        <ul>
+          <li><strong>Natural Reason and Revelation:</strong> The novel argues that pure unaided human reason (represented by Hayy) can reach the same truths as revealed religion — showing the harmony between philosophy and revelation.</li>
+          <li><strong>Epistemology:</strong> Knowledge proceeds from observation → abstraction → philosophical reasoning → mystical illumination. The highest knowledge is direct experiential (Sufi) knowledge of God.</li>
+          <li><strong>Political dimension:</strong> When Hayy encounters a religious society (represented by Absal and Salaman), he realizes that most people cannot handle philosophical truth directly and need religious symbols and law.</li>
+        </ul>
+        <div class="key">Historical influence: <em>Hayy ibn Yaqzan</em> was translated into Latin and English and influenced Daniel Defoe's Robinson Crusoe and John Locke's empiricism.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Ibn Bajjah (Avempace) — Philosophy of the Solitary Individual</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Ibn Bajjah (c. 1085–1138 CE)</h3>
+        <h4>Life</h4>
+        <p>Abu Bakr Muhammad ibn Bajjah, known in the West as Avempace, was born in Zaragoza (Muslim Spain). He served various Almoravid rulers as a physician, musician, and philosopher. He died in Fez (Morocco) — allegedly poisoned by jealous rivals.</p>
+        <h4>Major Works</h4>
+        <ul>
+          <li><em>Tadbir al-Mutawahhid</em> (The Regime of the Solitary) — his most important political-philosophical work</li>
+          <li><em>Risalat al-Wada</em> (Epistle of Farewell)</li>
+          <li>Works on logic, natural science, and music</li>
+        </ul>
+        <h4>Key Philosophical Ideas</h4>
+        <ul>
+          <li><strong>The Solitary Individual (Al-Mutawahhid):</strong> Since the ideal Virtuous City (as described by Al-Farabi) does not exist in reality, the wise philosopher must live as a "spiritual stranger" in an imperfect society. He should isolate himself from the corrupt norms of society and cultivate his intellect through philosophy.</li>
+          <li><strong>Union with the Active Intellect:</strong> The highest goal of the philosopher is intellectual union with the Active Intellect — achieving the highest form of knowledge and happiness through philosophy alone.</li>
+          <li><strong>Soul and Intellect:</strong> He developed Al-Farabi's and Ibn Sina's theories, emphasizing the intellect's capacity to attain a state of pure spiritual illumination.</li>
+          <li><strong>Theory of Forms:</strong> His original contribution to the theory of perception and intellection.</li>
+        </ul>
+        <div class="key">Ibn Bajjah influenced both Ibn Tufayl (who referenced him in Hayy ibn Yaqzan) and Ibn Rushd. His concept of the philosopher as a "spiritual stranger" in society is a remarkable forerunner of later European ideas about the individual and society.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Ibn Maskawaih (Miskawayh) — Ethics and Character Formation</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Ibn Maskawaih / Miskawayh (932–1030 CE)</h3>
+        <h4>Life</h4>
+        <p>Ahmad ibn Muhammad Miskawayh was an Iranian philosopher, historian, and court administrator who served under the Buyid dynasty in Baghdad and Persia. He was the librarian and advisor to several Buyid rulers.</p>
+        <h4>Major Works</h4>
+        <ul>
+          <li><em>Tahdhib al-Akhlaq wa Tathir al-A'raq</em> (Refinement of Character) — his philosophical masterwork on ethics</li>
+          <li><em>Tajarib al-Umam</em> (Experiences of Nations) — historical chronicles</li>
+        </ul>
+        <h4>Ethical Philosophy</h4>
+        <ul>
+          <li><strong>Aristotelian Ethics:</strong> Miskawayh adapted Aristotle's virtue ethics for an Islamic context. Virtue (Fadila) is the mean between two extremes (excess and deficiency).</li>
+          <li><strong>The Soul and Its Faculties:</strong> He identified three faculties of the soul: the rational faculty (Natiqah), the irascible faculty (Ghadabiyya), and the appetitive faculty (Shahwaniyya). The virtues corresponding to these are: Wisdom (Hikma), Courage (Shuja'a), and Temperance (Iffah). Justice (Adl) is the highest virtue, harmonizing all three.</li>
+          <li><strong>Character can be changed:</strong> Against those who believed character is fixed, Miskawayh argued that character (Khuluq) can be reformed through education, practice, and conscious moral effort — making him a pioneer of moral psychology.</li>
+          <li><strong>Social Ethics:</strong> He emphasized that humans are social beings — we need each other not just materially but for moral development.</li>
+        </ul>
+        <div class="key">Miskawayh is often considered the first great Muslim philosopher to focus primarily on ethics. His work <em>Tahdhib al-Akhlaq</em> is a landmark in Islamic moral philosophy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Allama Iqbal — Philosophy of Khudi (Self) and Reconstruction of Islamic Thought</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <h3>Allama Iqbal (1877–1938 CE)</h3>
+        <h4>Life</h4>
+        <p>Sir Muhammad Iqbal was born in Sialkot (British India, now Pakistan). He studied in Lahore, then in Cambridge, and received his PhD from the University of Munich. He became the greatest Muslim poet-philosopher of the modern era and is revered as the "Spiritual Father of Pakistan." He wrote in Urdu, Persian, and English.</p>
+        <h4>Major Works</h4>
+        <ul>
+          <li><em>The Reconstruction of Religious Thought in Islam</em> (1930) — his most important philosophical prose work (English)</li>
+          <li><em>Asrar-e-Khudi</em> (Secrets of the Self) — Persian poetry on his philosophy of the self</li>
+          <li><em>Rumuz-e-Bekhudi</em> (Hints of Selflessness)</li>
+          <li><em>Bal-e-Jibril</em>, <em>Zarb-e-Kalim</em>, <em>Bang-e-Dara</em> — Urdu poetry collections</li>
+        </ul>
+        <h4>Philosophy of Khudi (Self/Ego)</h4>
+        <p>Iqbal's central philosophical concept is <em>Khudi</em> — the self or ego. Against pessimistic Eastern mysticism (especially the Sufi doctrine of Fana — annihilation of self) and Western materialism, Iqbal argued for the affirmation and strengthening of the self.</p>
+        <ul>
+          <li><strong>The Self is real and precious:</strong> God is the Ultimate Ego; each human ego is a spark of divine creativity. Humans must develop and strengthen their individual selfhood.</li>
+          <li><strong>The Perfect Man (Mard-e-Mu'min):</strong> The ideal is the perfect Muslim believer who, like the Prophet, develops his self to its highest potential — creative, autonomous, and God-conscious.</li>
+          <li><strong>Against Fana:</strong> Iqbal criticized the Sufi doctrine of self-annihilation as leading to passivity and decline. The goal is not to lose the self in God but to develop the self to such perfection that it becomes a mirror of divine attributes — this is <em>Baqa</em> (subsistence) rather than <em>Fana</em>.</li>
+          <li><strong>Dynamic Islam:</strong> Through <em>Ijtihad</em>, Islamic thought must be dynamically reconstructed for each age — not stagnant repetition of the past.</li>
+          <li><strong>Influence:</strong> Influenced by Rumi, Nietzsche's will to power (which he critiques and Islamizes), Henri Bergson's creative evolution, and Fichte's philosophy of the self.</li>
+        </ul>
+        <div class="key">Historical role: Iqbal's "Allahabad Address" of 1930 first articulated the idea of a separate Muslim state in northwestern India — the intellectual foundation of Pakistan. He is Pakistan's national poet.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PAST QUESTIONS -->
+<div class="section" id="sec-prev">
+  <div class="intro-box">
+    <strong>📝 Past Exam Questions — Fully Answered</strong>
+    All previous exam questions with complete exam-ready answers. Answers are cross-referenced to detailed content in other tabs.
+  </div>
+
+  <div class="section-label">4-Mark Questions (Short Answer)</div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q1. Discuss different aspects of Islam as a complete code of life.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Full answer in the Foundations tab.</em> Key points to write:</p>
+        <ol>
+          <li><strong>Spiritual:</strong> Five Pillars — Shahadah, Salah, Zakat, Sawm, Hajj — maintain human connection with God and purify the soul.</li>
+          <li><strong>Moral/Ethical:</strong> Quran and Hadith provide a comprehensive moral code: justice, honesty, compassion, and prohibition of injustice. "I was sent to perfect moral character." (Prophet PBUH)</li>
+          <li><strong>Social:</strong> Regulates family (marriage, inheritance), social roles, rights of all members of society.</li>
+          <li><strong>Legal (Shariah):</strong> Derived from Quran, Sunnah, Ijma, and Qiyas — governs criminal, civil, trade, and personal law.</li>
+          <li><strong>Economic:</strong> Forbids Riba (usury), mandates Zakat, promotes equitable distribution of wealth.</li>
+          <li><strong>Political:</strong> Governance based on Shura (consultation), justice, accountability — ruler is a trustee, not an absolute sovereign.</li>
+        </ol>
+        <div class="key">Conclusion: Islam's comprehensive scope covering spiritual, ethical, social, legal, economic, and political dimensions makes it a complete code of life (Deen) — not merely a religion of ritual.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q2. Who are the Murji'as? Describe their standpoint on the status of Muslims who commit sin.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Full answer in the Schools tab.</em> Exam-ready summary:</p>
+        <p><strong>Origin:</strong> Murji'a (from Arja'a = to defer/postpone) — emerged in the late 7th century as a response to civil wars and extremist Kharijite positions.</p>
+        <p><strong>On sinners:</strong></p>
+        <ul>
+          <li>Faith (Iman) alone — not deeds — determines Muslim identity.</li>
+          <li>A Muslim who commits a grave sin remains a full Muslim — sin does not nullify faith.</li>
+          <li>Judgment of sinners is deferred entirely to God on the Day of Judgment — humans should not declare another believer to be a kafir (unbeliever).</li>
+          <li>Extreme Murji'a: sin cannot harm the soul at all as long as one has faith.</li>
+          <li>Moderate Murji'a: sinners may be punished but God may ultimately forgive the faithful.</li>
+        </ul>
+        <div class="key">Contrast: Kharijites said sinners are kafirs (apostates). Mutazilites said sinners are in an intermediate position. Murji'as said sinners remain full Muslims — judgment belongs to God alone.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q3. Who are the Ithna Ashariya (The Twelvers)?</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Full answer in the Political Schools tab.</em> Exam-ready summary:</p>
+        <p><strong>Definition:</strong> The largest branch of Shia Islam. They recognize twelve Imams from the Prophet's family (Ahl al-Bayt) as the sole legitimate successors.</p>
+        <p><strong>The Twelve Imams:</strong> Starting with Ali ibn Abi Talib and ending with the Twelfth Imam Muhammad al-Mahdi, who entered occultation (Ghayba) in 874 CE and is expected to return before the Day of Judgment.</p>
+        <p><strong>Key beliefs:</strong></p>
+        <ul>
+          <li>Each Imam is divinely appointed (by God through Prophet/preceding Imam) and infallible (Ma'sum).</li>
+          <li>Obedience to the Imam is a religious obligation.</li>
+          <li>During the Major Occultation, qualified jurists (Marja') exercise religious authority on behalf of the Hidden Imam.</li>
+          <li>The Twelfth Imam is the Mahdi (Guided One) who will return to fill the earth with justice.</li>
+        </ul>
+        <p><strong>Distribution today:</strong> Majority in Iran and Iraq; significant minorities in Lebanon, Pakistan, India, and elsewhere.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q4. Describe in short the classifications of different schools of thought in Muslim Philosophy.</div>
+        <div class="card-meta"><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Full answer in the Foundations tab.</em> Exam-ready summary:</p>
+        <p><strong>Three broad categories:</strong></p>
+        <h4>I. Philosophical/Theological Schools (Kalam)</h4>
+        <p>Qadarites (free will) ↔ Jabarites (predestination) | Mutazilites (rationalist) ↔ Asharites (orthodox traditionalist) | Maturidis and Tahawis (moderate Sunni schools)</p>
+        <h4>II. Religious-Political Schools</h4>
+        <p>Sunnis (caliphate by election) | Shia (Imama through the Prophet's family, divinely appointed) | Kharijis (any pious Muslim can lead; sinners are apostates) | Murji'as (defer judgment on sinners to God)</p>
+        <h4>III. Mystical School</h4>
+        <p>Sufis — focus on inner spiritual development, divine love, Maqamat (stations), Ahwal (states), and the quest for Fana (annihilation of ego in God) and Baqa (subsistence in God).</p>
+        <div class="key">Additionally: the Falsafa (philosophical) tradition — Al-Kindi, Al-Farabi, Ibn Sina — engaged directly with Greek philosophical methods.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">12.5-Mark Questions (Long Answer)</div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q1 (12.5): Define Muslim Philosophy. Analyze definitions given by various philosophers.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Foundations tab.</em> Ensure you cover:</p>
+        <ul>
+          <li>Definition (general + your own synthesis)</li>
+          <li>Syed Abdul Hai's definition</li>
+          <li>Majid Fakhry's definition</li>
+          <li>De Boer's definition</li>
+          <li>Max Horten's definition</li>
+          <li>M.M. Sharif's definition</li>
+          <li>Nature of Muslim Philosophy (rational-revelatory synthesis, eclectic, encyclopedic)</li>
+          <li>Sources (Quran, Hadith, Greek Philosophy, Persian/Indian traditions, Ijtihad)</li>
+          <li>Scope (metaphysics, epistemology, ethics, politics, cosmology, mysticism)</li>
+          <li>Muslim vs. Islamic Philosophy distinction</li>
+          <li>Conclusion</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q2 (12.5): State main points of differences in political philosophy of Shia, Sunni, and Kharijis.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Political tab.</em> Key points to cover for each school:</p>
+        <table>
+          <tr><th>Point</th><th>Sunni</th><th>Shia</th><th>Kharijites</th></tr>
+          <tr><td>Who can lead</td><td>Qualified Qurayshi Muslim</td><td>Prophet's family (Ali's descendants) only</td><td>Any pious Muslim</td></tr>
+          <tr><td>How chosen</td><td>Election/Bay'a/Consensus</td><td>Divine appointment (Nass)</td><td>Election + piety</td></tr>
+          <tr><td>Infallibility</td><td>No</td><td>Yes (Isma)</td><td>No — deposed for sin</td></tr>
+          <tr><td>On sinners</td><td>Still Muslim; obey to avoid Fitna</td><td>God's judgment; patience</td><td>Kafir! Must rebel</td></tr>
+          <tr><td>Nature of leadership</td><td>Human political institution</td><td>Divine spiritual-political office</td><td>Pure political role</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q3 (12.5): Compare Mutazilite and Asharite views on Attributes of Allah, Beatification, and Createdness of Quran.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Schools tab.</em> The three sub-parts:</p>
+        <ol>
+          <li><strong>Attributes of Allah:</strong> Mutazilites = attributes are identical to essence (no real separate attributes). Asharites = real eternal attributes distinct from but inseparable from essence.</li>
+          <li><strong>Vision of Allah:</strong> Mutazilites = impossible (would require direction/place). Asharites = possible in afterlife, bila kayf (without asking how).</li>
+          <li><strong>Createdness of Quran:</strong> Mutazilites = Quran is created (brought into time). Asharites = eternal Kalam Nafsi (divine speech in essence) + created Kalam Lafzi (linguistic expression).</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q4 (12.5): Compare views of Jabariya and Qadariya on freedom of will.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Schools tab.</em> Key structure:</p>
+        <ol>
+          <li><strong>Introduction</strong> — the problem of free will in Islam</li>
+          <li><strong>Jabariya</strong> — definition, founders (Jahm ibn Safwan), doctrine (man is compelled), Quranic evidence, types (extreme and moderate)</li>
+          <li><strong>Qadariya</strong> — definition, founders (Ma'bad al-Juhani), doctrine (man creates his actions), Quranic evidence, Mutazilite development</li>
+          <li><strong>Comparison table</strong></li>
+          <li><strong>Evaluation</strong> — Asharite Kasb theory as synthesis</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q5 (12.5): Discuss fundamental principles of Sufism. Describe the Sufi Path.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Sufism tab.</em> Key structure:</p>
+        <ol>
+          <li>Definition and origin of Sufism (Suf = wool; early ascetics; Hasan al-Basri, Rabia al-Adawiyya)</li>
+          <li>Fundamental principles: Tawhid/Wahdat al-Wujud, Mahabbah, Ma'rifa, Fana/Baqa, Zuhd/Tawakkul, the Shaykh, Dhikr</li>
+          <li>The Sufi Path: Shariah → Tariqah → Haqiqah</li>
+          <li>Maqamat (Stations — permanent): Tawba, Wara', Zuhd, Faqr, Sabr, Tawakkul, Ridha</li>
+          <li>Ahwal (States — temporary): Muraqaba, Qurb, Mahabbah, Khawf, Shawq, Uns, Hayba, Ghaybah</li>
+          <li>Sufi Orders (Tariqas)</li>
+          <li>Criticism and evaluation</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q6 (12.5): Explain and evaluate Al-Farabi's Political Philosophy.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Philosophers tab.</em> Structure:</p>
+        <ol>
+          <li>Life and works of Al-Farabi</li>
+          <li>Metaphysical foundation (emanation theory)</li>
+          <li>The Virtuous City (Madina Fadila)</li>
+          <li>The Philosopher-King/Imam — qualities and divine connection</li>
+          <li>Religion vs. Philosophy (symbols vs. demonstrative proof)</li>
+          <li>Types of imperfect cities (6 types)</li>
+          <li>Critical evaluation (strengths and weaknesses)</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">Q7 (12.5): Mention aspects of Ibn Sina's philosophy. Illustrate views on the soul.</div>
+        <div class="card-meta"><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="answer">
+        <p>→ <em>Complete detailed answer in the Philosophers tab.</em> Structure:</p>
+        <ol>
+          <li>Life and works (brief)</li>
+          <li>Necessary Being (Wajib al-Wujud) — God as Necessary Being</li>
+          <li>Emanation cosmology</li>
+          <li>Epistemology</li>
+          <li>Theory of the Soul — nature and definition</li>
+          <li><strong>Flying/Floating Man argument</strong> — must include this!</li>
+          <li>Three types of soul (vegetative, animal, rational)</li>
+          <li>Five internal senses</li>
+          <li>Immortality of the soul — argument</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SAMPLE QUESTIONS -->
+<div class="section" id="sec-sample">
+  <div class="intro-box">
+    <strong>🎯 Sample Practice Questions</strong>
+    Try each question yourself before revealing the answer. This mimics exam conditions. Answers are hidden — tap "Reveal Answer" to check.
+  </div>
+
+  <div class="section-label">4-Mark Sample Questions</div>
+
+  <!-- Sample 1 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">S1. What is Kalam? How does it differ from Falsafa?</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Try to answer this yourself first, then reveal below.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Kalam vs. Falsafa</h3>
+          <p><strong>Kalam</strong> (literally "speech" or "word") is Islamic scholastic theology — the rational defense and elaboration of Islamic religious doctrine. It uses logical argumentation primarily to defend and interpret revealed truths (Quran, Hadith). Its starting point is religious belief; reason is its instrument. Key schools: Mutazilites, Asharites, Maturidis.</p>
+          <p><strong>Falsafa</strong> (from Greek <em>Philosophia</em>) is the Greek-inspired philosophical tradition in Islam. Its starting point is pure reason and empirical observation — independent of revelation in principle, though most practitioners tried to harmonize the two. Key figures: Al-Kindi, Al-Farabi, Ibn Sina, Ibn Rushd.</p>
+          <table>
+            <tr><th>Aspect</th><th>Kalam</th><th>Falsafa</th></tr>
+            <tr><td>Starting point</td><td>Religious revelation</td><td>Greek philosophical texts + reason</td></tr>
+            <tr><td>Primary goal</td><td>Defend Islamic doctrine rationally</td><td>Discover truth through reason</td></tr>
+            <tr><td>Method</td><td>Dialectical theology</td><td>Logic, metaphysics, natural science</td></tr>
+            <tr><td>Key figures</td><td>Al-Ashari, Al-Mutazila, Maturidi</td><td>Al-Farabi, Ibn Sina, Ibn Rushd</td></tr>
+          </table>
+          <div class="key">Key overlap: Most Muslim thinkers engaged with both — the distinction is methodological emphasis rather than a hard divide.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample 2 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">S2. Who were the Kharijites? What was their political doctrine?</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Try to answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>The Kharijites</h3>
+          <p><strong>Origin:</strong> The Kharijites (from Kharaja — "to go out/rebel") emerged in 657 CE when they abandoned Ali ibn Abi Talib's camp during the Battle of Siffin, objecting to his agreement to arbitration with Muawiyah. Their slogan was: <em>La Hukma illa lillah</em> — "Judgment belongs only to God" — and they declared that human arbitration was apostasy.</p>
+          <p><strong>Key Political Doctrines:</strong></p>
+          <ul>
+            <li>Any pious Muslim — even a non-Arab slave — can be Caliph, as long as he is righteous. No ethnic or family restriction on leadership.</li>
+            <li>The Caliph is elected by the community and can be deposed or killed if he sins.</li>
+            <li>Grave sinners are apostates (kafirs) — not merely sinful Muslims. This is called Takfir.</li>
+            <li>Jihad against sinful rulers and Muslims who oppose them is an obligation.</li>
+            <li>The Muslim community should be a pure community of the righteous — no compromise with sin.</li>
+          </ul>
+          <div class="key">Legacy: Kharijite-type thinking (Takfiri extremism) is still influential today in various extremist movements that declare other Muslims to be apostates and justify violence against them.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample 3 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">S3. What is Al-Farabi's concept of 'Active Intellect' and its role in human knowledge?</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Try to answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>The Active Intellect</h3>
+          <p>The Active Intellect (<em>Al-Aql al-Fa'al</em>) is the Tenth Intellect in Al-Farabi's (and Ibn Sina's) Neo-Platonic cosmological scheme. It occupies the lowest level of the cosmic intellect hierarchy — closest to the terrestrial world — and governs the realm of matter and human souls.</p>
+          <h4>Role in Human Knowledge</h4>
+          <ul>
+            <li>It illuminates the human "material intellect" (potential intellect) the way the sun illuminates physical objects — enabling humans to move from potential to actual knowledge.</li>
+            <li>It is the source of all intelligible forms (universal concepts) that the human mind abstracts from sensory experience.</li>
+            <li>The highest achievement of the human intellect is "conjunction" (Ittissal) with the Active Intellect — the state of perfect philosophical understanding and happiness.</li>
+            <li>In Islamic terms, Al-Farabi identified the Active Intellect with the Angel Gabriel — the mediator of divine revelation to the Prophet.</li>
+          </ul>
+          <div class="key">The Active Intellect thus bridges cosmic order and human knowledge — linking the divine with the human mind and making both philosophy and prophecy possible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample 4 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">S4. What is Wahdat al-Wujud? Which Sufi thinker is associated with it?</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Try to answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Wahdat al-Wujud (Unity of Being)</h3>
+          <p><strong>Associated thinker:</strong> The great Andalusian Sufi mystic <strong>Muhyiddin Ibn Arabi</strong> (1165–1240 CE), often called <em>al-Shaykh al-Akbar</em> (the Greatest Master).</p>
+          <p><strong>The Doctrine:</strong> Wahdat al-Wujud holds that there is ultimately only one Being — God (Wujud). The multiplicity of created beings we observe in the world is not illusory (as in some Hindu Advaita thought) but consists of the self-manifestations or epiphanies (Tajalliyat) of the One Divine Being.</p>
+          <ul>
+            <li>God is the absolute, infinite, undifferentiated Being.</li>
+            <li>The universe is the self-disclosure (Tajalli) of God — God reveals Himself through His creation.</li>
+            <li>Every created being is a "name" or "attribute" of God made manifest.</li>
+            <li>This is not pantheism (God = world) but rather that no being has independent existence apart from God.</li>
+          </ul>
+          <p><strong>Controversy:</strong> Orthodox scholars criticized this doctrine as compromising divine transcendence and blurring the distinction between God and creation. Ibn Arabi and his followers defended it as a profound metaphysical truth beyond ordinary theological categories.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample 5 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">S5. What is Iqbal's concept of Khudi? How does it differ from the Sufi concept of Fana?</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark4">4 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Try to answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Khudi vs. Fana</h3>
+          <p><strong>Iqbal's Khudi (Self):</strong> Iqbal's central philosophical concept. Khudi is the human self or ego — which Iqbal sees as real, precious, and God-given. God is the Ultimate Ego; each human ego is a spark of divine creativity. The purpose of life is to develop and strengthen the self to its highest potential — creative, dynamic, active, and God-conscious. The perfect Khudi reflects divine attributes: knowledge, power, and creative will.</p>
+          <p><strong>The Sufi concept of Fana:</strong> Fana (annihilation) is the Sufi goal of dissolving the individual ego in the Divine — losing the self entirely in God. The individual personality is extinguished in the ocean of Divine Being.</p>
+          <p><strong>Key Difference:</strong></p>
+          <table>
+            <tr><th>Aspect</th><th>Iqbal's Khudi</th><th>Sufi Fana</th></tr>
+            <tr><td>Goal</td><td>Strengthen and affirm the self</td><td>Annihilate the self in God</td></tr>
+            <tr><td>Self</td><td>Real, precious, God-like</td><td>An illusion to be overcome</td></tr>
+            <tr><td>Ideal</td><td>The Perfect Man (Mard-e-Mu'min) — dynamic, creative</td><td>The mystic absorbed in Divine Being</td></tr>
+            <tr><td>Result</td><td>Active, creative individual in society</td><td>Passive withdrawal from world</td></tr>
+          </table>
+          <div class="key">Iqbal criticized Fana-based Sufism for leading to passivity and decline of Muslim civilization. He preferred Baqa (subsistence in God) — where the self is purified and strengthened, not dissolved.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">12.5-Mark Sample Questions</div>
+
+  <!-- Sample Long 1 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">SL1. Write a detailed note on Ibn Khaldun's philosophy of history and concept of Asabiyyah.</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>This is a long-answer question. Write at least 5–6 paragraphs before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Ibn Khaldun: Life and Context</h3>
+          <p>Abd al-Rahman ibn Khaldun (1332–1406 CE) was born in Tunis and lived through one of the most turbulent periods of Islamic history — the Black Death, the decline of Andalusian civilization, and the Mongol-Timurid devastation. His Muqaddimah (the prolegomena to his universal history Kitab al-Ibar) is one of the most original works in human intellectual history — founding sociology, philosophy of history, and what we might today call political science and economics.</p>
+
+          <h3>The New Science of Human Civilization (Umran)</h3>
+          <p>Ibn Khaldun's fundamental insight was that history cannot be properly understood without understanding the social laws that govern human civilization (Umran). Previous historians simply recorded events; Ibn Khaldun sought to explain why civilizations rise and fall through causal analysis. He called this new science the science of Umran (civilization/society) — making him the forefather of sociology.</p>
+
+          <h3>The Concept of Asabiyyah (Social Solidarity)</h3>
+          <p>Asabiyyah is the cornerstone of Ibn Khaldun's system. It means group feeling, social cohesion, tribal solidarity, and collective identity. It is the force that enables a group to act together — to fight, to cooperate, to conquer, and to govern.</p>
+          <ul>
+            <li><strong>Sources of Asabiyyah:</strong> Common ancestry, shared danger, common values and religion, and prolonged co-habitation.</li>
+            <li><strong>Bedouins vs. Urban populations:</strong> Desert/rural groups (Bedouins) have stronger Asabiyyah because shared hardship, necessity, and simplicity forge stronger bonds. Urban populations weaken Asabiyyah through luxury, division of labor, and softness.</li>
+            <li><strong>Role of Religion:</strong> Prophetic religion can strengthen Asabiyyah enormously by adding a transcendent spiritual dimension to group solidarity — explaining the rapid early Islamic conquests.</li>
+          </ul>
+
+          <h3>The Cyclical Theory of Dynasties</h3>
+          <p>Ibn Khaldun described a cyclical pattern for dynasties (Dawla) lasting roughly 3–4 generations (~120 years):</p>
+          <ol>
+            <li><strong>1st Generation — The Conquerors:</strong> Strong Asabiyyah; simple, tough, heroic; conquer urban civilization.</li>
+            <li><strong>2nd Generation — Consolidation:</strong> Establish administration; Asabiyyah still strong; prosperous.</li>
+            <li><strong>3rd Generation — Prosperity and Softness:</strong> Luxury weakens group cohesion; rulers become autocratic; people lose martial virtues.</li>
+            <li><strong>4th Generation — Decline:</strong> Asabiyyah severely weakened; dynasty becomes dependent on mercenaries; vulnerable to a new group with stronger Asabiyyah that conquers them — and the cycle begins again.</li>
+          </ol>
+
+          <h3>Economic Thought</h3>
+          <p>Ibn Khaldun made remarkable contributions anticipating modern economics: he recognized that labor is the source of value (anticipating Adam Smith and Marx), described how division of labor increases productivity, explained supply and demand effects on prices, and showed how excessive taxation destroys economic activity — anticipating the Laffer Curve by 600 years.</p>
+
+          <h3>Geography and Climate</h3>
+          <p>Ibn Khaldun also analyzed how geography and climate affect human character and social organization — anticipating Montesquieu's theory of climate and character by three centuries.</p>
+
+          <h3>Critical Evaluation</h3>
+          <h4>Strengths:</h4>
+          <ul>
+            <li>Pioneered a scientific, causal approach to history — explaining social phenomena through natural laws, not arbitrary divine intervention.</li>
+            <li>The Asabiyyah concept remains a powerful analytical tool.</li>
+            <li>Remarkably modern in economic reasoning and sociological analysis.</li>
+          </ul>
+          <h4>Limitations:</h4>
+          <ul>
+            <li>The cyclical model oversimplifies — not all dynasties follow this pattern.</li>
+            <li>His analysis was drawn primarily from North African and Arab history — may not universally apply.</li>
+            <li>He underestimated the role of technology, ideas, and long-term structural change.</li>
+          </ul>
+          <div class="key">Conclusion: Ibn Khaldun's Muqaddimah is rightly described by Arnold Toynbee as "the greatest work of its kind." He founded the sociology of knowledge, philosophy of history, and economic sociology — all while writing in 14th-century Tunisia. His concept of Asabiyyah remains analytically powerful for understanding collective action, nationalism, and political change today.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample Long 2 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">SL2. Critically examine Al-Ghazali's critique of Muslim philosophers. What were his main objections?</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Write your answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Al-Ghazali's Critique — Background</h3>
+          <p>Al-Ghazali (1058–1111 CE) first mastered the philosophical tradition — reading all the works of Al-Farabi and Ibn Sina — before critiquing them. He described his method in Deliverance from Error: "I knew that to refute a system before understanding it is to act as a blind man." His Tahafut al-Falasifa (The Incoherence of the Philosophers, 1095 CE) is a systematic demolition of twenty philosophical positions held by Muslim Aristotelians.</p>
+
+          <h3>The Twenty Points of Criticism</h3>
+          <p>Al-Ghazali identified twenty positions where philosophers contradicted Islamic belief. He declared that on seventeen of these, the philosophers committed heretical innovation (Bid'a), but on three they committed outright apostasy (Kufr):</p>
+
+          <h4>The Three Points of Apostasy (Kufr)</h4>
+          <ol>
+            <li><strong>Eternity of the World:</strong> Al-Farabi and Ibn Sina held that the world is eternal — it has always existed. Al-Ghazali argued this directly contradicts Quranic teaching that God created the world from nothing (ex nihilo) — a direct denial of divine omnipotence and creation.</li>
+            <li><strong>God's Knowledge of Particulars:</strong> The philosophers argued that God, being pure intellect, knows only universal forms/essences — not individual particular events or persons. Al-Ghazali argued this contradicts divine omniscience (God knows all things, including every leaf that falls — Quran 6:59) and makes prayer meaningless.</li>
+            <li><strong>Bodily Resurrection:</strong> The philosophers held that resurrection is only spiritual (souls reunite with Active Intellect) — there is no bodily resurrection. Al-Ghazali insisted that the Quran clearly affirms physical bodily resurrection, reward, and punishment — and that denying this is apostasy.</li>
+          </ol>
+
+          <h3>Other Major Criticisms</h3>
+          <h4>On Causality — Occasionalism</h4>
+          <p>Al-Ghazali developed his famous critique of necessary causation: philosophers assume that fire necessarily burns cotton — but this is mere habit of observation, not logical necessity. There is no rational necessity connecting cause and effect; God creates burning directly whenever He wills. This occasionalist position protects divine omnipotence and preserves the possibility of miracles.</p>
+          <h4>On Emanation</h4>
+          <p>The philosophers' Neo-Platonic emanation theory (the universe flowing necessarily from God like light from the sun) compromises divine freedom. A God who necessarily creates is not truly omnipotent or free — He is more like an impersonal force than the personal God of Islam.</p>
+          <h4>On Prophecy</h4>
+          <p>Al-Ghazali objected to the philosophers' reduction of prophecy to a natural intellectual phenomenon — the Prophet as merely a superior philosopher. This denies the special, supra-rational nature of divine revelation.</p>
+
+          <h3>Ibn Rushd's Response (Tahafut al-Tahafut)</h3>
+          <p>Ibn Rushd wrote a systematic rebuttal (Incoherence of the Incoherence) pointing out that Al-Ghazali often misrepresented the philosophers' positions, and that his occasionalist critique of causation actually undermines all rational science and natural knowledge.</p>
+
+          <h3>Critical Evaluation of Al-Ghazali's Critique</h3>
+          <h4>Strengths:</h4>
+          <ul>
+            <li>Successfully defended the transcendence and freedom of God against mechanistic emanationist schemes.</li>
+            <li>His critique of necessary causation was philosophically sophisticated and remains interesting in philosophy of science.</li>
+            <li>Effectively protected key Islamic doctrines (creation, omniscience, resurrection) from philosophical erosion.</li>
+          </ul>
+          <h4>Weaknesses:</h4>
+          <ul>
+            <li>His occasionalism makes natural scientific explanation impossible — if fire does not naturally burn, how can medicine work?</li>
+            <li>He sometimes misrepresents or oversimplifies philosophical positions (as Ibn Rushd showed).</li>
+            <li>His critique contributed to a decline of the Falsafa tradition in the Islamic East — which some historians see as contributing to scientific stagnation.</li>
+          </ul>
+          <div class="key">Historical Impact: Al-Ghazali's critique was enormously influential — it effectively ended the flourishing of Aristotelian philosophy in the Islamic East. However, it also drove Islamic thought toward a richer integration of Sufism and orthodoxy (as in Ihya Ulum al-Din), which shaped Islamic civilization profoundly for centuries.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample Long 3 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">SL3. Discuss Allama Iqbal's concept of the Reconstruction of Religious Thought in Islam.</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Write your answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Introduction: Iqbal's Mission</h3>
+          <p>Allama Muhammad Iqbal (1877–1938) addressed one of the most pressing problems facing Islam in the modern era: how should Islamic thought respond to modernity — to modern science, Western philosophy, and the intellectual challenges of the 20th century? His book The Reconstruction of Religious Thought in Islam (1930) — originally delivered as six lectures — is his most systematic prose response to this challenge.</p>
+
+          <h3>Background and Context</h3>
+          <p>Iqbal observed that the Muslim world had reached a state of intellectual stagnation — bound by centuries of uncritical Taqlid (blind imitation) and unable to engage creatively with modern thought. He believed that the Quran itself calls for rational engagement with reality — and that the closing of the gates of Ijtihad (independent reasoning) had paralyzed Muslim civilization.</p>
+
+          <h3>Key Themes of the Reconstruction</h3>
+
+          <h4>1. Ijtihad as the Principle of Movement</h4>
+          <p>Iqbal insisted that Ijtihad — independent intellectual inquiry and legal reasoning — must be reopened and exercised boldly. Just as the Prophet's companions exercised Ijtihad in new situations, so must Muslims today. Ijtihad is "the principle of movement in the structure of Islam." Without it, Islam becomes a fossilized system rather than a living force.</p>
+
+          <h4>2. The Quran and the Empirical Spirit</h4>
+          <p>Iqbal argued that the Quran's repeated call to observe nature (the natural world as God's signs, Ayat) was actually the origin of the empirical scientific spirit. The Quran liberated humanity from the Greek tendency to devalue sensory observation in favor of pure abstract reasoning — making the Quran the founding document of empiricism in the broadest sense.</p>
+
+          <h4>3. Ego (Khudi) and Reality</h4>
+          <p>Reality, for Iqbal, is fundamentally egotic — it consists of selves (egos) arranged in a hierarchy culminating in the Supreme Ego (God). The universe is not dead matter governed by mechanical laws but a living community of selves engaged in creative activity. This personalistic metaphysics is opposed to pantheism and to mechanistic materialism.</p>
+
+          <h4>4. Prayer and Religious Experience</h4>
+          <p>In one lecture, Iqbal analyzes the nature of religious experience. Against those who dismiss mystical experience as subjective, Iqbal argues that it is a genuine form of knowledge — like sense perception and reason, but oriented toward the ultimate spiritual reality. The namaz (daily prayer) is not mere ritual but a training of the soul to attend to the highest reality.</p>
+
+          <h4>5. The Concept of God</h4>
+          <p>God in Iqbal's framework is the Ultimate Ego — creative, free, omniscient, and intimately connected to the world He creates. God is not the deistic watchmaker who creates and withdraws, nor the pantheistic absolute who IS the world, but a personal God continuously engaged in creative activity who respects human freedom.</p>
+
+          <h4>6. Human Freedom and Destiny</h4>
+          <p>Iqbal navigated the free will debate by emphasizing that genuine human freedom is both theologically necessary (moral responsibility) and philosophically defensible. His concept of Khudi (self) implies genuine human agency — humans are co-creators with God, not puppets of determinism.</p>
+
+          <h4>7. Critique of Western Philosophy and Culture</h4>
+          <p>Iqbal engaged seriously with Western thinkers — Hegel, Nietzsche, Bergson, Kant — both learning from them and critiquing them. He criticized Western materialism, nationalism (as a tribalism that fragments human brotherhood), and colonial exploitation while appreciating the West's scientific achievements.</p>
+
+          <h3>Philosophical Influences on Iqbal</h3>
+          <ul>
+            <li><strong>Rumi:</strong> The greatest single influence — spiritual master and guide</li>
+            <li><strong>Bergson:</strong> Creative evolution and the élan vital influenced his concept of a dynamic universe</li>
+            <li><strong>Nietzsche:</strong> Will to power — Islamized and redirected toward spiritual self-development (Khudi)</li>
+            <li><strong>Whitehead:</strong> Process philosophy and dynamic reality</li>
+            <li><strong>Fichte:</strong> Philosophy of the self (Ego)</li>
+          </ul>
+
+          <h3>Critical Evaluation</h3>
+          <h4>Strengths:</h4>
+          <ul>
+            <li>The most serious modern Muslim attempt to engage Western philosophy without surrendering Islamic identity.</li>
+            <li>The call to reopen Ijtihad remains urgently relevant.</li>
+            <li>His personalist metaphysics provides an alternative to both materialism and pantheism.</li>
+          </ul>
+          <h4>Limitations:</h4>
+          <ul>
+            <li>Some traditional scholars felt he went too far in his reinterpretations.</li>
+            <li>His philosophical synthesis is sometimes inconsistent.</li>
+            <li>His prescription for Ijtihad raises difficult questions: who is qualified? What are the criteria?</li>
+          </ul>
+          <div class="key">Conclusion: Iqbal's Reconstruction remains the most significant modern attempt at Muslim philosophical renaissance. His call to dynamism, creative self-affirmation, and engagement with modernity through Ijtihad continues to inspire Muslim thinkers worldwide. He represents the most successful bridge between the classical Muslim philosophical tradition and contemporary thought.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sample Long 4 -->
+  <div class="card open">
+    <div class="card-header" onclick="toggleCard(this)">
+      <span class="card-chevron">▶</span>
+      <div class="card-title-wrap">
+        <div class="card-q">SL4. Discuss the Mutazilite school — its origin, five principles, and historical significance.</div>
+        <div class="card-meta"><span class="tag sample">Sample</span><span class="tag mark12">12.5 marks</span></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p><em>Write your answer before revealing.</em></p>
+      <button class="sample-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="sample-answer">
+        <div class="answer">
+          <h3>Origin of the Mutazilites</h3>
+          <p>The Mutazilite school emerged in Basra (Iraq) in the early 8th century. The founding moment (according to tradition) occurred when Wasil ibn Ata (700–748 CE) separated (I'tazala — "withdrew") from the circle of the great scholar Hasan al-Basri over the question of the grave sinner. Hasan al-Basri held that the grave sinner is a hypocrite (munafiq); the Kharijites said he is a kafir. Wasil proposed a third position: the grave sinner occupies an intermediate position (al-Manzila bayn al-Manzilatayn) — neither fully believer nor fully unbeliever. This became one of the five core Mutazilite principles.</p>
+          <p>The school flourished under the Abbasid caliphs — especially reaching its zenith when Caliph al-Ma'mun (r. 813–833 CE) adopted Mutazilism as the official state theology and enforced it through the Mihna (Inquisition). Scholars who refused to accept the Mutazilite doctrine of the createdness of the Quran were persecuted — most famously Ahmad ibn Hanbal, who suffered flogging and imprisonment for his refusal.</p>
+
+          <h3>The Five Principles (Usul al-Khamsa)</h3>
+          <h4>1. Al-Tawhid (Divine Unity)</h4>
+          <p>God is absolutely one and unique — with no resemblance to creation whatsoever. This led the Mutazilites to deny real divine attributes separate from the essence (to avoid what they saw as Shirk — placing eternal beings alongside God) and to interpret anthropomorphic Quranic expressions allegorically.</p>
+
+          <h4>2. Al-Adl (Divine Justice)</h4>
+          <p>God is absolutely just — He cannot do evil and would not punish the innocent. This principle requires: (a) that humans have genuine free will (otherwise God punishing people for acts He compelled is unjust); (b) that God cannot be said to have willed evil; (c) that God's promises and threats in the Quran are necessarily carried out.</p>
+
+          <h4>3. Al-Wa'd wa al-Wa'id (Promise and Threat)</h4>
+          <p>God's promises of Paradise for the righteous and threats of Hell for the sinful are necessarily fulfilled — God cannot fail to keep His promises or empty His threats. This distinguishes them from the Murji'a (who said God may forgive anyone) and the Asharites (who said God's will is absolute and He may forgive or punish as He pleases).</p>
+
+          <h4>4. Al-Manzila bayn al-Manzilatayn (The Intermediate Position)</h4>
+          <p>The Muslim grave sinner occupies a position between belief (Iman) and unbelief (Kufr) — he is neither fully a believer nor an unbeliever, but a transgressor (Fasiq). He will be in Hell if he dies without repentance, but his Hell is not the same as the Hell of outright unbelievers.</p>
+
+          <h4>5. Al-Amr bi al-Ma'ruf wa al-Nahy 'an al-Munkar (Commanding Right and Forbidding Wrong)</h4>
+          <p>Every Muslim has a religious obligation to promote good and prevent evil — in the community, in society, and politically. This principle gave the Mutazilites a basis for political activism and justified their advocacy for the Mihna.</p>
+
+          <h3>Major Mutazilite Scholars</h3>
+          <ul>
+            <li>Wasil ibn Ata — founder</li>
+            <li>Amr ibn Ubayd — co-founder</li>
+            <li>Al-Allaf (Abu al-Hudhayl) — greatest early Mutazilite thinker</li>
+            <li>Al-Nazzam — innovative on atomism and natural philosophy</li>
+            <li>Al-Jahiz — famous litterateur and Mutazilite thinker</li>
+            <li>Al-Jubbai — teacher of Al-Ashari (before his defection)</li>
+            <li>Qadi Abd al-Jabbar — the greatest systematic Mutazilite (10th century)</li>
+          </ul>
+
+          <h3>Decline of the Mutazilites</h3>
+          <p>The Mutazilite Mihna ended in 848 CE under Caliph al-Mutawakkil, who reversed the policy and supported traditional scholarship. Al-Ashari's defection from Mutazilism and his founding of a new school that used Mutazilite methods against Mutazilite conclusions was a major blow. By the 10th–11th centuries, the Asharite school had largely displaced Mutazilism in Sunni orthodoxy.</p>
+
+          <h3>Historical Significance</h3>
+          <ul>
+            <li>The Mutazilites pioneered the use of rational philosophical argument in Islamic theology — creating the tradition of Kalam.</li>
+            <li>Their engagement with Greek logic and philosophy made Islamic theology intellectually sophisticated.</li>
+            <li>The Mutazilite emphasis on divine justice and human free will influenced Shia theology, which adopted many Mutazilite positions.</li>
+            <li>Their critique of anthropomorphism protected Islamic monotheism from literalist distortions.</li>
+            <li>Their political activism (the Mihna) is a cautionary tale about the dangers of enforcing theological orthodoxy through state power.</li>
+          </ul>
+          <div class="key">The Mutazilites may have lost the historical battle for Sunni orthodoxy, but their intellectual legacy — the use of reason in theology — became permanently embedded in Islamic thought through the Asharite and Maturidi schools.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+</div>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('sec-' + id).classList.add('active');
+    if (btn) btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleCard(header) {
+    const card = header.closest('.card');
+    card.classList.toggle('open');
+  }
+
+  function revealAnswer(btn) {
+    const ans = btn.nextElementSibling;
+    ans.classList.add('shown');
+    btn.style.display = 'none';
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.removeAttribute('data-theme');
+      btn.textContent = '🌙 Dark';
+      btn.classList.remove('active');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️ Light';
+      btn.classList.add('active');
+    }
+  }
+
+  function togglePaper() {
+    const body = document.getElementById('bodyEl');
+    const btn = document.getElementById('paperBtn');
+    body.classList.toggle('paper');
+    btn.classList.toggle('active');
+  }
+
+  // Auto-open first card in each section on load
+  document.querySelectorAll('.section .card:first-of-type').forEach(c => c.classList.add('open'));
+</script>
+
+</body>
+</html>
