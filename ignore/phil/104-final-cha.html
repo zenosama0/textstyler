@@ -523,29 +523,69 @@ body.focus-mode .hero .notice,body.focus-mode .hero .searchbar{display:none;}
   if(localStorage.getItem('ethics-theme')) root.dataset.theme=localStorage.getItem('ethics-theme');
   if(localStorage.getItem('ethics-paper')==='0') body.classList.remove('paper');
 
-  // Turn each major section into small, readable study bites based on its headings.
-  const bites=[];
-  sections.forEach((section, sectionIndex)=>{
+  // Focus Mode uses curated study groups instead of splitting at every heading.
+  // Related ideas stay together so the bite is small, but still makes sense on its own.
+  const mergePlans={
+    map:[1],
+    nature:[2,1],
+    connections:[2,2],
+    plato:[1],
+    goodwill:[1],
+    aristotle:[2,2],
+    freedom:[1],
+    kant:[2,2],
+    dilemma:[2,2],
+    crime:[1],
+    hedonism:[2,2],
+    standards:[2,1],
+    euthyphro:[1],
+    intuition:[2,1],
+    pyq:[2,2,2],
+    practice:[1,1,1,1],
+    grading:[1,1,1,1,1,1,1,1,1,1,1,1],
+    memorize:[2,2,1,1,1,1,1]
+  };
+
+  function buildFocusBites(section, sectionIndex){
     const sectionTitle=section.querySelector('h2')?.textContent.trim() || `Topic ${sectionIndex+1}`;
+    const chunks=[];
     const nodes=[...section.children];
     let current=null;
-    nodes.forEach((node,i)=>{
+    nodes.forEach(node=>{
       if(node.tagName==='H2') return;
       if(node.tagName==='H3'){
-        if(current) bites.push(current);
+        if(current) chunks.push(current);
         current={sectionTitle,title:node.textContent.trim(),nodes:[]};
       }else if(current){
-        // Keep a short cluster together, but split very large blocks.
         current.nodes.push(node);
-      }else if(!['SCRIPT'].includes(node.tagName)){
+      }else if(node.tagName!=='SCRIPT'){
         current={sectionTitle,title:sectionTitle,nodes:[node]};
       }
     });
-    if(current) bites.push(current);
-  });
-  // Add a concise opening bite from the top of the guide.
-  const intro=bites.shift();
-  if(intro) bites.unshift(intro);
+    if(current) chunks.push(current);
+    if(!chunks.length) return [];
+
+    const plan=mergePlans[section.id] || chunks.map(()=>1);
+    const grouped=[];
+    let groupIndex=0, groupSize=0, group=null;
+    chunks.forEach((chunk)=>{
+      let target=plan[groupIndex] || 1;
+      if(!group || groupSize>=target){
+        group={sectionTitle,title:chunk.title,nodes:[]};
+        grouped.push(group);
+        groupIndex++;
+        groupSize=0;
+        target=plan[groupIndex-1] || 1;
+      }
+      // Use a meaningful combined title when multiple subtopics are joined.
+      if(groupSize>0) group.title += ' + ' + chunk.title;
+      group.nodes.push(...chunk.nodes);
+      groupSize++;
+    });
+    return grouped;
+  }
+
+  const bites=sections.flatMap((section,i)=>buildFocusBites(section,i));
 
   const state={index:Number(localStorage.getItem('ethics-focus-index')||0),done:new Set(JSON.parse(localStorage.getItem('ethics-focus-done')||'[]')),seconds:Number(localStorage.getItem('ethics-focus-seconds')||480)};
   if(!Number.isFinite(state.index)||state.index<0) state.index=0;
