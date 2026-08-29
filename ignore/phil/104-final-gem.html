@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ethics Final Exam - Complete Study Guide</title>
+    <title>Ethics Final Exam - Undergraduate Academic Study Guide</title>
     <style>
-        /* CSS Reset & General Setup */
+        /* Modern Minimalist Paper CSS Reset & Layout */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -16,222 +16,224 @@
             width: 100%;
             min-height: 100%;
             overflow-x: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0f172a;
-            color: #334155;
-            line-height: 1.6;
+            background-color: #f5f4ef; /* Warm paper tone */
+            color: #222222;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.65;
             -webkit-text-size-adjust: 100%;
         }
 
-        .wrapper {
+        .paper-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
-            padding: 12px;
-            background-color: #f8fafc;
-            min-height: 100vh;
-        }
-
-        /* Header Styling */
-        header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: #ffffff;
-            padding: 24px 18px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
-            border: 1px solid #334155;
-        }
-
-        header h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #38bdf8;
-            margin-bottom: 6px;
-            line-height: 1.25;
-        }
-
-        header p {
-            font-size: 0.875rem;
-            color: #94a3b8;
-            margin-bottom: 14px;
-        }
-
-        .exam-badge-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .badge-info {
-            background: rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge-gold {
-            background: rgba(251, 191, 36, 0.15);
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* Navigation Bar */
-        .nav-pills {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 4px 0 12px 0;
-            margin-bottom: 16px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .nav-pills::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-pill {
-            white-space: nowrap;
-            background: #ffffff;
-            color: #475569;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-decoration: none;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-        }
-
-        .nav-pill:active {
-            background: #0284c7;
-            color: #ffffff;
-        }
-
-        /* Section Cards */
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 24px 0 12px 0;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .section-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .tag-short {
-            background-color: #dbeafe;
-            color: #1e40af;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-
-        .tag-long {
-            background-color: #fef3c7;
-            color: #92400e;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-
-        .tag-quiz {
-            background-color: #e0e7ff;
-            color: #3730a3;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            text-transform: uppercase;
-        }
-
-        .card {
-            background: #ffffff;
-            border-radius: 14px;
             padding: 16px;
-            margin-bottom: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .paper-sheet {
+            background-color: #ffffff;
+            border: 1px solid #e2ded4;
+            border-radius: 4px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+            padding: 24px 20px;
+            margin-bottom: 20px;
             overflow-wrap: break-word;
             word-wrap: break-word;
         }
 
-        .card h2, .card h3 {
-            color: #0f172a;
-            font-size: 1rem;
+        /* Typography - Academic & Minimalist */
+        h1, h2, h3, h4 {
+            font-family: "Georgia", "Times New Roman", serif;
+            color: #111111;
             font-weight: 700;
-            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        header.academic-header {
+            border-bottom: 2px solid #111111;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .institution-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666666;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        header h1 {
+            font-size: 1.65rem;
+            margin-bottom: 8px;
+            color: #0f1d3a;
+        }
+
+        .exam-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.82rem;
+            color: #444444;
+            background: #fdfbf7;
+            border: 1px solid #ebe7df;
+            padding: 8px 12px;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        .meta-item {
+            font-weight: 500;
+        }
+
+        /* Minimalist Navigation Pills */
+        .nav-container {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e8e4dc;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .nav-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            white-space: nowrap;
+            background-color: #f5f4ef;
+            color: #333333;
+            text-decoration: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #e0dcd3;
+            border-radius: 3px;
+            transition: all 0.15s ease;
+        }
+
+        .nav-tab:active {
+            background-color: #1f2937;
+            color: #ffffff;
+            border-color: #1f2937;
+        }
+
+        /* Academic Section Headers */
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1.5px solid #1f2937;
+            padding-bottom: 6px;
+            margin: 28px 0 16px 0;
+        }
+
+        .section-heading h2 {
+            font-size: 1.2rem;
+            letter-spacing: -0.2px;
+        }
+
+        .badge-tag {
+            font-size: 0.68rem;
+            font-family: -apple-system, sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 2px 6px;
+            border: 1px solid #333333;
+            border-radius: 2px;
+            background: #ffffff;
+            color: #111111;
+        }
+
+        /* Question Cards / Blocks */
+        .question-block {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #dcd7cd;
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .question-title {
+            font-size: 1.05rem;
+            color: #0f1d3a;
+            margin-bottom: 12px;
             line-height: 1.35;
         }
 
-        .card p {
-            font-size: 0.88rem;
-            color: #334155;
-            margin-bottom: 10px;
+        .mark-weight {
+            font-size: 0.75rem;
+            font-family: -apple-system, sans-serif;
+            font-weight: 600;
+            color: #666666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .card ul, .card ol {
-            padding-left: 18px;
-            margin-bottom: 10px;
-            font-size: 0.88rem;
+        /* Academic Content Elements */
+        p {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: #2b2b2b;
+            text-align: justify;
         }
 
-        .card li {
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        li {
             margin-bottom: 6px;
         }
 
-        /* Callouts / Memorize Boxes */
-        .memorize-box {
-            background-color: #f0fdf4;
-            border-left: 4px solid #16a34a;
-            padding: 12px;
-            border-radius: 0 10px 10px 0;
-            margin: 10px 0;
-            font-size: 0.85rem;
-            color: #14532d;
+        strong {
+            color: #111111;
         }
 
-        .memorize-box strong {
-            color: #15803d;
-            display: block;
-            margin-bottom: 4px;
-            font-size: 0.875rem;
-        }
-
-        .quote-box {
-            background-color: #f1f5f9;
-            border-left: 4px solid #0284c7;
+        /* Textual Quotations & Concept Callouts */
+        blockquote {
+            border-left: 3px solid #1f2937;
+            background-color: #fcfbf9;
             padding: 10px 14px;
-            border-radius: 0 8px 8px 0;
-            margin: 10px 0;
+            margin: 12px 0;
             font-style: italic;
-            font-size: 0.85rem;
-            color: #1e293b;
+            font-size: 0.88rem;
+            color: #333333;
         }
 
-        /* Tables for comparisons */
-        .table-responsive {
+        .academic-note {
+            background-color: #f7f5f0;
+            border: 1px solid #e5e1d8;
+            padding: 12px 14px;
+            border-radius: 3px;
+            margin: 12px 0;
+            font-size: 0.85rem;
+            color: #222222;
+        }
+
+        .academic-note strong {
+            display: block;
+            font-family: "Georgia", serif;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            color: #0f1d3a;
+        }
+
+        /* Clean Academic Tables */
+        .table-wrap {
             width: 100%;
             overflow-x: auto;
-            margin: 12px 0;
+            margin: 14px 0;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -244,553 +246,476 @@
         }
 
         th {
-            background-color: #f1f5f9;
-            color: #0f172a;
+            background-color: #f0ede6;
+            color: #111111;
             padding: 8px 10px;
             font-weight: 700;
-            border-bottom: 2px solid #cbd5e1;
+            border: 1px solid #dcd7cd;
+            font-family: "Georgia", serif;
         }
 
         td {
             padding: 8px 10px;
-            border-bottom: 1px solid #e2e8f0;
+            border: 1px solid #e5e1d8;
             vertical-align: top;
         }
 
-        .highlight {
-            background-color: #fef08a;
-            padding: 1px 4px;
-            border-radius: 3px;
+        /* Structural Divider */
+        hr.academic-divider {
+            border: 0;
+            height: 1px;
+            background: #dcd7cd;
+            margin: 24px 0;
         }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 24px 12px;
-            color: #64748b;
-            font-size: 0.8rem;
-            border-top: 1px solid #e2e8f0;
-            margin-top: 24px;
+            font-size: 0.78rem;
+            color: #777777;
+            padding: 20px 0 10px 0;
+            border-top: 1px solid #e0dcd3;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <header>
-        <h1>Ethics Final Exam Study Guide</h1>
-        <p>Complete Revision, High-Yield Notes & Sample Answers</p>
-        <div class="exam-badge-container">
-            <span class="badge-info">Exam Pattern: 70 Marks Total</span>
-            <span class="badge-gold">4 Short (5M ea) = 20M</span>
-            <span class="badge-gold">4 Long (12.5M ea) = 50M</span>
+<div class="paper-container">
+    <div class="paper-sheet">
+        <header class="academic-header">
+            <div class="institution-title">Department of Philosophy • Final Examination Study Guide</div>
+            <h1>Ethics (Moral Philosophy)</h1>
+            <p style="text-align: left; font-size: 0.85rem; color: #555555; margin-bottom: 0;">An Undergraduate Academic Revision Matrix and Answer Blueprint.</p>
+            
+            <div class="exam-meta">
+                <span class="meta-item"><strong>Format:</strong> Written Final Exam</span>
+                <span class="meta-item"><strong>Total Marks:</strong> 70</span>
+                <span class="meta-item"><strong>Structure:</strong> 4 Short Questions (5M) + 4 Essay Questions (12.5M)</span>
+            </div>
+        </header>
+
+        <!-- Minimalist Navigation Bar -->
+        <div class="nav-container">
+            <a href="#key-terms" class="nav-tab">1. Technical Terminology</a>
+            <a href="#short-questions" class="nav-tab">2. Short Questions (5M)</a>
+            <a href="#long-questions" class="nav-tab">3. Essay Questions (12.5M)</a>
+            <a href="#quiz-synthesis" class="nav-tab">4. Quiz Exam Synthesis</a>
         </div>
-    </header>
 
-    <!-- Quick Jump Navigation -->
-    <div class="nav-pills">
-        <a href="#cheat-sheet" class="nav-pill">⚡ Cram Sheet</a>
-        <a href="#short-q" class="nav-pill">📝 Short Questions (5M)</a>
-        <a href="#long-q" class="nav-pill">📚 Long Questions (12.5M)</a>
-        <a href="#quiz-q" class="nav-pill">🧪 Quiz Exams Review</a>
-    </div>
+        <!-- SECTION 1: ESSENTIAL TERMINOLOGY & FORMULAS -->
+        <div id="key-terms" class="section-heading">
+            <h2>1. Technical Terminology & Core Formulas</h2>
+            <span class="badge-tag">Memory Matrix</span>
+        </div>
 
-    <!-- SECTION 1: CRAM & MEMORIZATION CHEAT SHEET -->
-    <div id="cheat-sheet" class="section-header">
-        <span class="section-title">1. Essential Things to Memorize</span>
-        <span class="tag-short">Quick Reference</span>
-    </div>
-
-    <div class="card">
-        <h3>🔑 Key Definitions & Formulas for Rapid Recall</h3>
-        
-        <div class="memorize-box">
-            <strong>1. Plato's Cardinal Virtues & Soul Triad</strong>
+        <div class="academic-note">
+            <strong>Key Philosophical Concepts for Exam Citation</strong>
             <ul>
-                <li><strong>Wisdom (Prudence):</strong> Reason (<em>Logistikon</em>)</li>
-                <li><strong>Courage (Fortitude):</strong> Spirit (<em>Thumos</em>)</li>
-                <li><strong>Temperance (Moderation):</strong> Appetite (<em>Epithumetikon</em>)</li>
-                <li><strong>Justice:</strong> Harmony of all three working in proper order.</li>
+                <li><strong>Eudaimonia (Aristotle):</strong> Objective human flourishing/well-being achieved through character excellence (<em>Arête</em>), not temporary subjective pleasure.</li>
+                <li><strong>Categorical Imperative (Kant):</strong> An unconditional, non-hypothetical moral command grounded in pure practical reason, binding on all rational beings regardless of inclination.</li>
+                <li><strong>Euthyphro Dilemma (Plato):</strong> The meta-ethical challenge asking whether an action is morally right because God commands it (Voluntarism) or whether God commands it because it is intrinsically right (Intellectualism).</li>
+                <li><strong>Naturalistic Fallacy (G.E. Moore):</strong> The logical error of defining non-natural moral properties (like "Good") in terms of natural or physical properties (like "Pleasure" or "Evolution").</li>
+                <li><strong>Jus Talionis (Kant/Retributivism):</strong> The principle of exact proportionality in retributive justice ("eye for an eye"), respecting the offender's rational agency.</li>
             </ul>
         </div>
 
-        <div class="memorize-box">
-            <strong>2. Kant's 3 Formulations of Categorical Imperative</strong>
+        <!-- SECTION 2: SHORT QUESTIONS (5 MARKS EACH) -->
+        <div id="short-questions" class="section-heading">
+            <h2>2. Short Questions (5 Marks Each)</h2>
+            <span class="badge-tag">Target: ~200 Words</span>
+        </div>
+
+        <!-- SQ1 -->
+        <div class="question-block">
+            <div class="mark-weight">Short Question • 5 Marks</div>
+            <h3 class="question-title">1. Plato's Four Cardinal Virtues</h3>
+            <p><strong>Undergraduate Standard Answer:</strong></p>
+            <p>In Plato's seminal dialogue <em>The Republic</em> (Book IV), virtue (<em>Arête</em>) is conceptualized as the harmonious functional integrity of a structured system. Plato identifies four <strong>Cardinal Virtues</strong>—Wisdom, Courage, Temperance, and Justice—and explicitly grounds them in his <strong>Tripartite Model of the Human Soul</strong> (<em>Psyche</em>) and the parallel structure of the ideal city-state (<em>Polis</em>):</p>
+            <ol>
+                <li><strong>Wisdom (Prudence / <em>Sophia</em>):</strong> The virtue of the <em>Rational Part</em> (<em>Logistikon</em>). It represents rational governance, moral foresight, and knowledge of the Good. In the state, it corresponds to the Guardian-Kings.</li>
+                <li><strong>Courage (Fortitude / <em>Andreia</em>):</strong> The virtue of the <em>Spirited Part</em> (<em>Thumos</em>). It is the unyielding preservation of rational convictions regarding what ought to be feared or endured. In the state, it characterizes the Auxiliaries/Soldiers.</li>
+                <li><strong>Temperance (Moderation / <em>Sophrosyne</em>):</strong> The virtue of the <em>Appetitive Part</em> (<em>Epithumetikon</em>). It is the harmonious agreement between higher and lower elements, ensuring bodily desires obey reason.</li>
+                <li><strong>Justice (<em>Dikaiosyne</em>):</strong> The supreme structural virtue. Plato defines justice as "doing one's own proper work and not meddling in the affairs of others." It is achieved when Reason rules, Spirit executes Reason's mandates, and Appetite submits.</li>
+            </ol>
+            <blockquote>"Justice is not a mere external performance, but an internal ordering of the soul where each part fulfills its natural function." — Plato, <em>Republic</em></blockquote>
+        </div>
+
+        <!-- SQ2 -->
+        <div class="question-block">
+            <div class="mark-weight">Short Question • 5 Marks</div>
+            <h3 class="question-title">2. Goodwill in Kantian Deontology</h3>
+            <p><strong>Undergraduate Standard Answer:</strong></p>
+            <p>Immanuel Kant opens Section I of the <em>Groundwork of the Metaphysics of Morals</em> with the central thesis of deontology: <em>"It is impossible to think of anything at all in the world... that could be considered good without limitation except a Good Will."</em></p>
             <ul>
-                <li><strong>1. Universal Law:</strong> Act only according to maxims you can will to become universal laws.</li>
-                <li><strong>2. End-in-Itself (Humanity):</strong> Treat persons never merely as a means, but always as an end.</li>
-                <li><strong>3. Kingdom of Ends:</strong> Act as a legislating member of a moral community of equals.</li>
+                <li><strong>Unconditional vs. Conditional Value:</strong> Intellectual talents (wisdom), psychological qualities (courage), and material fortune (wealth, power) possess only <em>conditional value</em>. If guided by an evil intention, they become exceptionally harmful. A Goodwill possesses <em>unconditional intrinsic value</em>; its goodness is self-contained.</li>
+                <li><strong>Action from Duty (<em>Achtung</em>):</strong> A Goodwill is not evaluated by its fruits, consequences, or utility. It is a will that acts purely <strong>from duty</strong> (out of reverence for the moral law), explicitly contrasted with acting merely <em>in accordance with duty</em> out of self-interest or immediate inclination.</li>
+                <li><strong>Rational Autonomy:</strong> The Goodwill represents practical reason self-legislating moral principles independently of sensory impulses (heteronomy).</li>
             </ul>
         </div>
 
-        <div class="memorize-box">
-            <strong>3. Aristotle's Golden Mean Key Examples</strong>
+        <!-- SQ3 -->
+        <div class="question-block">
+            <div class="mark-weight">Short Question • 5 Marks</div>
+            <h3 class="question-title">3. Connection Between Ethics and Sociology</h3>
+            <p><strong>Undergraduate Standard Answer:</strong></p>
+            <p>Ethics and Sociology are complementary social sciences that study human conduct from distinct methodological standpoints:</p>
             <ul>
-                <li><strong>Courage:</strong> Deficit = Cowardice | Excess = Rashness</li>
-                <li><strong>Temperance:</strong> Deficit = Insensibility | Excess = Licentiousness</li>
-                <li><strong>Generosity:</strong> Deficit = Stinginess | Excess = Wastefulness</li>
-                <li><strong>Magnanimity:</strong> Deficit = Pusillanimity | Excess = Vanity</li>
+                <li><strong>Methodological Distinction (Descriptive vs. Normative):</strong> Sociology is an empirical, descriptive science that investigates social structures, group behaviors, customs, and institutions as factual occurrences ("What is"). Ethics is a philosophical, normative science that critically evaluates human conduct against ideal standards of rightness and justice ("What ought to be").</li>
+                <li><strong>Interdependence & Fact-Value Dialectic:</strong>
+                    <ul>
+                        <li><em>Sociology's contribution to Ethics:</em> Sociology provides essential empirical data regarding social contexts, institutional structures, and cultural norms. Without empirical awareness, ethical theories remain abstract and unviable.</li>
+                        <li><em>Ethics' contribution to Sociology:</em> Sociology without normative critique degenerates into uncritical moral relativism. Ethics provides the normative tools required to critique oppressive social institutions (e.g., systemic racism, feudalism) and guide legislative reform.</li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
-        <div class="memorize-box">
-            <strong>4. Bentham's Hedonic Calculus (7 Factors - "FICCDEP")</strong>
-            Frequency/Fecundity, Intensity, Certainty, Clarity/Propinquity, Duration, Extent, Purity.
+        <!-- SQ4 -->
+        <div class="question-block">
+            <div class="mark-weight">Short Question • 5 Marks</div>
+            <h3 class="question-title">4. Connection Between Ethics and Psychology</h3>
+            <p><strong>Undergraduate Standard Answer:</strong></p>
+            <p>Ethics and Psychology share a core interest in human action, mental states, and volition, yet operate under different scientific objectives:</p>
+            <ul>
+                <li><strong>Positive Science vs. Normative Science:</strong> Psychology is a positive/empirical science analyzing the psychological mechanisms of behavior, emotional drives, habit formation, and cognition. Ethics evaluates voluntary human conduct through normative standards of moral good and evil.</li>
+                <li><strong>Points of Intersection:</strong>
+                    <ul>
+                        <li><em>Volition and Agency:</em> Moral responsibility presupposes psychological agency. Ethics relies on psychology to establish whether an action was voluntary, intentional, or performed under cognitive impairment.</li>
+                        <li><em>Moral Psychology:</em> Ethical theories require psychological plausibility regarding moral motivation, guilt, empathy, and moral development (e.g., Kohlberg's stages).</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><em>Analytical Summary:</em> Psychology explains the causal antecedents of human choice; Ethics evaluates the justification of those choices.</p>
         </div>
 
-        <div class="memorize-box">
-            <strong>5. Three Theories of Punishment</strong>
+        <!-- SQ5 -->
+        <div class="question-block">
+            <div class="mark-weight">Short Question • 5 Marks</div>
+            <h3 class="question-title">5. Perfectionism (Self-Realization Theory)</h3>
+            <p><strong>Undergraduate Standard Answer:</strong></p>
+            <p><strong>Perfectionism</strong> (Self-Realization Ethics) is a teleological moral theory endorsed by Aristotle, Spinoza, Hegel, T.H. Green, and F.H. Bradley. It posits that the supreme moral good consists in the complete, harmonious realization of human nature and potential.</p>
             <ul>
-                <li><strong>Retributive:</strong> Eye for an eye (Past-oriented; Kant/Hegel).</li>
-                <li><strong>Deterrent:</strong> Prevention & warning (Future-oriented; Bentham).</li>
-                <li><strong>Reformative:</strong> Rehabilitation & moral education (Future-oriented).</li>
+                <li><strong>Synthesis of Extremes:</strong> Perfectionism explicitly rejects both Hedonism (which reduces human good to sensory pleasure) and Asceticism (which suppresses fundamental human drives). It advocates for the rational integration and optimal expression of intellectual, physical, emotional, and social capacities.</li>
+                <li><strong>Individual and Social Ideal:</strong> Self-realization is not an egoistic pursuit. As T.H. Green and F.H. Bradley argued, an individual realizes their true rational self through active participation in a moral social organism ("My Station and Its Duties").</li>
             </ul>
         </div>
-    </div>
 
-    <!-- SECTION 2: SHORT QUESTIONS (5 MARKS EACH) -->
-    <div id="short-q" class="section-header">
-        <span class="section-title">2. Short Questions (5 Marks Each)</span>
-        <span class="tag-short">5 Marks</span>
-    </div>
-
-    <!-- Q1 -->
-    <div class="card">
-        <h3>Q1. Plato's Four Cardinal Virtues</h3>
-        <p><strong>Answer (5 Marks Format):</strong></p>
-        <p>In Plato's masterpiece <em>The Republic</em>, virtues are moral excellence essential for individual soul harmony and the ideal state (<em>Polis</em>). Plato identifies four <strong>Cardinal Virtues</strong>, corresponding directly to his <strong>tripartite division of the human soul</strong>:</p>
-        <ol>
-            <li><strong>Wisdom (Prudence / <em>Sophrosyne</em>):</strong> The virtue of the <em>Rational Part</em> of the soul. It provides sound judgment, practical insight, and moral knowledge.</li>
-            <li><strong>Courage (Fortitude / <em>Andreia</em>):</strong> The virtue of the <em>Spirited Part</em>. It enables an individual to endure fear and pain to uphold righteous principles.</li>
-            <li><strong>Temperance (Moderation):</strong> The virtue of the <em>Appetitive Part</em>. It represents self-control, restraining physical desires and instincts.</li>
-            <li><strong>Justice (<em>Dikaiosyne</em>):</strong> The supreme unifying virtue achieved when all three parts of the soul perform their proper duties harmoniously without interfering with one another.</li>
-        </ol>
-        <div class="quote-box">"Justice in the individual is the state where Reason rules, Spirit supports Reason, and Appetite obeys." — Plato</div>
-    </div>
-
-    <!-- Q2 -->
-    <div class="card">
-        <h3>Q2. Goodwill in Kantian Ethics</h3>
-        <p><strong>Answer (5 Marks Format):</strong></p>
-        <p>Immanuel Kant opens his <em>Groundwork of the Metaphysics of Morals</em> with the famous statement that nothing in the world can be called good without qualification except a <strong>Good Will</strong>.</p>
-        <ul>
-            <li><strong>Intrinsic Value:</strong> Talents of mind (intelligence), qualities of temperament (courage), or gifts of fortune (wealth, power) are conditionally good—they can become evil if guided by a bad will. Goodwill alone is intrinsically good in itself.</li>
-            <li><strong>Motivated by Duty:</strong> A goodwill is not good because of its consequences, outcomes, or utility. It acts purely out of respect for the moral law (<strong>Duty for Duty's sake</strong>), regardless of personal inclinations or desires.</li>
-            <li><strong>Rational Autonomy:</strong> A goodwill self-legislates moral laws through rational reflection, embodying moral freedom.</li>
-        </ul>
-    </div>
-
-    <!-- Q3 -->
-    <div class="card">
-        <h3>Q3. Connection Between Ethics and Sociology</h3>
-        <p><strong>Answer (5 Marks Format):</strong></p>
-        <p>Ethics and Sociology are deeply interconnected social sciences, yet they operate from distinct philosophical standpoints:</p>
-        <ul>
-            <li><strong>Sociology (Descriptive):</strong> Studies social structures, customs, institutions, and how humans actually behave in groups ("What is").</li>
-            <li><strong>Ethics (Normative):</strong> Evaluates human behavior, moral values, and ideal conduct ("What ought to be").</li>
-            <li><strong>Interdependence:</strong>
-                <ul>
-                    <li>Sociology provides Ethics with empirical background—showing social realities, customs, and practical contexts.</li>
-                    <li>Ethics provides Sociology with normative standards—critiquing unjust social practices (e.g., discrimination, caste systems) and guiding social reform.</li>
-                </ul>
-            </li>
-        </ul>
-        <p><em>Conclusion:</em> Sociology without Ethics lacks moral orientation; Ethics without Sociology lacks practical application.</p>
-    </div>
-
-    <!-- Q4 -->
-    <div class="card">
-        <h3>Q4. Connection Between Ethics and Psychology</h3>
-        <p><strong>Answer (5 Marks Format):</strong></p>
-        <p>Ethics and Psychology both analyze human action, mind, and behavior, but differ in scope:</p>
-        <ul>
-            <li><strong>Psychology (Positive/Descriptive Science):</strong> Investigates the origin, nature, and mental mechanics of human behavior, motives, desires, and emotions.</li>
-            <li><strong>Ethics (Normative Science):</strong> Judges whether voluntary human actions are morally right or wrong, good or bad.</li>
-            <li><strong>Key Interconnections:</strong>
-                <ul>
-                    <li>Ethics relies on Psychology to understand <em>volition, intentions, free will, and moral development</em>. Only voluntary actions studied by psychology fall under moral judgment.</li>
-                    <li>Psychology aids Ethics in evaluating psychological states such as moral remorse, guilt, and empathy.</li>
-                </ul>
-            </li>
-        </ul>
-        <p><em>Distinction:</em> Psychology explains <strong>why</strong> people act; Ethics evaluates <strong>whether</strong> they should act that way.</p>
-    </div>
-
-    <!-- Q5 -->
-    <div class="card">
-        <h3>Q5. Perfectionism (Self-Realization Theory)</h3>
-        <p><strong>Answer (5 Marks Format):</strong></p>
-        <p><strong>Perfectionism</strong> (also known as Self-Realization Ethics or Eudaimonism) is a moral theory advocated by thinkers like Aristotle, Spinoza, Hegel, T.H. Green, and F.H. Bradley.</p>
-        <ul>
-            <li><strong>Core Premise:</strong> The supreme moral good is the complete self-realization and harmonious development of human nature (intellectual, physical, emotional, and moral capacities).</li>
-            <li><strong>Synthesis of Extremes:</strong> Rejects both extreme Hedonism (pursuit of raw pleasure) and extreme Asceticism (suppression of desires). It advocates for the rational integration of all human faculties.</li>
-            <li><strong>Social Aspect:</strong> An individual realizes their true self not in isolation, but as an active member of an organized moral community ("My Station and Its Duties").</li>
-        </ul>
-    </div>
-
-    <!-- SECTION 3: LONG QUESTIONS (12.5 MARKS EACH) -->
-    <div id="long-q" class="section-header">
-        <span class="section-title">3. Long Essay Questions (12.5 Marks Each)</span>
-        <span class="tag-long">12.5 Marks</span>
-    </div>
-
-    <!-- LQ1 -->
-    <div class="card">
-        <h3>Q1. Aristotle's Virtue Ethics, Properties, Key Virtues & The Golden Mean</h3>
-        <p><strong>1. Introduction to Virtue Ethics:</strong></p>
-        <p>Aristotle's moral theory in <em>Nicomachean Ethics</em> is a teleological, agent-centered ethics. Unlike modern deontological or consequentialist theories that ask "What ought I to do?", Aristotle asks, "What kind of person should I be?". The ultimate end (<em>Telos</em>) of human life is <strong>Eudaimonia</strong> (flourishing, well-being, living well).</p>
-
-        <p><strong>2. Properties of Virtue Ethics:</strong></p>
-        <ul>
-            <li><strong>Habitual Character (<em>Hexis</em>):</strong> Virtue (<em>Arête</em>) is not a single action or emotion, but a settled disposition of character acquired through practice and habituation.</li>
-            <li><strong>Role of Reason:</strong> Human flourishing consists in performing the unique human function (<em>Ergon</em>), which is activity of the soul in accordance with reason.</li>
-            <li><strong>Division of Virtues:</strong>
-                <ul>
-                    <li><em>Intellectual Virtues:</em> Acquired through teaching and instruction (e.g., <em>Phronesis</em> or practical wisdom).</li>
-                    <li><em>Moral Virtues:</em> Acquired through habituation (<em>Ethos</em>) and practice (e.g., courage, temperance).</li>
-                </ul>
-            </li>
-        </ul>
-
-        <p><strong>3. The Doctrine of the Golden Mean:</strong></p>
-        <p>Aristotle defines moral virtue as a <strong>mean state between two extremes—a vice of deficiency and a vice of excess</strong>, relative to us and determined by rational principle.</p>
-
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Deficiency (Too Little)</th>
-                        <th>Golden Mean (Virtue)</th>
-                        <th>Excess (Too Much)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Cowardice</td>
-                        <td><strong>Courage</strong></td>
-                        <td>Rashness</td>
-                    </tr>
-                    <tr>
-                        <td>Insensibility</td>
-                        <td><strong>Temperance</strong></td>
-                        <td>Licentiousness</td>
-                    </tr>
-                    <tr>
-                        <td>Stinginess / Meanness</td>
-                        <td><strong>Generosity</strong></td>
-                        <td>Extravagance</td>
-                    </tr>
-                    <tr>
-                        <td>Pusillanimity (Smallness of soul)</td>
-                        <td><strong>Magnanimity</strong></td>
-                        <td>Vanity / Arrogance</td>
-                    </tr>
-                    <tr>
-                        <td>Surliness / Rudeness</td>
-                        <td><strong>Friendliness</strong></td>
-                        <td>Flattery</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- SECTION 3: LONG ESSAY QUESTIONS (12.5 MARKS EACH) -->
+        <div id="long-questions" class="section-heading">
+            <h2>3. Long Essay Questions (12.5 Marks Each)</h2>
+            <span class="badge-tag">Target: ~500-600 Words</span>
         </div>
 
-        <p><strong>4. Critical Evaluation:</strong></p>
-        <p><em>Strengths:</em> Holistic, integrates emotion with reason, emphasizes life-long moral growth and character. <br>
-        <em>Weaknesses:</em> Lacks precise decision rules in moral dilemmas; the "mean" is subjective and culturally relative; some actions (e.g., murder, theft) have no mean state and are intrinsically evil.</p>
-    </div>
+        <!-- LQ1 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">1. Aristotle's Virtue Ethics, Properties, and the Doctrine of the Golden Mean</h3>
+            
+            <p><strong>1. Teleological & Agent-Centered Framework:</strong></p>
+            <p>In the <em>Nicomachean Ethics</em>, Aristotle formulates a teleological, agent-centered normative framework. Unlike modern act-centered theories (Deontology and Utilitarianism) that focus on evaluating isolated actions, Aristotle asks: <em>"What constitutes a flourishing human life?"</em> Every human action aims at some good, culminating in an ultimate, self-sufficient end (<em>Telos</em>): <strong>Eudaimonia</strong> (flourishing or living well).</p>
 
-    <!-- LQ2 -->
-    <div class="card">
-        <h3>Q2. Free Will and Ethics: Supporting Arguments & Discussion</h3>
-        <p><strong>1. Introduction & The Problem:</strong></p>
-        <p>Ethics is the evaluation of moral responsibility. The fundamental premise of all ethical systems is <strong>Free Will</strong>—the capacity of human agents to make uncoerced, conscious choices among alternatives. If determinism fully controls human actions like clockwork, praise, blame, guilt, and moral law lose all meaning.</p>
+            <p><strong>2. Function Argument (<em>Ergon</em>) & Definition of Virtue:</strong></p>
+            <p>Aristotle derives the human good through the <em>Function Argument</em>. The distinct function of human beings—distinguishing them from plants (nutritive) and animals (perceptual)—is the activity of the soul in accordance with reason. Therefore, human excellence (<em>Arête</em>) is performing this rational function excellently over a complete lifespan.</p>
+            <ul>
+                <li><strong>Intellectual Virtues:</strong> Acquired via instruction; includes <em>Sophia</em> (theoretical wisdom) and <em>Phronesis</em> (practical wisdom).</li>
+                <li><strong>Moral Virtues:</strong> Acquired through habituation (<em>Ethos</em>); stable character dispositions (<em>Hexis</em>) to feel and act appropriately.</li>
+            </ul>
 
-        <p><strong>2. Philosophical Positions:</strong></p>
-        <ul>
-            <li><strong>Hard Determinism:</strong> Universal causation governs all physical and mental events. Free will is an illusion; moral responsibility does not exist.</li>
-            <li><strong>Libertarianism:</strong> Humans possess genuine agency and causal power independent of prior physical causes.</li>
-            <li><strong>Compatibilism (Soft Determinism):</strong> Free will is compatible with determinism as long as an agent acts according to internal desires without external compulsion.</li>
-        </ul>
+            <p><strong>3. The Doctrine of the Golden Mean (<em>Mesotes</em>):</strong></p>
+            <p>Aristotle defines moral virtue as a settled state of character concerned with choice, lying in a <strong>mean between two extremes—a vice of excess and a vice of deficiency</strong>—relative to us, as determined by a rational principle formulated by a person of practical wisdom (<em>Phronimos</em>).</p>
 
-        <p><strong>3. Arguments Supporting Free Will in Ethics:</strong></p>
-        <ol>
-            <li><strong>Argument from Moral Experience & Consciousness:</strong> Humans possess an undeniable immediate experience of deliberation, choice, and post-action moral feelings (guilt, remorse, or moral pride).</li>
-            <li><strong>Kant's Postulate: "Ought Implies Can":</strong> Immanuel Kant argued that if moral duty mandates "You ought to do X," it logically presupposes "You can do X." Moral obligation is meaningless without the freedom to choose.</li>
-            <li><strong>Foundation of Moral & Legal Responsibility:</strong> Justice systems, criminal law, and social rewards/punishments rest on the concept of voluntary action (<em>mens rea</em>). Punishment without free will is unjust.</li>
-            <li><strong>Argument from Rational Deliberation:</strong> Weighing reasons, seeking ethical advice, and self-correction demonstrate that conscious thought causally influences behavior.</li>
-        </ol>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Deficiency (Vice)</th>
+                            <th>Golden Mean (Virtue)</th>
+                            <th>Excess (Vice)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Cowardice (Fear rules)</td>
+                            <td><strong>Courage (<em>Andreia</em>)</strong></td>
+                            <td>Rashness (Blind confidence)</td>
+                        </tr>
+                        <tr>
+                            <td>Insensibility (Suppression)</td>
+                            <td><strong>Temperance (<em>Sophrosyne</em>)</strong></td>
+                            <td>Licentiousness (Overindulgence)</td>
+                        </tr>
+                        <tr>
+                            <td>Stinginess / Meanness</td>
+                            <td><strong>Generosity (<em>Eleutheriotes</em>)</strong></td>
+                            <td>Extravagance / Profligacy</td>
+                        </tr>
+                        <tr>
+                            <td>Pusillanimity (Smallness of mind)</td>
+                            <td><strong>Magnanimity (<em>Megalopsychia</em>)</strong></td>
+                            <td>Vanity / Arrogance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <p><strong>4. Conclusion:</strong> Free will is the necessary postulate of practical reason. Without assuming moral agency, ethics collapses into mechanical biology.</p>
-    </div>
-
-    <!-- LQ3 -->
-    <div class="card">
-        <h3>Q3. Philosophy's Connection in Ethics & Necessity of Ethics in Current Society</h3>
-        <p><strong>1. Ethics as a Core Branch of Philosophy:</strong></p>
-        <p>Ethics (Moral Philosophy) is one of the main branches of Philosophy, alongside Metaphysics (study of reality), Epistemology (study of knowledge), and Logic. Philosophy provides the foundational methodology for ethics:</p>
-        <ul>
-            <li><strong>Epistemological Link:</strong> How do we know what is morally right? Through intuition, reason, divine revelation, or empirical observation?</li>
-            <li><strong>Metaphysical Link:</strong> Do objective moral facts exist? What is the nature of human agency and soul?</li>
-        </ul>
-
-        <p><strong>2. Necessity of Studying Ethics in Current Society:</strong></p>
-        <p>Modern society faces unprecedented ethical crises driven by technological, biological, and political shifts:</p>
-        <ol>
-            <li><strong>Artificial Intelligence & Data Ethics:</strong> Automated decision-making, algorithmic bias, surveillance, autonomous weapons, and privacy rights demand rigorous ethical frameworks.</li>
-            <li><strong>Bioethics & Environmental Crisis:</strong> Gene editing (CRISPR), climate change, resource depletion, and animal rights require balancing human progress with ecological survival.</li>
-            <li><strong>Political Polarization & Governance:</strong> Rising corruption, erosion of democratic norms, and disinformation require a rebirth of public virtue, human rights, and civic duty.</li>
-            <li><strong>Moral Relativism & Nihilism:</strong> In a post-modern, hyper-connected world, ethics grounds individuals against moral confusion, restoring purpose and social cohesion.</li>
-        </ol>
-
-        <p><em>Conclusion:</em> Science and technology give us power; Ethics gives us wisdom to use that power for human flourishing.</p>
-    </div>
-
-    <!-- LQ4 -->
-    <div class="card">
-        <h3>Q4. Kant's Categorical vs. Hypothetical Imperative & The 3 Formulations</h3>
-        <p><strong>1. Categorical vs. Hypothetical Imperatives:</strong></p>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Hypothetical Imperative</th>
-                        <th>Categorical Imperative</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Conditional command ("If you want X, do Y").</td>
-                        <td>Unconditional command ("Do Y").</td>
-                    </tr>
-                    <tr>
-                        <td>Based on desire, interest, or consequences.</td>
-                        <td>Based purely on pure practical reason and duty.</td>
-                    </tr>
-                    <tr>
-                        <td>Example: "Study hard if you want good grades."</td>
-                        <td>Example: "Do not tell lies." (Applies universally).</td>
-                    </tr>
-                </tbody>
-            </table>
+            <p><strong>4. Philosophical Evaluation & Critique:</strong></p>
+            <p><em>Strengths:</em> Integrates cognitive reasoning with moral emotions; recognizes that ethics requires context-sensitive practical wisdom rather than rigid algorithmics.<br>
+            <em>Critiques:</em> Lacks concrete decision procedures for moral dilemmas; the concept of the "mean" is susceptible to cultural relativism; Aristotle explicitly notes that certain actions (e.g., murder, adultery) are intrinsically evil and possess no Golden Mean.</p>
         </div>
 
-        <p><strong>2. The Three Main Formulas of the Categorical Imperative:</strong></p>
-        <ol>
-            <li><strong>Formula of Universal Law:</strong> <em>"Act only according to that maxim whereby you can at the same time will that it should become a universal law."</em>
-                <br>• <em>Test:</em> Can your action's rule be universalized without logical contradiction? (e.g., making a lying promise fails because if everyone lied, the institution of promising destroys itself).
-            </li>
-            <li><strong>Formula of Humanity as an End-in-Itself:</strong> <em>"Act in such a way that you treat humanity, whether in your own person or in the person of any other, never merely as a means to an end, but always at the same time as an end."</em>
-                <br>• Prohibits exploitation, manipulation, and treating rational beings as disposable instruments.
-            </li>
-            <li><strong>Formula of Autonomy / Kingdom of Ends:</strong> <em>"Act according to maxims of a universally legislating member of a merely possible kingdom of ends."</em>
-                <br>• Conceives a systematic union of rational beings through common objective moral laws where every person is both lawgiver and subject.
-            </li>
-        </ol>
+        <!-- LQ2 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">2. Free Will and Ethics: Supporting Arguments, Philosophical Positions, and Moral Agency</h3>
+            
+            <p><strong>1. The Metaphysical Foundation of Moral Responsibility:</strong></p>
+            <p>Free will—the capacity of rational agents to choose between genuine alternatives without external coercion—is the indispensable postulate of moral philosophy. If human choices are merely deterministic outcomes of physical causation, moral evaluation (praise, blame, reward, and punishment) becomes logically incoherent.</p>
 
-        <p><strong>3. Relationship with Freedom of the Will:</strong> Kant demonstrates that rational autonomy is the sole principle of morality. Free will and moral law are reciprocal concepts—a free will is one under moral law.</p>
-    </div>
+            <p><strong>2. Comparative Philosophical Spectrum:</strong></p>
+            <ul>
+                <li><strong>Hard Determinism (Incompatibilism):</strong> Universal physical laws and prior causal states dictate all events, including human choices. Free will is an illusion; moral responsibility is rejected.</li>
+                <li><strong>Libertarianism (Incompatibilism):</strong> Human agents possess non-causal or agent-causal power to choose independently of prior physical antecedents. Genuine free will exists.</li>
+                <li><strong>Compatibilism / Soft Determinism (Hobbes, Hume):</strong> Free will is compatible with physical determinism. An action is free as long as the agent acts according to internal desires without external compulsion, even if those desires are causally conditioned.</li>
+            </ul>
 
-    <!-- LQ5 -->
-    <div class="card">
-        <h3>Q5. Ethical Dilemmas: Nature, Contemporary Examples, Reasons & Prevention</h3>
-        <p><strong>1. Nature of Ethical Dilemma:</strong></p>
-        <p>An ethical dilemma occurs when an agent is placed in a complex situation where two or more moral imperatives conflict, and choosing one option inevitably leads to violating another moral obligation. Neither option is completely morally flawless.</p>
-
-        <p><strong>2. Contemporary Ethical Dilemmas:</strong></p>
-        <ul>
-            <li><strong>Privacy vs. Public Safety (Tech Ethics):</strong> Government mass surveillance and data encryption backdoors to stop crime versus protecting civil rights and digital privacy.</li>
-            <li><strong>Medical Triage & Resource Allocation:</strong> Allocating scarce medical equipment (e.g., ICU beds, ventilators) during health pandemics—saving younger patients vs. prioritizing critical care by arrival.</li>
-            <li><strong>Economic Development vs. Environmental Protection:</strong> Developing nations industrializing to eliminate poverty vs. strict international carbon emission caps.</li>
-        </ul>
-
-        <p><strong>3. Reasons for Ethical Dilemmas:</strong></p>
-        <ul>
-            <li>Rapid technological advancements creating unprecedented choices outstripping moral/legal traditions.</li>
-            <li>Pluralistic societies with competing value systems (e.g., Utilitarian outcome focus vs. Deontological rights focus).</li>
-            <li>Resource scarcity and incomplete empirical information.</li>
-        </ul>
-
-        <p><strong>4. Prevention and Resolution Frameworks:</strong></p>
-        <ul>
-            <li>Establishing proactive Institutional Ethics Review Boards and clear Codes of Conduct.</li>
-            <li>Utilizing structured moral reasoning frameworks (weighing rights, duties, outcomes, and virtues).</li>
-            <li>Fostering transparent multi-stakeholder dialogue before implementing major technological changes.</li>
-        </ul>
-    </div>
-
-    <!-- LQ6 -->
-    <div class="card">
-        <h3>Q6. Crime & Punishment in Ethics: Doctrines & Capital Punishment Debate</h3>
-        <p><strong>1. Ethical Basis of Crime and Punishment:</strong></p>
-        <p>A crime is a breach of moral-legal obligation that disrupts social order. Punishment is state-sanctioned pain/deprivation imposed on an offender. Ethically, inflicting pain is wrong unless justified by a higher moral theory.</p>
-
-        <p><strong>2. Three Major Doctrines of Punishment:</strong></p>
-        <ol>
-            <li><strong>Retributive Theory (Kant, Hegel):</strong> Backward-looking (*Jus Talionis*). Punishment is an end in itself, deserved because of the crime ("An eye for an eye"). Restores moral equilibrium.</li>
-            <li><strong>Deterrent / Preventive Theory (Bentham, Utilitarianism):</strong> Forward-looking. Punishment is justified only if it prevents future crime by deterring others and incapacitating offenders. Pain of punishment must outweigh pleasure of crime.</li>
-            <li><strong>Reformative / Rehabilitative Theory:</strong> Humanistic view. Considers crime as a psychological illness or social dysfunction. Focuses on re-educating, treating, and restoring the criminal.</li>
-        </ol>
-
-        <p><strong>3. The Death Penalty (Capital Punishment) Debate:</strong></p>
-        <ul>
-            <li><strong>Arguments Supporting Capital Punishment:</strong>
-                <ul>
-                    <li><em>Retribution:</em> Murder forfeits the murderer's right to life; ultimate justice requires ultimate penalty.</li>
-                    <li><em>Deterrence & Protection:</em> Permanently protects society from dangerous individuals.</li>
-                </ul>
-            </li>
-            <li><strong>Arguments Opposing Capital Punishment:</strong>
-                <ul>
-                    <li><em>Inviolability of Life:</em> Human dignity is absolute; the state shouldn't execute citizens.</li>
-                    <li><em>Irreversibility & Miscarriages of Justice:</em> Risk of executing innocent people due to flawed legal systems.</li>
-                    <li><em>Lack of Empirical Deterrence:</em> Studies show life imprisonment deters crime equally effectively.</li>
-                </ul>
-            </li>
-        </ul>
-
-        <div class="quote-box"><strong>Principled Exam Position:</strong> Capital Punishment should be rejected in modern ethical legal frameworks in favor of Reformative Justice and Life Imprisonment without Parole, honoring human dignity while securing society.</div>
-    </div>
-
-    <!-- LQ7 -->
-    <div class="card">
-        <h3>Q7. Utilitarianism & Hedonism: Bentham vs. Mill & Modern Analysis</h3>
-        <p><strong>1. Utilitarianism as Hedonism:</strong></p>
-        <p>Utilitarianism is a consequentialist, universalistic form of Hedonism. It holds that pleasure/happiness is the sole intrinsic good and pain is the sole intrinsic evil. Its fundamental mandate is the <strong>"Greatest Happiness Principle"</strong> (maximizing utility for the greatest number).</p>
-
-        <p><strong>2. Bentham vs. Mill Comparison:</strong></p>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Jeremy Bentham</th>
-                        <th>John Stuart Mill</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Quantitative Hedonism:</strong> All pleasures are equal in quality. "Push-pin is as good as poetry."</td>
-                        <td><strong>Qualitative Hedonism:</strong> Pleasures differ in quality (Higher mental vs. Lower bodily pleasures).</td>
-                    </tr>
-                    <tr>
-                        <td>Calculated via <strong>Hedonic Calculus</strong> (Intensity, Duration, Certainty, etc.).</td>
-                        <td>Evaluated by <strong>"Competent Judges"</strong> who have experienced both.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Act Utilitarianism:</strong> Assess each specific action directly.</td>
-                        <td>Foundation for <strong>Rule Utilitarianism:</strong> Follow general rules that produce greatest long-term good.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <p><strong>3. Arguments Establishing Free Will as an Ethical Postulate:</strong></p>
+            <ol>
+                <li><strong>Kant's Postulate: "Ought Implies Can" (<em>Sollen fordert Können</em>):</strong> Immanuel Kant argued that a moral command ("You ought to perform action X") logically implies that the agent possesses the operational freedom to perform or refrain from X. Prescribing duty to a deterministic automaton is a category mistake.</li>
+                <li><strong>Phenomenological Argument from Moral Consciousness:</strong> Human decision-making involves immediate experiential awareness of rational deliberation, choice, and subsequent post-action feelings of remorse or moral satisfaction.</li>
+                <li><strong>Legal and Penological Necessity:</strong> Criminal jurisprudence relies on the doctrine of <em>Mens Rea</em> (guilty mind). Society holds individuals liable only when actions are voluntary.</li>
+            </ol>
         </div>
 
-        <div class="quote-box">"It is better to be a human being dissatisfied than a pig satisfied; better to be Socrates dissatisfied than a fool satisfied." — J.S. Mill</div>
+        <!-- LQ3 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">3. Philosophy's Connection in Ethics & Necessity of Studying Ethics in Contemporary Society</h3>
+            
+            <p><strong>1. Ethics as Meta-Philosophical Inquiry:</strong></p>
+            <p>Ethics is not an isolated domain; it is deeply embedded within the core branches of Philosophy:</p>
+            <ul>
+                <li><strong>Epistemological Connection:</strong> Investigates moral cognition—how do we justify moral knowledge? (Via Rationalism, Empiricism, Intuitionism, or Divine Revelation?).</li>
+                <li><strong>Metaphysical Connection:</strong> Examines the ontological status of moral facts (Moral Realism vs. Anti-Realism) and the nature of human personal identity and agency.</li>
+            </ul>
 
-        <p><strong>3. Which is More Modern? Detailed Thesis:</strong></p>
-        <p><strong>John Stuart Mill's Qualitative Utilitarianism is far more modern and viable.</strong> Bentham's quantitative calculus leads to the "tyranny of the majority" and justifies immoral acts (e.g., sacrificing an innocent person if it pleases a mob). Mill's framework protects individual rights, liberty (*On Liberty*), intellectual cultivation, and aligns with modern liberal constitutional democracy and human rights ethics.</p>
-    </div>
-
-    <!-- LQ8 -->
-    <div class="card">
-        <h3>Q8. Standards of Morality: Divine Command Theory & Divine Law in Utilitarianism</h3>
-        <p><strong>1. Divine Command Theory (Theological Voluntarism):</strong></p>
-        <p>Divine Command Theory posits that moral truths depend directly on God's commands. An act is morally right if God commands it, and wrong if God forbids it.</p>
-        <ul>
-            <li><em>Strengths:</em> Provides objective, authoritative, and universal moral obligations with clear cosmic accountability.</li>
-            <li><em>Critiques:</em> Leaves morality vulnerable to religious interpretation and subject to the Euthyphro Dilemma.</li>
-        </ul>
-
-        <p><strong>2. Divine Law as a Standard in Hedonism / Utilitarianism (Theistic Utilitarianism):</strong></p>
-        <p>Developed by thinkers like <strong>William Paley</strong> and <strong>John Gay</strong>, Theological Utilitarianism bridges divine law and utilitarianism:</p>
-        <ul>
-            <li><strong>Premise:</strong> God is infinitely good and benevolent, desiring the ultimate happiness of all His creation.</li>
-            <li><strong>Synthesis:</strong> God's Divine Laws are not arbitrary commands, but practical guidelines designed to maximize universal human happiness and eliminate suffering.</li>
-            <li><strong>Motivation:</strong> Divine rewards (heaven) and punishments (hell) solve the problem of egoism by providing rational motivation for individuals to act for the "greatest happiness of others."</li>
-        </ul>
-    </div>
-
-    <!-- LQ9 -->
-    <div class="card">
-        <h3>Q9. The Euthyphro Dilemma (Plato) & Its Solution</h3>
-        <p><strong>1. Origin & Statement of Dilemma:</strong></p>
-        <p>In Plato's dialogue <em>Euthyphro</em>, Socrates asks Euthyphro: <strong>"Is the pious (morally good) loved by the gods because it is pious, or is it pious because it is loved by the gods?"</strong></p>
-
-        <p><strong>2. Analysis of the Two Horns:</strong></p>
-
-        <div class="memorize-box">
-            <strong>Horn 1: Voluntarism (It is good because God commands it)</strong>
-            <p>• <em>Problem:</em> Morality becomes arbitrary. If God commanded murder or torture, it would become morally good overnight. It reduces God's goodness to a empty statement ("God commands what God commands").</p>
+            <p><strong>2. The Imperative Necessity of Applied Ethics in Current Society:</strong></p>
+            <p>Modern society faces complex disruptions where technological advancement outpaces traditional moral standards:</p>
+            <ol>
+                <li><strong>Artificial Intelligence & Algorithmic Governance:</strong> Autonomous systems require ethical programming concerning algorithmic bias, data privacy, accountability in autonomous weapons, and technological displacement.</li>
+                <li><strong>Bioethics & Genetic Engineering:</strong> Gene editing technologies (CRISPR), reproductive technologies, and end-of-life care mandate clear deontological and utilitarian guidelines to preserve human dignity.</li>
+                <li><strong>Environmental Crisis & Intergenerational Justice:</strong> Climate change necessitates expanding traditional anthropocentric ethics to include ecological preservation, animal rights, and duty to future human generations.</li>
+                <li><strong>Pluralism & Moral Relativism:</strong> Globalized, multicultural societies require rigorous normative frameworks to negotiate ideological conflict, defend universal human rights, and reinforce civic virtue.</li>
+            </ol>
         </div>
 
-        <div class="memorize-box">
-            <strong>Horn 2: Intellectualism (God commands it because it is intrinsically good)</strong>
-            <p>• <em>Problem:</em> Morality exists independently of God. Goodness becomes an external standard to which God must conform, limiting God's sovereignty and omnipotence.</p>
+        <!-- LQ4 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">4. Kant's Categorical Imperative vs. Hypothetical Imperative & The Three Formulations</h3>
+            
+            <p><strong>1. Categorical vs. Hypothetical Imperatives:</strong></p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hypothetical Imperative</th>
+                            <th>Categorical Imperative</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conditional command ("If you desire X, do Y").</td>
+                            <td>Unconditional command ("Act X").</td>
+                        </tr>
+                        <tr>
+                            <td>Grounded in subjective desire, utility, or end goals.</td>
+                            <td>Grounded in pure practical reason binding on all agents.</td>
+                        </tr>
+                        <tr>
+                            <td>Instrumental value (Means to an end).</td>
+                            <td>Intrinsic moral obligation (Duty in itself).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>2. The Three Formulations of the Categorical Imperative:</strong></p>
+            <ol>
+                <li><strong>Formula of Universal Law:</strong> <em>"Act only according to that maxim whereby you can at the same time will that it should become a universal law."</em>
+                    <br>• <em>Analytical Test:</em> Requires evaluating if a action's maxim causes a <strong>Contradiction in Conception</strong> (e.g., making a lying promise destroys the concept of promising) or a <strong>Contradiction in the Will</strong> (e.g., refusing to help others in need).
+                </li>
+                <li><strong>Formula of Humanity as an End-in-Itself:</strong> <em>"Act in such a way that you treat humanity, whether in your own person or in the person of any other, never merely as a means to an end, but always at the same time as an end."</em>
+                    <br>• Asserts the absolute, non-instrumental dignity (<em>Würde</em>) of rational agents, forbidding coercion and exploitation.
+                </li>
+                <li><strong>Formula of Autonomy / Kingdom of Ends:</strong> <em>"Act according to maxims of a universally legislating member of a merely possible kingdom of ends."</em>
+                    <br>• Envisions a community of rational beings where every individual acts as both lawgiver and subject under universal moral laws.
+                </li>
+            </ol>
         </div>
 
-        <p><strong>3. Solutions to the Dilemma:</strong></p>
-        <p>Philosophers like <strong>Thomas Aquinas</strong> and modern thinkers like <strong>Robert Adams (Modified Divine Command Theory)</strong> offer a <em>Third Way / Essentialist Solution</em>:</p>
-        <ul>
-            <li><strong>Split the False Dilemma:</strong> Reject both horns by anchoring morality in <strong>God's Immutable Nature</strong>.</li>
-            <li><strong>Essentialism:</strong> God does not command things arbitrarily (rejecting Horn 1), nor does God obey an external law (rejecting Horn 2). God's essential nature <em>IS</em> the ultimate standard of Goodness. God commands what is good because His commands are a necessary reflection of His intrinsically loving, just, and perfect character.</li>
-        </ul>
+        <!-- LQ5 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">5. Nature of Ethical Dilemmas, Contemporary Manifestations, Causes, and Resolution Frameworks</h3>
+            
+            <p><strong>1. Theoretical Nature of an Ethical Dilemma:</strong></p>
+            <p>A genuine ethical dilemma occurs when a moral agent is bound by two or more conflicting moral obligations, but can fulfill only one. Fulfilling obligation A forces the violation of obligation B, resulting in unavoidable moral residue or distress regardless of the choice made.</p>
+
+            <p><strong>2. Contemporary Case Studies:</strong></p>
+            <ul>
+                <li><strong>Data Privacy vs. National Security:</strong> Mass digital surveillance vs. individual rights to privacy and autonomy.</li>
+                <li><strong>Medical Resource Allocation (Triage Ethics):</strong> Allocating scarce life-saving resources (ICU beds, organs) during health emergencies—Utilitarian maximization of lives vs. Deontological equal rights to care.</li>
+                <li><strong>Economic Growth vs. Climate Mitigation:</strong> Industrializing developing nations to eliminate poverty vs. strict global carbon budgets.</li>
+            </ul>
+
+            <p><strong>3. Underlying Causes:</strong></p>
+            <p>Dilemmas stem from pluralistic value systems (clash between Utilitarian, Deontological, and Virtue principles), technological innovation outpacing policy, and structural resource limits.</p>
+
+            <p><strong>4. Systemic Resolution Principles:</strong></p>
+            <p>Dilemmas are resolved by applying structured decision models: establishing clear duty hierarchies (e.g., Ross's <em>Prima Facie</em> duties), conducting impact analyses, enforcing institutional ethics boards, and maintaining institutional transparency.</p>
+        </div>
+
+        <!-- LQ6 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">6. Ethical Theories of Punishment & The Capital Punishment Debate</h3>
+            
+            <p><strong>1. The Justification Problem of Legal Punishment:</strong></p>
+            <p>Punishment involves state-sanctioned deprivation of liberty, rights, or life. Ethically, inflicting harm is prima facie wrong unless justified by a sound normative framework.</p>
+
+            <p><strong>2. The Three Classic Doctrines of Punishment:</strong></p>
+            <ol>
+                <li><strong>Retributive Theory (Kant, Hegel - Retrospective):</strong> Punishment is justified because the offender deserves it (<em>Jus Talionis</em>). It is a moral end in itself that balances the scales of justice and respects the criminal's rational agency.</li>
+                <li><strong>Deterrent Theory (Bentham, Utilitarianism - Prospective):</strong> Punishment is an evil justified only if it prevents greater future crime through general deterrence, individual deterrence, and incapacitation.</li>
+                <li><strong>Reformative / Rehabilitative Theory (Humanistic Model):</strong> Views crime as a symptom of psychological or social pathology. Focuses on moral education, therapy, and social integration.</li>
+            </ol>
+
+            <p><strong>3. Academic Argumentation on Capital Punishment:</strong></p>
+            <ul>
+                <li><strong>Pro-Abolitionist Position (Recommended Academic Stance):</strong> Capital punishment violates absolute human dignity, risks irreversible miscarriages of justice, and lacks empirical evidence of superior deterrence over life imprisonment.</li>
+                <li><strong>Retentionist Counter-Argument:</strong> Extreme heinous acts forfeit the right to life; retributive justice demands proportional retribution.</li>
+            </ul>
+        </div>
+
+        <!-- LQ7 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">7. Utilitarianism as Hedonism: Bentham vs. Mill Comparative Analysis</h3>
+            
+            <p><strong>1. Utilitarianism's Hedonistic Foundations:</strong></p>
+            <p>Utilitarianism is a consequentialist, universalistic hedonism holding that pleasure (happiness) is the sole intrinsic good, and pain the sole intrinsic evil. It mandates maximizing the net balance of pleasure for the greatest number.</p>
+
+            <p><strong>2. Bentham vs. Mill Comparative Analysis:</strong></p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th>Jeremy Bentham (Quantitative)</th>
+                            <th>John Stuart Mill (Qualitative)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Nature of Pleasure</strong></td>
+                            <td>Strictly quantitative. "Quantity of pleasure being equal, push-pin is as good as poetry."</td>
+                            <td>Qualitative distinction between Higher (intellectual/moral) and Lower (bodily) pleasures.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Measurement</strong></td>
+                            <td><strong>Hedonic Calculus</strong> (Intensity, Duration, Certainty, Propinquity, Fecundity, Purity, Extent).</td>
+                            <td>Evaluation by <strong>"Competent Judges"</strong> with experience in both.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ethical Model</strong></td>
+                            <td><strong>Act Utilitarianism:</strong> Assess utility for each individual action.</td>
+                            <td>Foundation for <strong>Rule Utilitarianism:</strong> Adhere to moral rules that maximize utility over time.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>3. Thesis on Modern Relevance:</strong></p>
+            <p><strong>John Stuart Mill's Qualitative Utilitarianism is far more viable in modern political and legal ethics.</strong> Bentham's quantitative approach risks justifying the tyranny of the majority (e.g., oppressing a minority to pleasure a crowd). Mill's framework integrates individual liberty (<em>On Liberty</em>), constitutional rights, and intellectual cultivation into utility, aligning with modern human rights ethics.</p>
+        </div>
+
+        <!-- LQ8 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">8. Divine Command Theory & Theological Utilitarianism</h3>
+            
+            <p><strong>1. Divine Command Theory (Theological Voluntarism):</strong></p>
+            <p>Divine Command Theory holds that moral values are derived directly from divine commands. Moral rightness equals obedience to God's will; moral wrongness equals disobedience.</p>
+
+            <p><strong>2. Theological Utilitarianism (Paley & Gay):</strong></p>
+            <p>Theological Utilitarianism bridges divine law and hedonism:</p>
+            <ul>
+                <li><strong>Premise:</strong> God is omnibenevolent and wills the happiness of all creation.</li>
+                <li><strong>Synthesis:</strong> Divine commands are not arbitrary laws, but moral guidelines designed to promote general human happiness. Divine sanctions (heavenly rewards / hellish punishments) provide rational motivation for individuals to align self-interest with the public good.</li>
+            </ul>
+        </div>
+
+        <!-- LQ9 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">9. Plato's Euthyphro Dilemma & The Essentialist Solution</h3>
+            
+            <p><strong>1. The Dilemma Stated:</strong></p>
+            <p>In Plato's dialogue <em>Euthyphro</em>, Socrates asks: <em>"Is the pious loved by the gods because it is pious, or is it pious because it is loved by the gods?"</em></p>
+
+            <p><strong>2. Analytical Critique of Both Horns:</strong></p>
+            <ul>
+                <li><strong>Horn 1: Voluntarism (It is good because God commands it):</strong>
+                    <br>• <em>Fatal Flaw:</em> Morality becomes arbitrary. If God commanded murder, it would become morally obligatory. Reduces "God is good" to a tautology ("God commands what He commands").
+                </li>
+                <li><strong>Horn 2: Intellectualism (God commands it because it is good):</strong>
+                    <br>• <em>Fatal Flaw:</em> Morality is independent of God. The Good becomes an external standard to which God must conform, compromising divine sovereignty.
+                </li>
+            </ul>
+
+            <p><strong>3. The Essentialist / Aquinas Solution:</strong></p>
+            <p>Philosophers resolve the dilemma by rejecting both horns: Morality is neither dependent on arbitrary divine commands nor external to God. Morality is grounded in <strong>God's Immutable Essential Nature</strong>. God commands what is good because His nature is the ultimate standard of Goodness itself.</p>
+        </div>
+
+        <!-- LQ10 -->
+        <div class="question-block">
+            <div class="mark-weight">Essay Question • 12.5 Marks</div>
+            <h3 class="question-title">10. Intuitionism: G.E. Moore's Naturalistic Fallacy & W.D. Ross's Prima Facie Duties</h3>
+            
+            <p><strong>1. Epistemological Premise of Intuitionism:</strong></p>
+            <p>Intuitionism is a non-naturalist cognitivist meta-ethical theory holding that basic moral truths are self-evident and known directly through rational intuition, independent of empirical observation or deduction.</p>
+
+            <p><strong>2. G.E. Moore & The Naturalistic Fallacy:</strong></p>
+            <p>In <em>Principia Ethica</em> (1903), G.E. Moore argued that "Good" is a simple, unanalyzable, non-natural property (analogous to "Yellow"). Attempting to define "Good" in terms of natural properties (e.g., "Pleasure" or "Evolution") commits the <strong>Naturalistic Fallacy</strong>, as demonstrated by the <em>Open Question Argument</em>.</p>
+
+            <p><strong>3. W.D. Ross & Prima Facie Duties:</strong></p>
+            <p>In <em>The Right and the Good</em> (1930), W.D. Ross addressed moral conflict by distinguishing between:</p>
+            <ul>
+                <li><strong>Prima Facie Duties:</strong> Conditional duties binding at first glance (Fidelity, Reparation, Gratitude, Justice, Beneficence, Self-Improvement, Non-Maleficence).</li>
+                <li><strong>Actual Duty:</strong> The concrete obligation determined by weighing competing prima facie duties in a specific context.</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 4: QUIZ EXAMS REVISION SYNTHESIS -->
+        <div id="quiz-synthesis" class="section-heading">
+            <h2>4. Quiz Exams Revision Synthesis</h2>
+            <span class="badge-tag">Quick Review</span>
+        </div>
+
+        <div class="academic-note">
+            <strong>Key Takeaways for Past Quiz Questions</strong>
+            <ul>
+                <li><strong>Nature of Ethics & Psychology (Quiz 1):</strong> Highlight Normative vs. Descriptive science; mention Hume's Is-Ought Distinction.</li>
+                <li><strong>Kant's CI & Freedom of Will (Quiz 2):</strong> Emphasize that Autonomy is the sole principle of morality; free will is practical self-legislation.</li>
+                <li><strong>Hedonism & Egoism vs. Altruism (Quiz 3):</strong> Contrast Epicurean/Hobbesian egoism with Utilitarian universalism (Greatest Happiness Principle).</li>
+                <li><strong>Crime & Punishment (Quiz 4):</strong> Integrate Retributive, Deterrent, and Reformative models into a coherent penological framework.</li>
+            </ul>
+        </div>
+
+        <footer>
+            Academic Revision Matrix • Formatted for Mobile & Desktop Compatibility • Department of Philosophy Exam Guide
+        </footer>
     </div>
-
-    <!-- LQ10 -->
-    <div class="card">
-        <h3>Q10. Intuitionism as a Standard of Morality in Ethics</h3>
-        <p><strong>1. Introduction to Intuitionism:</strong></p>
-        <p>Intuitionism is a non-naturalist cognitivist theory holding that fundamental moral truths (such as "Goodness", "Duty") are self-evident and known directly through rational moral intuition, without reliance on empirical observation or logical deduction.</p>
-
-        <p><strong>2. Key Proponents & Concepts:</strong></p>
-        <ul>
-            <li><strong>G.E. Moore (<em>Principia Ethica</em>):</strong>
-                <ul>
-                    <li>Argued "Good" is a simple, unanalyzable, non-natural quality (analogous to the color "Yellow").</li>
-                    <li>Formulated the <strong>Naturalistic Fallacy</strong>: Attempting to define moral "Good" in terms of natural properties (e.g., pleasure, evolution, survival) is logically flawed. Demonstrated via the <em>Open Question Argument</em>.</li>
-                </ul>
-            </li>
-            <li><strong>W.D. Ross (Prima Facie Duties):</strong> Moral duties are self-evident intuitionist duties that apply "at first glance" unless conflicted by a weightier duty. Included: <em>Fidelity, Reparation, Gratitude, Justice, Beneficence, Self-improvement, Non-maleficence</em>.</li>
-        </ul>
-
-        <p><strong>3. Strengths & Criticisms:</strong></p>
-        <ul>
-            <li><em>Strengths:</em> Preserves objective moral truths; matches everyday moral experience where basic rules feel self-evident.</li>
-            <li><em>Criticisms:</em> Fails to resolve conflicting intuitions among different people/cultures; provides no objective decision mechanism when intuitions clash.</li>
-        </ul>
-    </div>
-
-    <!-- SECTION 4: QUIZ EXAMS FULL REVISION -->
-    <div id="quiz-q" class="section-header">
-        <span class="section-title">4. Past Quiz Exams Review</span>
-        <span class="tag-quiz">Quiz Revision</span>
-    </div>
-
-    <div class="card">
-        <h3>Exam 1: Nature of Ethics & Differences between Ethics and Psychology</h3>
-        <p><strong>• Nature of Ethics:</strong> Ethics is the normative, reflective, and systematic branch of philosophy that investigates moral principles governing right and wrong human conduct. It is non-empirical, normative, and aims at human good (Eudaimonia).</p>
-        <p><strong>• Differences:</strong> Psychology is a <em>descriptive science</em> that explains mental mechanics and behavior ("what is"). Ethics is a <em>normative science</em> that judges voluntary conduct against moral standards ("what ought to be").</p>
-    </div>
-
-    <div class="card">
-        <h3>Exam 2: Kant's Categorical Imperative & Freedom of the Will</h3>
-        <p><strong>• Explanation:</strong> Categorical Imperative is the central unconditionally binding moral law discovered through practical reason. (See Long Q4 for formulas).</p>
-        <p><strong>• Relationship with Freedom:</strong> Freedom is the precondition of the Categorical Imperative. To obey moral law autonomously means acting free from sensory impulses, making autonomy and freedom identical in Kant's moral metaphysics.</p>
-    </div>
-
-    <div class="card">
-        <h3>Exam 3: Hedonism, Characteristics & Egoistic vs Altruistic Hedonism</h3>
-        <p><strong>• Hedonism:</strong> The ethical doctrine that pleasure is the sole intrinsic good and pain the sole evil.</p>
-        <p><strong>• Egoistic Hedonism (Epicurus, Hobbes):</strong> Focuses on maximizing the individual's personal pleasure.</p>
-        <p><strong>• Universalistic / Altruistic Hedonism (Utilitarianism - Bentham, Mill):</strong> Focuses on maximizing pleasure for all sentient beings ("Greatest happiness of the greatest number").</p>
-    </div>
-
-    <div class="card">
-        <h3>Exam 4: Crime and Punishment Synthesis</h3>
-        <p><strong>• Synthesis:</strong> Ethical justification of state punishment requires balancing Retribution (desert for past acts), Deterrence (prevention of future crime), and Rehabilitation (re-education of offender). (See Long Q6).</p>
-    </div>
-
-    <footer>
-        Ethics Final Exam Study Guide • Designed for High Achievement • Prepared with Comprehensive Analytical Precision
-    </footer>
 </div>
 
 </body>
