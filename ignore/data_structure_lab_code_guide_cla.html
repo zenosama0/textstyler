@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Data Structure Lab - Code Guide</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3250;
+    --accent: #6c8fff;
+    --accent2: #a78bfa;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --text: #d4d8f0;
+    --muted: #7b82a8;
+    --code-bg: #111420;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .site-header {
+    text-align: center;
+    padding: 2.5rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .site-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.4rem;
+  }
+  .site-header p {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.78rem;
+    color: var(--accent);
+    margin-top: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 3rem;
+  }
+  .toc h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .toc ul { list-style: none; padding: 0; }
+  .toc li { margin-bottom: 0.35rem; }
+  .toc a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.92rem;
+  }
+  .toc a:hover { text-decoration: underline; }
+  .toc .sub {
+    padding-left: 1.2rem;
+    margin-top: 0.2rem;
+  }
+  .toc .sub a { color: var(--accent2); font-size: 0.88rem; }
+
+  /* Lab Section */
+  .lab-block {
+    margin-bottom: 4rem;
+  }
+  .lab-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    border-left: 4px solid var(--accent);
+    padding-left: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+  .lab-subtitle {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-left: 1.3rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Problem Card */
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .problem-header {
+    background: var(--surface2);
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .problem-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .problem-header .goal {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+  .problem-body {
+    padding: 1.4rem;
+  }
+
+  /* What it does box */
+  .what-box {
+    background: rgba(108, 143, 255, 0.07);
+    border: 1px solid rgba(108, 143, 255, 0.25);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.9rem;
+  }
+  .what-box strong {
+    display: block;
+    color: var(--accent);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Code block */
+  .code-wrap {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    overflow-x: auto;
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+  code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    color: #c9d1ff;
+  }
+  .kw { color: #818cf8; }
+  .fn { color: #67e8f9; }
+  .str { color: #86efac; }
+  .num { color: #fbbf24; }
+  .cmt { color: #4b5280; font-style: italic; }
+  .type { color: #f9a8d4; }
+
+  /* Explanation sections */
+  .explain-section {
+    margin-top: 1.5rem;
+  }
+  .explain-section h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Step-by-step line items */
+  .step-list {
+    list-style: none;
+    padding: 0;
+  }
+  .step-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  .step-num {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-text strong {
+    display: block;
+    color: #fff;
+    font-size: 0.88rem;
+    margin-bottom: 0.15rem;
+  }
+  .step-text span {
+    color: var(--muted);
+    font-size: 0.84rem;
+  }
+  .inline-code {
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.82em;
+    color: #a5b4fc;
+  }
+
+  /* Key concept pills */
+  .key-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.78rem;
+    color: var(--accent2);
+  }
+
+  /* IO section */
+  .io-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+  .io-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+  }
+  .io-box label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .io-box .val {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--green);
+  }
+
+  /* Divider between labs */
+  .lab-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 3.5rem 0;
+  }
+
+  /* Callout */
+  .callout {
+    background: rgba(251, 191, 36, 0.06);
+    border-left: 3px solid var(--yellow);
+    padding: 0.8rem 1.1rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-top: 1.2rem;
+  }
+  .callout strong { color: var(--yellow); }
+
+  /* Sub-part label (for multi-part problems) */
+  .sub-part {
+    font-weight: 600;
+    color: var(--accent2);
+    font-size: 0.85rem;
+    margin: 1.2rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sub-part::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+  }
+
+  @media (max-width: 560px) {
+    .io-row { grid-template-columns: 1fr; }
+    .site-header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="site-header">
+    <h1>Data Structure Lab - Code Guide</h1>
+    <p>SEU | Dept. of CSE | Course Code 242</p>
+    <div class="badge">Written for beginners</div>
+  </header>
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ul>
+      <li><a href="#lab1">Lab 1</a>
+        <ul class="sub">
+          <li><a href="#lab1-p1">Problem 1 - Sum of 1 to N</a></li>
+          <li><a href="#lab1-p2">Problem 2 - Reverse Array Print</a></li>
+          <li><a href="#lab1-p3">Problem 3 - Linear Search</a></li>
+        </ul>
+      </li>
+      <li><a href="#lab2">Lab 2</a>
+        <ul class="sub">
+          <li><a href="#lab2-p1">Problem 1 - Array Insertion (End / Index 1 / k-th)</a></li>
+        </ul>
+      </li>
+      <li><a href="#lab3">Lab 3</a>
+        <ul class="sub">
+          <li><a href="#lab3-p1">Problem 1 - Array Deletion (Last / Index 1 / k-th)</a></li>
+        </ul>
+      </li>
+      <li><a href="#lab4">Lab 4</a>
+        <ul class="sub">
+          <li><a href="#lab4-p1">Problem 1 - Bubble Sort</a></li>
+        </ul>
+      </li>
+      <li><a href="#lab5">Lab 5</a>
+        <ul class="sub">
+          <li><a href="#lab5-p1">Problem 1 - Binary Search</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ========================================================== -->
+  <!-- LAB 1 -->
+  <!-- ========================================================== -->
+  <section class="lab-block" id="lab1">
+    <div class="lab-title">Lab 1</div>
+    <div class="lab-subtitle">Loops, Arrays, Linear Search</div>
+
+    <!-- L1 P1 -->
+    <div class="problem-card" id="lab1-p1">
+      <div class="problem-header">
+        <h3>Problem 1 - Sum of all integers from 1 to N</h3>
+        <div class="goal">Ask the user for a number N, then add up every integer from 1 all the way to N and print the result.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          Think of it like stacking blocks. You start with zero blocks (sum = 0), then one at a time you add 1 block, then 2, then 3 ... all the way to N. When you are done, you count the total stack. A <strong>for loop</strong> is the tool that does the repeating for you.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> N, sum = <span class="num">0</span>;          <span class="cmt">// (A)</span>
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;N);           <span class="cmt">// (B)</span>
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">1</span>; i &lt;= N; i++) {  <span class="cmt">// (C)</span>
+        sum += i;               <span class="cmt">// (D)</span>
+    }
+    <span class="fn">printf</span>(<span class="str">"Sum = %d\n"</span>, sum); <span class="cmt">// (E)</span>
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Line-by-line breakdown</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong><span class="inline-code">int N, sum = 0;</span></strong>
+                <span>Two integer variables are created. <span class="inline-code">N</span> will store the number the user types. <span class="inline-code">sum</span> is the running total - it must start at 0 so that nothing is accidentally added before the loop begins.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong><span class="inline-code">scanf("%d", &amp;N);</span></strong>
+                <span>This reads a number from the keyboard and stores it in <span class="inline-code">N</span>. The <span class="inline-code">&amp;</span> symbol means "put it at the memory address of N." The <span class="inline-code">%d</span> tells scanf to expect a whole integer.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong><span class="inline-code">for(int i = 1; i &lt;= N; i++)</span></strong>
+                <span>This is the loop engine. It has three parts separated by semicolons: <strong>start</strong> (i begins at 1), <strong>condition</strong> (keep going while i is still less than or equal to N), and <strong>step</strong> (increase i by 1 after each round). So it counts 1, 2, 3 ... N.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">D</div>
+              <div class="step-text">
+                <strong><span class="inline-code">sum += i;</span></strong>
+                <span>This is shorthand for <span class="inline-code">sum = sum + i</span>. Every time the loop runs, the current value of i gets added onto whatever sum already holds. After the first round: sum = 1. After the second: sum = 3. And so on.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">E</div>
+              <div class="step-text">
+                <strong><span class="inline-code">printf("Sum = %d\n", sum);</span></strong>
+                <span>After the loop finishes, this prints the final total. <span class="inline-code">%d</span> is a placeholder that gets replaced by the value of <span class="inline-code">sum</span>. <span class="inline-code">\n</span> moves the cursor to a new line.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Input</label><div class="val">10</div></div>
+          <div class="io-box"><label>Output</label><div class="val">Sum = 55</div></div>
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">for loop</span>
+          <span class="pill">accumulator variable</span>
+          <span class="pill">scanf / printf</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- L1 P2 -->
+    <div class="problem-card" id="lab1-p2">
+      <div class="problem-header">
+        <h3>Problem 2 - Print array elements in reverse order</h3>
+        <div class="goal">A fixed array of 10 numbers is given. Print all elements from the last one back to the first.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          An array stores elements in slots numbered 0, 1, 2 ... 9. Normally a loop goes up. To reverse, just make the loop count <strong>down</strong> instead - start at slot 9, stop at slot 0.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> arr[] = {<span class="num">12, 25, 8, 41, 19, 30, 2, 11, 43, 88</span>};  <span class="cmt">// (A)</span>
+    <span class="fn">printf</span>(<span class="str">"Array Elements in Reverse:\n"</span>);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">9</span>; i &gt;= <span class="num">0</span>; i--) {  <span class="cmt">// (B)</span>
+        <span class="fn">printf</span>(<span class="str">"%d "</span>, arr[i]);       <span class="cmt">// (C)</span>
+    }
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Line-by-line breakdown</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong><span class="inline-code">int arr[] = {12, 25, 8, ...};</span></strong>
+                <span>This creates an array called <span class="inline-code">arr</span>. You don't need to write the size in the brackets because C counts the items inside the curly braces automatically. The first element (12) is at index 0, the last (88) is at index 9.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong><span class="inline-code">for(int i = 9; i &gt;= 0; i--)</span></strong>
+                <span>The loop starts at 9 (the last valid index), keeps running while i is 0 or more, and decreases i by 1 each round with <span class="inline-code">i--</span>. This is the reverse of the usual loop - it counts down instead of up.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong><span class="inline-code">printf("%d ", arr[i]);</span></strong>
+                <span>Prints the element at position <span class="inline-code">i</span>. Since i goes 9, 8, 7 ... 0, the elements come out last-to-first. The space after <span class="inline-code">%d</span> separates each number in the output.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Input (none needed)</label><div class="val">Array: 12 25 8 41 19 30 2 11 43 88</div></div>
+          <div class="io-box"><label>Output</label><div class="val">88 43 11 2 30 19 41 8 25 12</div></div>
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">array indexing</span>
+          <span class="pill">reverse loop (i--)</span>
+          <span class="pill">predefined array</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- L1 P3 -->
+    <div class="problem-card" id="lab1-p3">
+      <div class="problem-header">
+        <h3>Problem 3 - Linear Search</h3>
+        <div class="goal">Ask the user for a number (the "key"), then scan through the array one by one to see if the key is there. If found, report its index; if not, say it was not found.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          Linear search is like looking for a specific card in a deck by flipping through one card at a time from the top. You check each card, and the moment you find a match you stop. If you reach the end without a match, the card is not there.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> arr[] = {<span class="num">12, 25, 8, 41, 19, 30</span>};  <span class="cmt">// (A)</span>
+    <span class="type">int</span> key, found = <span class="num">-1</span>;                 <span class="cmt">// (B)</span>
+
+    <span class="fn">printf</span>(<span class="str">"search for number in array: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;key);                    <span class="cmt">// (C)</span>
+
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">6</span>; i++) {          <span class="cmt">// (D)</span>
+        <span class="kw">if</span>(arr[i] == key) {                <span class="cmt">// (E)</span>
+            found = i;
+            <span class="kw">break</span>;                         <span class="cmt">// (F)</span>
+        }
+    }
+
+    <span class="kw">if</span>(found != <span class="num">-1</span>)                       <span class="cmt">// (G)</span>
+        <span class="fn">printf</span>(<span class="str">"Element found at index %d.\n"</span>, found);
+    <span class="kw">else</span>
+        <span class="fn">printf</span>(<span class="str">"Element not found in the array.\n"</span>);
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Line-by-line breakdown</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong>The array</strong>
+                <span>Defines a fixed list of 6 integers that will be searched through. Indices go from 0 to 5.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong><span class="inline-code">int key, found = -1;</span></strong>
+                <span><span class="inline-code">key</span> will hold the number the user wants to find. <span class="inline-code">found</span> starts at -1 which is a "not found yet" signal - since -1 is never a valid array index, it works as a safe placeholder.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong><span class="inline-code">scanf("%d", &amp;key);</span></strong>
+                <span>Reads the user's search number from the keyboard and stores it in <span class="inline-code">key</span>.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">D</div>
+              <div class="step-text">
+                <strong><span class="inline-code">for(int i = 0; i &lt; 6; i++)</span></strong>
+                <span>Loops through indices 0 to 5 - every position in the array. The search goes one slot at a time, left to right.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">E</div>
+              <div class="step-text">
+                <strong><span class="inline-code">if(arr[i] == key)</span></strong>
+                <span>Compares the current element to the key. If they are equal, a match is found. The current index <span class="inline-code">i</span> is saved into <span class="inline-code">found</span>.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">F</div>
+              <div class="step-text">
+                <strong><span class="inline-code">break;</span></strong>
+                <span>Immediately exits the loop once a match is found. No point checking the rest of the array if the answer is already known.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">G</div>
+              <div class="step-text">
+                <strong><span class="inline-code">if(found != -1)</span></strong>
+                <span>After the loop, this checks whether <span class="inline-code">found</span> changed from its starting value of -1. If it did, the element was found and we print its index. If it's still -1, nothing matched and we print the "not found" message.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Input (found)</label><div class="val">19</div></div>
+          <div class="io-box"><label>Output</label><div class="val">Element found at index 4.</div></div>
+        </div>
+        <div class="io-row">
+          <div class="io-box"><label>Input (not found)</label><div class="val">50</div></div>
+          <div class="io-box"><label>Output</label><div class="val">Element not found in the array.</div></div>
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">linear search</span>
+          <span class="pill">sentinel value (-1)</span>
+          <span class="pill">break statement</span>
+          <span class="pill">if-else</span>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="lab-divider"></div>
+
+  <!-- ========================================================== -->
+  <!-- LAB 2 -->
+  <!-- ========================================================== -->
+  <section class="lab-block" id="lab2">
+    <div class="lab-title">Lab 2</div>
+    <div class="lab-subtitle">Array Insertion</div>
+
+    <!-- L2 P1 -->
+    <div class="problem-card" id="lab2-p1">
+      <div class="problem-header">
+        <h3>Problem 1 - Insert element at End / Index 1 / k-th position</h3>
+        <div class="goal">Take an existing array and add a new element to it - first at the very end, then at position 1, then at whatever position the user asks for.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          Arrays in memory are a fixed line of boxes. To insert a new box in the middle, you must physically <strong>slide all the boxes after the target spot one step to the right</strong> to make room, then place the new value in the opened-up slot. The end of the array is the only place that needs no sliding.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="cmt">// --- The reusable insert function ---</span>
+<span class="type">void</span> <span class="fn">insertAtIndex</span>(<span class="type">int</span> arr[], <span class="type">int</span> *size, <span class="type">int</span> index, <span class="type">int</span> item) { <span class="cmt">// (A)</span>
+    <span class="kw">if</span>(index &lt; <span class="num">0</span> || index &gt; *size) <span class="kw">return</span>;  <span class="cmt">// (B)</span>
+    <span class="kw">for</span>(<span class="type">int</span> i = *size; i &gt; index; i--) {      <span class="cmt">// (C)</span>
+        arr[i] = arr[i-<span class="num">1</span>];
+    }
+    arr[index] = item;   <span class="cmt">// (D)</span>
+    (*size)++;           <span class="cmt">// (E)</span>
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+
+    <span class="cmt">// --- Part i: Insert at end ---</span>
+    <span class="type">int</span> arr1[<span class="num">10</span>] = {<span class="num">23, 4, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> size1 = <span class="num">8</span>;
+    <span class="fn">insertAtIndex</span>(arr1, &amp;size1, size1, <span class="num">55</span>);  <span class="cmt">// index = size = end</span>
+    <span class="fn">printf</span>(<span class="str">"i) After inserting 55 at end: "</span>);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; size1; i++) <span class="fn">printf</span>(<span class="str">"%d "</span>, arr1[i]);
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="cmt">// --- Part ii: Insert at index 1 ---</span>
+    <span class="type">int</span> arr2[<span class="num">10</span>] = {<span class="num">23, 4, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> size2 = <span class="num">8</span>;
+    <span class="fn">insertAtIndex</span>(arr2, &amp;size2, <span class="num">1</span>, <span class="num">55</span>);
+    <span class="fn">printf</span>(<span class="str">"ii) After inserting 55 at index 1: "</span>);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; size2; i++) <span class="fn">printf</span>(<span class="str">"%d "</span>, arr2[i]);
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="cmt">// --- Part iii: Insert at user-given k ---</span>
+    <span class="type">int</span> arr3[<span class="num">10</span>] = {<span class="num">23, 4, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> size3 = <span class="num">8</span>, k;
+    <span class="fn">printf</span>(<span class="str">"iii) Enter index to insert: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;k);
+    <span class="fn">insertAtIndex</span>(arr3, &amp;size3, k, <span class="num">55</span>);
+    <span class="fn">printf</span>(<span class="str">"After inserting 55 at index %d: "</span>, k);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; size3; i++) <span class="fn">printf</span>(<span class="str">"%d "</span>, arr3[i]);
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Understanding the helper function first</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong><span class="inline-code">void insertAtIndex(int arr[], int *size, int index, int item)</span></strong>
+                <span>This is a <strong>function</strong> - a named block of reusable code. It takes four inputs: the array, a pointer to its size (<span class="inline-code">int *size</span> means "the memory address where size lives, so changes here affect the original"), the position to insert at, and the new value to insert. Using a function means we don't have to copy-paste the same shifting logic three times.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong><span class="inline-code">if(index &lt; 0 || index &gt; *size) return;</span></strong>
+                <span>A safety check. If the requested index makes no sense (negative, or beyond the current end of the array), the function exits immediately without doing anything. <span class="inline-code">||</span> means "or."</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong>The shifting loop</strong>
+                <span>This is the core of insertion. Starting from the <em>last occupied slot</em> and working backwards towards the target index, each element is copied one slot to the right: <span class="inline-code">arr[i] = arr[i-1]</span>. Going right-to-left is essential - if you went left-to-right you would overwrite values before they are moved.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">D</div>
+              <div class="step-text">
+                <strong><span class="inline-code">arr[index] = item;</span></strong>
+                <span>Now that a gap has been created at the target index (the old value there was shifted right), the new item is placed into that slot.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">E</div>
+              <div class="step-text">
+                <strong><span class="inline-code">(*size)++;</span></strong>
+                <span>The array is now one element larger, so the size counter is increased by 1. The <span class="inline-code">*</span> is needed because <span class="inline-code">size</span> is a pointer - this updates the actual variable in <span class="inline-code">main()</span>, not just a local copy.</span>
+              </div>
+            </li>
+          </ul>
+
+          <h4 style="margin-top:1.5rem;">How the three parts use the function</h4>
+
+          <div class="sub-part">Part i - Insert at end</div>
+          <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.8rem;">
+            Calls <span class="inline-code">insertAtIndex(arr1, &size1, size1, 55)</span>. Notice <span class="inline-code">index = size1 = 8</span>. The shifting loop's condition <span class="inline-code">i &gt; 8</span> is never true, so <strong>no shifting happens at all</strong>. The new value is simply placed at slot 8. This is the fast O(1) case.
+          </p>
+
+          <div class="sub-part">Part ii - Insert at index 1</div>
+          <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.8rem;">
+            Calls with <span class="inline-code">index = 1</span>. The loop runs from i = 8 down to i = 2, shifting slots 7, 6, 5, 4, 3, 2, 1 each one place right. Then 55 lands at slot 1. All the original elements from index 1 onward are preserved, just shifted.
+          </p>
+
+          <div class="sub-part">Part iii - Insert at user-given k</div>
+          <p style="font-size:0.88rem; color:var(--muted);">
+            The user types a k, that value is passed as the index. The function is identical - it works for any valid index. The user input of k = 3 causes elements at positions 3, 4, 5, 6, 7 to all shift right by one, and 55 drops into slot 3.
+          </p>
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Input (k = 3)</label><div class="val">3</div></div>
+          <div class="io-box"><label>Output (part iii)</label><div class="val">23 4 12 55 66 45 7 39 18</div></div>
+        </div>
+
+        <div class="callout">
+          <strong>Why size = 10 for the array but only 8 used?</strong> The array is declared with space for 10 (<span class="inline-code">int arr1[10]</span>) but only 8 values are filled in. This reserves extra room so insertion doesn't overflow the array's bounds.
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">functions</span>
+          <span class="pill">pointers (*size)</span>
+          <span class="pill">right-shift loop</span>
+          <span class="pill">O(1) vs O(n) insertion</span>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="lab-divider"></div>
+
+  <!-- ========================================================== -->
+  <!-- LAB 3 -->
+  <!-- ========================================================== -->
+  <section class="lab-block" id="lab3">
+    <div class="lab-title">Lab 3</div>
+    <div class="lab-subtitle">Array Deletion</div>
+
+    <div class="problem-card" id="lab3-p1">
+      <div class="problem-header">
+        <h3>Problem 1 - Delete element at Last / Index 1 / k-th position</h3>
+        <div class="goal">Remove a specific element from the array. Handle three cases: delete the last element, the element at index 1, and the element at any user-given index.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          Deleting from an array is the mirror image of insertion. Because elements are stored in a continuous block, removing from the middle requires <strong>sliding all elements after it one step to the left</strong> to fill the gap. Deleting from the end requires no sliding at all.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="type">void</span> <span class="fn">deleteAtIndex</span>(<span class="type">int</span> arr[], <span class="type">int</span> *size, <span class="type">int</span> index) {  <span class="cmt">// (A)</span>
+    <span class="kw">if</span>(index &lt; <span class="num">0</span> || index &gt;= *size) <span class="kw">return</span>;           <span class="cmt">// (B)</span>
+    <span class="kw">for</span>(<span class="type">int</span> i = index; i &lt; *size - <span class="num">1</span>; i++) {           <span class="cmt">// (C)</span>
+        arr[i] = arr[i+<span class="num">1</span>];
+    }
+    (*size)--;  <span class="cmt">// (D)</span>
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+
+    <span class="cmt">// --- Part i: Delete last element ---</span>
+    <span class="type">int</span> arr1[<span class="num">10</span>] = {<span class="num">23, 4, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> size1 = <span class="num">8</span>;
+    <span class="fn">deleteAtIndex</span>(arr1, &amp;size1, size1 - <span class="num">1</span>);  <span class="cmt">// index 7 = last</span>
+    <span class="fn">printf</span>(<span class="str">"i) After deleting last element: "</span>);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; size1; i++) <span class="fn">printf</span>(<span class="str">"%d "</span>, arr1[i]);
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="cmt">// --- Part ii: Delete index 1 ---</span>
+    <span class="type">int</span> arr2[<span class="num">10</span>] = {<span class="num">23, 4, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> size2 = <span class="num">8</span>;
+    <span class="fn">deleteAtIndex</span>(arr2, &amp;size2, <span class="num">1</span>);
+    <span class="fn">printf</span>(<span class="str">"ii) After deleting index 1: "</span>);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; size2; i++) <span class="fn">printf</span>(<span class="str">"%d "</span>, arr2[i]);
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="cmt">// --- Part iii: Delete at user-given k ---</span>
+    <span class="type">int</span> arr3[<span class="num">10</span>] = {<span class="num">23, 4, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> size3 = <span class="num">8</span>, k;
+    <span class="fn">printf</span>(<span class="str">"iii) Enter index to delete: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;k);
+    <span class="fn">deleteAtIndex</span>(arr3, &amp;size3, k);
+    <span class="fn">printf</span>(<span class="str">"After deleting index %d: "</span>, k);
+    <span class="kw">for</span>(<span class="type">int</span> i = <span class="num">0</span>; i &lt; size3; i++) <span class="fn">printf</span>(<span class="str">"%d "</span>, arr3[i]);
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Breaking down the delete function</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong><span class="inline-code">void deleteAtIndex(int arr[], int *size, int index)</span></strong>
+                <span>Same function pattern as Lab 2's insert. It takes the array, a pointer to the size (so changes propagate back), and the index to remove. It returns nothing (<span class="inline-code">void</span>).</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong>Bounds check</strong>
+                <span>If the index is negative, or if it equals or exceeds the current size, the function exits. <span class="inline-code">&gt;= *size</span> is used here (instead of <span class="inline-code">&gt;</span> in insert) because the last valid index is always <span class="inline-code">size - 1</span>.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong>The left-shift loop</strong>
+                <span>Starts at the target index and moves forward. Each element is overwritten by the one to its right: <span class="inline-code">arr[i] = arr[i+1]</span>. This effectively "pulls" all elements from the right of the deleted position one step left, closing the gap. The loop stops before the last element (<span class="inline-code">i &lt; *size - 1</span>) to avoid reading out of bounds.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">D</div>
+              <div class="step-text">
+                <strong><span class="inline-code">(*size)--;</span></strong>
+                <span>The array is now logically one element smaller. Decreasing size means future print loops won't accidentally print the now-stale last slot. The actual memory isn't freed - the number is still there - but it is treated as outside the array.</span>
+              </div>
+            </li>
+          </ul>
+
+          <h4 style="margin-top:1.5rem;">How the three parts differ</h4>
+
+          <div class="sub-part">Part i - Delete the last element</div>
+          <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.8rem;">
+            Passes <span class="inline-code">size1 - 1</span> = index 7 as the target. The shifting loop starts at i = 7, but since the condition is <span class="inline-code">i &lt; size - 1 = 7</span>, it never runs at all. Only the size is decremented. Very fast - no work needed.
+          </p>
+
+          <div class="sub-part">Part ii - Delete at index 1</div>
+          <p style="font-size:0.88rem; color:var(--muted); margin-bottom:0.8rem;">
+            Elements at indices 2, 3, 4, 5, 6, 7 each shift left by one slot. Element at index 1 (the value 4) is overwritten and effectively gone.
+          </p>
+
+          <div class="sub-part">Part iii - Delete at user-given k</div>
+          <p style="font-size:0.88rem; color:var(--muted);">
+            User enters a number k; that index is removed using the same function. With k = 3, the value 66 is removed and everything to its right slides left.
+          </p>
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Output (part i)</label><div class="val">23 4 12 66 45 7 39</div></div>
+          <div class="io-box"><label>Output (part ii)</label><div class="val">23 12 66 45 7 39 18</div></div>
+        </div>
+
+        <div class="callout">
+          <strong>Insert vs Delete - spot the difference:</strong> Insert shifts elements <em>right-to-left</em> (backward loop) to make room. Delete shifts elements <em>left-to-right</em> (forward loop) to close the gap. The direction matters to avoid overwriting data before it's been copied.
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">left-shift loop</span>
+          <span class="pill">logical size</span>
+          <span class="pill">O(1) vs O(n) deletion</span>
+          <span class="pill">pointer to size</span>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="lab-divider"></div>
+
+  <!-- ========================================================== -->
+  <!-- LAB 4 -->
+  <!-- ========================================================== -->
+  <section class="lab-block" id="lab4">
+    <div class="lab-title">Lab 4</div>
+    <div class="lab-subtitle">Bubble Sort</div>
+
+    <div class="problem-card" id="lab4-p1">
+      <div class="problem-header">
+        <h3>Problem 1 - Sort array using Bubble Sort</h3>
+        <div class="goal">Given a scrambled array of 10 student scores, rearrange them in ascending order using the Bubble Sort algorithm, then print both the original and the sorted version.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          Bubble sort works by repeatedly walking through the array and comparing neighboring elements. If two neighbors are in the wrong order, swap them. After each full walk, the largest unsorted value has "bubbled up" to its correct spot at the right end. Repeat for as many passes as needed.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> students[<span class="num">10</span>] = {<span class="num">23, 4, 99, 13, 12, 66, 45, 7, 39, 18</span>};
+    <span class="type">int</span> n = <span class="num">10</span>;
+    <span class="type">int</span> i, j, temp;           <span class="cmt">// (A)</span>
+
+    <span class="fn">printf</span>(<span class="str">"Initial Array: "</span>);
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; n; i++) {
+        <span class="fn">printf</span>(<span class="str">"%d "</span>, students[i]);
+    }
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; n - <span class="num">1</span>; i++) {           <span class="cmt">// (B) outer loop</span>
+        <span class="kw">for</span> (j = <span class="num">0</span>; j &lt; n - <span class="num">1</span>; j++) {         <span class="cmt">// (C) inner loop</span>
+            <span class="kw">if</span> (students[j] &gt; students[j + <span class="num">1</span>]) {  <span class="cmt">// (D)</span>
+                temp = students[j];                 <span class="cmt">// (E) swap</span>
+                students[j] = students[j + <span class="num">1</span>];
+                students[j + <span class="num">1</span>] = temp;
+            }
+        }
+    }
+
+    <span class="fn">printf</span>(<span class="str">"Sorted array: "</span>);
+    <span class="kw">for</span> (i = <span class="num">0</span>; i &lt; n; i++) {
+        <span class="fn">printf</span>(<span class="str">"%d "</span>, students[i]);
+    }
+    <span class="fn">printf</span>(<span class="str">"\n"</span>);
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Line-by-line breakdown</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong><span class="inline-code">int i, j, temp;</span></strong>
+                <span><span class="inline-code">i</span> and <span class="inline-code">j</span> are the two loop counters. <span class="inline-code">temp</span> is a temporary holding variable used during swaps - without a temp, swapping two values would cause one to be overwritten and lost.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong>Outer loop: <span class="inline-code">for(i = 0; i &lt; n-1; i++)</span></strong>
+                <span>Controls <em>how many passes</em> are made over the array. For n = 10 elements, 9 passes (n-1) are enough to guarantee everything is sorted. Think of each pass as one "sweep" from left to right.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong>Inner loop: <span class="inline-code">for(j = 0; j &lt; n-1; j++)</span></strong>
+                <span>On each pass, this loop walks j from 0 to 8, comparing the element at j with the element at j+1. The condition <span class="inline-code">j &lt; n-1</span> stops before the last element so that <span class="inline-code">j+1</span> never goes out of bounds.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">D</div>
+              <div class="step-text">
+                <strong><span class="inline-code">if(students[j] &gt; students[j+1])</span></strong>
+                <span>Checks if the left neighbor is bigger than the right. If it is, they are in the wrong order and need swapping. If the left is already smaller (correct order), nothing happens and j moves on.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">E</div>
+              <div class="step-text">
+                <strong>The three-step swap</strong>
+                <span>You cannot swap A and B directly - doing <span class="inline-code">A = B</span> would destroy A's old value. The trick: save A in <span class="inline-code">temp</span>, copy B into A, then copy <span class="inline-code">temp</span> (the old A) into B. All three lines together accomplish the swap safely.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Visualizing one pass:</strong> Starting array: <span class="inline-code">23 4 99 13 ...</span>
+          Compare 23 and 4 - wrong order, swap → <span class="inline-code">4 23 99 13 ...</span>
+          Compare 23 and 99 - correct order, no swap.
+          Compare 99 and 13 - wrong order, swap → <span class="inline-code">4 23 13 99 ...</span>
+          After a full pass, 99 has "bubbled" to the far right.
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Input (predefined)</label><div class="val">23 4 99 13 12 66 45 7 39 18</div></div>
+          <div class="io-box"><label>Output (sorted)</label><div class="val">4 7 12 13 18 23 39 45 66 99</div></div>
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">nested loops</span>
+          <span class="pill">adjacent comparison</span>
+          <span class="pill">three-step swap</span>
+          <span class="pill">O(n^2) time</span>
+          <span class="pill">in-place sort</span>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="lab-divider"></div>
+
+  <!-- ========================================================== -->
+  <!-- LAB 5 -->
+  <!-- ========================================================== -->
+  <section class="lab-block" id="lab5">
+    <div class="lab-title">Lab 5</div>
+    <div class="lab-subtitle">Binary Search</div>
+
+    <div class="problem-card" id="lab5-p1">
+      <div class="problem-header">
+        <h3>Problem 1 - Search in sorted array using Binary Search</h3>
+        <div class="goal">Given a sorted array of 10 integers, find a user-specified key using Binary Search. Print the index if found, or a "not found" message otherwise.</div>
+      </div>
+      <div class="problem-body">
+
+        <div class="what-box">
+          <strong>The Core Idea</strong>
+          Binary search is like guessing a number between 1 and 100. Instead of guessing 1, 2, 3 ... you guess 50 first. If the answer is higher, you now know it's 51-100 and you guess 75 next. Each guess cuts the remaining options in half. Binary search does exactly this - it only works on <strong>sorted</strong> arrays because it relies on knowing which half to discard.
+        </div>
+
+        <pre><code><span class="kw">#include</span> <span class="str">&lt;stdio.h&gt;</span>
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> arr[<span class="num">10</span>] = {<span class="num">1, 3, 9, 17, 25, 29, 43, 55, 83, 99</span>};
+    <span class="type">int</span> low, high, mid, flag = <span class="num">0</span>, key, index = <span class="num">-1</span>;  <span class="cmt">// (A)</span>
+
+    <span class="fn">printf</span>(<span class="str">"Enter the key you want to search: "</span>);
+    <span class="fn">scanf</span>(<span class="str">"%d"</span>, &amp;key);
+
+    low = <span class="num">0</span>;    <span class="cmt">// (B)</span>
+    high = <span class="num">9</span>;
+
+    <span class="kw">while</span>(low &lt;= high) {                  <span class="cmt">// (C)</span>
+        mid = (low + high) / <span class="num">2</span>;           <span class="cmt">// (D)</span>
+        <span class="kw">if</span>(key == arr[mid]) {             <span class="cmt">// (E)</span>
+            flag = <span class="num">1</span>;
+            index = mid;
+            <span class="kw">break</span>;
+        }
+        <span class="kw">else if</span>(key &gt; arr[mid]) {        <span class="cmt">// (F)</span>
+            low = mid + <span class="num">1</span>;
+        }
+        <span class="kw">else</span> {                            <span class="cmt">// (G)</span>
+            high = mid - <span class="num">1</span>;
+        }
+    }
+
+    <span class="kw">if</span>(flag == <span class="num">1</span>) {                       <span class="cmt">// (H)</span>
+        <span class="fn">printf</span>(<span class="str">"Element %d is found at index %d\n"</span>, key, index);
+    } <span class="kw">else</span> {
+        <span class="fn">printf</span>(<span class="str">"Element %d is not found in the array\n"</span>, key);
+    }
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</code></pre>
+
+        <div class="explain-section">
+          <h4>Line-by-line breakdown</h4>
+          <ul class="step-list">
+            <li>
+              <div class="step-num">A</div>
+              <div class="step-text">
+                <strong>Variables declared</strong>
+                <span><span class="inline-code">low</span> and <span class="inline-code">high</span> mark the current search window (left and right boundaries). <span class="inline-code">mid</span> is the calculated middle point. <span class="inline-code">flag</span> starts at 0 (not found). <span class="inline-code">index</span> starts at -1 (unknown). <span class="inline-code">key</span> holds the user's search target.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">B</div>
+              <div class="step-text">
+                <strong><span class="inline-code">low = 0; high = 9;</span></strong>
+                <span>Sets the initial search boundaries to the full array - index 0 (first element) to index 9 (last element). These will shrink as the search narrows down.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">C</div>
+              <div class="step-text">
+                <strong><span class="inline-code">while(low &lt;= high)</span></strong>
+                <span>The loop keeps going as long as there is still a valid search range. If <span class="inline-code">low</span> ever goes past <span class="inline-code">high</span>, the search space is empty - the element doesn't exist.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">D</div>
+              <div class="step-text">
+                <strong><span class="inline-code">mid = (low + high) / 2;</span></strong>
+                <span>Calculates the middle index of the current window. Integer division automatically rounds down. For example, if low = 0 and high = 9, mid = 4.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">E</div>
+              <div class="step-text">
+                <strong>Match found</strong>
+                <span>If <span class="inline-code">arr[mid]</span> equals the key, the search is successful. Set <span class="inline-code">flag = 1</span> to signal success, save the index, and break out of the loop.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">F</div>
+              <div class="step-text">
+                <strong><span class="inline-code">else if(key &gt; arr[mid]) - low = mid + 1;</span></strong>
+                <span>If the key is larger than the middle element, the key must be in the RIGHT half. Move <span class="inline-code">low</span> up to just past mid, discarding the left half entirely.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">G</div>
+              <div class="step-text">
+                <strong><span class="inline-code">else - high = mid - 1;</span></strong>
+                <span>If the key is smaller than the middle element, the key must be in the LEFT half. Move <span class="inline-code">high</span> down to just before mid, discarding the right half.</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num">H</div>
+              <div class="step-text">
+                <strong>Print the result</strong>
+                <span>After the loop ends (either by break or by the window shrinking to nothing), check the flag. If it's 1, print the found index. If it's still 0, print the not-found message.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong>Tracing a search for key = 29 in {1, 3, 9, 17, 25, 29, 43, 55, 83, 99}:</strong><br/>
+          Round 1: low=0, high=9, mid=4 → arr[4]=25. 29 &gt; 25, so low = 5.<br/>
+          Round 2: low=5, high=9, mid=7 → arr[7]=55. 29 &lt; 55, so high = 6.<br/>
+          Round 3: low=5, high=6, mid=5 → arr[5]=29. Match! Return index 5.
+        </div>
+
+        <div class="io-row">
+          <div class="io-box"><label>Input (found)</label><div class="val">29</div></div>
+          <div class="io-box"><label>Output</label><div class="val">Element 29 is found at index 5</div></div>
+        </div>
+        <div class="io-row">
+          <div class="io-box"><label>Input (not found)</label><div class="val">50</div></div>
+          <div class="io-box"><label>Output</label><div class="val">Element 50 is not found in the array</div></div>
+        </div>
+
+        <div class="callout">
+          <strong>Binary vs Linear search - why does it matter?</strong> Linear search checks up to N elements in the worst case. Binary search checks at most log2(N). For 1000 elements: linear may check 1000 times; binary checks at most 10 times. The array <em>must</em> be sorted for binary search to work.
+        </div>
+
+        <div class="key-concepts">
+          <span class="pill">binary search</span>
+          <span class="pill">low / mid / high pointers</span>
+          <span class="pill">while loop</span>
+          <span class="pill">halving search space</span>
+          <span class="pill">requires sorted array</span>
+          <span class="pill">flag variable</span>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+</div>
+</body>
+</html>
