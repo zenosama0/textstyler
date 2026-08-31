@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Structure Lab - Beginner Code Reconstruction Guide</title>
+<style>
+:root {
+  --bg:#f6f7fb; --card:#ffffff; --text:#1d2330; --muted:#5d6675;
+  --border:#dfe3ea; --accent:#315efb; --code:#151922; --codeText:#f2f5f7;
+  --note:#eef4ff;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; font-family:Segoe UI,system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+header { padding:42px 20px 28px; background:var(--card); border-bottom:1px solid var(--border); }
+.wrap { max-width:1100px; margin:auto; }
+h1 { margin:0 0 10px; font-size:clamp(28px,4vw,44px); line-height:1.15; }
+.subtitle { color:var(--muted); max-width:850px; }
+nav { position:sticky; top:0; z-index:5; background:rgba(255,255,255,.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
+nav .wrap { display:flex; gap:8px; flex-wrap:wrap; padding:10px 14px; }
+nav a { color:var(--text); text-decoration:none; padding:7px 10px; border-radius:8px; }
+nav a:hover { background:var(--note); color:var(--accent); }
+main { padding:28px 16px 60px; }
+.lab { margin:0 auto 44px; max-width:1100px; }
+.lab-title { display:flex; gap:14px; align-items:baseline; flex-wrap:wrap; margin-bottom:18px; }
+.lab-title span { color:var(--accent); font-weight:700; }
+.lab-title h2 { margin:0; font-size:28px; }
+.problem { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin:18px 0; box-shadow:0 4px 18px rgba(25,34,56,.04); }
+.problem-head { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.problem h3 { margin:0; font-size:23px; }
+.badge { background:var(--note); color:var(--accent); padding:4px 9px; border-radius:999px; font-size:13px; font-weight:700; }
+.question { margin:16px 0; padding:14px 16px; background:#fafbfe; border-left:4px solid var(--accent); border-radius:8px; }
+h4 { margin-top:24px; margin-bottom:10px; font-size:18px; }
+ul,ol { padding-left:24px; }
+li { margin:7px 0; }
+pre { overflow:auto; background:var(--code); color:var(--codeText); padding:17px; border-radius:12px; font-size:14px; line-height:1.55; }
+table { width:100%; border-collapse:collapse; overflow:hidden; border:1px solid var(--border); border-radius:10px; display:block; overflow-x:auto; }
+th,td { padding:11px 12px; border-bottom:1px solid var(--border); vertical-align:top; text-align:left; min-width:180px; }
+th { background:#f4f6fa; }
+tr:last-child td { border-bottom:none; }
+.trace { background:var(--note); border:1px solid #d7e2ff; border-radius:10px; padding:13px 15px; }
+.tip { margin:22px auto 0; max-width:1100px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:18px; }
+.mini-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
+.card { border:1px solid var(--border); border-radius:12px; padding:14px; background:#fbfcff; }
+.card b { display:block; margin-bottom:4px; }
+footer { padding:28px 16px 60px; color:var(--muted); text-align:center; }
+@media (max-width:700px) {
+  .problem { padding:16px; border-radius:12px; }
+  pre { font-size:12.5px; }
+  .lab-title h2 { font-size:24px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Data Structure Lab - Code Reconstruction Guide</h1>
+    <div class="subtitle">
+      A beginner-first guide for rebuilding the exact programs from Labs 1–5.
+      The goal is not to memorize the code. For each problem, first identify what
+      the question is asking for, then assemble the matching C pattern.
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#method">How to read questions</a>
+    <a href="#lab-1">Lab 1</a>
+    <a href="#lab-2">Lab 2</a>
+    <a href="#lab-3">Lab 3</a>
+    <a href="#lab-4">Lab 4</a>
+    <a href="#lab-5">Lab 5</a>
+  </div>
+</nav>
+
+<main>
+  <section class="tip" id="method">
+    <h2>Before memorizing any code</h2>
+    <p>When an exam gives you a programming question, convert the English into a small list of actions.</p>
+    <div class="mini-grid">
+      <div class="card"><b>"calculate a total"</b>Think: accumulator + loop.</div>
+      <div class="card"><b>"print in reverse"</b>Think: last index → first index.</div>
+      <div class="card"><b>"search one by one"</b>Think: linear search + comparison.</div>
+      <div class="card"><b>"insert at index"</b>Think: shift right → place value → size++.</div>
+      <div class="card"><b>"delete at index"</b>Think: shift left → size--.</div>
+      <div class="card"><b>"sort using Bubble Sort"</b>Think: nested loops + adjacent swap.</div>
+      <div class="card"><b>"search sorted array"</b>Think: Binary Search + low/high/mid.</div>
+    </div>
+    <p><strong>Important beginner rule:</strong> C arrays start at index 0. For an array of size <code>n</code>, the last valid index is <code>n - 1</code>.</p>
+  </section>
+
+  
+    <section class="lab" id="lab-1">
+      <div class="lab-title"><span>Lab 1</span><h2>Loops, Reverse Traversal, and Linear Search</h2></div>
+      
+        <article class="problem" id="lab1-problem-1">
+          <div class="problem-head">
+            <span class="badge">Problem 1</span>
+            <h3>Summation from 1 to N</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Write a C program to calculate the summation of all integers from 1 to N using a loop, where N is given by the user.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>Look for three things in the question: a user-provided limit N, repeated numbers from 1 through N, and a total/sum.</li><li>That naturally suggests an accumulator variable (start at 0) and a loop that visits every number.</li><li>Because the sequence begins at 1 and ends at N, a for loop is a very direct match.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int N, sum = 0;
+    scanf(&quot;%d&quot;, &amp;N);
+
+    for(int i = 1; i &lt;= N; i++) {
+        sum += i;
+    }
+
+    printf(&quot;Sum = %d\n&quot;, sum);
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>#include &lt;stdio.h&gt;</code></td><td>Includes the standard input/output library so functions such as <code>scanf()</code> and <code>printf()</code> can be used.</td></tr><tr><td><code>int main()</code></td><td>The main function is where the program starts running. <code>int</code> means it returns an integer value.</td></tr><tr><td><code>int N, sum = 0;</code></td><td>N stores the upper limit entered by the user. <code>sum</code> is the accumulator: it starts at 0 because nothing has been added yet.</td></tr><tr><td><code>scanf("%d", &amp;N);</code></td><td>Reads an integer from the keyboard. <code>%d</code> means integer, and <code>&amp;N</code> gives scanf the memory address where it should store the input.</td></tr><tr><td><code>for(int i = 1; i &lt;= N; i++)</code></td><td>This loop starts at 1, keeps going while i is at most N, and increases i by 1 after each iteration.</td></tr><tr><td><code>sum += i;</code></td><td>Adds the current loop number to the running total. This is shorthand for <code>sum = sum + i;</code>.</td></tr><tr><td><code>printf("Sum = %d\n", sum);</code></td><td>Prints the final value stored in sum.</td></tr><tr><td><code>return 0;</code></td><td>Ends the program and conventionally reports successful execution.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">For N = 5: sum starts 0 → add 1 = 1 → add 2 = 3 → add 3 = 6 → add 4 = 10 → add 5 = 15.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Create the input variable N.</li><li>Create sum and initialize it to 0.</li><li>Loop from 1 through N.</li><li>Add the current loop variable into sum.</li><li>Print sum.</li></ol>
+        </article>
+        
+        <article class="problem" id="lab1-problem-2">
+          <div class="problem-head">
+            <span class="badge">Problem 2</span>
+            <h3>Print an Array in Reverse</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Write a C program to print the elements of an array in reverse order.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>The array has 10 elements, so valid indices are 0 through 9.</li><li>To print backward, start at the last index and move toward index 0.</li><li>The main trick is not changing the array at all; only the order of accessing its indices changes.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[] = {12, 25, 8, 41, 19, 30, 2, 11, 43, 88};
+
+    printf(&quot;Array Elements in Reverse:\n&quot;);
+
+    for(int i = 9; i &gt;= 0; i--) {
+        printf(&quot;%d &quot;, arr[i]);
+    }
+
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>int arr[] = {...};</code></td><td>Creates an integer array and initializes it with the values from the question. The compiler can determine the array size from the initializer.</td></tr><tr><td><code>i = 9</code></td><td>The final element is at index 9 because the array has 10 elements and indexing starts at 0.</td></tr><tr><td><code>i &gt;= 0</code></td><td>The loop must continue until index 0 is printed.</td></tr><tr><td><code>i--</code></td><td>Decreases the index by 1 each time, so the access order becomes 9, 8, 7, ..., 0.</td></tr><tr><td><code>arr[i]</code></td><td>Reads the element at the current index. The array itself is not rearranged.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">Access order: arr[9] = 88 → arr[8] = 43 → arr[7] = 11 → ... → arr[0] = 12.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Count the array elements.</li><li>Find the last valid index: size - 1.</li><li>Start the loop there.</li><li>Continue while the index is &gt;= 0.</li><li>Decrease the index each iteration and print arr[index].</li></ol>
+        </article>
+        
+        <article class="problem" id="lab1-problem-3">
+          <div class="problem-head">
+            <span class="badge">Problem 3</span>
+            <h3>Linear Search</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Search for a given key in an array using Linear Search. Print its index if found; otherwise print a not-found message.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>Linear Search means checking the elements one by one from the beginning.</li><li>You need a key variable for the value being searched.</li><li>You also need a way to remember whether a match was found. Here, found = -1 conveniently means &#x27;not found yet&#x27; because valid array indices are 0 or greater.</li><li>As soon as a match is found, break stops unnecessary searching.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[] = {12, 25, 8, 41, 19, 30};
+    int key, found = -1;
+
+    printf(&quot;search for number in array: &quot;);
+    scanf(&quot;%d&quot;, &amp;key);
+
+    for(int i = 0; i &lt; 6; i++) {
+        if(arr[i] == key) {
+            found = i;
+            break;
+        }
+    }
+
+    if(found != -1)
+        printf(&quot;Element found at index %d.\n&quot;, found);
+    else
+        printf(&quot;Element not found in the array.\n&quot;);
+
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>int key, found = -1;</code></td><td>key stores what the user wants to search for. found stores the answer index. Starting at -1 gives a special value meaning 'no match found'.</td></tr><tr><td><code>scanf("%d", &amp;key);</code></td><td>Reads the search value from the user.</td></tr><tr><td><code>for(int i = 0; i &lt; 6; i++)</code></td><td>Visits every valid index of this 6-element array: 0, 1, 2, 3, 4, 5.</td></tr><tr><td><code>if(arr[i] == key)</code></td><td>Compares the current array element with the requested key. Notice the double equals <code>==</code>, which means comparison; a single <code>=</code> would assign a value.</td></tr><tr><td><code>found = i;</code></td><td>Stores the index where the match occurred.</td></tr><tr><td><code>break;</code></td><td>Immediately leaves the loop because the required element has already been found.</td></tr><tr><td><code>if(found != -1)</code></td><td>Checks whether the special 'not found' value was replaced by a real index.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">Searching for 19 checks 12 → 25 → 8 → 41 → 19. At 19, found becomes 4 and the loop stops.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Store the array.</li><li>Read the key.</li><li>Use a loop from index 0 to size - 1.</li><li>Compare arr[i] with key.</li><li>If equal, save i and break.</li><li>After the loop, test whether the saved index is still -1.</li></ol>
+        </article>
+        
+    </section>
+    
+    <section class="lab" id="lab-2">
+      <div class="lab-title"><span>Lab 2</span><h2>Array Insertion</h2></div>
+      
+        <article class="problem" id="lab2-problem-1">
+          <div class="problem-head">
+            <span class="badge">Problem 1</span>
+            <h3>Insert at End, Index 1, or Any Index</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Given students[10] = {23, 4, 12, 66, 45, 7, 39, 18}, insert 55 at the end, at index 1, and at a user-selected index.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>The physical array has capacity 10, but only 8 positions are currently occupied. Therefore you must track the logical size separately from the array capacity.</li><li>Insertion at an index other than the end requires shifting existing elements one position to the right to make a hole.</li><li>A reusable function is useful because all three tasks are really the same operation: insert one item at a specified index.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+void insertAtIndex(int arr[], int *size, int index, int item) {
+    if(index &lt; 0 || index &gt; *size) return;
+
+    for(int i = *size; i &gt; index; i--) {
+        arr[i] = arr[i-1];
+    }
+
+    arr[index] = item;
+    (*size)++;
+}
+
+int main() {
+    int arr1[10] = {23, 4, 12, 66, 45, 7, 39, 18};
+    int size1 = 8;
+    insertAtIndex(arr1, &amp;size1, size1, 55);
+
+    printf(&quot;i) After inserting 55 at end: &quot;);
+    for(int i = 0; i &lt; size1; i++) printf(&quot;%d &quot;, arr1[i]);
+    printf(&quot;\n&quot;);
+
+    int arr2[10] = {23, 4, 12, 66, 45, 7, 39, 18};
+    int size2 = 8;
+    insertAtIndex(arr2, &amp;size2, 1, 55);
+
+    printf(&quot;ii) After inserting 55 at index 1: &quot;);
+    for(int i = 0; i &lt; size2; i++) printf(&quot;%d &quot;, arr2[i]);
+    printf(&quot;\n&quot;);
+
+    int arr3[10] = {23, 4, 12, 66, 45, 7, 39, 18};
+    int size3 = 8, k;
+
+    printf(&quot;iii) Enter index to insert: &quot;);
+    scanf(&quot;%d&quot;, &amp;k);
+
+    insertAtIndex(arr3, &amp;size3, k, 55);
+
+    printf(&quot;After inserting 55 at index %d: &quot;, k);
+    for(int i = 0; i &lt; size3; i++) printf(&quot;%d &quot;, arr3[i]);
+    printf(&quot;\n&quot;);
+
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>void insertAtIndex(...)</code></td><td>Creates one reusable function so the insertion logic does not need to be rewritten three times.</td></tr><tr><td><code>int arr[]</code></td><td>Receives the array. Arrays are passed to functions in a way that lets the function modify the original array.</td></tr><tr><td><code>int *size</code></td><td>A pointer to size is used because the function must change the original size variable in main. This lets <code>(*size)++</code> update it.</td></tr><tr><td><code>if(index &lt; 0 || index &gt; *size) return;</code></td><td>Rejects invalid indices. Index equal to size is allowed because that means inserting immediately after the current last element.</td></tr><tr><td><code>for(int i = *size; i &gt; index; i--)</code></td><td>Starts at the first empty position and moves backward. Going backward is important so that values are not overwritten before they are copied.</td></tr><tr><td><code>arr[i] = arr[i-1];</code></td><td>Copies each existing value one place to the right.</td></tr><tr><td><code>arr[index] = item;</code></td><td>Places the new item into the hole that was created.</td></tr><tr><td><code>(*size)++;</code></td><td>Increases the logical number of used elements by one.</td></tr><tr><td><code>insertAtIndex(arr1, &amp;size1, size1, 55)</code></td><td>For end insertion, the target index is the current size. Example: with size 8, the new item goes at index 8.</td></tr><tr><td><code>insertAtIndex(arr2, &amp;size2, 1, 55)</code></td><td>Targets index 1, so elements currently at indices 1 through 7 are shifted right.</td></tr><tr><td><code>scanf("%d", &amp;k)</code></td><td>Lets the user choose the insertion index for part iii.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">Insert 55 at index 3 into [23,4,12,66,45,7,39,18]. Shift 18→9, 39→8, 7→7, 45→6, 66→5. Then place 55 at index 3.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Keep both capacity and logical size in mind.</li><li>Validate the target index.</li><li>Start from the end of the used portion.</li><li>Shift elements right until the target position is open.</li><li>Put the new value at the target.</li><li>Increase size.</li><li>Remember: this only works if there is unused capacity.</li></ol>
+        </article>
+        
+    </section>
+    
+    <section class="lab" id="lab-3">
+      <div class="lab-title"><span>Lab 3</span><h2>Array Deletion</h2></div>
+      
+        <article class="problem" id="lab3-problem-1">
+          <div class="problem-head">
+            <span class="badge">Problem 1</span>
+            <h3>Delete Last, Index 1, or Any Index</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Delete the last element, delete the element at index 1, and delete the element at a user-selected index from the given array.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>Deletion from an array changes the logical contents, so track size separately.</li><li>If the deleted element is in the middle, the values after it must move left to close the gap.</li><li>For the last element, no shifting is needed; decreasing the logical size is enough.</li><li>A single deleteAtIndex function can handle all three cases.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+void deleteAtIndex(int arr[], int *size, int index) {
+    if(index &lt; 0 || index &gt;= *size) return;
+
+    for(int i = index; i &lt; *size - 1; i++) {
+        arr[i] = arr[i+1];
+    }
+
+    (*size)--;
+}
+
+int main() {
+    int arr1[10] = {23, 4, 12, 66, 45, 7, 39, 18};
+    int size1 = 8;
+    deleteAtIndex(arr1, &amp;size1, size1 - 1);
+
+    printf(&quot;i) After deleting last element: &quot;);
+    for(int i = 0; i &lt; size1; i++) printf(&quot;%d &quot;, arr1[i]);
+    printf(&quot;\n&quot;);
+
+    int arr2[10] = {23, 4, 12, 66, 45, 7, 39, 18};
+    int size2 = 8;
+    deleteAtIndex(arr2, &amp;size2, 1);
+
+    printf(&quot;ii) After deleting index 1: &quot;);
+    for(int i = 0; i &lt; size2; i++) printf(&quot;%d &quot;, arr2[i]);
+    printf(&quot;\n&quot;);
+
+    int arr3[10] = {23, 4, 12, 66, 45, 7, 39, 18};
+    int size3 = 8, k;
+
+    printf(&quot;iii) Enter index to delete: &quot;);
+    scanf(&quot;%d&quot;, &amp;k);
+
+    deleteAtIndex(arr3, &amp;size3, k);
+
+    printf(&quot;After deleting index %d: &quot;, k);
+    for(int i = 0; i &lt; size3; i++) printf(&quot;%d &quot;, arr3[i]);
+    printf(&quot;\n&quot;);
+
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>if(index &lt; 0 || index &gt;= *size) return;</code></td><td>The valid indices are 0 through size-1. An index equal to size is already outside the used portion, so it is rejected.</td></tr><tr><td><code>for(int i = index; i &lt; *size - 1; i++)</code></td><td>Starts at the deleted position and continues until the element immediately before the old last position.</td></tr><tr><td><code>arr[i] = arr[i+1];</code></td><td>Copies every following value one place to the left, filling the deleted element's position.</td></tr><tr><td><code>(*size)--;</code></td><td>Reduces the logical number of elements by one. The old final cell may still physically contain a value, but it is no longer part of the array's used portion.</td></tr><tr><td><code>size1 - 1</code></td><td>For size 8, the last valid index is 7. This expression avoids hard-coding 7 and directly represents 'last index'.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">Delete index 3 from [23,4,12,66,45,7,39,18]: copy 45→index3, 7→index4, 39→index5, 18→index6, then reduce size from 8 to 7.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Validate the index: 0 &lt;= index &lt; size.</li><li>Start at the deleted index.</li><li>Shift every later element one place left.</li><li>Decrease size.</li><li>For the last element, the loop performs zero shifts and only size decreases.</li></ol>
+        </article>
+        
+    </section>
+    
+    <section class="lab" id="lab-4">
+      <div class="lab-title"><span>Lab 4</span><h2>Bubble Sort</h2></div>
+      
+        <article class="problem" id="lab4-problem-1">
+          <div class="problem-head">
+            <span class="badge">Problem 1</span>
+            <h3>Sort Ten Integers Using Bubble Sort</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Sort an array of ten student scores using Bubble Sort and display the initial and final arrays.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>Bubble Sort repeatedly compares neighboring elements.</li><li>If the left element is larger than the right element, swap them.</li><li>One full pass pushes a large value toward the right side. Repeating enough passes sorts the whole array.</li><li>Swapping needs a temporary variable so one value is not lost.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int students[10] = {23, 4, 99, 13, 12, 66, 45, 7, 39, 18};
+    int n = 10;
+    int i, j, temp;
+
+    printf(&quot;Initial Array: &quot;);
+    for (i = 0; i &lt; n; i++) {
+        printf(&quot;%d &quot;, students[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    for (i = 0; i &lt; n - 1; i++) {
+        for (j = 0; j &lt; n - 1; j++) {
+            if (students[j] &gt; students[j + 1]) {
+                temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+
+    printf(&quot;Sorted array: &quot;);
+    for (i = 0; i &lt; n; i++) {
+        printf(&quot;%d &quot;, students[i]);
+    }
+    printf(&quot;\n&quot;);
+
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>int students[10] = {...}</code></td><td>Stores the ten scores that must be sorted.</td></tr><tr><td><code>int n = 10;</code></td><td>Stores the number of elements, making the loops easier to understand and reuse.</td></tr><tr><td><code>printf("Initial Array...")</code></td><td>Displays the original order before sorting changes the array.</td></tr><tr><td><code>for (i = 0; i &lt; n - 1; i++)</code></td><td>The outer loop controls how many passes are made. Bubble Sort needs n-1 passes in the basic version.</td></tr><tr><td><code>for (j = 0; j &lt; n - 1; j++)</code></td><td>The inner loop walks through neighboring pairs.</td></tr><tr><td><code>students[j] &gt; students[j + 1]</code></td><td>Checks whether the adjacent pair is in descending order. If so, swapping makes that pair ascending.</td></tr><tr><td><code>temp = students[j]</code></td><td>Temporarily saves the left value so it is not lost when the assignment happens.</td></tr><tr><td><code>students[j] = students[j + 1]</code></td><td>Moves the smaller right-hand value to the left.</td></tr><tr><td><code>students[j + 1] = temp</code></td><td>Puts the original left value into the right position.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">A small example [5, 2, 4]: compare 5 and 2 → swap → [2,5,4]; compare 5 and 4 → swap → [2,4,5]. Next pass confirms the order.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Print the initial array.</li><li>Use an outer loop for repeated passes.</li><li>Use an inner loop to compare adjacent elements.</li><li>If left &gt; right, swap them.</li><li>After the passes, print the final array.</li></ol>
+        </article>
+        
+    </section>
+    
+    <section class="lab" id="lab-5">
+      <div class="lab-title"><span>Lab 5</span><h2>Binary Search</h2></div>
+      
+        <article class="problem" id="lab5-problem-1">
+          <div class="problem-head">
+            <span class="badge">Problem 1</span>
+            <h3>Search a Sorted Array Using Binary Search</h3>
+          </div>
+
+          <div class="question"><strong>Problem statement:</strong> Search for a key in the sorted array {1, 3, 9, 17, 25, 29, 43, 55, 83, 99}. Print its index if found; otherwise report that it does not exist.</div>
+
+          <h4>1. How to recognize the solution from the question</h4>
+          <ul><li>The key phrase is &#x27;sorted array&#x27;. That is the condition that allows Binary Search.</li><li>Instead of checking every element, repeatedly check the middle of the current search range.</li><li>If the key is larger than the middle value, everything to the left of the middle can be discarded.</li><li>If the key is smaller, everything to the right can be discarded.</li><li>Three variables describe the current search range: low, high, and mid.</li></ul>
+
+          <h4>2. Code</h4>
+          <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[10] = {1, 3, 9, 17, 25, 29, 43, 55, 83, 99};
+    int low, high, mid, flag = 0, key, index = -1;
+
+    printf(&quot;Enter the key you want to search: &quot;);
+    scanf(&quot;%d&quot;, &amp;key);
+
+    low = 0;
+    high = 9;
+
+    while(low &lt;= high) {
+        mid = (low + high) / 2;
+
+        if(key == arr[mid]) {
+            flag = 1;
+            index = mid;
+            break;
+        }
+        else if(key &gt; arr[mid]) {
+            low = mid + 1;
+        }
+        else {
+            high = mid - 1;
+        }
+    }
+
+    if(flag == 1) {
+        printf(&quot;Element %d is found at index %d\n&quot;, key, index);
+    }
+    else {
+        printf(&quot;Element %d is not found in the array\n&quot;, key);
+    }
+
+    return 0;
+}</code></pre>
+
+          <h4>3. What each important part does</h4>
+          <table>
+            <thead><tr><th>Code / part</th><th>Why it is written this way</th></tr></thead>
+            <tbody><tr><td><code>low = 0;</code></td><td>The search initially begins at the first index.</td></tr><tr><td><code>high = 9;</code></td><td>Because the array has 10 elements, its last valid index is 9.</td></tr><tr><td><code>while(low &lt;= high)</code></td><td>As long as there is at least one possible index remaining, continue searching.</td></tr><tr><td><code>mid = (low + high) / 2;</code></td><td>Finds the middle index of the current search range using integer division.</td></tr><tr><td><code>if(key == arr[mid])</code></td><td>If the middle value equals the key, the search is complete.</td></tr><tr><td><code>flag = 1;</code></td><td>Marks the search as successful.</td></tr><tr><td><code>index = mid;</code></td><td>Stores the matching index so it can be printed after the loop.</td></tr><tr><td><code>else if(key &gt; arr[mid])</code></td><td>Because the array is sorted, a larger key must be to the right of mid. Everything from low through mid can be discarded.</td></tr><tr><td><code>low = mid + 1;</code></td><td>Moves the lower boundary past the middle.</td></tr><tr><td><code>high = mid - 1;</code></td><td>When the key is smaller, discard mid and everything to its right by moving the upper boundary left.</td></tr><tr><td><code>flag == 1</code></td><td>After the loop, this tells the program whether a match was found.</td></tr></tbody>
+          </table>
+
+          <h4>4. Think through one example</h4>
+          <div class="trace">For key 29: low=0, high=9 → mid=4 (25); 29 is larger → low=5 → mid=7 (55); 29 is smaller → high=6 → mid=5 (29), found.</div>
+
+          <h4>5. Rebuild recipe</h4>
+          <ol><li>Make sure the array is sorted.</li><li>Set low to 0 and high to the last index.</li><li>While low &lt;= high, calculate mid.</li><li>Compare key with arr[mid].</li><li>Equal: found.</li><li>Greater: search right half with low = mid + 1.</li><li>Smaller: search left half with high = mid - 1.</li><li>If the loop finishes, the key was not found.</li></ol>
+        </article>
+        
+    </section>
+    
+</main>
+
+<footer>
+  Built around the five supplied Data Structure Lab reports. Keep the original question in front of you and use each "Rebuild recipe" to recreate the code instead of memorizing it line-for-line.
+</footer>
+</body>
+</html>
