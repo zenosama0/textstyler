@@ -77,10 +77,10 @@ footer{max-width:1100px;margin:auto;padding:20px 16px 50px;color:var(--muted);fo
 <header>
 <div class="wrap">
 <div class="badge" style="background:rgba(255,255,255,.16);color:#fff">INTRODUCTION TO LOGIC</div>
-<h1>Irving M. Copi - Logic Exam Study Guide</h1>
-<p class="sub">পরীক্ষার জন্য সাজানো সহজ বাংলা guide। Definition, argument, categorical logic, fallacy, induction, probability এবং আগের বছরের প্রশ্ন একসঙ্গে অনুশীলন করার জন্য তৈরি। লক্ষ্য হলো শুধু মুখস্থ নয়, পরীক্ষায় কী লিখবে তা বুঝে যাওয়া।</p>
+<h1>Irving M. Copi - Exam Study Guide</h1>
+<p class="sub">A structured undergraduate guide for definitions, arguments, categorical logic, definitions, fallacies, induction, probability, and the supplied previous-year questions. The emphasis is on <b>what to write in an exam</b>, not just memorizing isolated terms.</p>
 <div class="toolbar">
-<button class="btn" onclick="window.print()">Print / PDF</button>
+<button class="btn" onclick="window.print()">Print / Save as PDF</button>
 <button class="btn secondary" onclick="document.querySelector('#search').focus()">Search Guide</button>
 <button class="btn" id="langToggle" onclick="toggleLanguage()" type="button">বাংলা</button></div>
 </div>
@@ -95,222 +95,273 @@ footer{max-width:1100px;margin:auto;padding:20px 16px 50px;color:var(--muted);fo
 <section class="card">
 <h2 id="contents">সূচিপত্র</h2>
 <div class="toc">
-<a href="#basics">১. যুক্তিবিদ্যার মূল বিষয়</a>
-<a href="#q1">২. যুক্তিবিদ্যা কী? + কেন্দ্রীয় সমস্যা</a>
-<a href="#definitions">৩. সংজ্ঞার দরকারি শব্দ</a>
-<a href="#arguments">৪. Premise, Conclusion, Truth ও Validity</a>
-<a href="#categorical">৫. Categorical Proposition</a>
-<a href="#transformations">৬. Conversion, Obversion ও Contraposition</a>
-<a href="#syllogism">৭. Categorical Syllogism + Venn</a>
-<a href="#fallacies">৮. Fallacy - ধরন ও উদাহরণ</a>
-<a href="#induction">৯. Induction + Mill-এর Methods</a>
-<a href="#probability">১০. Probability + Analogy</a>
-<a href="#previous">১১. আগের বছরের প্রশ্ন - পূর্ণ উত্তর</a>
-<a href="#rapid">১২. শেষ মুহূর্তের Revision Sheet</a>
+<a href="#basics">১. যুক্তিবিদ্যার মূল বিষয়: যা জানতেই হবে</a>
+<a href="#q1">২. যুক্তিবিদ্যা কী? কেন্দ্রীয় সমস্যা আলোচনা</a>
+<a href="#definitions">৩. সংজ্ঞার প্রয়োজনীয় শব্দভান্ডার</a>
+<a href="#arguments">৪. পূর্বকথন, উপসংহার, সত্যতা ও বৈধতা</a>
+<a href="#categorical">৫. প্রমিত শ্রেণিবাচক প্রস্তাব</a>
+<a href="#transformations">৬. রূপান্তর, বিপরীতকরণ ও প্রতিপক্ষীকরণ</a>
+<a href="#syllogism">৭. শ্রেণিবাচক ন্যায়ানুমান ও ভেনচিত্র</a>
+<a href="#fallacies">৮. কুযুক্তি: ধরন ও উদাহরণ</a>
+<a href="#induction">৯. আগমন ও মিলের পরীক্ষামূলক অনুসন্ধানের পদ্ধতি</a>
+<a href="#probability">১০. সম্ভাবনা ও সাদৃশ্যভিত্তিক যুক্তি</a>
+<a href="#previous">১১. আগের বছরের প্রশ্ন: পূর্ণ উত্তর</a>
+<a href="#rapid">১২. শেষ মুহূর্তের পুনরাবৃত্তি পত্র</a>
 </div>
 </section>
+
 <section class="card" id="basics">
 <h2>১. যুক্তিবিদ্যার মূল বিষয়: যা জানতেই হবে</h2>
-<div class="tip"><b>বড় ধারণা:</b> যুক্তিবিদ্যা যুক্তি নিয়ে কাজ করে এবং কোন যুক্তি সঠিকভাবে তৈরি হয়েছে আর কোনটি ভুল, তা যাচাই করার নিয়ম দেয়। এটি শুধু কোনো কথার বিষয়বস্তু সত্য কি না, তা দেখে না। বরং উপসংহারটি premises থেকে ঠিকভাবে এসেছে কি না, সেটি দেখে।</div>
+<div class="tip"><b>বড় ধারণা:</b> যুক্তিবিদ্যা যুক্তি নিয়ে আলোচনা করে এবং কোন যুক্তি সঠিকভাবে তৈরি হয়েছে আর কোনটি ভুল, তা বিচার করার নিয়ম দেয়। কোনো বিষয়ের বক্তব্য সত্য কি না, সেটিই এর প্রধান বিষয় নয়। বরং কোনো উপসংহার দেওয়া কারণ বা পূর্বকথন থেকে ঠিকভাবে এসেছে কি না, সেটিই মূল প্রশ্ন।</div>
 <div class="grid2"><div>
-<h3>Argument বা যুক্তি</h3>
-<p><b>Argument</b> হলো কয়েকটি proposition-এর সমষ্টি, যেখানে একটি proposition হলো <b>conclusion</b> এবং অন্যগুলো সেই conclusion-কে সমর্থন করে, যেগুলোকে <b>premises</b> বলা হয়।</p>
-<p><b>Premise-এর ইঙ্গিত:</b> because, since, for, as, given that.</p>
-<p><b>Conclusion-এর ইঙ্গিত:</b> therefore, hence, so, thus, consequently.</p>
+<h3>যুক্তি</h3>
+<p><b>যুক্তি</b> হলো কয়েকটি প্রস্তাবের সমষ্টি, যেখানে একটি প্রস্তাবকে <b>উপসংহার</b> বলা হয় এবং অন্য প্রস্তাবগুলো সেই উপসংহারকে সমর্থন করে। এগুলোকে <b>পূর্বকথন</b> বলা হয়।</p>
+<p><b>পূর্বকথনের ইঙ্গিতবাহী শব্দ:</b> কারণ, যেহেতু, এই জন্য, প্রদত্ত যে, কারণ হিসেবে।</p>
+<p><b>উপসংহারের ইঙ্গিতবাহী শব্দ:</b> অতএব, সুতরাং, তাই, অতএব ফল হলো, ফলত।</p>
 </div><div>
-<h3>Proposition বা প্রস্তাব</h3>
-<p><b>Proposition</b> হলো declarative sentence-এর এমন বক্তব্য, যা <b>true বা false</b> হতে পারে।</p>
-<p>Question, command এবং exclamation proposition নয়, কারণ এগুলোকে সত্য বা মিথ্যা বলা যায় না।</p>
+<h3>প্রস্তাব</h3>
+<p><b>প্রস্তাব</b> হলো এমন বক্তব্য, যা ঘোষণামূলক বাক্যে প্রকাশিত হয় এবং <b>সত্য বা মিথ্যা</b> হতে পারে।</p>
+<p>প্রশ্ন, আদেশ ও আবেগসূচক বাক্য প্রস্তাব নয়, কারণ এগুলোকে সাধারণভাবে সত্য বা মিথ্যা বলা যায় না।</p>
 </div></div>
-<h3>Deduction বনাম Induction</h3>
-<table><tr><th>Deductive inference</th><th>Inductive inference</th></tr>
-<tr><td>Premises থেকে conclusion অবশ্যই অনুসরণ করে বলে দাবি করে।</td><td>Premises conclusion-কে probable বা শক্তভাবে support করে বলে দাবি করে।</td></tr>
-<tr><td>মূলত <b>validity</b> দিয়ে বিচার করা হয়; sound হলে premises-ও সত্য হতে হবে।</td><td><b>Inductive strength</b> বা support-এর মাত্রা দিয়ে বিচার করা হয়।</td></tr>
-<tr><td>উদাহরণ: সব মানুষ মরণশীল; Socrates মানুষ; তাই Socrates মরণশীল।</td><td>উদাহরণ: দেখা সব কাক কালো; তাই পরের কাকটিও সম্ভবত কালো হবে।</td></tr></table>
-<div class="exam"><b>Exam habit:</b> “valid = true” লিখবে না। Validity argument-এর বৈশিষ্ট্য; truth বা falsity proposition-এর বৈশিষ্ট্য।</div>
+<h3>নিগমন বনাম আগমন</h3>
+<table><tr><th>নিগমনমূলক অনুমান</th><th>আগমনমূলক অনুমান</th></tr>
+<tr><td>এতে দাবি করা হয় যে পূর্বকথন থেকে উপসংহার অবশ্যই অনুসরণ করে।</td><td>এতে দাবি করা হয় যে পূর্বকথন উপসংহারকে সম্ভাব্য বা যথেষ্টভাবে সমর্থন করে।</td></tr>
+<tr><td>মূলত <b>বৈধতা</b> দিয়ে বিচার করা হয়। যুক্তি সুসংগত হলে পূর্বকথনও সত্য হতে হয়।</td><td><b>আগমনমূলক শক্তি</b> বা সমর্থনের মাত্রা দিয়ে বিচার করা হয়।</td></tr>
+<tr><td>উদাহরণ: সব মানুষ মরণশীল; সক্রেটিস মানুষ; অতএব সক্রেটিস মরণশীল।</td><td>উদাহরণ: দেখা সব কাক কালো; অতএব পরের দেখা কাকও সম্ভবত কালো হবে।</td></tr></table>
+<div class="exam"><b>পরীক্ষার অভ্যাস:</b> “বৈধ = সত্য” লিখবে না। বৈধতা যুক্তির বৈশিষ্ট্য; সত্যতা বা মিথ্যাতা প্রস্তাবের বৈশিষ্ট্য।</div>
 </section>
+
 <section class="card" id="q1">
 <h2>২. যুক্তিবিদ্যা কী? কেন্দ্রীয় সমস্যা আলোচনা</h2>
-<h3>Exam-ready answer</h3>
-<p>Copi-এর মতে, <b>logic</b> হলো সঠিক reasoning এবং ভুল reasoning আলাদা করার পদ্ধতি ও নীতির অধ্যয়ন। তাই যুক্তিবিদ্যা কোনো একটি নির্দিষ্ট বিষয় নয়, বরং reasoning কীভাবে কাজ করে তা নিয়ে কাজ করে।</p>
-<p><b>কেন্দ্রীয় সমস্যা</b> হলো, কোনো argument-এর conclusion তার premises থেকে সঠিকভাবে অনুসরণ করে কি না তা নির্ধারণ করা। Deductive argument-এ প্রশ্ন হলো premises কি conclusion-কে entail করে; inductive argument-এ প্রশ্ন হলো premises conclusion-এর জন্য যথেষ্ট বা probable support দেয় কি না।</p>
-<div class="definition"><b>মনে রাখবে:</b> Logic জিজ্ঞেস করে, “Conclusion কি premises থেকে follow করে?” শুধু “Statements সত্য কি?” এই প্রশ্ন নয়।</div>
+<h3>পরীক্ষায় লেখার মতো উত্তর</h3>
+<p>কপির মতে, <b>যুক্তিবিদ্যা হলো সঠিক যুক্তি ও ভুল যুক্তি আলাদা করার পদ্ধতি ও নীতির অধ্যয়ন</b>। তাই যুক্তিবিদ্যা কোনো একটি নির্দিষ্ট বিষয় নিয়ে নয়, বরং যুক্তি কীভাবে কাজ করে তা নিয়ে আলোচনা করে। এর উদ্দেশ্য হলো যুক্তি বিশ্লেষণ ও বিচার করার পরিষ্কার মানদণ্ড দেওয়া।</p>
+<p><b>যুক্তিবিদ্যার কেন্দ্রীয় সমস্যা</b> হলো কোনো যুক্তির উপসংহার তার পূর্বকথন থেকে সঠিক উপায়ে অনুসরণ করে কি না তা নির্ধারণ করা। নিগমনমূলক যুক্তিতে প্রশ্ন হলো পূর্বকথন কি উপসংহারকে অনিবার্যভাবে প্রতিষ্ঠা করে। আগমনমূলক যুক্তিতে প্রশ্ন হলো পূর্বকথন কি উপসংহারের পক্ষে যথেষ্ট বা সম্ভাব্য সমর্থন দেয়।</p>
+<div class="definition"><b>মূল পার্থক্য:</b> যুক্তিবিদ্যা জিজ্ঞেস করে, “উপসংহার কি পূর্বকথন থেকে অনুসরণ করে?” শুধু “বক্তব্যগুলো কি সত্য?” এই প্রশ্নই নয়।</div>
 <h3>যুক্তিবিদ্যার ৩টি মূল কাজ</h3>
-<ol><li><b>Analysis:</b> premises, conclusion এবং logical structure চিহ্নিত করা।</li><li><b>Evaluation:</b> reasoning ভালো না খারাপ, valid না invalid, তা যাচাই করা।</li><li><b>Error detection:</b> fallacy ও reasoning-এর ভুল ধরিয়ে দেওয়া।</li></ol>
-<div class="exam"><b>৫ নম্বরের উত্তর:</b> প্রথমে logic-এর সংজ্ঞা দাও, তারপর premises ও conclusion-এর সম্পর্ককে central problem বলো, শেষে ৩টি function এক লাইনে করে লেখো।</div>
+<ol><li><b>বিশ্লেষণ ও পরিষ্কার করা:</b> পূর্বকথন, উপসংহার ও যুক্তির কাঠামো চিহ্নিত করা।</li><li><b>বিচারের মানদণ্ড দেওয়া:</b> ভালো ও খারাপ যুক্তি আলাদা করার নিয়ম প্রয়োগ করা।</li><li><b>ভুল ধরা ও এড়ানো:</b> অবৈধ অনুমান ও কুযুক্তি শনাক্ত করে যুক্তিকে উন্নত করা।</li></ol>
+<div class="exam"><b>৫ নম্বরের উত্তর:</b> এক বাক্যে যুক্তিবিদ্যার সংজ্ঞা দাও, পূর্বকথন ও উপসংহারের সম্পর্ককে কেন্দ্রীয় সমস্যা বলো, তারপর তিনটি কাজ এক বাক্যে করে লেখো।</div>
 </section>
+
 <section class="card" id="definitions">
-<h2>৩. Definition Diary</h2>
-<table>
-<tr><th>Term</th><th>সহজ পরীক্ষার সংজ্ঞা</th></tr>
-<tr><td class="term">Denotation</td><td>কোনো term যেসব বস্তু বা শ্রেণির ক্ষেত্রে ঠিকভাবে প্রযোজ্য, সেই পুরো class।</td></tr>
-<tr><td class="term">Connotation</td><td>কোনো term-এর সঙ্গে জড়িত গুণ বা বৈশিষ্ট্যগুলো।</td></tr>
-<tr><td class="term">Sentence</td><td>ব্যাকরণগতভাবে সম্পূর্ণ expression। সব sentence proposition নয়।</td></tr>
-<tr><td class="term">Proposition</td><td>Declarative sentence যে বক্তব্য প্রকাশ করে এবং যা সত্য বা মিথ্যা হতে পারে।</td></tr>
-<tr><td class="term">Judgement</td><td>মনে কোনো বিষয়কে স্বীকার বা অস্বীকার করার মানসিক কাজ।</td></tr>
-<tr><td class="term">Subject</td><td>Categorical proposition-এ যার সম্পর্কে কিছু বলা হয়।</td></tr>
-<tr><td class="term">Predicate</td><td>Subject সম্পর্কে যে term-টি বলা হয় বা অস্বীকার করা হয়।</td></tr>
-<tr><td class="term">Connector</td><td>Argument বা compound statement-এর অংশগুলো যুক্ত করা শব্দ, যেমন and, or, if...then, therefore।</td></tr>
-<tr><td class="term">Term</td><td>Categorical proposition-এর একটি অংশ, যা একটি class বা category বোঝায়।</td></tr>
-<tr><td class="term">Universal affirmative (A)</td><td>“All S are P.” অর্থাৎ S-এর প্রত্যেক সদস্য P-এর মধ্যে আছে।</td></tr>
-<tr><td class="term">Distribution</td><td>কোনো term-এর class-এর সব সদস্যকে বোঝানো হয়েছে কি না।</td></tr>
-<tr><td class="term">Distributed</td><td>যখন proposition ওই class-এর <b>সব সদস্যকে</b> বোঝায়।</td></tr>
-<tr><td class="term">Undistributed</td><td>যখন proposition ওই class-এর সব সদস্যকে বোঝায় না।</td></tr>
-<tr><td class="term">Premise</td><td>Conclusion-কে support করার জন্য দেওয়া proposition।</td></tr>
-<tr><td class="term">Assumption</td><td>Argument বা proof-এ সাময়িকভাবে সত্য ধরে নেওয়া proposition।</td></tr>
-<tr><td class="term">Conclusion</td><td>যে proposition-কে premises-এর সাহায্যে প্রতিষ্ঠা করা হয়।</td></tr>
-<tr><td class="term">Deductive inference</td><td>যেখানে conclusion premises থেকে অবশ্যই follow করে বলে দাবি করা হয়।</td></tr>
-<tr><td class="term">Inductive inference</td><td>যেখানে conclusion premises-এর বাইরে আরও কিছু বলে এবং probability-এর সঙ্গে আসে।</td></tr>
-<tr><td class="term">Immediate inference</td><td>একটি premise থেকে একটি conclusion-এ সরাসরি logical transformation, যেমন conversion, obversion, contraposition।</td></tr>
-<tr><td class="term">Mediate inference</td><td>দুই বা ততোধিক premise ব্যবহার করে conclusion পাওয়া, যেমন syllogism।</td></tr>
-<tr><td class="term">Conversion</td><td>Subject ও predicate বদলানো, যেখানে সেই form-এ অর্থ ঠিক রেখে inference valid থাকে।</td></tr>
+<h2>৩. সংজ্ঞার প্রয়োজনীয় শব্দভান্ডার</h2>
+<table><tr><th>শব্দ</th><th>পরীক্ষার সহজ সংজ্ঞা</th></tr>
+<tr><td class="term">অভিধেয়তা</td><td>কোনো পদ যেসব বস্তু বা শ্রেণির ক্ষেত্রে সঠিকভাবে প্রযোজ্য, সেই সম্পূর্ণ শ্রেণি।</td></tr>
+<tr><td class="term">অভিধানার্থ</td><td>কোনো পদের সঙ্গে যুক্ত গুণ, বৈশিষ্ট্য বা অর্থবাহী লক্ষণসমষ্টি।</td></tr>
+<tr><td class="term">বাক্য</td><td>ব্যাকরণগতভাবে সম্পূর্ণ প্রকাশ। সব বাক্য প্রস্তাব প্রকাশ করে না।</td></tr>
+<tr><td class="term">প্রস্তাব</td><td>ঘোষণামূলক বাক্যে প্রকাশিত এমন বক্তব্য, যা সত্য বা মিথ্যা হতে পারে।</td></tr>
+<tr><td class="term">বিচার</td><td>মনে কোনো বিষয়কে স্বীকার বা অস্বীকার করার মানসিক কাজ।</td></tr>
+<tr><td class="term">বিষয়পদ</td><td>শ্রেণিবাচক প্রস্তাবে যার সম্পর্কে কিছু বলা বা অস্বীকার করা হয়।</td></tr>
+<tr><td class="term">বিধেয়পদ</td><td>বিষয়পদ সম্পর্কে যে বৈশিষ্ট্য বলা বা অস্বীকার করা হয়।</td></tr>
+<tr><td class="term">সংযোজক</td><td>যুক্তি বা যৌগিক বক্তব্যের অংশগুলো যুক্ত করা শব্দ, যেমন এবং, অথবা, যদি...তবে, অতএব।</td></tr>
+<tr><td class="term">পদ</td><td>শ্রেণিবাচক প্রস্তাবের এমন অংশ, যা কোনো শ্রেণি বা গোষ্ঠী বোঝায়।</td></tr>
+<tr><td class="term">সর্বজনীন স্বীকৃতিবাচক প্রস্তাব (A)</td><td>“সব S হলো P।” অর্থাৎ S শ্রেণির প্রত্যেক সদস্য P শ্রেণির অন্তর্ভুক্ত।</td></tr>
+<tr><td class="term">ব্যাপ্তি</td><td>কোনো পদ দিয়ে বোঝানো শ্রেণির সব সদস্যকে প্রস্তাবটি নির্দেশ করছে কি না।</td></tr>
+<tr><td class="term">ব্যাপ্ত পদ</td><td>যখন প্রস্তাবটি ওই শ্রেণির <b>সব সদস্যকে</b> নির্দেশ করে।</td></tr>
+<tr><td class="term">অব্যাপ্ত পদ</td><td>যখন প্রস্তাবটি ওই শ্রেণির সব সদস্যকে নির্দেশ করে না।</td></tr>
+<tr><td class="term">পূর্বকথন</td><td>উপসংহারকে সমর্থন করার জন্য দেওয়া প্রস্তাব।</td></tr>
+<tr><td class="term">অনুমিত ধারণা</td><td>যুক্তি, প্রমাণ বা বিশ্লেষণে সাময়িকভাবে সত্য ধরে নেওয়া প্রস্তাব।</td></tr>
+<tr><td class="term">উপসংহার</td><td>যে প্রস্তাবকে পূর্বকথনের সাহায্যে প্রতিষ্ঠা করার চেষ্টা করা হয়।</td></tr>
+<tr><td class="term">নিগমনমূলক অনুমান</td><td>যেখানে দাবি করা হয় যে উপসংহার পূর্বকথন থেকে অবশ্যই অনুসরণ করে।</td></tr>
+<tr><td class="term">আগমনমূলক অনুমান</td><td>যেখানে উপসংহার পূর্বকথনের বাইরে কিছু যোগ করে এবং কিছু মাত্রার সম্ভাবনা দাবি করে।</td></tr>
+<tr><td class="term">অবিলম্ব অনুমান</td><td>একটি পূর্বকথন থেকে সরাসরি একটি উপসংহারে যাওয়ার রূপান্তর, যেমন রূপান্তর, বিপরীতকরণ ও প্রতিপক্ষীকরণ।</td></tr>
+<tr><td class="term">মধ্যবর্তী অনুমান</td><td>দুই বা ততোধিক পূর্বকথনের সাহায্যে উপসংহার পাওয়া, যেমন ন্যায়ানুমান।</td></tr>
+<tr><td class="term">রূপান্তর</td><td>বিষয়পদ ও বিধেয়পদ বদলানোর তাৎক্ষণিক অনুমান, যেখানে সংশ্লিষ্ট রূপে অর্থ ঠিক থাকে।</td></tr>
 </table>
-<div class="warning"><b>খুব গুরুত্বপূর্ণ:</b> “Distribution” মানে term সত্য নয়। এর মানে proposition ওই class-এর <b>প্রত্যেক সদস্যকে</b> নিয়ে কথা বলছে।</div>
+<div class="warning"><b>খুব গুরুত্বপূর্ণ:</b> “ব্যাপ্তি” মানে পদটি সত্য নয়। এর মানে প্রস্তাবটি ওই পদের শ্রেণির <b>প্রত্যেক সদস্যকে</b> নিয়ে কথা বলছে।</div>
 </section>
+
 <section class="card" id="arguments">
-<h2>৪. Premise ও Conclusion-এর সম্পর্ক: Truth বনাম Validity</h2>
-<p>Argument-এ premises হলো conclusion গ্রহণের কারণ। Logical প্রশ্ন হলো conclusionটি premises থেকে follow করে কি না। Deductive logic-এ এই সম্পর্ককে <b>validity</b> বলা হয়।</p>
-<div class="grid2"><div><h3>Truth</h3><p>Truth বা falsity হলো <b>proposition</b>-এর বৈশিষ্ট্য।</p><p>উদাহরণ: “Dhaka is the capital of Bangladesh” সত্য বা মিথ্যা হতে পারে।</p></div><div><h3>Validity</h3><p>Validity বা invalidity হলো <b>argument</b>-এর বৈশিষ্ট্য।</p><p>যদি এমন কোনো সম্ভাব্য অবস্থা না থাকে যেখানে সব premises সত্য কিন্তু conclusion মিথ্যা, তাহলে argument valid।</p></div></div>
-<h3>Truth আর Validity-এর পার্থক্য বোঝার উদাহরণ</h3>
-<div class="formula">All fish are mammals.
-All whales are fish.
-Therefore, all whales are mammals.</div>
-<p>Form valid, কিন্তু প্রথম premise মিথ্যা। তাই argument <b>valid but unsound</b>।</p>
-<div class="formula">All birds are animals.
-All dogs are animals.
-Therefore, all dogs are birds.</div>
-<p>Premises সত্য হতে পারে, কিন্তু conclusion follow করে না। তাই <b>invalid</b>।</p>
-<div class="formula">All mammals are animals.
-All whales are mammals.
-Therefore, all whales are animals.</div>
-<p>এটি <b>valid and sound</b>, কারণ reasoning valid এবং premises সত্য।</p>
-<div class="exam"><b>মুখস্থ করার লাইন:</b> “Truth হলো proposition-এর বৈশিষ্ট্য; validity হলো argument-এর বৈশিষ্ট্য। Valid argument-এর false premise থাকতে পারে, কিন্তু proposition-কে valid বা invalid বলা হয় না।”</div>
+<h2>৪. পূর্বকথন ও উপসংহারের সম্পর্ক: সত্যতা বনাম বৈধতা</h2>
+<h3>পূর্বকথন ও উপসংহারের সম্পর্ক</h3>
+<p>একটি যুক্তিতে পূর্বকথন হলো উপসংহার গ্রহণের কারণ। যুক্তিবিদ্যার মূল প্রশ্ন হলো উপসংহারটি ওই পূর্বকথন থেকে অনুসরণ করে কি না। নিগমনমূলক যুক্তিতে এই সম্পর্ককে <b>বৈধতা</b> বলা হয়।</p>
+<div class="grid2"><div><h3>সত্যতা</h3><p>সত্যতা বা মিথ্যাতা হলো <b>প্রস্তাবের</b> বৈশিষ্ট্য।</p><p>উদাহরণ: “ঢাকা বাংলাদেশের রাজধানী” বক্তব্যটি সত্য বা মিথ্যা হতে পারে।</p></div><div><h3>বৈধতা</h3><p>বৈধতা বা অবৈধতা হলো <b>যুক্তির</b> বৈশিষ্ট্য।</p><p>এমন কোনো সম্ভাব্য অবস্থা না থাকলে, যেখানে সব পূর্বকথন সত্য কিন্তু উপসংহার মিথ্যা, যুক্তিটি বৈধ।</p></div></div>
+<h3>সত্যতা ও বৈধতা আলাদা কেন: উদাহরণ</h3>
+<div class="formula">সব মাছ স্তন্যপায়ী।
+সব তিমি মাছ।
+অতএব, সব তিমি স্তন্যপায়ী।</div>
+<p>যুক্তির কাঠামো বৈধ। কিন্তু প্রথম পূর্বকথন মিথ্যা। তাই যুক্তিটি <b>বৈধ কিন্তু সুসংগত নয়</b>।</p>
+<div class="formula">সব পাখি প্রাণী।
+সব কুকুর প্রাণী।
+অতএব, সব কুকুর পাখি।</div>
+<p>পূর্বকথন সত্য হতে পারে, কিন্তু উপসংহার অনুসরণ করে না। তাই এটি <b>অবৈধ</b>।</p>
+<div class="formula">সব স্তন্যপায়ী প্রাণী।
+সব তিমি স্তন্যপায়ী।
+অতএব, সব তিমি প্রাণী।</div>
+<p>এটি <b>বৈধ ও সুসংগত</b>, কারণ অনুমান বৈধ এবং পূর্বকথন সত্য।</p>
+<div class="exam"><b>মুখস্থ করার লাইন:</b> “সত্যতা হলো প্রস্তাবের বৈশিষ্ট্য; বৈধতা হলো যুক্তির বৈশিষ্ট্য। বৈধ যুক্তির মিথ্যা পূর্বকথন থাকতে পারে, কিন্তু কোনো প্রস্তাবকে বৈধ বা অবৈধ বলা হয় না।”</div>
 </section>
+
 <section class="card" id="categorical">
-<h2>৫. Standard-form Categorical Propositions</h2>
-<p>Standard-form categorical proposition-এ subject term (S), predicate term (P), quantifier/copula pattern এবং A, E, I, O-এর একটি form থাকে।</p>
-<table class="matrix"><tr><th>Form</th><th>Pattern</th><th>নাম</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr>
-<tr><td>A</td><td>All S are P.</td><td>Universal affirmative</td><td>Affirmative</td><td>Universal</td><td>S distributed; P undistributed</td></tr>
-<tr><td>E</td><td>No S are P.</td><td>Universal negative</td><td>Negative</td><td>Universal</td><td>S distributed; P distributed</td></tr>
-<tr><td>I</td><td>Some S are P.</td><td>Particular affirmative</td><td>Affirmative</td><td>Particular</td><td>S undistributed; P undistributed</td></tr>
-<tr><td>O</td><td>Some S are not P.</td><td>Particular negative</td><td>Negative</td><td>Particular</td><td>S undistributed; P distributed</td></tr></table>
-<h3>Quality</h3><p><b>Affirmative</b> proposition S ও P-এর সম্পর্ককে গ্রহণ করে। <b>Negative</b> proposition সেই সম্পর্ক অস্বীকার করে।</p>
-<h3>Quantity</h3><p><b>Universal</b> subject class-এর সব সদস্য নিয়ে কথা বলে। <b>Particular</b> কিছু সদস্য নিয়ে কথা বলে।</p>
-<h3>Distribution</h3><p>যখন proposition কোনো term-এর class-এর <b>প্রত্যেক সদস্য</b> বোঝায়, তখন term distributed।</p>
-<div class="exam"><b>উদাহরণ:</b> “All voters are citizens.” → A proposition. <b>Voters:</b> distributed. <b>Citizens:</b> undistributed.<br/><b>উদাহরণ:</b> “Some citizens are not voters.” → O proposition. <b>Citizens:</b> undistributed. <b>Voters:</b> distributed.</div>
-<h3>Mnemonic</h3><p><b>A:</b> Subject only. <b>E:</b> Both. <b>I:</b> Neither. <b>O:</b> Predicate only.</p>
+<h2>৫. প্রমিত শ্রেণিবাচক প্রস্তাব</h2>
+<p>প্রমিত শ্রেণিবাচক প্রস্তাবে একটি বিষয়পদ, একটি বিধেয়পদ, একটি পরিমাণসূচক কাঠামো এবং A, E, I, O-এর একটি রূপ থাকে।</p>
+<table class="matrix"><tr><th>রূপ</th><th>কাঠামো</th><th>নাম</th><th>গুণ</th><th>পরিমাণ</th><th>ব্যাপ্তি</th></tr>
+<tr><td>A</td><td>সব S হলো P।</td><td>সর্বজনীন স্বীকৃতিবাচক</td><td>স্বীকৃতিবাচক</td><td>সর্বজনীন</td><td>S ব্যাপ্ত; P অব্যাপ্ত</td></tr>
+<tr><td>E</td><td>কোনো S-ই P নয়।</td><td>সর্বজনীন অস্বীকৃতিবাচক</td><td>অস্বীকৃতিবাচক</td><td>সর্বজনীন</td><td>S ব্যাপ্ত; P ব্যাপ্ত</td></tr>
+<tr><td>I</td><td>কিছু S হলো P।</td><td>বিশেষ স্বীকৃতিবাচক</td><td>স্বীকৃতিবাচক</td><td>বিশেষ</td><td>S অব্যাপ্ত; P অব্যাপ্ত</td></tr>
+<tr><td>O</td><td>কিছু S P নয়।</td><td>বিশেষ অস্বীকৃতিবাচক</td><td>অস্বীকৃতিবাচক</td><td>বিশেষ</td><td>S অব্যাপ্ত; P ব্যাপ্ত</td></tr>
+</table>
+<h3>গুণ</h3><p><b>স্বীকৃতিবাচক</b> প্রস্তাব বিষয়পদ ও বিধেয়পদের মধ্যে অন্তর্ভুক্তি বা মিল স্বীকার করে। <b>অস্বীকৃতিবাচক</b> প্রস্তাব সেই সম্পর্ক অস্বীকার করে।</p>
+<h3>পরিমাণ</h3><p><b>সর্বজনীন</b> প্রস্তাব বিষয়শ্রেণির সব সদস্য নিয়ে কথা বলে। <b>বিশেষ</b> প্রস্তাব কিছু সদস্য নিয়ে কথা বলে।</p>
+<h3>ব্যাপ্তি</h3><p>কোনো পদ তখন ব্যাপ্ত, যখন প্রস্তাবটি ওই পদের শ্রেণির <b>প্রত্যেক সদস্যকে</b> নির্দেশ করে।</p>
+<div class="exam"><b>প্রশ্ন:</b> “সব ভোটার নাগরিক।” → A প্রস্তাব। <b>ভোটার:</b> ব্যাপ্ত। <b>নাগরিক:</b> অব্যাপ্ত।<br><b>প্রশ্ন:</b> “কিছু নাগরিক ভোটার নয়।” → O প্রস্তাব। <b>নাগরিক:</b> অব্যাপ্ত। <b>ভোটার:</b> ব্যাপ্ত।</div>
+<h3>মনে রাখার সূত্র</h3><p><b>A:</b> শুধু বিষয়পদ ব্যাপ্ত। <b>E:</b> দুটিই ব্যাপ্ত। <b>I:</b> কোনোটিই ব্যাপ্ত নয়। <b>O:</b> শুধু বিধেয়পদ ব্যাপ্ত।</p>
 </section>
+
 <section class="card" id="transformations">
-<h2>৬. Conversion, Obversion ও Contraposition</h2>
-<div class="grid3"><div><h3>Conversion</h3><p>S ও P অদলবদল করো।</p><p><b>E ও I:</b> valid.</p><p><b>A:</b> traditional treatment-এ existential assumption থাকলে limitation-এর মাধ্যমে valid হতে পারে।</p><p><b>O:</b> invalid.</p></div>
-<div><h3>Obversion</h3><p>Subject একই রাখো, quality বদলাও, predicate-এর complement বসাও।</p><p><b>A, E, I, O সব ক্ষেত্রেই valid.</b></p><p>উদাহরণ: All S are P → No S are non-P.</p></div>
-<div><h3>Contraposition</h3><p>Subject ও predicate অদলবদল করে উভয়ের complement ব্যবহার করা হয়।</p><p><b>A ও O:</b> valid.</p><p><b>E ও I:</b> সাধারণভাবে invalid.</p></div></div>
-<table><tr><th>Original</th><th>Conversion</th><th>Obversion</th><th>Contraposition</th></tr>
-<tr><td>All S are P.</td><td>All P are S. (সাধারণভাবে valid নয়)</td><td>No S are non-P. (valid)</td><td>All non-P are non-S. (valid)</td></tr>
-<tr><td>No S are P.</td><td>No P are S. (valid)</td><td>All S are non-P. (valid)</td><td>সাধারণ simple categorical inference হিসেবে valid নয়</td></tr>
-<tr><td>Some S are P.</td><td>Some P are S. (valid)</td><td>Some S are not non-P. (valid)</td><td>সাধারণভাবে valid নয়</td></tr>
-<tr><td>Some S are not P.</td><td>Some P are not S. (invalid)</td><td>Some S are non-P. (valid)</td><td>Some non-P are not non-S. (valid)</td></tr></table>
-<div class="warning"><b>শুধু নাম মুখস্থ করবে না।</b> পরীক্ষায় দেখাবে কী বদলেছে, কী complement হয়েছে এবং inference valid কি না।</div>
-<h3>Existential import ও Boolean interpretation</h3><p><b>Existential import</b> হলো universal proposition-এর subject class-এ সত্যিই কোনো সদস্য আছে কি না, সেই ধারণা। Traditional interpretation-এ universal categorical proposition-এ অনেক সময় existential import ধরা হতো। <b>Boolean interpretation</b>-এ universal A ও E proposition subject class-এর member থাকা বাধ্যতামূলক করে না।</p>
-<div class="exam">এটি conversion by limitation এবং empty class-সহ syllogistic validity বুঝতে গুরুত্বপূর্ণ।</div>
+<h2>৬. রূপান্তর, বিপরীতকরণ ও প্রতিপক্ষীকরণ</h2>
+<div class="grid3"><div>
+<h3>রূপান্তর</h3><p>বিষয়পদ ও বিধেয়পদ অদলবদল করা হয়।</p><p><b>E ও I:</b> বৈধ।</p><p><b>A:</b> প্রচলিত ঐতিহ্যগত ব্যাখ্যায় অস্তিত্ব ধরে নিলে সীমিত রূপে বৈধ।</p><p><b>O:</b> অবৈধ।</p>
+</div><div>
+<h3>বিপরীতকরণ</h3><p>বিষয়পদ একই থাকে, গুণ বদলায় এবং বিধেয়পদের পরিপূরক নেওয়া হয়।</p><p><b>A, E, I, O:</b> চারটিতেই বৈধ।</p><p>উদাহরণ: সব S হলো P → কোনো S-ই P-বহির্ভূত নয়।</p>
+</div><div>
+<h3>প্রতিপক্ষীকরণ</h3><p>বিষয়পদ ও বিধেয়পদ অদলবদল করে উভয়ের পরিপূরক নেওয়া হয়।</p><p><b>A ও O:</b> বৈধ।</p><p><b>E ও I:</b> সাধারণত অবৈধ।</p>
+</div></div>
+<table><tr><th>মূল প্রস্তাব</th><th>রূপান্তর</th><th>বিপরীতকরণ</th><th>প্রতিপক্ষীকরণ</th></tr>
+<tr><td>সব S হলো P।</td><td>সব P হলো S। (সাধারণভাবে বৈধ নয়)</td><td>কোনো S-ই P-বহির্ভূত নয়। (বৈধ)</td><td>সব P-বহির্ভূত হলো S-বহির্ভূত। (বৈধ)</td></tr>
+<tr><td>কোনো S-ই P নয়।</td><td>কোনো P-ই S নয়। (বৈধ)</td><td>সব S হলো P-বহির্ভূত। (বৈধ)</td><td>সরল শ্রেণিবাচক অনুমান হিসেবে সাধারণত বৈধ নয়।</td></tr>
+<tr><td>কিছু S হলো P।</td><td>কিছু P হলো S। (বৈধ)</td><td>কিছু S P-বহির্ভূত নয়। (বৈধ)</td><td>সাধারণভাবে বৈধ নয়।</td></tr>
+<tr><td>কিছু S P নয়।</td><td>কিছু P S নয়। (অবৈধ)</td><td>কিছু S হলো P-বহির্ভূত। (বৈধ)</td><td>কিছু P-বহির্ভূত হলো S-বহির্ভূত নয়। (বৈধ)</td></tr>
+</table>
+<div class="warning"><b>শুধু নাম মুখস্থ করবে না।</b> পরীক্ষায় দেখাবে কী করা হয়েছে: কোন পদ বদলানো হয়েছে, কী অস্বীকার বা পরিপূরক করা হয়েছে এবং অনুমানটি বৈধ কি না।</div>
+<h3>অস্তিত্বগত অর্থ ও বুলীয় ব্যাখ্যা</h3><p><b>অস্তিত্বগত অর্থ</b> বলতে বোঝায় কোনো প্রস্তাব তার বিষয়শ্রেণিতে সদস্য আছে বলে ধরে নেয় কি না। ঐতিহ্যগত ব্যাখ্যায় সর্বজনীন শ্রেণিবাচক প্রস্তাবের ক্ষেত্রে অনেক সময় এমন অস্তিত্ব ধরে নেওয়া হতো। <b>বুলীয় ব্যাখ্যায়</b> সর্বজনীন A ও E প্রস্তাব বিষয়শ্রেণির সদস্য থাকা বাধ্যতামূলক করে না।</p>
+<div class="exam">এই পার্থক্য বিশেষভাবে গুরুত্বপূর্ণ সীমিত রূপে রূপান্তর এবং ফাঁকা শ্রেণি থাকলে ন্যায়ানুমানের বৈধতা বোঝার সময়।</div>
 </section>
+
 <section class="card" id="syllogism">
-<h2>৭. Standard-form Categorical Syllogism ও Venn Diagram</h2>
-<h3>সংজ্ঞা</h3><p>Standard-form categorical syllogism হলো এমন deductive argument যাতে ঠিক তিনটি categorical proposition থাকে: দুইটি premise ও একটি conclusion। এখানে ঠিক তিনটি term থাকে এবং প্রতিটি term দুইবার করে আসে।</p>
-<h3>তিনটি term</h3><table><tr><th>Term</th><th>অর্থ</th></tr><tr><td>Major term (P)</td><td>Conclusion-এর predicate।</td></tr><tr><td>Minor term (S)</td><td>Conclusion-এর subject।</td></tr><tr><td>Middle term (M)</td><td>দুই premise-এ থাকে, কিন্তু conclusion-এ থাকে না।</td></tr></table>
-<h3>Syllogism-এর বৈশিষ্ট্য</h3><ul><li>তিনটি categorical proposition: দুই premise, এক conclusion।</li><li>ঠিক তিনটি term: S, P, M।</li><li>প্রতিটি term দুইবার করে আসে।</li><li>Middle term premises-এর মধ্যে minor ও major term-কে যুক্ত করে।</li><li>Syllogism-এর <b>mood</b> হলো A/E/I/O pattern এবং <b>figure</b> হলো M-এর position।</li></ul>
-<h3>Figures</h3><table class="matrix"><tr><th>Figure</th><th>Major premise</th><th>Minor premise</th><th>Conclusion</th></tr><tr><td>1</td><td>M-P</td><td>S-M</td><td>S-P</td></tr><tr><td>2</td><td>P-M</td><td>S-M</td><td>S-P</td></tr><tr><td>3</td><td>M-P</td><td>M-S</td><td>S-P</td></tr><tr><td>4</td><td>P-M</td><td>M-S</td><td>S-P</td></tr></table>
-<h3>Venn Diagram পরীক্ষার পদ্ধতি</h3><ol><li>S, P, M নামে তিনটি overlapping circle আঁকো।</li><li>শুধু <b>premises</b> diagram করো; empty region shade করো এবং existence থাকলে X বসাও।</li><li>শুরুতে conclusion diagram করো না।</li><li>দেখো conclusionটি premise-diagram থেকেই বাধ্যতামূলকভাবে আসে কি না।</li><li>এলে valid, না এলে invalid।</li></ol>
-<h3>চাওয়া উদাহরণ</h3><details><summary>IAI-3</summary><div class="inside"><p><b>Figure 3:</b> Major = I, minor = A, conclusion = I.</p><p>Some M are P; All M are S; therefore, Some S are P.</p><p>“Some M are P” থেকে M∩P-তে X বসবে। “All M are S” বলছে সব M, S-এর ভিতরে। তাই X-টিও S∩P-তে থাকবে। Conclusion বাধ্যতামূলক।</p><p><b>Result: VALID.</b></p></div></details>
-<details><summary>EAE-3</summary><div class="inside"><p>No M are P; All M are S; therefore, No S are P.</p><p>Premises শুধু M-কে নিয়ন্ত্রণ করছে। S-এর M-এর বাইরে থাকা অংশে P থাকতে পারে। তাই conclusion বাধ্যতামূলক নয়।</p><p><b>Result: INVALID.</b></p></div></details>
+<h2>৭. প্রমিত শ্রেণিবাচক ন্যায়ানুমান ও ভেনচিত্র</h2>
+<h3>সংজ্ঞা</h3><p><b>প্রমিত শ্রেণিবাচক ন্যায়ানুমান</b> হলো এমন নিগমনমূলক যুক্তি যাতে ঠিক তিনটি শ্রেণিবাচক প্রস্তাব থাকে: দুটি পূর্বকথন ও একটি উপসংহার। এতে ঠিক তিনটি পদ থাকে এবং প্রতিটি পদ দুইবার করে আসে।</p>
+<h3>তিনটি পদ</h3><table><tr><th>পদ</th><th>অর্থ</th></tr>
+<tr><td>প্রধান পদ (P)</td><td>উপসংহারের বিধেয়পদ।</td></tr>
+<tr><td>গৌণ পদ (S)</td><td>উপসংহারের বিষয়পদ।</td></tr>
+<tr><td>মধ্যপদ (M)</td><td>দুই পূর্বকথনে থাকে, কিন্তু উপসংহারে থাকে না।</td></tr></table>
+<h3>ন্যায়ানুমানের বৈশিষ্ট্য</h3><ul>
+<li>দুটি পূর্বকথন ও একটি উপসংহারসহ মোট তিনটি শ্রেণিবাচক প্রস্তাব।</li>
+<li>ঠিক তিনটি পদ: S, P এবং M।</li>
+<li>প্রতিটি পদ দুইবার করে থাকে।</li>
+<li>মধ্যপদ পূর্বকথনে গৌণ ও প্রধান পদের মধ্যে সম্পর্ক তৈরি করে।</li>
+<li>এর একটি <b>রূপবিন্যাস</b> থাকে, যা A/E/I/O-র ধরন দিয়ে বোঝা হয়, এবং একটি <b>আকৃতি</b> থাকে, যা মধ্যপদের অবস্থান দিয়ে বোঝা হয়।</li></ul>
+<h3>চারটি আকৃতি</h3><table class="matrix"><tr><th>আকৃতি</th><th>প্রধান পূর্বকথন</th><th>গৌণ পূর্বকথন</th><th>উপসংহার</th></tr>
+<tr><td>১</td><td>M-P</td><td>S-M</td><td>S-P</td></tr><tr><td>২</td><td>P-M</td><td>S-M</td><td>S-P</td></tr><tr><td>৩</td><td>M-P</td><td>M-S</td><td>S-P</td></tr><tr><td>৪</td><td>P-M</td><td>M-S</td><td>S-P</td></tr></table>
+<h3>ভেনচিত্রে পরীক্ষার নিয়ম</h3><ol><li>S, P ও M চিহ্নিত তিনটি পরস্পর ছেদকারী বৃত্ত আঁকো।</li><li>শুধু পূর্বকথন বসাও: যে অংশ অবশ্যই শূন্য, তা ছায়া দাও এবং যেখানে অস্তিত্বের কথা বলা হয়েছে সেখানে X বসাও।</li><li>শুরুতেই উপসংহার বসাবে না।</li><li>পূর্বকথন বসানোর পর দেখো উপসংহারটি নিজে থেকেই বাধ্যতামূলক হচ্ছে কি না।</li><li>বাধ্যতামূলক হলে যুক্তি বৈধ, না হলে অবৈধ।</li></ol>
+<h3>চাওয়া উদাহরণ</h3>
+<details><summary>IAI-3</summary><div class="inside"><p><b>তৃতীয় আকৃতি:</b> I, A, I। অর্থ: কিছু M হলো P; সব M হলো S; অতএব কিছু S হলো P।</p><p>“কিছু M হলো P” থেকে M∩P অংশে X বসবে। “সব M হলো S” থেকে সব M-কে S-এর ভেতরে ধরতে হবে। তাই ওই X-ও S∩P-র মধ্যে থাকবে। উপসংহার “কিছু S হলো P” বাধ্যতামূলক।</p><p><b>ফল: বৈধ।</b></p></div></details>
+<details><summary>EAE-3</summary><div class="inside"><p>অর্থ: কোনো M-ই P নয়; সব M হলো S; অতএব কোনো S-ই P নয়।</p><p>পূর্বকথন শুধু M-অঞ্চল নিয়ন্ত্রণ করে। M-এর বাইরে থাকা S-এর সদস্য P-ও হতে পারে। তাই উপসংহার বাধ্যতামূলক নয়।</p><p><b>ফল: অবৈধ।</b></p></div></details>
 </section>
+
 <section class="card" id="fallacies">
-<h2>৮. Fallacies - ধরন, সংজ্ঞা ও উদাহরণ</h2>
-<div class="tip"><b>সংজ্ঞা:</b> Fallacy হলো ভুল reasoning-এর একটি ধরন। Fallacious argument দেখতে convincing হতে পারে, কিন্তু conclusion-কে প্রয়োজনীয় logical support দেয় না।</div>
-<h3>A. Fallacies of Relevance</h3><table><tr><th>Fallacy</th><th>কী হয়</th><th>সহজ উদাহরণ</th></tr>
-<tr><td><b>Appeal to Force</b></td><td>যুক্তির বদলে হুমকি বা শক্তি ব্যবহার করা হয়।</td><td>“আমার proposal মানো, না হলে চাকরি হারাবে।”</td></tr>
-<tr><td><b>Abusive ad Hominem</b></td><td>যুক্তির বদলে মানুষটিকে আক্রমণ করা হয়।</td><td>“ওর economic argument ভুল, কারণ সে বোকা।”</td></tr>
-<tr><td><b>Circumstantial ad Hominem</b></td><td>বক্তার স্বার্থ বা অবস্থার কথা বলে claim reject করা হয়।</td><td>“তুমি environmental rule support করছ কারণ তুমি ওই group-এ কাজ করো।”</td></tr>
-<tr><td><b>Tu Quoque</b></td><td>সমালোচনার উত্তর হিসেবে সমালোচকও একই কাজ করে বলে দেখানো হয়।</td><td>“Cheating খারাপ বলো না, তুমিও গত বছর cheat করেছিলে।”</td></tr>
-<tr><td><b>Appeal to Ignorance</b></td><td>কিছু false প্রমাণ হয়নি বলে true, বা true প্রমাণ হয়নি বলে false ধরে নেওয়া।</td><td>“Aliens নেই প্রমাণ হয়নি, তাই তারা অবশ্যই আছে।”</td></tr>
-<tr><td><b>Appeal to Pity</b></td><td>Relevant evidence-এর বদলে pity ব্যবহার করা।</td><td>“আমাকে full marks দিন, নইলে family disappointed হবে।”</td></tr>
-<tr><td><b>Appeal to the People</b></td><td>জনপ্রিয়তা বা crowd emotion-কে evidence বানানো।</td><td>“লক্ষ মানুষ বিশ্বাস করে, তাই সত্য।”</td></tr>
-<tr><td><b>Red Herring</b></td><td>আসল প্রশ্ন থেকে মন অন্যদিকে ঘুরিয়ে দেওয়া।</td><td>“Report জাল করেছ?” উত্তর: “আমাদের company হাজার চাকরি দিয়েছে।”</td></tr>
-<tr><td><b>Missing the Point</b></td><td>Premises অন্য conclusion support করে, কিন্তু অন্য conclusion দেওয়া হয়।</td><td>“Traffic enforcement দরকার, তাই city park বন্ধ করা উচিত।”</td></tr>
-<tr><td><b>Straw Man</b></td><td>Opponent-এর আসল কথা বদলে দুর্বল version বানিয়ে সেটি attack করা।</td><td>“সে কম exam চায়, মানে সে চায় student কিছু না শিখুক।”</td></tr></table>
-<h3>B. Fallacies of Presumption</h3><table><tr><th>Fallacy</th><th>কী হয়</th><th>উদাহরণ</th></tr>
-<tr><td><b>Accident</b></td><td>সাধারণ rule-কে এমন exceptional case-এ প্রয়োগ করা যেখানে ruleটি ঠিকভাবে খাটে না।</td><td>“Freedom of speech সবসময় ভালো, তাই crowded theater-এ মিথ্যা fire alarm দিলেও অনুমতি থাকা উচিত।”</td></tr>
-<tr><td><b>Converse Accident / Hasty Generalization</b></td><td>কম বা unrepresentative sample থেকে বড় generalization করা।</td><td>“দুই tourist rude ছিল, তাই tourist-রা rude।”</td></tr>
-<tr><td><b>False Cause</b></td><td>Correlation বা দুর্বল কারণকে আসল কারণ ধরে নেওয়া।</td><td>“এই shirt পরে match জিতেছি, তাই shirt-ই জিতিয়েছে।”</td></tr>
-<tr><td><b>Begging the Question</b></td><td>Conclusion-কে premise-এর মধ্যে সরাসরি বা পরোক্ষভাবে ধরে নেওয়া।</td><td>“এই law just, কারণ এটি fair law।”</td></tr>
-<tr><td><b>Complex Question</b></td><td>দুই বা ততোধিক প্রশ্ন একসঙ্গে এমনভাবে করা হয় যাতে উত্তর দিলে অন্যায্য assumption মেনে নিতে হয়।</td><td>“তুমি কি cheating করা বন্ধ করেছ?”</td></tr></table>
-<h3>C. Fallacies of Ambiguity</h3><table><tr><th>Fallacy</th><th>কী হয়</th><th>উদাহরণ</th></tr>
-<tr><td><b>Equivocation</b></td><td>একই key word argument-এর মধ্যে ভিন্ন অর্থে ব্যবহার করা।</td><td>“Bank river-এর পাশে; river bank money-related; তাই...”</td></tr>
-<tr><td><b>Amphiboly</b></td><td>একটি শব্দ নয়, grammatical structure-এর ambiguity থেকে সমস্যা হয়।</td><td>“I saw the student with the telescope” দুইভাবে বোঝা যায়।</td></tr>
-<tr><td><b>Accent</b></td><td>Emphasis বা wording বদলে অর্থ অন্যদিকে নেওয়া হয়।</td><td>Sentence-এর শুধু emphasized অংশ দেখিয়ে অন্য দাবি বোঝানো।</td></tr>
-<tr><td><b>Composition</b></td><td>Parts-এর গুণ দেখে whole-এর গুণ infer করা।</td><td>“প্রতিটি player excellent, তাই team অবশ্যই excellent।”</td></tr>
-<tr><td><b>Division</b></td><td>Whole-এর গুণ দেখে প্রতিটি part-এর একই গুণ infer করা।</td><td>“Company rich, তাই প্রত্যেক employee rich।”</td></tr></table>
-<h3>D. Weak or defective inductive reasoning</h3><p>Inductive fallacy হয় যখন evidence insufficient, unrepresentative, irrelevant বা ভুলভাবে interpret করা হয়।</p><div class="exam"><b>Fallacy question-এর formula:</b> (১) সংজ্ঞা, (২) ভুল reasoning pattern, (৩) নতুন উদাহরণ, (৪) এক লাইনে বলো কেন premises conclusion justify করে না।</div>
+<h2>৮. কুযুক্তি: ধরন, সংজ্ঞা ও উদাহরণ</h2>
+<div class="tip"><b>সংজ্ঞা:</b> কুযুক্তি হলো ভুলভাবে যুক্তি করার একটি ধরন। কুযুক্তিপূর্ণ যুক্তি শুনতে গ্রহণযোগ্য মনে হতে পারে, কিন্তু উপসংহারকে প্রয়োজনীয় যৌক্তিক সমর্থন দেয় না।</div>
+<h3>ক. প্রাসঙ্গিকতার কুযুক্তি</h3>
+<table><tr><th>কুযুক্তি</th><th>কী ঘটে</th><th>উদাহরণ</th></tr>
+<tr><td><b>জোর খাটানোর আবেদন</b></td><td>প্রাসঙ্গিক কারণের বদলে হুমকি বা জোর ব্যবহার করা হয়।</td><td>“আমার প্রস্তাব মানো, না হলে চাকরি হারাবে।”</td></tr>
+<tr><td><b>ব্যক্তি-আক্রমণমূলক কুযুক্তি</b></td><td>যুক্তির বদলে বক্তাকে আক্রমণ করা হয়।</td><td>“তার অর্থনৈতিক যুক্তি ভুল, কারণ সে বোকা।”</td></tr>
+<tr><td><b>পরিস্থিতিনির্ভর ব্যক্তি-আক্রমণ</b></td><td>বক্তার পরিস্থিতি বা স্বার্থ দেখিয়ে তার দাবিকে বাতিল করা হয়।</td><td>“তুমি পরিবেশের নিয়ম সমর্থন করছ, কারণ তুমি পরিবেশবাদী সংগঠনে কাজ করো।”</td></tr>
+<tr><td><b>তুমিও তাই কুযুক্তি</b></td><td>সমালোচনার জবাবে সমালোচকও একই কাজ করেছে বলে অভিযোগ করা হয়।</td><td>“প্রতারণা ভুল বলবে না; তুমিও তো গত বছর প্রতারণা করেছিলে।”</td></tr>
+<tr><td><b>অজ্ঞতার আবেদন</b></td><td>কোনো কিছু ভুল প্রমাণিত হয়নি বলে তাকে সত্য ধরা, বা সত্য প্রমাণিত হয়নি বলে তাকে মিথ্যা ধরা।</td><td>“কেউ প্রমাণ করেনি যে ভিনগ্রহের প্রাণী নেই, তাই তারা অবশ্যই আছে।”</td></tr>
+<tr><td><b>করুণার আবেদন</b></td><td>প্রাসঙ্গিক প্রমাণের বদলে দয়া বা সহানুভূতি ব্যবহার করা হয়।</td><td>“আমাকে পুরো নম্বর দিন; আমার পরিবার হতাশ হবে।”</td></tr>
+<tr><td><b>জনমতের আবেদন</b></td><td>যুক্তির বদলে জনপ্রিয়তা বা মানুষের আবেগকে প্রমাণ হিসেবে ব্যবহার করা হয়।</td><td>“লক্ষ মানুষ এটা বিশ্বাস করে, তাই এটি সত্য।”</td></tr>
+<tr><td><b>বিষয়ান্তর</b></td><td>মূল প্রশ্ন থেকে মন সরিয়ে অন্য অপ্রাসঙ্গিক বিষয় আনা হয়।</td><td>প্রশ্ন: “তুমি কি প্রতিবেদন জাল করেছিলে?” উত্তর: “আমাদের কোম্পানি হাজার হাজার চাকরি দিয়েছে।”</td></tr>
+<tr><td><b>মূল বক্তব্য এড়িয়ে যাওয়া</b></td><td>পূর্বকথন এক উপসংহারকে সমর্থন করলেও অন্য উপসংহার দেওয়া হয়।</td><td>“যানবাহন নিয়ন্ত্রণ কঠোর করা দরকার, তাই শহরের পার্ক বন্ধ করা উচিত।”</td></tr>
+<tr><td><b>খড়ের পুতুল কুযুক্তি</b></td><td>প্রতিপক্ষের আসল বক্তব্যকে দুর্বল বা বিকৃত রূপ দিয়ে সেটিকেই আক্রমণ করা হয়।</td><td>“সে কম পরীক্ষা চায়, তাই সে চায় ছাত্ররা কিছুই না শিখুক।”</td></tr>
+</table>
+<h3>খ. অনুমানভিত্তিক কুযুক্তি</h3>
+<table><tr><th>কুযুক্তি</th><th>কী ঘটে</th><th>উদাহরণ</th></tr>
+<tr><td><b>ব্যতিক্রম উপেক্ষা</b></td><td>সাধারণ নিয়মকে এমন ব্যতিক্রমী ক্ষেত্রে প্রয়োগ করা হয় যেখানে নিয়মটি ঠিকভাবে খাটে না।</td><td>“বাকস্বাধীনতা সবসময় ভালো; তাই ভিড়ের থিয়েটারে মিথ্যা আগুনের সতর্কতা দেওয়া উচিত।”</td></tr>
+<tr><td><b>উল্টো ব্যতিক্রম বা তড়িঘড়ি সাধারণীকরণ</b></td><td>খুব ছোট বা অপ্রতিনিধিত্বশীল উদাহরণ থেকে বড় সাধারণ সিদ্ধান্ত নেওয়া হয়।</td><td>“দুজন পর্যটক খারাপ ব্যবহার করেছে, তাই পর্যটকেরা খারাপ।”</td></tr>
+<tr><td><b>ভুল কারণ</b></td><td>যথেষ্ট প্রমাণ ছাড়া কোনো দুর্বল কারণ বা শুধু সম্পর্ককে আসল কারণ ধরা হয়।</td><td>“আমি এই জামা পরেছিলাম এবং আমরা জিতেছি; তাই জামাটাই জিতিয়েছে।”</td></tr>
+<tr><td><b>প্রশ্নকেই প্রমাণ ধরে নেওয়া</b></td><td>উপসংহার সরাসরি বা ঘুরিয়ে পূর্বকথনেই ধরে নেওয়া হয়।</td><td>“এই আইন ন্যায়সংগত, কারণ এটি একটি ন্যায়সংগত আইন।”</td></tr>
+<tr><td><b>জটিল প্রশ্ন</b></td><td>একাধিক প্রশ্ন এমনভাবে একত্র করা হয় যাতে উত্তর দিলে অযৌক্তিক একটি ধারণা মেনে নেওয়া হয়।</td><td>“তুমি কি পরীক্ষায় নকল করা বন্ধ করেছ?”</td></tr>
+</table>
+<h3>গ. অস্পষ্টতার কুযুক্তি</h3>
+<table><tr><th>কুযুক্তি</th><th>কী ঘটে</th><th>উদাহরণ</th></tr>
+<tr><td><b>শব্দার্থ বদল</b></td><td>একই গুরুত্বপূর্ণ শব্দ যুক্তির মাঝখানে ভিন্ন অর্থে ব্যবহৃত হয়।</td><td>“ব্যাংক নদীর পাশে; নদীর তীর টাকা-পয়সার ব্যাংক; অতএব...”</td></tr>
+<tr><td><b>বাক্যগঠনজনিত অস্পষ্টতা</b></td><td>একটি শব্দ নয়, বাক্যগঠনের কারণে একাধিক অর্থ তৈরি হয়।</td><td>“আমি দূরবীনসহ ছাত্রটিকে দেখেছি” দুইভাবে বোঝা যেতে পারে।</td></tr>
+<tr><td><b>জোরের কারণে অর্থবিভ্রান্তি</b></td><td>কোনো শব্দ বা অংশে জোর বদলে দিয়ে বক্তব্যের অর্থ অন্যভাবে বোঝানো হয়।</td><td>একটি বাক্যের শুধু জোর দেওয়া অংশ তুলে ধরে ভিন্ন দাবি তৈরি করা।</td></tr>
+<tr><td><b>অংশ থেকে সমগ্রে</b></td><td>অংশগুলোর বৈশিষ্ট্য দেখে পুরো জিনিসের একই বৈশিষ্ট্য অনুমান করা হয়।</td><td>“প্রতিটি খেলোয়াড় চমৎকার; তাই পুরো দল অবশ্যই চমৎকার।”</td></tr>
+<tr><td><b>সমগ্র থেকে অংশে</b></td><td>সমগ্রের বৈশিষ্ট্য দেখে প্রতিটি অংশেরও একই বৈশিষ্ট্য আছে বলে ধরা হয়।</td><td>“কোম্পানি ধনী; তাই প্রত্যেক কর্মচারীও ধনী।”</td></tr>
+</table>
+<h3>ঘ. দুর্বল বা ত্রুটিপূর্ণ আগমনমূলক যুক্তি</h3><p>আগমনমূলক কুযুক্তি তখন হয় যখন প্রমাণ অপর্যাপ্ত, অপ্রতিনিধিত্বশীল, অপ্রাসঙ্গিক বা ভুলভাবে ব্যাখ্যা করা হয়।</p>
+<div class="exam"><b>কুযুক্তির প্রশ্নে লেখার সূত্র:</b> (১) সংজ্ঞা, (২) ভুল যুক্তির ধরন, (৩) নতুন উদাহরণ, (৪) এক লাইনে বোঝাও কেন পূর্বকথন উপসংহারকে সমর্থন করে না।</div>
 </section>
+
 <section class="card" id="induction">
-<h2>৯. Inductive Inference ও Mill-এর Methods</h2>
-<h3>Inductive argument</h3><p>Inductive argument-এ premises conclusion-কে <b>probable</b> করে, guarantee করে না। Conclusion premises-এ সরাসরি থাকা তথ্যের বাইরে যায়।</p>
-<h3>Mill-এর পাঁচটি method</h3><table><tr><th>Method</th><th>সহজ ধারণা</th><th>সহজ উদাহরণ</th></tr>
-<tr><td><b>Method of Agreement</b></td><td>যেসব case-এ phenomenon ঘটে, সবখানে common factor খোঁজা।</td><td>ভিন্ন খাবার খাওয়া কয়েকজন অসুস্থ, কিন্তু একটি খাবার সবার common।</td></tr>
-<tr><td><b>Method of Difference</b></td><td>একটি positive case ও কাছাকাছি negative case তুলনা করে যে factor আলাদা, তাকে causal factor হিসেবে ধরা।</td><td>এক group treatment পেল, অন্য similar group পেল না।</td></tr>
-<tr><td><b>Joint Method</b></td><td>Agreement ও Difference একসঙ্গে ব্যবহার করা।</td><td>সুস্থ ও অসুস্থ comparable case-এ factor-এর উপস্থিতি/অনুপস্থিতি দেখা।</td></tr>
-<tr><td><b>Method of Residues</b></td><td>Known causes দিয়ে known effect বাদ দিলে বাকি অংশকে remaining cause-এর সঙ্গে যুক্ত করা।</td><td>Total effect থেকে known contributors বাদ দিয়ে residual cause খোঁজা।</td></tr>
-<tr><td><b>Method of Concomitant Variations</b></td><td>এক factor নিয়মিত বদলালে অন্য factor-ও নিয়মিত বদলায় কি না দেখা।</td><td>Temperature বাড়ার সঙ্গে কোনো measurement নিয়মিত বদলায়।</td></tr></table>
-<h3>Mill-এর methods-এর সীমাবদ্ধতা</h3><ul><li>বাস্তবে অনেক সময় <b>একাধিক interacting cause</b> থাকে।</li><li>সব অন্য factor একই রাখা কঠিন।</li><li>Correlation নিজে একক causal explanation প্রমাণ করে না।</li><li>বাস্তব situation অনেক জটিল হতে পারে।</li><li>Case নির্বাচন বা hidden condition reasoning ভুল করাতে পারে।</li><li>এগুলো causal inquiry-এর systematic method, certainty-এর magic formula নয়।</li></ul>
+<h2>৯. আগমনমূলক অনুমান ও মিলের পরীক্ষামূলক অনুসন্ধানের পাঁচ পদ্ধতি</h2>
+<h3>আগমনমূলক যুক্তি</h3><p>আগমনমূলক যুক্তিতে পূর্বকথন উপসংহারকে <b>সম্ভাব্য</b> করে, নিশ্চিত করে না। উপসংহার পূর্বকথনে সরাসরি থাকা তথ্যের বাইরে যায়।</p>
+<h3>মিলের পাঁচটি পদ্ধতি</h3>
+<table><tr><th>পদ্ধতি</th><th>মূল ধারণা</th><th>সহজ উদাহরণ</th></tr>
+<tr><td><b>সাদৃশ্য পদ্ধতি</b></td><td>যেসব ক্ষেত্রে কোনো ঘটনা ঘটে, সেসব ক্ষেত্রে যে একটি সাধারণ উপাদান থাকে সেটি খোঁজা।</td><td>ভিন্ন খাবার খাওয়া কয়েকজন অসুস্থ হয়েছে; সবার খাওয়া একই খাবারটি সন্দেহ করা হয়।</td></tr>
+<tr><td><b>পার্থক্য পদ্ধতি</b></td><td>ঘটনা-ঘটা একটি ক্ষেত্র এবং প্রায় একই রকম ঘটনা-না-ঘটা ক্ষেত্র তুলনা করে যে উপাদানটি আলাদা, তাকে কারণ হিসেবে ধরা।</td><td>দুটি প্রায় একই দলের একটিকে চিকিৎসা দেওয়া হলো, অন্যটিকে দেওয়া হলো না।</td></tr>
+<tr><td><b>সাদৃশ্য ও পার্থক্যের যৌথ পদ্ধতি</b></td><td>দুটি পদ্ধতি একসঙ্গে ব্যবহার করা হয়।</td><td>অসুস্থ ক্ষেত্রে একটি কারণ থাকে এবং তুলনীয় সুস্থ ক্ষেত্রে তা থাকে না।</td></tr>
+<tr><td><b>অবশিষ্টাংশের পদ্ধতি</b></td><td>পরিচিত কারণ দিয়ে পরিচিত ফলের অংশগুলো ব্যাখ্যা করার পর যে অংশ বাকি থাকে, তাকে বাকি কারণের সঙ্গে যুক্ত করা হয়।</td><td>মোট প্রভাব থেকে জানা কারণগুলো বাদ দিয়ে অবশিষ্ট কারণ খোঁজা।</td></tr>
+<tr><td><b>সহপরিবর্তনের পদ্ধতি</b></td><td>একটি উপাদান নিয়মিত বদলালে অন্য উপাদানও নিয়মিত বদলায় কি না দেখা হয়।</td><td>তাপমাত্রা বাড়ার সঙ্গে কোনো পরিমাপ নিয়মিত বাড়ে বা কমে।</td></tr>
+</table>
+<h3>মিলের পদ্ধতির সীমাবদ্ধতা</h3><ul><li>বাস্তবে অনেক ঘটনার <b>একাধিক পারস্পরিকভাবে কাজ করা কারণ</b> থাকে।</li><li>সব অন্য উপাদান একই রাখা কঠিন।</li><li>সহসম্পর্ক একাই একক কারণ প্রমাণ করে না।</li><li>বাস্তব পরিস্থিতি খুব জটিল হওয়ায় পরিষ্কার তুলনা করা কঠিন হতে পারে।</li><li>ঘটনা বাছাই বা গোপন শর্ত যুক্তিকে ভুল পথে নিতে পারে।</li><li>এই পদ্ধতিগুলো কারণ খোঁজার সুশৃঙ্খল উপায়, নিশ্চয়তা পাওয়ার জাদুর সূত্র নয়।</li></ul>
 </section>
+
 <section class="card" id="probability">
-<h2>১০. Probability ও Analogical Argument</h2>
-<h3>Analogical argument</h3><p><b>Analogical argument</b> similarity থেকে reasoning করে। দুই বা ততোধিক case-এর relevant similarity দেখিয়ে অন্য একটি মিলও সম্ভবত আছে বলে inference করা হয়।</p>
-<div class="formula">Object A has properties p, q, r, and s.
-Object B has properties p, q, and r.
-Therefore, B probably has property s.</div>
-<p><b>Strength নির্ভর করে:</b> relevant similarity কতগুলো, সেগুলো কতটা গুরুত্বপূর্ণ, significant dissimilarity আছে কি না, এবং comparison cases কতটা representative।</p>
-<h3>Probability-এর theory / interpretation</h3><table><tr><th>Approach</th><th>মূল ধারণা</th><th>Strength</th><th>Limitation</th></tr>
-<tr><td><b>Classical / mathematical</b></td><td>Equally possible outcome-এর ratio দিয়ে probability নির্ধারণ।</td><td>Fair dice, coin-এর মতো symmetric case-এ পরিষ্কার।</td><td>বাস্তব ক্ষেত্রে “equally possible” প্রমাণ করা কঠিন।</td></tr>
-<tr><td><b>Statistical / relative-frequency</b></td><td>বড় class বা sequence-এ occurrence-এর relative frequency দিয়ে probability বোঝা।</td><td>Empirical data-এর সঙ্গে ভালোভাবে যুক্ত।</td><td>Single-case probability এবং exact long-run meaning নিয়ে সমস্যা থাকতে পারে।</td></tr></table>
-<h3>Coin problem</h3><div class="formula">Fair coin:
-P(T on one toss) = 1/2
+<h2>১০. সম্ভাবনা ও সাদৃশ্যভিত্তিক যুক্তি</h2>
+<h3>সাদৃশ্যভিত্তিক যুক্তি</h3><p><b>সাদৃশ্যভিত্তিক যুক্তি</b> মিলের ওপর ভিত্তি করে যুক্তি করে। দুই বা ততোধিক ঘটনার গুরুত্বপূর্ণ মিল দেখিয়ে অন্য একটি বৈশিষ্ট্যও সম্ভবত মিলবে বলে অনুমান করা হয়।</p>
+<div class="formula">বস্তু A-এর বৈশিষ্ট্য p, q, r এবং s আছে।
+বস্তু B-এর বৈশিষ্ট্য p, q এবং r আছে।
+অতএব, সম্ভবত B-এর s বৈশিষ্ট্যও আছে।</div>
+<p><b>যুক্তির শক্তি নির্ভর করে:</b> গুরুত্বপূর্ণ মিলের সংখ্যা, সেই মিলের গুরুত্ব, গুরুত্বপূর্ণ অমিল না থাকা, এবং তুলনার উদাহরণগুলো কতটা প্রতিনিধিত্বশীল তার ওপর।</p>
+<h3>সম্ভাবনার ধারণা বা ব্যাখ্যা</h3><table><tr><th>ধরন</th><th>মূল ধারণা</th><th>প্রধান সুবিধা</th><th>প্রধান সীমাবদ্ধতা</th></tr>
+<tr><td><b>শাস্ত্রীয় বা গাণিতিক ব্যাখ্যা</b></td><td>সমভাবে সম্ভাব্য ফলগুলোর অনুপাত দিয়ে সম্ভাবনা নির্ধারণ করা হয়।</td><td>ন্যায্য পাশা বা মুদ্রার মতো সমমিত ক্ষেত্রে পরিষ্কার।</td><td>বাস্তবে কোন ফল সমান সম্ভাবনাময়, তা নির্ধারণ করা কঠিন হতে পারে।</td></tr>
+<tr><td><b>পরিসংখ্যানগত বা আপেক্ষিক-ঘটনহার ব্যাখ্যা</b></td><td>বড় শ্রেণি বা ধারাবাহিক ঘটনার মধ্যে কোনো ফল কতবার ঘটে, তার আপেক্ষিক হার দিয়ে সম্ভাবনা বোঝানো হয়।</td><td>বাস্তব তথ্যের সঙ্গে সরাসরি যুক্ত।</td><td>একটি মাত্র ঘটনার সম্ভাবনা এবং দীর্ঘমেয়াদি ঘটনার সঠিক অর্থ নিয়ে সমস্যা থাকতে পারে।</td></tr></table>
+<h3>মুদ্রা নিক্ষেপের সমস্যা</h3><div class="formula">ন্যায্য মুদ্রা:
+একবার লেজ পাওয়ার সম্ভাবনা = ১/২
 
-P(TTT in 3 tosses) = (1/2)^3 = 1/8
+৩ বারেই লেজ পাওয়ার সম্ভাবনা = (১/২)^৩ = ১/৮
 
-P(at least one H in 3 tosses)
-= 1 - P(no H)
-= 1 - (1/2)^3
-= 7/8</div><p><b>Shortcut:</b> “at least one head” = 1 - “no heads.”</p>
+৩ বার নিক্ষেপে অন্তত একটি হেড পাওয়ার সম্ভাবনা
+= ১ - কোনো হেড না পাওয়ার সম্ভাবনা
+= ১ - (১/২)^৩
+= ৭/৮</div><p><b>দ্রুত পদ্ধতি:</b> “অন্তত একটি হেড” = ১ - “একটিও হেড নয়”।</p>
 </section>
+
 <section class="card" id="previous">
-<h2>১১. Previous-Year Questions - পূর্ণ উত্তর</h2><p class="small">Long-mark answer-এ আগে direct definition, তারপর explanation, example বা evaluation।</p>
-<details open=""><summary>Group A - 5-mark questions</summary><div class="inside">
-<h3>১. What is Logic? Explain the central problem.</h3><p><b>Answer:</b> Logic হলো correct reasoning ও incorrect reasoning আলাদা করার methods ও principles-এর study। এর central problem হলো conclusion premises থেকে appropriate logical way-এ follow করে কি না। Deductive reasoning-এ entailment এবং inductive reasoning-এ adequate probable support দেখা হয়।</p>
-<h3>২. তিনটি basic function of logic</h3><p><b>Answer:</b> (১) <b>Analysis</b> - proposition, premise, conclusion ও structure চিহ্নিত করা; (২) <b>Evaluation</b> - reasoning valid, strong বা defective কি না যাচাই করা; (৩) <b>Error detection</b> - fallacy ও অন্য defect চিহ্নিত করা।</p>
-<h3>৩. Analogical argument কী?</h3><p><b>Answer:</b> Similarity-এর ভিত্তিতে একটি case-এর আরও একটি property অন্য case-এও সম্ভবত আছে বলে যে inductive inference করা হয়, সেটি analogical argument। এর strength relevant similarity, dissimilarity-এর অভাব এবং comparison-এর representativeness-এর ওপর নির্ভর করে।</p>
-<h3>৪. Distribution</h3><table><tr><th>Proposition</th><th>Form</th><th>Subject</th><th>Predicate</th></tr><tr><td>All voters are citizens.</td><td>A</td><td><b>Distributed</b></td><td><b>Undistributed</b></td></tr><tr><td>Some citizens are not voters.</td><td>O</td><td><b>Undistributed</b></td><td><b>Distributed</b></td></tr></table>
+<h2>১১. আগের বছরের প্রশ্ন: পূর্ণ উত্তর</h2><p class="small">বড় নম্বরের প্রশ্নে আগে সরাসরি সংজ্ঞা দাও, তারপর ব্যাখ্যা, উদাহরণ বা বিচার দাও।</p>
+<details open><summary>ক. ৫ নম্বরের প্রশ্ন</summary><div class="inside">
+<h3>১. যুক্তিবিদ্যা কী? কপির মতে যুক্তিবিদ্যার কেন্দ্রীয় সমস্যা ব্যাখ্যা করো।</h3><p><b>উত্তর:</b> কপির মতে যুক্তিবিদ্যা হলো সঠিক যুক্তি ও ভুল যুক্তি আলাদা করার পদ্ধতি ও নীতির অধ্যয়ন। যুক্তিবিদ্যা কোনো নির্দিষ্ট বিষয়ের পরিবর্তে যুক্তির মূল্যায়ন নিয়ে কাজ করে। এর কেন্দ্রীয় সমস্যা হলো কোনো উপসংহার তার পূর্বকথন থেকে উপযুক্ত যৌক্তিক পদ্ধতিতে অনুসরণ করে কি না নির্ধারণ করা। নিগমনমূলক যুক্তিতে পূর্বকথন উপসংহারকে অনিবার্যভাবে প্রতিষ্ঠা করে কি না দেখা হয়; আগমনমূলক যুক্তিতে যথেষ্ট সম্ভাব্য সমর্থন আছে কি না দেখা হয়।</p>
+<h3>২. যুক্তিবিদ্যার তিনটি মূল কাজ সংক্ষেপে লেখো।</h3><p><b>উত্তর:</b> তিনটি কাজ হলো: (১) <b>বিশ্লেষণ</b> - প্রস্তাব, পূর্বকথন, উপসংহার ও কাঠামো চিহ্নিত করা; (২) <b>বিচার</b> - অনুমান বৈধ, শক্তিশালী বা ত্রুটিপূর্ণ কি না পরীক্ষা করা; (৩) <b>ভুল শনাক্তকরণ ও সংশোধন</b> - কুযুক্তি ও অন্য ত্রুটি চিহ্নিত করে যুক্তিকে নির্ভরযোগ্য করা।</p>
+<h3>৩. সাদৃশ্যভিত্তিক যুক্তি কী?</h3><p><b>উত্তর:</b> দুই বা ততোধিক ঘটনার প্রাসঙ্গিক মিলকে ভিত্তি করে আরেকটি মিলও সম্ভবত আছে বলে যে আগমনমূলক অনুমান করা হয়, সেটি সাদৃশ্যভিত্তিক যুক্তি। এর শক্তি গুরুত্বপূর্ণ মিলের সংখ্যা, সেই মিলের গুরুত্ব, বড় অমিলের অনুপস্থিতি এবং তুলনার উদাহরণগুলোর প্রতিনিধিত্বশীলতার ওপর নির্ভর করে।</p>
+<h3>৪. নিচের প্রস্তাবে ব্যাপ্তি নির্ণয় করো: ক) সব ভোটার নাগরিক। খ) কিছু নাগরিক ভোটার নয়।</h3><table><tr><th>প্রস্তাব</th><th>রূপ</th><th>বিষয়পদ</th><th>বিধেয়পদ</th></tr><tr><td>ক) সব ভোটার নাগরিক।</td><td>A</td><td><b>ব্যাপ্ত</b></td><td><b>অব্যাপ্ত</b></td></tr><tr><td>খ) কিছু নাগরিক ভোটার নয়।</td><td>O</td><td><b>অব্যাপ্ত</b></td><td><b>ব্যাপ্ত</b></td></tr></table>
 </div></details>
-<details><summary>Group B - Long questions</summary><div class="inside">
-<h3>১. Premise ও Conclusion-এর relation. Truth ও Validity.</h3><p><b>Answer:</b> Premises হলো conclusion গ্রহণের কারণ এবং conclusion হলো যে proposition-কে establish করা হচ্ছে। Deductive argument valid যখন এমন কোনো possible case নেই যেখানে সব premises true অথচ conclusion false।</p><p><b>Truth</b> proposition-এর বৈশিষ্ট্য, আর <b>validity</b> argument-এর logical structure-এর বৈশিষ্ট্য। তাই valid argument-এর false premise থাকতে পারে। “All fish are mammals. All whales are fish. Therefore all whales are mammals.” form valid, কিন্তু প্রথম premise false, তাই unsound।</p><h3>২. Logical Definition কী?</h3><p><b>Answer:</b> Logical definition হলো এমন precise definition যা term-এর essential attributes বোঝায় এবং খুব broad বা খুব narrow হয় না। উদাহরণ: “A triangle is a plane figure bounded by three straight lines.”</p>
-<h3>৩. Rules of definition ও fallacy</h3><ol><li>Essential attributes দিতে হবে।</li><li>Circular হওয়া যাবে না।</li><li>Denotation-এ equivalent হতে হবে, খুব broad বা narrow নয়।</li><li>Obscure বা ambiguous হওয়া উচিত নয়।</li><li>Literal precision দরকার হলে শুধু figurative ভাষা ব্যবহার করা উচিত নয়।</li><li>যেখানে affirmative definition সম্ভব, সেখানে অপ্রয়োজনে negative definition দেওয়া ঠিক নয়।</li></ol>
-<h3>৪. Fallacy ও fallacies of relevance</h3><p><b>Answer:</b> Fallacy হলো erroneous reasoning। Relevance fallacy-এ premises conclusion-এর জন্য logically relevant support দেয় না। প্রধান উদাহরণ: appeal to force, abusive ad hominem, circumstantial ad hominem, tu quoque, appeal to ignorance, appeal to pity, appeal to the people, red herring, missing the point এবং straw man।</p>
-<h3>৫. Standard-form categorical proposition</h3><p><b>Answer:</b> এটি subject term ও predicate term নিয়ে A, E, I, O-এর একটি standard pattern। Quality affirmative বা negative; quantity universal বা particular; distribution দেখায় term-এর class-এর সব সদস্যকে বোঝানো হয়েছে কি না।</p><table><tr><th>Type</th><th>Form</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr><tr><td>A</td><td>All S are P</td><td>Affirmative</td><td>Universal</td><td>S distributed, P undistributed</td></tr><tr><td>E</td><td>No S are P</td><td>Negative</td><td>Universal</td><td>S distributed, P distributed</td></tr><tr><td>I</td><td>Some S are P</td><td>Affirmative</td><td>Particular</td><td>Neither distributed</td></tr><tr><td>O</td><td>Some S are not P</td><td>Negative</td><td>Particular</td><td>S undistributed, P distributed</td></tr></table>
-<h3>৬. Conversion, Obversion, Contraposition; Existential import</h3><p><b>Answer:</b> Conversion-এ subject ও predicate বদলায়। Obversion-এ quality বদলে predicate-এর complement বসে এবং সব form-এ valid। Contraposition-এ subject ও predicate বদলে দুটির complement নেওয়া হয়; standard treatment-এ A ও O valid। Boolean interpretation-এ universal proposition subject class-এ member থাকা বাধ্যতামূলক করে না।</p>
-<h3>৭. Standard-form categorical syllogism</h3><p><b>Answer:</b> দুই premise ও এক conclusion নিয়ে গঠিত categorical deductive argument, যেখানে exactly three terms থাকে: major, minor, middle। Mood A/E/I/O pattern এবং figure middle term-এর position থেকে আসে।</p>
-<h3>৮. IAI-3 ও EAE-3</h3><p><b>IAI-3:</b> Some M are P; All M are S; therefore Some S are P. <b>VALID.</b></p><p><b>EAE-3:</b> No M are P; All M are S; therefore No S are P. <b>INVALID.</b></p>
-<h3>৯. Mill-এর method ও limitations</h3><p><b>Answer:</b> Agreement, Difference, Joint Agreement and Difference, Residues এবং Concomitant Variations হলো পাঁচটি method। সীমাবদ্ধতা হলো multiple causes, control-এর সমস্যা, hidden differences, correlation ≠ unique cause এবং real-world complexity।</p>
-<h3>১০. Theories of probability</h3><p><b>Answer:</b> Classical interpretation equally possible outcomes-এর ratio ব্যবহার করে। Statistical বা relative-frequency interpretation বড় class বা sequence-এর frequency ব্যবহার করে। Fair coin-এ তিনবার tail হলে <b>1/8</b>; তিন toss-এ অন্তত এক head হলে complement method-এ <b>7/8</b>।</p>
+<details><summary>খ. বড় নম্বরের প্রশ্ন</summary><div class="inside">
+<h3>১. পূর্বকথন ও উপসংহারের সম্পর্ক ব্যাখ্যা করো। সত্যতা ও বৈধতা আলোচনা করো।</h3><p><b>উত্তর:</b> একটি যুক্তি পূর্বকথন ও উপসংহার নিয়ে গঠিত। পূর্বকথন হলো উপসংহার গ্রহণের কারণ, আর উপসংহার হলো যুক্তি যে বক্তব্য প্রতিষ্ঠা করতে চায়। নিগমনমূলক যুক্তি তখন বৈধ, যখন এমন কোনো সম্ভাব্য অবস্থা নেই যেখানে সব পূর্বকথন সত্য কিন্তু উপসংহার মিথ্যা।</p><p><b>সত্যতা</b> প্রস্তাবের বৈশিষ্ট্য, আর <b>বৈধতা</b> যুক্তির কাঠামোগত বৈশিষ্ট্য। তাই কোনো বৈধ যুক্তির একটি বা একাধিক পূর্বকথন মিথ্যা হতে পারে। “সব মাছ স্তন্যপায়ী; সব তিমি মাছ; অতএব সব তিমি স্তন্যপায়ী” কাঠামোগতভাবে বৈধ, কিন্তু প্রথম পূর্বকথন মিথ্যা, তাই যুক্তিটি সুসংগত নয়।</p>
+<h3>২. যৌক্তিক সংজ্ঞা কী?</h3><p><b>উত্তর:</b> যৌক্তিক সংজ্ঞা হলো এমন নির্ভুল সংজ্ঞা যা কোনো পদের প্রয়োজনীয় বৈশিষ্ট্য চিহ্নিত করে এবং সংজ্ঞাটি যেন অতিরিক্ত বিস্তৃত বা অতিরিক্ত সংকীর্ণ না হয়। উদাহরণ: “ত্রিভুজ হলো তিনটি সরলরেখা দিয়ে সীমাবদ্ধ সমতল চিত্র।”</p>
+<h3>৩. সংজ্ঞার নিয়ম ও নিয়ম ভঙ্গের কুযুক্তি ব্যাখ্যা করো।</h3><ol><li>প্রয়োজনীয় বৈশিষ্ট্য উল্লেখ করতে হবে।</li><li>সংজ্ঞা নিজেকেই ঘুরিয়ে ব্যবহার করা যাবে না।</li><li>অর্থের বিস্তৃতি মূল পদের সমান হতে হবে; খুব বড় বা ছোট নয়।</li><li>অস্পষ্ট বা দ্ব্যর্থক ভাষা ব্যবহার করা উচিত নয়।</li><li>আক্ষরিক নির্ভুলতা প্রয়োজন হলে শুধু রূপক ভাষা দিয়ে সংজ্ঞা দেওয়া উচিত নয়।</li><li>স্বীকৃতিবাচক সংজ্ঞা দেওয়া সম্ভব হলে অকারণে অস্বীকৃতিবাচক সংজ্ঞা দেওয়া উচিত নয়।</li></ol>
+<h3>৪. কুযুক্তি কী? প্রাসঙ্গিকতার কুযুক্তি উদাহরণসহ আলোচনা করো।</h3><p><b>উত্তর:</b> কুযুক্তি হলো ভুলভাবে যুক্তি করার একটি ধরন। প্রাসঙ্গিকতার কুযুক্তিতে পূর্বকথন উপসংহারের জন্য প্রয়োজনীয় যৌক্তিক সমর্থন দেয় না, যদিও তা সমর্থনের মতো মনে হতে পারে। প্রধান উদাহরণ হলো জোর খাটানোর আবেদন, ব্যক্তি-আক্রমণ, পরিস্থিতিনির্ভর ব্যক্তি-আক্রমণ, তুমিও তাই, অজ্ঞতার আবেদন, করুণার আবেদন, জনমতের আবেদন, বিষয়ান্তর, মূল বক্তব্য এড়িয়ে যাওয়া এবং খড়ের পুতুল কুযুক্তি।</p><p><b>উদাহরণ:</b> “হাজার মানুষ আমার মতের সঙ্গে একমত, তাই আমার রাজনৈতিক বক্তব্য সত্য।” জনপ্রিয়তা নিজে সত্যতার প্রমাণ নয়।</p>
+<h3>৫. প্রমিত শ্রেণিবাচক প্রস্তাবে গুণ, পরিমাণ ও ব্যাপ্তি ব্যাখ্যা করো।</h3><p><b>উত্তর:</b> প্রমিত শ্রেণিবাচক প্রস্তাবে একটি বিষয়পদ ও একটি বিধেয়পদ থাকে এবং A, E, I, O-এর একটি কাঠামো থাকে। এর <b>গুণ</b> স্বীকৃতিবাচক বা অস্বীকৃতিবাচক; <b>পরিমাণ</b> সর্বজনীন বা বিশেষ; আর <b>ব্যাপ্তি</b> বোঝায় কোনো পদ তার শ্রেণির সব সদস্যকে নির্দেশ করছে কি না।</p><table><tr><th>ধরন</th><th>রূপ</th><th>গুণ</th><th>পরিমাণ</th><th>ব্যাপ্তি</th></tr><tr><td>A</td><td>সব S হলো P</td><td>স্বীকৃতিবাচক</td><td>সর্বজনীন</td><td>S ব্যাপ্ত, P অব্যাপ্ত</td></tr><tr><td>E</td><td>কোনো S-ই P নয়</td><td>অস্বীকৃতিবাচক</td><td>সর্বজনীন</td><td>S ব্যাপ্ত, P ব্যাপ্ত</td></tr><tr><td>I</td><td>কিছু S হলো P</td><td>স্বীকৃতিবাচক</td><td>বিশেষ</td><td>কোনোটিই ব্যাপ্ত নয়</td></tr><tr><td>O</td><td>কিছু S P নয়</td><td>অস্বীকৃতিবাচক</td><td>বিশেষ</td><td>S অব্যাপ্ত, P ব্যাপ্ত</td></tr></table>
+<h3>৬. রূপান্তর, বিপরীতকরণ, প্রতিপক্ষীকরণ এবং অস্তিত্বগত অর্থ ও বুলীয় ব্যাখ্যা আলোচনা করো।</h3><p><b>উত্তর:</b> <b>রূপান্তর</b>-এ বিষয়পদ ও বিধেয়পদ অদলবদল করা হয়। “কোনো S-ই P নয়” থেকে “কোনো P-ই S নয়” বৈধ; “কিছু S হলো P” থেকে “কিছু P হলো S” বৈধ। <b>বিপরীতকরণ</b>-এ গুণ বদলে বিধেয়পদের পরিপূরক নেওয়া হয় এবং চার ধরনের প্রস্তাবেই তা বৈধ। <b>প্রতিপক্ষীকরণ</b>-এ বিষয়পদ ও বিধেয়পদ বদলে উভয়ের পরিপূরক নেওয়া হয়; প্রচলিত ব্যাখ্যায় A ও O রূপে এটি বৈধ। <b>অস্তিত্বগত অর্থ</b> হলো সর্বজনীন প্রস্তাব বিষয়শ্রেণিতে সদস্য আছে বলে ধরে নেয় কি না। বুলীয় ব্যাখ্যায় সর্বজনীন প্রস্তাব বিষয়শ্রেণির সদস্য থাকা বাধ্যতামূলক করে না।</p>
+<h3>৭. প্রমিত শ্রেণিবাচক ন্যায়ানুমান কী? বৈশিষ্ট্য উল্লেখ করো।</h3><p><b>উত্তর:</b> প্রমিত শ্রেণিবাচক ন্যায়ানুমান হলো দুইটি পূর্বকথন ও একটি উপসংহার নিয়ে গঠিত শ্রেণিবাচক নিগমনমূলক যুক্তি, যাতে ঠিক তিনটি পদ থাকে। প্রধান পদ উপসংহারের বিধেয়, গৌণ পদ উপসংহারের বিষয় এবং মধ্যপদ দুই পূর্বকথনে থাকলেও উপসংহারে থাকে না। প্রতিটি পদ দুইবার আসে। ন্যায়ানুমানের রূপবিন্যাস A/E/I/O এবং আকৃতি মধ্যপদের অবস্থান দিয়ে নির্ধারিত হয়।</p>
+<h3>৮. ভেনচিত্রে IAI-3 ও EAE-3 পরীক্ষা করো।</h3><p><b>IAI-3:</b> কিছু M হলো P; সব M হলো S; অতএব কিছু S হলো P। X-কে M∩P-তে বসাতে হবে এবং সব M S-এর মধ্যে থাকায় ওই X S∩P-তেও থাকবে। <b>বৈধ।</b></p><p><b>EAE-3:</b> কোনো M-ই P নয়; সব M হলো S; অতএব কোনো S-ই P নয়। পূর্বকথন M-এর বাইরের S-কে নিয়ন্ত্রণ করে না। তাই উপসংহার বাধ্যতামূলক নয়। <b>অবৈধ।</b></p>
+<h3>৯. মিলের পরীক্ষামূলক অনুসন্ধানের পদ্ধতি ও সীমাবদ্ধতা আলোচনা করো।</h3><p><b>উত্তর:</b> জন স্টুয়ার্ট মিল কারণ অনুসন্ধানের জন্য পাঁচটি পদ্ধতি দেন: সাদৃশ্য পদ্ধতি, পার্থক্য পদ্ধতি, সাদৃশ্য ও পার্থক্যের যৌথ পদ্ধতি, অবশিষ্টাংশের পদ্ধতি এবং সহপরিবর্তনের পদ্ধতি।</p><p><b>সীমাবদ্ধতা:</b> প্রকৃত ঘটনায় একাধিক পারস্পরিক কারণ থাকতে পারে; পূর্ণ নিয়ন্ত্রণ কঠিন; গোপন পার্থক্য থাকতে পারে; নিয়মিত সহসম্পর্ক একক কারণ প্রমাণ করে না; এবং বাস্তব ব্যবস্থা অনেক জটিল। তাই এই পদ্ধতিগুলো শক্তিশালী হলেও ভুলহীন নিশ্চয়তা দেয় না।</p>
+<h3>১০. সম্ভাবনার তত্ত্ব ব্যাখ্যা ও বিচার করো।</h3><p><b>উত্তর:</b> শাস্ত্রীয় ব্যাখ্যায় সমভাবে সম্ভাব্য ফলের অনুপাত থেকে সম্ভাবনা নির্ধারিত হয়। ন্যায্য মুদ্রা বা পাশার মতো ক্ষেত্রে এটি পরিষ্কার। পরিসংখ্যানগত ব্যাখ্যায় বড় শ্রেণি বা ধারায় কোনো ফলের আপেক্ষিক ঘটনার হার দিয়ে সম্ভাবনা বোঝানো হয়। এটি বাস্তব তথ্যের সঙ্গে যুক্ত হলেও একটি মাত্র ঘটনার সম্ভাবনা ব্যাখ্যায় প্রশ্ন থাকে।</p><p><b>তিনবার মুদ্রা নিক্ষেপে সব লেজ:</b> ন্যায্য মুদ্রায় প্রতিবার লেজের সম্ভাবনা ১/২। তাই মোট সম্ভাবনা = (১/২)^৩ = ১/৮।</p><p><b>তিনবারে অন্তত একটি হেড:</b> পরিপূরক ব্যবহার করে = ১ - কোনো হেড না পাওয়ার সম্ভাবনা = ১ - (১/২)^৩ = ৭/৮।</p>
 </div></details>
 </section>
-<section class="card" id="rapid"><h2>১২. Last-Minute Revision Sheet</h2>
-<div class="grid3"><div><h3>Argument basics</h3><p>Premise = support.</p><p>Conclusion = যাকে support করা হচ্ছে।</p><p>Truth = proposition.</p><p>Validity = argument.</p><p>Sound = valid + true premises.</p></div><div><h3>A/E/I/O</h3><p>A = All S are P → S only distributed.</p><p>E = No S are P → both distributed.</p><p>I = Some S are P → neither.</p><p>O = Some S are not P → P only distributed.</p></div><div><h3>Immediate inference</h3><p>Conversion = swap.</p><p>Obversion = quality change + predicate complement.</p><p>Contraposition = swap + complement.</p></div></div>
-<h3>Fallacy memory map</h3><p><span class="badge">Relevance</span> force, ad hominem, ignorance, pity, people, red herring, missing point, straw man</p><p><span class="badge">Presumption</span> accident, converse accident/hasty generalization, false cause, begging question, complex question</p><p><span class="badge">Ambiguity</span> equivocation, amphiboly, accent, composition, division</p><h3>Mill</h3><p><b>A</b>greement - common factor | <b>D</b>ifference - positive vs negative case | <b>J</b>oint A+D | <b>R</b>esidues - known causes বাদ | <b>C</b>oncomitant variation - একসঙ্গে বদল।</p><h3>Probability</h3><p>৩ toss-এ সব tail = <b>1/8</b>.</p><p>৩ toss-এ অন্তত এক head = <b>7/8</b>.</p>
+
+<section class="card" id="rapid">
+<h2>১২. শেষ মুহূর্তের পুনরাবৃত্তি পত্র</h2>
+<div class="grid3"><div>
+<h3>যুক্তির মূল কথা</h3><p>পূর্বকথন = সমর্থন।</p><p>উপসংহার = যে বক্তব্যকে সমর্থন করা হচ্ছে।</p><p>সত্যতা = প্রস্তাবের বৈশিষ্ট্য।</p><p>বৈধতা = যুক্তির বৈশিষ্ট্য।</p><p>সুসংগত = বৈধ + সত্য পূর্বকথন।</p>
+</div><div>
+<h3>A/E/I/O</h3><p>A = সব S হলো P → শুধু S ব্যাপ্ত।</p><p>E = কোনো S-ই P নয় → দুটিই ব্যাপ্ত।</p><p>I = কিছু S হলো P → কোনোটিই ব্যাপ্ত নয়।</p><p>O = কিছু S P নয় → শুধু P ব্যাপ্ত।</p>
+</div><div>
+<h3>অবিলম্ব অনুমান</h3><p>রূপান্তর = অদলবদল।</p><p>বিপরীতকরণ = গুণ বদল + বিধেয়ের পরিপূরক।</p><p>প্রতিপক্ষীকরণ = অদলবদল + উভয়ের পরিপূরক।</p>
+</div></div>
+<h3>কুযুক্তি মনে রাখার মানচিত্র</h3><p><span class="badge">প্রাসঙ্গিকতা</span> জোর খাটানো, ব্যক্তি-আক্রমণ, অজ্ঞতা, করুণা, জনমত, বিষয়ান্তর, মূল বক্তব্য এড়িয়ে যাওয়া, খড়ের পুতুল</p><p><span class="badge">অনুমানভিত্তিক</span> ব্যতিক্রম উপেক্ষা, উল্টো ব্যতিক্রম বা তড়িঘড়ি সাধারণীকরণ, ভুল কারণ, প্রশ্নকেই প্রমাণ ধরা, জটিল প্রশ্ন</p><p><span class="badge">অস্পষ্টতা</span> শব্দার্থ বদল, বাক্যগঠনজনিত অস্পষ্টতা, জোরের কারণে অর্থবিভ্রান্তি, অংশ থেকে সমগ্রে, সমগ্র থেকে অংশে</p>
+<h3>মিলের পদ্ধতি</h3><p><b>স</b>াদৃশ্য = সাধারণ উপাদান &nbsp;|&nbsp; <b>প</b>ার্থক্য = ঘটনার ও ঘটনার-না-ঘটা ক্ষেত্র তুলনা &nbsp;|&nbsp; <b>য</b>ৌথ পদ্ধতি = সাদৃশ্য + পার্থক্য &nbsp;|&nbsp; <b>অ</b>বশিষ্টাংশ = জানা কারণ বাদ &nbsp;|&nbsp; <b>স</b>হপরিবর্তন = একসঙ্গে নিয়মিত বদল।</p>
+<h3>সম্ভাবনা</h3><p>৩ বারেই লেজ = <b>১/৮</b>।</p><p>৩ বার নিক্ষেপে অন্তত এক হেড = <b>৭/৮</b>।</p>
 </section>
-<section class="card"><h2>উচ্চ নম্বর পাওয়ার জন্য Logic Answer কীভাবে লিখবে</h2><ol><li><b>প্রথমে সংজ্ঞা দাও।</b> একটি পরিষ্কার textbook-style sentence।</li><li><b>Structure দাও।</b> Meaning, explanation, example, evaluation-এর মতো heading ব্যবহার করো।</li><li><b>Exact logical vocabulary ব্যবহার করো।</b> “true argument” নয়, “valid argument” বলো।</li><li><b>Categorical logic-এ form লিখো।</b> A/E/I/O ও distribution।</li><li><b>Fallacy-তে example দাও।</b></li><li><b>Long answer শেষে conclusion দাও।</b></li></ol><div class="exam"><b>Golden rule:</b> Definition + precise explanation + example + correct terminology, vague general discussion-এর চেয়ে অনেক শক্তিশালী।</div></section>
+<section class="card">
+<h2>উচ্চ নম্বর পাওয়ার জন্য যুক্তির উত্তর কীভাবে লিখবে</h2>
+<ol><li><b>প্রথমে সংজ্ঞা দাও।</b> একটি পরিষ্কার পাঠ্যবইয়ের মতো বাক্য দিয়ে শুরু করো।</li><li><b>কাঠামো দাও।</b> অর্থ, ব্যাখ্যা, উদাহরণ, বিচার ইত্যাদি শিরোনাম ব্যবহার করো।</li><li><b>সঠিক যৌক্তিক শব্দ ব্যবহার করো।</b> যেমন “বৈধ যুক্তি” বলবে, “সত্য যুক্তি” নয়।</li><li><b>শ্রেণিবাচক যুক্তিতে রূপ লিখবে।</b> A/E/I/O ও ব্যাপ্তি।</li><li><b>কুযুক্তিতে সবসময় উদাহরণ দেবে।</b> উদাহরণে বোঝা যাবে যে ভুলটি তুমি বুঝেছ।</li><li><b>বড় প্রশ্নের শেষে উপসংহার দেবে।</b> শেষ বাক্যে নির্দিষ্ট ফলটি পরিষ্কার করে দাও।</li></ol>
+<div class="exam"><b>মূল নিয়ম:</b> যুক্তির পরীক্ষায় সংজ্ঞা + নির্ভুল ব্যাখ্যা + উদাহরণ + সঠিক পরিভাষা, অস্পষ্ট সাধারণ আলোচনার চেয়ে অনেক বেশি শক্তিশালী।</div>
+</section>
 </main>
 <footer>
-<p>Source basis: Irving M. Copi, Introduction to Logic. এই page-এ arguments, definitions, informal fallacies, categorical propositions ও syllogisms, induction, Mill-এর methods, analogy এবং probability-এর standard Copi treatment সহজ ভাষায় সাজানো হয়েছে।</p>
+<p><b>Source basis:</b> Irving M. Copi, <i>Introduction to Logic</i>, using the standard Copi treatment of arguments, definitions, informal fallacies, categorical propositions and syllogisms, induction, Mill's methods, analogy, and probability. The page is organized as an exam-focused study guide.</p>
 </footer>
 <script>
 function filterContent(){
@@ -329,15 +380,17 @@ const BN_MAIN=document.querySelector('main').innerHTML;
 const EN_H1="Irving M. Copi - Exam Study Guide";
 const EN_SUB="A structured undergraduate guide for definitions, arguments, categorical logic, definitions, fallacies, induction, probability, and the supplied previous-year questions. The emphasis is on <b>what to write in an exam</b>, not just memorizing isolated terms.";
 const EN_BADGE="INTRODUCTION TO LOGIC";
-const BN_H1='Irving M. Copi - Logic Exam Study Guide';
-const BN_SUB='পরীক্ষার জন্য সাজানো সহজ বাংলা guide। Definition, argument, categorical logic, fallacy, induction, probability এবং আগের বছরের প্রশ্ন একসঙ্গে অনুশীলন করার জন্য তৈরি। লক্ষ্য হলো শুধু মুখস্থ নয়, পরীক্ষায় কী লিখবে তা বুঝে যাওয়া।';
+const EN_FOOTER="<b>Source basis:</b> Irving M. Copi, <i>Introduction to Logic</i>, using the standard Copi treatment of arguments, definitions, informal fallacies, categorical propositions and syllogisms, induction, Mill's methods, analogy, and probability. The page is organized as an exam-focused study guide.";
+const BN_FOOTER="<b>উৎস:</b> আরভিং এম. কপির <i>যুক্তিবিদ্যার ভূমিকা</i> গ্রন্থের মানক আলোচনার ভিত্তিতে যুক্তি, সংজ্ঞা, অনানুষ্ঠানিক কুযুক্তি, শ্রেণিবাচক প্রস্তাব ও ন্যায়ানুমান, আগমন, মিলের পদ্ধতি, সাদৃশ্য এবং সম্ভাবনার বিষয়গুলো পরীক্ষাভিত্তিকভাবে সাজানো হয়েছে।";
+const BN_H1='আরভিং এম. কপি - যুক্তিবিদ্যার পরীক্ষার প্রস্তুতি';
+const BN_SUB='পরীক্ষার জন্য সাজানো সহজ বাংলা পাঠ। সংজ্ঞা, যুক্তি, শ্রেণিবাচক প্রস্তাব, কুযুক্তি, আগমন, সম্ভাবনা এবং আগের বছরের প্রশ্ন একসঙ্গে অনুশীলনের জন্য তৈরি। লক্ষ্য শুধু মুখস্থ করা নয়, পরীক্ষায় কী লিখবে তা বুঝে যাওয়া।';
 const BN_BADGE='যুক্তিবিদ্যা';
 const EN_SEARCH_PLACEHOLDER='Search: distribution, fallacy, conversion, probability...';
-const BN_SEARCH_PLACEHOLDER='Search: distribution, fallacy, conversion, probability...';
+const BN_SEARCH_PLACEHOLDER='খুঁজুন: ব্যাপ্তি, কুযুক্তি, রূপান্তর, সম্ভাবনা...';
 function setSearchLanguage(lang){
   const input=document.getElementById('search');
   const clear=input.nextElementSibling;
-  if(lang==='bn'){ input.placeholder='খুঁজুন: distribution, fallacy, conversion, probability...'; clear.textContent='পরিষ্কার'; }
+  if(lang==='bn'){ input.placeholder='খুঁজুন: ব্যাপ্তি, কুযুক্তি, রূপান্তর, সম্ভাবনা...'; clear.textContent='পরিষ্কার'; }
   else { input.placeholder=EN_SEARCH_PLACEHOLDER; clear.textContent='Clear'; }
 }
 let currentLang='en';
@@ -347,16 +400,16 @@ function toggleLanguage(){
   const sub=document.querySelector('header .sub');
   const badge=document.querySelector('header .badge');
   const btn=document.getElementById('langToggle');
+  const footer=document.querySelector('footer p');
   if(currentLang==='bn'){
-    main.innerHTML=EN_MAIN; h1.innerHTML=EN_H1; sub.innerHTML=EN_SUB; badge.innerHTML=EN_BADGE;
+    main.innerHTML=EN_MAIN; h1.innerHTML=EN_H1; sub.innerHTML=EN_SUB; badge.innerHTML=EN_BADGE; footer.innerHTML=EN_FOOTER; document.title='Introduction to Logic - Irving M. Copi | Exam Guide';
     document.documentElement.lang='en'; document.body.classList.remove('lang-bn'); btn.textContent='বাংলা'; currentLang='en';
   } else {
-    main.innerHTML=BN_MAIN; h1.innerHTML=BN_H1; sub.innerHTML=BN_SUB; badge.innerHTML=BN_BADGE;
+    main.innerHTML=BN_MAIN; h1.innerHTML=BN_H1; sub.innerHTML=BN_SUB; badge.innerHTML=BN_BADGE; footer.innerHTML=BN_FOOTER; document.title='আরভিং এম. কপি - যুক্তিবিদ্যার পরীক্ষার প্রস্তুতি';
     document.documentElement.lang='bn'; document.body.classList.add('lang-bn'); btn.textContent='EN'; currentLang='bn';
   }
   document.getElementById('search').value=''; filterContent();
 }
+setSearchLanguage('en');
 </script></body>
 </html>
-
-setSearchLanguage('en');
