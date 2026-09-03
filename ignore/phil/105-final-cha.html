@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Introduction to Logic - Irving M. Copi | Exam Guide</title>
-<meta name="description" content="Exam-focused Introduction to Logic study guide based on Irving M. Copi, with definitions, propositions, arguments, categorical logic, fallacies, induction, probability, and previous-year answers.">
+<meta content="Exam-focused Introduction to Logic study guide based on Irving M. Copi, with definitions, propositions, arguments, categorical logic, fallacies, induction, probability, and previous-year answers." name="description"/>
 <style>
 :root{
   --bg:#f5f6f8; --card:#fff; --text:#1d232b; --muted:#66717e; --line:#dde2e8;
@@ -66,343 +67,213 @@ footer{max-width:1100px;margin:auto;padding:20px 16px 50px;color:var(--muted);fo
   details{break-inside:avoid}
   a{color:#000;text-decoration:none}
 }
+
+.lang-bn{font-family:"Noto Sans Bengali","Nirmala UI","Vrinda",sans-serif;}
+.lang-bn .term,.lang-bn code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;}
+#langToggle{min-width:88px;}
 </style>
 </head>
 <body>
 <header>
 <div class="wrap">
-  <div class="badge" style="background:rgba(255,255,255,.16);color:#fff">INTRODUCTION TO LOGIC</div>
-  <h1>Irving M. Copi - Exam Study Guide</h1>
-  <p class="sub">A structured undergraduate guide for definitions, arguments, categorical logic, definitions, fallacies, induction, probability, and the supplied previous-year questions. The emphasis is on <b>what to write in an exam</b>, not just memorizing isolated terms.</p>
-  <div class="toolbar">
-    <button class="btn" onclick="window.print()">Print / Save as PDF</button>
-    <button class="btn secondary" onclick="document.querySelector('#search').focus()">Search Guide</button>
-  </div>
+<div class="badge" style="background:rgba(255,255,255,.16);color:#fff">INTRODUCTION TO LOGIC</div>
+<h1>Irving M. Copi - Logic Exam Study Guide</h1>
+<p class="sub">পরীক্ষার জন্য সাজানো সহজ বাংলা guide। Definition, argument, categorical logic, fallacy, induction, probability এবং আগের বছরের প্রশ্ন একসঙ্গে অনুশীলন করার জন্য তৈরি। লক্ষ্য হলো শুধু মুখস্থ নয়, পরীক্ষায় কী লিখবে তা বুঝে যাওয়া।</p>
+<div class="toolbar">
+<button class="btn" onclick="window.print()">Print / PDF</button>
+<button class="btn secondary" onclick="document.querySelector('#search').focus()">Search Guide</button>
+<button class="btn" id="langToggle" onclick="toggleLanguage()" type="button">বাংলা</button></div>
 </div>
 </header>
-
 <div class="searchbar">
-  <div class="inner">
-    <input id="search" type="search" placeholder="Search: distribution, fallacy, conversion, probability...">
-    <button onclick="document.getElementById('search').value='';filterContent()">Clear</button>
-  </div>
+<div class="inner">
+<input id="search" placeholder="Search: distribution, fallacy, conversion, probability..." type="search"/>
+<button onclick="document.getElementById('search').value='';filterContent()">Clear</button>
 </div>
-
+</div>
 <main class="wrap">
 <section class="card">
-<h2 id="contents">Contents</h2>
+<h2 id="contents">সূচিপত্র</h2>
 <div class="toc">
-<a href="#basics">1. Core Logic: What You Must Know</a>
-<a href="#q1">2. What Is Logic? + Central Problem</a>
-<a href="#definitions">3. Definition Diary</a>
-<a href="#arguments">4. Premises, Conclusion, Truth & Validity</a>
-<a href="#categorical">5. Categorical Propositions</a>
-<a href="#transformations">6. Conversion, Obversion & Contraposition</a>
-<a href="#syllogism">7. Categorical Syllogism + Venn</a>
-<a href="#fallacies">8. Fallacies - Types & Examples</a>
-<a href="#induction">9. Induction + Mill's Methods</a>
-<a href="#probability">10. Probability + Analogy</a>
-<a href="#previous">11. Previous-Year Questions - Full Answers</a>
-<a href="#rapid">12. Last-Minute Revision Sheet</a>
+<a href="#basics">১. যুক্তিবিদ্যার মূল বিষয়</a>
+<a href="#q1">২. যুক্তিবিদ্যা কী? + কেন্দ্রীয় সমস্যা</a>
+<a href="#definitions">৩. সংজ্ঞার দরকারি শব্দ</a>
+<a href="#arguments">৪. Premise, Conclusion, Truth ও Validity</a>
+<a href="#categorical">৫. Categorical Proposition</a>
+<a href="#transformations">৬. Conversion, Obversion ও Contraposition</a>
+<a href="#syllogism">৭. Categorical Syllogism + Venn</a>
+<a href="#fallacies">৮. Fallacy - ধরন ও উদাহরণ</a>
+<a href="#induction">৯. Induction + Mill-এর Methods</a>
+<a href="#probability">১০. Probability + Analogy</a>
+<a href="#previous">১১. আগের বছরের প্রশ্ন - পূর্ণ উত্তর</a>
+<a href="#rapid">১২. শেষ মুহূর্তের Revision Sheet</a>
 </div>
 </section>
-
 <section class="card" id="basics">
-<h2>1. Core Logic: Basic Knowledge You Should Know</h2>
-<div class="tip"><b>Big picture:</b> Logic studies arguments and the standards by which arguments can be evaluated as correct or incorrect. It is not primarily the study of whether the subject matter is true; it is the study of whether conclusions follow from premises in the required way.</div>
-<div class="grid2">
-<div>
-<h3>Argument</h3>
-<p>An <b>argument</b> is a group of propositions in which one proposition, the <b>conclusion</b>, is claimed to follow from one or more other propositions, the <b>premises</b>.</p>
-<p><b>Signal words for premises:</b> because, since, for, as, given that.</p>
-<p><b>Signal words for conclusions:</b> therefore, hence, so, thus, consequently.</p>
-</div>
-<div>
-<h3>Proposition</h3>
-<p>A <b>proposition</b> is what is asserted by a declarative sentence and is capable of being <b>true or false</b>.</p>
-<p>Questions, commands, and exclamations are not propositions because they do not assert something that is true or false.</p>
-</div>
-</div>
-<h3>Deduction vs. Induction</h3>
-<table>
-<tr><th>Deductive inference</th><th>Inductive inference</th></tr>
-<tr><td>Claims that the conclusion follows necessarily from the premises.</td><td>Claims that the premises make the conclusion probable or well supported.</td></tr>
-<tr><td>Evaluated mainly by <b>validity</b> (and, for a sound argument, truth of premises).</td><td>Evaluated by the degree of <b>inductive strength</b> / support.</td></tr>
-<tr><td>Example: All humans are mortal; Socrates is human; therefore Socrates is mortal.</td><td>Example: The observed crows have been black; therefore the next crow observed will probably be black.</td></tr>
-</table>
-<div class="exam"><b>Exam habit:</b> Never write “valid = true.” Validity belongs to arguments; truth/falsity belongs to propositions.</div>
+<h2>১. যুক্তিবিদ্যার মূল বিষয়: যা জানতেই হবে</h2>
+<div class="tip"><b>বড় ধারণা:</b> যুক্তিবিদ্যা যুক্তি নিয়ে কাজ করে এবং কোন যুক্তি সঠিকভাবে তৈরি হয়েছে আর কোনটি ভুল, তা যাচাই করার নিয়ম দেয়। এটি শুধু কোনো কথার বিষয়বস্তু সত্য কি না, তা দেখে না। বরং উপসংহারটি premises থেকে ঠিকভাবে এসেছে কি না, সেটি দেখে।</div>
+<div class="grid2"><div>
+<h3>Argument বা যুক্তি</h3>
+<p><b>Argument</b> হলো কয়েকটি proposition-এর সমষ্টি, যেখানে একটি proposition হলো <b>conclusion</b> এবং অন্যগুলো সেই conclusion-কে সমর্থন করে, যেগুলোকে <b>premises</b> বলা হয়।</p>
+<p><b>Premise-এর ইঙ্গিত:</b> because, since, for, as, given that.</p>
+<p><b>Conclusion-এর ইঙ্গিত:</b> therefore, hence, so, thus, consequently.</p>
+</div><div>
+<h3>Proposition বা প্রস্তাব</h3>
+<p><b>Proposition</b> হলো declarative sentence-এর এমন বক্তব্য, যা <b>true বা false</b> হতে পারে।</p>
+<p>Question, command এবং exclamation proposition নয়, কারণ এগুলোকে সত্য বা মিথ্যা বলা যায় না।</p>
+</div></div>
+<h3>Deduction বনাম Induction</h3>
+<table><tr><th>Deductive inference</th><th>Inductive inference</th></tr>
+<tr><td>Premises থেকে conclusion অবশ্যই অনুসরণ করে বলে দাবি করে।</td><td>Premises conclusion-কে probable বা শক্তভাবে support করে বলে দাবি করে।</td></tr>
+<tr><td>মূলত <b>validity</b> দিয়ে বিচার করা হয়; sound হলে premises-ও সত্য হতে হবে।</td><td><b>Inductive strength</b> বা support-এর মাত্রা দিয়ে বিচার করা হয়।</td></tr>
+<tr><td>উদাহরণ: সব মানুষ মরণশীল; Socrates মানুষ; তাই Socrates মরণশীল।</td><td>উদাহরণ: দেখা সব কাক কালো; তাই পরের কাকটিও সম্ভবত কালো হবে।</td></tr></table>
+<div class="exam"><b>Exam habit:</b> “valid = true” লিখবে না। Validity argument-এর বৈশিষ্ট্য; truth বা falsity proposition-এর বৈশিষ্ট্য।</div>
 </section>
-
 <section class="card" id="q1">
-<h2>2. What Is Logic? Discuss the Central Problem</h2>
+<h2>২. যুক্তিবিদ্যা কী? কেন্দ্রীয় সমস্যা আলোচনা</h2>
 <h3>Exam-ready answer</h3>
-<p>According to Copi, <b>logic is the study of the methods and principles used to distinguish correct reasoning from incorrect reasoning</b>. Logic therefore deals with reasoning rather than with any one particular subject matter. Its concern is to provide standards by which arguments may be analyzed and evaluated.</p>
-<p>The <b>central problem of logic</b> is the problem of determining whether a conclusion follows from its premises in the appropriate way. In a deductive argument, the key question is whether the premises <b>entail</b> the conclusion; in an inductive argument, the question is whether the premises provide sufficient or probable support for the conclusion.</p>
-<div class="definition"><b>Core distinction:</b> Logic asks “Does the conclusion follow from the premises?” It does not merely ask “Are the statements true?”</div>
-<h3>Three basic functions of logic</h3>
-<ol>
-<li><b>To clarify and analyze reasoning:</b> identify premises, conclusion, and logical structure.</li>
-<li><b>To provide standards for evaluation:</b> give criteria for distinguishing good reasoning from bad reasoning.</li>
-<li><b>To detect and avoid error:</b> expose invalid inference and common fallacies so that reasoning can be improved.</li>
-</ol>
-<div class="exam"><b>5-mark version:</b> Define logic in one sentence, explain that its central problem is the relation between premises and conclusion, then state the three functions above with one sentence each.</div>
+<p>Copi-এর মতে, <b>logic</b> হলো সঠিক reasoning এবং ভুল reasoning আলাদা করার পদ্ধতি ও নীতির অধ্যয়ন। তাই যুক্তিবিদ্যা কোনো একটি নির্দিষ্ট বিষয় নয়, বরং reasoning কীভাবে কাজ করে তা নিয়ে কাজ করে।</p>
+<p><b>কেন্দ্রীয় সমস্যা</b> হলো, কোনো argument-এর conclusion তার premises থেকে সঠিকভাবে অনুসরণ করে কি না তা নির্ধারণ করা। Deductive argument-এ প্রশ্ন হলো premises কি conclusion-কে entail করে; inductive argument-এ প্রশ্ন হলো premises conclusion-এর জন্য যথেষ্ট বা probable support দেয় কি না।</p>
+<div class="definition"><b>মনে রাখবে:</b> Logic জিজ্ঞেস করে, “Conclusion কি premises থেকে follow করে?” শুধু “Statements সত্য কি?” এই প্রশ্ন নয়।</div>
+<h3>যুক্তিবিদ্যার ৩টি মূল কাজ</h3>
+<ol><li><b>Analysis:</b> premises, conclusion এবং logical structure চিহ্নিত করা।</li><li><b>Evaluation:</b> reasoning ভালো না খারাপ, valid না invalid, তা যাচাই করা।</li><li><b>Error detection:</b> fallacy ও reasoning-এর ভুল ধরিয়ে দেওয়া।</li></ol>
+<div class="exam"><b>৫ নম্বরের উত্তর:</b> প্রথমে logic-এর সংজ্ঞা দাও, তারপর premises ও conclusion-এর সম্পর্ককে central problem বলো, শেষে ৩টি function এক লাইনে করে লেখো।</div>
 </section>
-
 <section class="card" id="definitions">
-<h2>3. Definition Diary</h2>
+<h2>৩. Definition Diary</h2>
 <table>
-<tr><th>Term</th><th>Exam definition</th></tr>
-<tr><td><span class="term">Denotation</span></td><td>The class or collection of objects to which a term correctly applies.</td></tr>
-<tr><td><span class="term">Connotation</span></td><td>The attributes or qualities implied by a term; the meaning-content associated with the term.</td></tr>
-<tr><td><span class="term">Sentence</span></td><td>A grammatically complete expression. Not every sentence expresses a proposition.</td></tr>
-<tr><td><span class="term">Proposition</span></td><td>What is asserted by a declarative sentence and is capable of being true or false.</td></tr>
-<tr><td><span class="term">Judgement</span></td><td>The mental act of affirming or denying something; in logic, the judged content may be expressed as a proposition.</td></tr>
-<tr><td><span class="term">Subject</span></td><td>In a categorical proposition, the term about which something is affirmed or denied.</td></tr>
-<tr><td><span class="term">Predicate</span></td><td>In a categorical proposition, the term that is affirmed or denied of the subject.</td></tr>
-<tr><td><span class="term">Connector</span></td><td>A word or expression linking parts of an argument or compound statement, such as “and,” “or,” “if...then,” or “therefore,” depending on context.</td></tr>
-<tr><td><span class="term">Term</span></td><td>A word or group of words that functions as a component of a categorical proposition; a term refers to a class or category rather than asserting by itself.</td></tr>
-<tr><td><span class="term">Universal affirmative (A)</span></td><td>“All S are P.” It affirms that every member of S is included in P.</td></tr>
-<tr><td><span class="term">Distribution</span></td><td>The status of a term as referring to every member of the class designated by that term.</td></tr>
-<tr><td><span class="term">Distributed</span></td><td>A term is distributed when the proposition refers to <b>all members</b> of the class denoted by that term.</td></tr>
-<tr><td><span class="term">Undistributed</span></td><td>A term is undistributed when the proposition does not refer to all members of that class.</td></tr>
-<tr><td><span class="term">Premise</span></td><td>A proposition offered as support for a conclusion.</td></tr>
-<tr><td><span class="term">Assumption</span></td><td>A proposition temporarily accepted or taken for granted in an argument, proof, or analysis.</td></tr>
-<tr><td><span class="term">Conclusion</span></td><td>The proposition that an argument attempts to establish on the basis of its premises.</td></tr>
-<tr><td><span class="term">Deductive inference</span></td><td>An inference in which the conclusion is claimed to follow necessarily from the premises.</td></tr>
-<tr><td><span class="term">Inductive inference</span></td><td>An inference in which the conclusion goes beyond the premises and is claimed to follow with some degree of probability.</td></tr>
-<tr><td><span class="term">Immediate inference</span></td><td>An inference from one premise to one conclusion by a direct logical transformation, e.g. conversion, obversion, or contraposition.</td></tr>
-<tr><td><span class="term">Mediate inference</span></td><td>An inference in which the conclusion is derived through two or more premises, as in a syllogism.</td></tr>
-<tr><td><span class="term">Conversion</span></td><td>An immediate inference formed by interchanging the subject and predicate terms of a categorical proposition while preserving the original meaning where the form permits.</td></tr>
+<tr><th>Term</th><th>সহজ পরীক্ষার সংজ্ঞা</th></tr>
+<tr><td class="term">Denotation</td><td>কোনো term যেসব বস্তু বা শ্রেণির ক্ষেত্রে ঠিকভাবে প্রযোজ্য, সেই পুরো class।</td></tr>
+<tr><td class="term">Connotation</td><td>কোনো term-এর সঙ্গে জড়িত গুণ বা বৈশিষ্ট্যগুলো।</td></tr>
+<tr><td class="term">Sentence</td><td>ব্যাকরণগতভাবে সম্পূর্ণ expression। সব sentence proposition নয়।</td></tr>
+<tr><td class="term">Proposition</td><td>Declarative sentence যে বক্তব্য প্রকাশ করে এবং যা সত্য বা মিথ্যা হতে পারে।</td></tr>
+<tr><td class="term">Judgement</td><td>মনে কোনো বিষয়কে স্বীকার বা অস্বীকার করার মানসিক কাজ।</td></tr>
+<tr><td class="term">Subject</td><td>Categorical proposition-এ যার সম্পর্কে কিছু বলা হয়।</td></tr>
+<tr><td class="term">Predicate</td><td>Subject সম্পর্কে যে term-টি বলা হয় বা অস্বীকার করা হয়।</td></tr>
+<tr><td class="term">Connector</td><td>Argument বা compound statement-এর অংশগুলো যুক্ত করা শব্দ, যেমন and, or, if...then, therefore।</td></tr>
+<tr><td class="term">Term</td><td>Categorical proposition-এর একটি অংশ, যা একটি class বা category বোঝায়।</td></tr>
+<tr><td class="term">Universal affirmative (A)</td><td>“All S are P.” অর্থাৎ S-এর প্রত্যেক সদস্য P-এর মধ্যে আছে।</td></tr>
+<tr><td class="term">Distribution</td><td>কোনো term-এর class-এর সব সদস্যকে বোঝানো হয়েছে কি না।</td></tr>
+<tr><td class="term">Distributed</td><td>যখন proposition ওই class-এর <b>সব সদস্যকে</b> বোঝায়।</td></tr>
+<tr><td class="term">Undistributed</td><td>যখন proposition ওই class-এর সব সদস্যকে বোঝায় না।</td></tr>
+<tr><td class="term">Premise</td><td>Conclusion-কে support করার জন্য দেওয়া proposition।</td></tr>
+<tr><td class="term">Assumption</td><td>Argument বা proof-এ সাময়িকভাবে সত্য ধরে নেওয়া proposition।</td></tr>
+<tr><td class="term">Conclusion</td><td>যে proposition-কে premises-এর সাহায্যে প্রতিষ্ঠা করা হয়।</td></tr>
+<tr><td class="term">Deductive inference</td><td>যেখানে conclusion premises থেকে অবশ্যই follow করে বলে দাবি করা হয়।</td></tr>
+<tr><td class="term">Inductive inference</td><td>যেখানে conclusion premises-এর বাইরে আরও কিছু বলে এবং probability-এর সঙ্গে আসে।</td></tr>
+<tr><td class="term">Immediate inference</td><td>একটি premise থেকে একটি conclusion-এ সরাসরি logical transformation, যেমন conversion, obversion, contraposition।</td></tr>
+<tr><td class="term">Mediate inference</td><td>দুই বা ততোধিক premise ব্যবহার করে conclusion পাওয়া, যেমন syllogism।</td></tr>
+<tr><td class="term">Conversion</td><td>Subject ও predicate বদলানো, যেখানে সেই form-এ অর্থ ঠিক রেখে inference valid থাকে।</td></tr>
 </table>
-<div class="warning"><b>Important wording:</b> “Distribution” does not mean “the term is true.” It means the proposition talks about <b>every member</b> of the class named by that term.</div>
+<div class="warning"><b>খুব গুরুত্বপূর্ণ:</b> “Distribution” মানে term সত্য নয়। এর মানে proposition ওই class-এর <b>প্রত্যেক সদস্যকে</b> নিয়ে কথা বলছে।</div>
 </section>
-
 <section class="card" id="arguments">
-<h2>4. Relation Between Premises and Conclusion: Truth vs. Validity</h2>
-<h3>Premise-conclusion relation</h3>
-<p>In an argument, the premises are the propositions offered as reasons for accepting the conclusion. The logical question is whether the conclusion follows from those premises. That relation is called <b>validity</b> in deductive logic.</p>
-<div class="grid2">
-<div>
-<h3>Truth</h3>
-<p>Truth/falsity is a property of <b>propositions</b>.</p>
-<p>Example: “Dhaka is the capital of Bangladesh” is either true or false.</p>
-</div>
-<div>
-<h3>Validity</h3>
-<p>Validity/invalidity is a property of <b>arguments</b>.</p>
-<p>An argument is valid when there is no possible case in which all its premises are true and its conclusion is false.</p>
-</div>
-</div>
-<h3>Example showing why truth and validity are different</h3>
+<h2>৪. Premise ও Conclusion-এর সম্পর্ক: Truth বনাম Validity</h2>
+<p>Argument-এ premises হলো conclusion গ্রহণের কারণ। Logical প্রশ্ন হলো conclusionটি premises থেকে follow করে কি না। Deductive logic-এ এই সম্পর্ককে <b>validity</b> বলা হয়।</p>
+<div class="grid2"><div><h3>Truth</h3><p>Truth বা falsity হলো <b>proposition</b>-এর বৈশিষ্ট্য।</p><p>উদাহরণ: “Dhaka is the capital of Bangladesh” সত্য বা মিথ্যা হতে পারে।</p></div><div><h3>Validity</h3><p>Validity বা invalidity হলো <b>argument</b>-এর বৈশিষ্ট্য।</p><p>যদি এমন কোনো সম্ভাব্য অবস্থা না থাকে যেখানে সব premises সত্য কিন্তু conclusion মিথ্যা, তাহলে argument valid।</p></div></div>
+<h3>Truth আর Validity-এর পার্থক্য বোঝার উদাহরণ</h3>
 <div class="formula">All fish are mammals.
 All whales are fish.
 Therefore, all whales are mammals.</div>
-<p>The form is valid. But the first premise is false. So the argument is <b>valid but unsound</b>.</p>
+<p>Form valid, কিন্তু প্রথম premise মিথ্যা। তাই argument <b>valid but unsound</b>।</p>
 <div class="formula">All birds are animals.
 All dogs are animals.
 Therefore, all dogs are birds.</div>
-<p>Here the premises may be true, but the conclusion does not follow. The argument is <b>invalid</b>.</p>
+<p>Premises সত্য হতে পারে, কিন্তু conclusion follow করে না। তাই <b>invalid</b>।</p>
 <div class="formula">All mammals are animals.
 All whales are mammals.
 Therefore, all whales are animals.</div>
-<p>This is <b>valid and sound</b>, because the inference is valid and the premises are true.</p>
-<div class="exam"><b>Key sentence to memorize:</b> “Truth is a property of propositions; validity is a property of arguments. A valid argument may have false premises, whereas a proposition cannot be called valid or invalid.”</div>
+<p>এটি <b>valid and sound</b>, কারণ reasoning valid এবং premises সত্য।</p>
+<div class="exam"><b>মুখস্থ করার লাইন:</b> “Truth হলো proposition-এর বৈশিষ্ট্য; validity হলো argument-এর বৈশিষ্ট্য। Valid argument-এর false premise থাকতে পারে, কিন্তু proposition-কে valid বা invalid বলা হয় না।”</div>
 </section>
-
 <section class="card" id="categorical">
-<h2>5. Standard-Form Categorical Propositions</h2>
-<p>A <b>standard-form categorical proposition</b> has a subject term (S), a predicate term (P), a quantifier/copula pattern, and one of four forms:</p>
-<table class="matrix">
-<tr><th>Form</th><th>Pattern</th><th>Name</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr>
+<h2>৫. Standard-form Categorical Propositions</h2>
+<p>Standard-form categorical proposition-এ subject term (S), predicate term (P), quantifier/copula pattern এবং A, E, I, O-এর একটি form থাকে।</p>
+<table class="matrix"><tr><th>Form</th><th>Pattern</th><th>নাম</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr>
 <tr><td>A</td><td>All S are P.</td><td>Universal affirmative</td><td>Affirmative</td><td>Universal</td><td>S distributed; P undistributed</td></tr>
 <tr><td>E</td><td>No S are P.</td><td>Universal negative</td><td>Negative</td><td>Universal</td><td>S distributed; P distributed</td></tr>
 <tr><td>I</td><td>Some S are P.</td><td>Particular affirmative</td><td>Affirmative</td><td>Particular</td><td>S undistributed; P undistributed</td></tr>
-<tr><td>O</td><td>Some S are not P.</td><td>Particular negative</td><td>Negative</td><td>Particular</td><td>S undistributed; P distributed</td></tr>
-</table>
-<h3>Quality</h3>
-<p><b>Affirmative</b> propositions assert inclusion or agreement between S and P. <b>Negative</b> propositions deny that relation.</p>
-<h3>Quantity</h3>
-<p><b>Universal</b> propositions speak about all members of the subject class. <b>Particular</b> propositions speak about some member(s).</p>
-<h3>Distribution</h3>
-<p>A term is distributed if the proposition is about <b>every member of that term's class</b>.</p>
-<div class="exam">
-<b>Question:</b> “All voters are citizens.” → A proposition. <b>Voters:</b> distributed. <b>Citizens:</b> undistributed.<br>
-<b>Question:</b> “Some citizens are not voters.” → O proposition. <b>Citizens:</b> undistributed. <b>Voters:</b> distributed.
-</div>
-<h3>Mnemonic</h3>
-<p><b>A:</b> Subject only. <b>E:</b> Both. <b>I:</b> Neither. <b>O:</b> Predicate only.</p>
+<tr><td>O</td><td>Some S are not P.</td><td>Particular negative</td><td>Negative</td><td>Particular</td><td>S undistributed; P distributed</td></tr></table>
+<h3>Quality</h3><p><b>Affirmative</b> proposition S ও P-এর সম্পর্ককে গ্রহণ করে। <b>Negative</b> proposition সেই সম্পর্ক অস্বীকার করে।</p>
+<h3>Quantity</h3><p><b>Universal</b> subject class-এর সব সদস্য নিয়ে কথা বলে। <b>Particular</b> কিছু সদস্য নিয়ে কথা বলে।</p>
+<h3>Distribution</h3><p>যখন proposition কোনো term-এর class-এর <b>প্রত্যেক সদস্য</b> বোঝায়, তখন term distributed।</p>
+<div class="exam"><b>উদাহরণ:</b> “All voters are citizens.” → A proposition. <b>Voters:</b> distributed. <b>Citizens:</b> undistributed.<br/><b>উদাহরণ:</b> “Some citizens are not voters.” → O proposition. <b>Citizens:</b> undistributed. <b>Voters:</b> distributed.</div>
+<h3>Mnemonic</h3><p><b>A:</b> Subject only. <b>E:</b> Both. <b>I:</b> Neither. <b>O:</b> Predicate only.</p>
 </section>
-
 <section class="card" id="transformations">
-<h2>6. Conversion, Obversion & Contraposition</h2>
-<div class="grid3">
-<div>
-<h3>Conversion</h3>
-<p>Swap S and P.</p>
-<p><b>E and I:</b> valid.</p>
-<p><b>A:</b> valid by limitation in the traditional treatment when existential assumptions permit.</p>
-<p><b>O:</b> invalid.</p>
-</div>
-<div>
-<h3>Obversion</h3>
-<p>Keep subject, change quality, and replace predicate by its complement.</p>
-<p><b>Valid for A, E, I, O.</b></p>
-<p>Example: All S are P → No S are non-P.</p>
-</div>
-<div>
-<h3>Contraposition</h3>
-<p>Interchange subject and predicate and replace both by their complements in the appropriate way.</p>
-<p><b>A and O:</b> valid.</p>
-<p><b>E and I:</b> generally invalid.</p>
-</div>
-</div>
-<table>
-<tr><th>Original</th><th>Conversion</th><th>Obversion</th><th>Contraposition</th></tr>
-<tr><td>All S are P.</td><td>All P are S. (not generally valid)</td><td>No S are non-P. (valid)</td><td>All non-P are non-S. (valid)</td></tr>
-<tr><td>No S are P.</td><td>No P are S. (valid)</td><td>All S are non-P. (valid)</td><td>Not generally valid as a simple categorical inference</td></tr>
-<tr><td>Some S are P.</td><td>Some P are S. (valid)</td><td>Some S are not non-P. (valid)</td><td>Not generally valid</td></tr>
-<tr><td>Some S are not P.</td><td>Some P are not S. (invalid)</td><td>Some S are non-P. (valid)</td><td>Some non-P are not non-S. (valid)</td></tr>
-</table>
-<div class="warning"><b>Do not memorize only the names.</b> In an exam, show the operation: what was swapped, what was negated/complemented, and whether the inference is valid.</div>
-<h3>Existential import and Boolean interpretation</h3>
-<p><b>Existential import</b> concerns whether a proposition asserts or presupposes that its subject class has members. Under the traditional interpretation, universal categorical propositions were often understood to carry existential import. Under the <b>Boolean interpretation</b>, universal A and E propositions do <b>not</b> imply that their subject classes actually have members.</p>
-<div class="exam">This difference matters especially for immediate inference rules such as conversion by limitation and for syllogistic validity involving empty classes.</div>
+<h2>৬. Conversion, Obversion ও Contraposition</h2>
+<div class="grid3"><div><h3>Conversion</h3><p>S ও P অদলবদল করো।</p><p><b>E ও I:</b> valid.</p><p><b>A:</b> traditional treatment-এ existential assumption থাকলে limitation-এর মাধ্যমে valid হতে পারে।</p><p><b>O:</b> invalid.</p></div>
+<div><h3>Obversion</h3><p>Subject একই রাখো, quality বদলাও, predicate-এর complement বসাও।</p><p><b>A, E, I, O সব ক্ষেত্রেই valid.</b></p><p>উদাহরণ: All S are P → No S are non-P.</p></div>
+<div><h3>Contraposition</h3><p>Subject ও predicate অদলবদল করে উভয়ের complement ব্যবহার করা হয়।</p><p><b>A ও O:</b> valid.</p><p><b>E ও I:</b> সাধারণভাবে invalid.</p></div></div>
+<table><tr><th>Original</th><th>Conversion</th><th>Obversion</th><th>Contraposition</th></tr>
+<tr><td>All S are P.</td><td>All P are S. (সাধারণভাবে valid নয়)</td><td>No S are non-P. (valid)</td><td>All non-P are non-S. (valid)</td></tr>
+<tr><td>No S are P.</td><td>No P are S. (valid)</td><td>All S are non-P. (valid)</td><td>সাধারণ simple categorical inference হিসেবে valid নয়</td></tr>
+<tr><td>Some S are P.</td><td>Some P are S. (valid)</td><td>Some S are not non-P. (valid)</td><td>সাধারণভাবে valid নয়</td></tr>
+<tr><td>Some S are not P.</td><td>Some P are not S. (invalid)</td><td>Some S are non-P. (valid)</td><td>Some non-P are not non-S. (valid)</td></tr></table>
+<div class="warning"><b>শুধু নাম মুখস্থ করবে না।</b> পরীক্ষায় দেখাবে কী বদলেছে, কী complement হয়েছে এবং inference valid কি না।</div>
+<h3>Existential import ও Boolean interpretation</h3><p><b>Existential import</b> হলো universal proposition-এর subject class-এ সত্যিই কোনো সদস্য আছে কি না, সেই ধারণা। Traditional interpretation-এ universal categorical proposition-এ অনেক সময় existential import ধরা হতো। <b>Boolean interpretation</b>-এ universal A ও E proposition subject class-এর member থাকা বাধ্যতামূলক করে না।</p>
+<div class="exam">এটি conversion by limitation এবং empty class-সহ syllogistic validity বুঝতে গুরুত্বপূর্ণ।</div>
 </section>
-
 <section class="card" id="syllogism">
-<h2>7. Standard-Form Categorical Syllogism & Venn Diagram Technique</h2>
-<h3>Definition</h3>
-<p>A <b>standard-form categorical syllogism</b> is a deductive argument consisting of exactly three categorical propositions: two premises and one conclusion, involving exactly three terms. Each term occurs twice.</p>
-<h3>Three terms</h3>
-<table>
-<tr><th>Term</th><th>Meaning</th></tr>
-<tr><td>Major term (P)</td><td>Predicate of the conclusion.</td></tr>
-<tr><td>Minor term (S)</td><td>Subject of the conclusion.</td></tr>
-<tr><td>Middle term (M)</td><td>Occurs in both premises but not in the conclusion.</td></tr>
-</table>
-<h3>Characteristics of a syllogism</h3>
-<ul>
-<li>Three categorical propositions: two premises and one conclusion.</li>
-<li>Exactly three terms: S, P, and M.</li>
-<li>Each term occurs twice.</li>
-<li>The middle term links the minor and major terms in the premises.</li>
-<li>The syllogism has a <b>mood</b> (A/E/I/O pattern) and a <b>figure</b> (based on the position of M).</li>
-</ul>
-<h3>Figures</h3>
-<table class="matrix">
-<tr><th>Figure</th><th>Major premise</th><th>Minor premise</th><th>Conclusion</th></tr>
-<tr><td>1</td><td>M-P</td><td>S-M</td><td>S-P</td></tr>
-<tr><td>2</td><td>P-M</td><td>S-M</td><td>S-P</td></tr>
-<tr><td>3</td><td>M-P</td><td>M-S</td><td>S-P</td></tr>
-<tr><td>4</td><td>P-M</td><td>M-S</td><td>S-P</td></tr>
-</table>
-<h3>Venn Diagram technique - exam procedure</h3>
-<ol>
-<li>Draw three overlapping circles labelled S, P, and M.</li>
-<li>Represent the <b>premises only</b>: shade regions that must be empty and place an X where existence is asserted.</li>
-<li>Do <b>not</b> diagram the conclusion initially.</li>
-<li>Check whether the conclusion is already forced by the completed premise diagram.</li>
-<li>If the conclusion is forced, the syllogism is valid; if not, it is invalid.</li>
-</ol>
-<h3>Requested examples</h3>
-<details><summary>IAI-3</summary><div class="inside">
-<p><b>Figure 3:</b> Major = I, minor = A, conclusion = I.</p>
-<p>Read as: Some M are P; All M are S; therefore, Some S are P.</p>
-<p>From “Some M are P,” place an X in the M∩P region. “All M are S” forces every M to be inside S. Therefore that existing M∩P object must also lie in S∩P. The conclusion “Some S are P” is forced.</p>
-<p><b>Result: VALID.</b></p>
-</div></details>
-<details><summary>EAE-3</summary><div class="inside">
-<p>Read as: No M are P; All M are S; therefore, No S are P.</p>
-<p>The premises only restrict M. S may still contain members outside M that are also P. Therefore the conclusion is not forced.</p>
-<p><b>Result: INVALID.</b></p>
-</div></details>
+<h2>৭. Standard-form Categorical Syllogism ও Venn Diagram</h2>
+<h3>সংজ্ঞা</h3><p>Standard-form categorical syllogism হলো এমন deductive argument যাতে ঠিক তিনটি categorical proposition থাকে: দুইটি premise ও একটি conclusion। এখানে ঠিক তিনটি term থাকে এবং প্রতিটি term দুইবার করে আসে।</p>
+<h3>তিনটি term</h3><table><tr><th>Term</th><th>অর্থ</th></tr><tr><td>Major term (P)</td><td>Conclusion-এর predicate।</td></tr><tr><td>Minor term (S)</td><td>Conclusion-এর subject।</td></tr><tr><td>Middle term (M)</td><td>দুই premise-এ থাকে, কিন্তু conclusion-এ থাকে না।</td></tr></table>
+<h3>Syllogism-এর বৈশিষ্ট্য</h3><ul><li>তিনটি categorical proposition: দুই premise, এক conclusion।</li><li>ঠিক তিনটি term: S, P, M।</li><li>প্রতিটি term দুইবার করে আসে।</li><li>Middle term premises-এর মধ্যে minor ও major term-কে যুক্ত করে।</li><li>Syllogism-এর <b>mood</b> হলো A/E/I/O pattern এবং <b>figure</b> হলো M-এর position।</li></ul>
+<h3>Figures</h3><table class="matrix"><tr><th>Figure</th><th>Major premise</th><th>Minor premise</th><th>Conclusion</th></tr><tr><td>1</td><td>M-P</td><td>S-M</td><td>S-P</td></tr><tr><td>2</td><td>P-M</td><td>S-M</td><td>S-P</td></tr><tr><td>3</td><td>M-P</td><td>M-S</td><td>S-P</td></tr><tr><td>4</td><td>P-M</td><td>M-S</td><td>S-P</td></tr></table>
+<h3>Venn Diagram পরীক্ষার পদ্ধতি</h3><ol><li>S, P, M নামে তিনটি overlapping circle আঁকো।</li><li>শুধু <b>premises</b> diagram করো; empty region shade করো এবং existence থাকলে X বসাও।</li><li>শুরুতে conclusion diagram করো না।</li><li>দেখো conclusionটি premise-diagram থেকেই বাধ্যতামূলকভাবে আসে কি না।</li><li>এলে valid, না এলে invalid।</li></ol>
+<h3>চাওয়া উদাহরণ</h3><details><summary>IAI-3</summary><div class="inside"><p><b>Figure 3:</b> Major = I, minor = A, conclusion = I.</p><p>Some M are P; All M are S; therefore, Some S are P.</p><p>“Some M are P” থেকে M∩P-তে X বসবে। “All M are S” বলছে সব M, S-এর ভিতরে। তাই X-টিও S∩P-তে থাকবে। Conclusion বাধ্যতামূলক।</p><p><b>Result: VALID.</b></p></div></details>
+<details><summary>EAE-3</summary><div class="inside"><p>No M are P; All M are S; therefore, No S are P.</p><p>Premises শুধু M-কে নিয়ন্ত্রণ করছে। S-এর M-এর বাইরে থাকা অংশে P থাকতে পারে। তাই conclusion বাধ্যতামূলক নয়।</p><p><b>Result: INVALID.</b></p></div></details>
 </section>
-
 <section class="card" id="fallacies">
-<h2>8. Fallacies - Types, Definitions & Examples</h2>
-<div class="tip"><b>Definition:</b> A fallacy is a kind of erroneous reasoning. A fallacious argument may look persuasive while failing to provide the required logical support.</div>
-
-<h3>A. Fallacies of Relevance</h3>
-<table>
-<tr><th>Fallacy</th><th>What happens</th><th>Example</th></tr>
-<tr><td><b>Argumentum ad Baculum / Appeal to Force</b></td><td>Threat or force is used instead of relevant reasons.</td><td>“Agree with my proposal or you will lose your job.”</td></tr>
-<tr><td><b>Argumentum ad Hominem - Abusive</b></td><td>Attacks the person rather than the argument.</td><td>“His economic argument is false because he is stupid.”</td></tr>
-<tr><td><b>Argumentum ad Hominem - Circumstantial</b></td><td>Dismisses a claim by pointing to the speaker’s circumstances or interests.</td><td>“You support environmental rules only because you work for an environmental group.”</td></tr>
-<tr><td><b>Argumentum ad Hominem - Tu Quoque</b></td><td>Rejects criticism because the critic is accused of doing the same thing.</td><td>“You cannot say cheating is wrong; you cheated last year.”</td></tr>
-<tr><td><b>Argumentum ad Ignorantiam / Appeal to Ignorance</b></td><td>Claims a proposition is true merely because it has not been proved false, or false because it has not been proved true.</td><td>“Nobody has proved aliens do not exist, so they must exist.”</td></tr>
-<tr><td><b>Argumentum ad Misericordiam / Appeal to Pity</b></td><td>Uses pity as a substitute for relevant evidence.</td><td>“Please give me full marks; my family will be disappointed.”</td></tr>
-<tr><td><b>Argumentum ad Populum / Appeal to the People</b></td><td>Uses popularity, emotion, or crowd approval instead of relevant support.</td><td>“Millions believe it, so it must be true.”</td></tr>
-<tr><td><b>Red Herring</b></td><td>Introduces an irrelevant issue that diverts attention from the original point.</td><td>Question: “Did you falsify the report?” Answer: “Our company has created thousands of jobs.”</td></tr>
-<tr><td><b>Missing the Point / Ignoring the Question</b></td><td>The premises may support a different conclusion from the one being argued for.</td><td>“We need stricter traffic enforcement, therefore we should close the city park.”</td></tr>
-<tr><td><b>Straw Man</b></td><td>Replaces an opponent’s real claim with a weaker or distorted version, then attacks that version.</td><td>“She wants fewer exams, so she wants students to learn nothing.”</td></tr>
-</table>
-
-<h3>B. Fallacies of Presumption</h3>
-<table>
-<tr><th>Fallacy</th><th>What happens</th><th>Example</th></tr>
-<tr><td><b>Accident</b></td><td>Applies a general rule to an exceptional case where the rule does not properly fit.</td><td>“Freedom of speech is always good; therefore a person should be allowed to shout a fire alarm falsely in a crowded theater.”</td></tr>
-<tr><td><b>Converse Accident / Hasty Generalization</b></td><td>Moves from an insufficient or unrepresentative sample to a broad generalization.</td><td>“Two tourists were rude, so tourists are rude.”</td></tr>
-<tr><td><b>False Cause</b></td><td>Treats an inadequate or merely correlated cause as the true cause.</td><td>“I wore this shirt and we won the match; the shirt caused the victory.”</td></tr>
-<tr><td><b>Begging the Question</b></td><td>The conclusion is assumed, directly or indirectly, in the premises.</td><td>“This law is just because it is a fair law.”</td></tr>
-<tr><td><b>Complex Question</b></td><td>Two or more questions are packed into one so that answering it appears to concede an unjustified assumption.</td><td>“Have you stopped cheating on exams?”</td></tr>
-</table>
-
-<h3>C. Fallacies of Ambiguity</h3>
-<table>
-<tr><th>Fallacy</th><th>What happens</th><th>Example</th></tr>
-<tr><td><b>Equivocation</b></td><td>A key word or phrase changes meaning during the argument.</td><td>“A bank is on the river; a river bank is money-related; therefore...”</td></tr>
-<tr><td><b>Amphiboly</b></td><td>Ambiguity comes from grammatical structure rather than a single word.</td><td>“I saw the student with the telescope” used with two different possible structures.</td></tr>
-<tr><td><b>Accent</b></td><td>Meaning changes because emphasis or wording is shifted in a way that alters interpretation.</td><td>Quoting only the emphasized fragment of a sentence to imply a different claim.</td></tr>
-<tr><td><b>Composition</b></td><td>Infers something about the whole from properties of parts.</td><td>“Every player is excellent; therefore the team must be excellent.”</td></tr>
-<tr><td><b>Division</b></td><td>Infers something about parts merely because it is true of the whole.</td><td>“The company is rich; therefore every employee is rich.”</td></tr>
-</table>
-
-<h3>D. Weak or defective inductive reasoning</h3>
-<p>For Copi-style exam preparation, remember that inductive fallacies arise when the evidence is insufficient, unrepresentative, irrelevant, or misinterpreted. The names above are the ones most likely to appear when the course asks specifically for “fallacies.”</p>
-<div class="exam"><b>How to answer a fallacy question:</b> (1) define the fallacy, (2) show the defective reasoning pattern, (3) give a fresh example, (4) explain in one sentence why the premises fail to justify the conclusion.</div>
+<h2>৮. Fallacies - ধরন, সংজ্ঞা ও উদাহরণ</h2>
+<div class="tip"><b>সংজ্ঞা:</b> Fallacy হলো ভুল reasoning-এর একটি ধরন। Fallacious argument দেখতে convincing হতে পারে, কিন্তু conclusion-কে প্রয়োজনীয় logical support দেয় না।</div>
+<h3>A. Fallacies of Relevance</h3><table><tr><th>Fallacy</th><th>কী হয়</th><th>সহজ উদাহরণ</th></tr>
+<tr><td><b>Appeal to Force</b></td><td>যুক্তির বদলে হুমকি বা শক্তি ব্যবহার করা হয়।</td><td>“আমার proposal মানো, না হলে চাকরি হারাবে।”</td></tr>
+<tr><td><b>Abusive ad Hominem</b></td><td>যুক্তির বদলে মানুষটিকে আক্রমণ করা হয়।</td><td>“ওর economic argument ভুল, কারণ সে বোকা।”</td></tr>
+<tr><td><b>Circumstantial ad Hominem</b></td><td>বক্তার স্বার্থ বা অবস্থার কথা বলে claim reject করা হয়।</td><td>“তুমি environmental rule support করছ কারণ তুমি ওই group-এ কাজ করো।”</td></tr>
+<tr><td><b>Tu Quoque</b></td><td>সমালোচনার উত্তর হিসেবে সমালোচকও একই কাজ করে বলে দেখানো হয়।</td><td>“Cheating খারাপ বলো না, তুমিও গত বছর cheat করেছিলে।”</td></tr>
+<tr><td><b>Appeal to Ignorance</b></td><td>কিছু false প্রমাণ হয়নি বলে true, বা true প্রমাণ হয়নি বলে false ধরে নেওয়া।</td><td>“Aliens নেই প্রমাণ হয়নি, তাই তারা অবশ্যই আছে।”</td></tr>
+<tr><td><b>Appeal to Pity</b></td><td>Relevant evidence-এর বদলে pity ব্যবহার করা।</td><td>“আমাকে full marks দিন, নইলে family disappointed হবে।”</td></tr>
+<tr><td><b>Appeal to the People</b></td><td>জনপ্রিয়তা বা crowd emotion-কে evidence বানানো।</td><td>“লক্ষ মানুষ বিশ্বাস করে, তাই সত্য।”</td></tr>
+<tr><td><b>Red Herring</b></td><td>আসল প্রশ্ন থেকে মন অন্যদিকে ঘুরিয়ে দেওয়া।</td><td>“Report জাল করেছ?” উত্তর: “আমাদের company হাজার চাকরি দিয়েছে।”</td></tr>
+<tr><td><b>Missing the Point</b></td><td>Premises অন্য conclusion support করে, কিন্তু অন্য conclusion দেওয়া হয়।</td><td>“Traffic enforcement দরকার, তাই city park বন্ধ করা উচিত।”</td></tr>
+<tr><td><b>Straw Man</b></td><td>Opponent-এর আসল কথা বদলে দুর্বল version বানিয়ে সেটি attack করা।</td><td>“সে কম exam চায়, মানে সে চায় student কিছু না শিখুক।”</td></tr></table>
+<h3>B. Fallacies of Presumption</h3><table><tr><th>Fallacy</th><th>কী হয়</th><th>উদাহরণ</th></tr>
+<tr><td><b>Accident</b></td><td>সাধারণ rule-কে এমন exceptional case-এ প্রয়োগ করা যেখানে ruleটি ঠিকভাবে খাটে না।</td><td>“Freedom of speech সবসময় ভালো, তাই crowded theater-এ মিথ্যা fire alarm দিলেও অনুমতি থাকা উচিত।”</td></tr>
+<tr><td><b>Converse Accident / Hasty Generalization</b></td><td>কম বা unrepresentative sample থেকে বড় generalization করা।</td><td>“দুই tourist rude ছিল, তাই tourist-রা rude।”</td></tr>
+<tr><td><b>False Cause</b></td><td>Correlation বা দুর্বল কারণকে আসল কারণ ধরে নেওয়া।</td><td>“এই shirt পরে match জিতেছি, তাই shirt-ই জিতিয়েছে।”</td></tr>
+<tr><td><b>Begging the Question</b></td><td>Conclusion-কে premise-এর মধ্যে সরাসরি বা পরোক্ষভাবে ধরে নেওয়া।</td><td>“এই law just, কারণ এটি fair law।”</td></tr>
+<tr><td><b>Complex Question</b></td><td>দুই বা ততোধিক প্রশ্ন একসঙ্গে এমনভাবে করা হয় যাতে উত্তর দিলে অন্যায্য assumption মেনে নিতে হয়।</td><td>“তুমি কি cheating করা বন্ধ করেছ?”</td></tr></table>
+<h3>C. Fallacies of Ambiguity</h3><table><tr><th>Fallacy</th><th>কী হয়</th><th>উদাহরণ</th></tr>
+<tr><td><b>Equivocation</b></td><td>একই key word argument-এর মধ্যে ভিন্ন অর্থে ব্যবহার করা।</td><td>“Bank river-এর পাশে; river bank money-related; তাই...”</td></tr>
+<tr><td><b>Amphiboly</b></td><td>একটি শব্দ নয়, grammatical structure-এর ambiguity থেকে সমস্যা হয়।</td><td>“I saw the student with the telescope” দুইভাবে বোঝা যায়।</td></tr>
+<tr><td><b>Accent</b></td><td>Emphasis বা wording বদলে অর্থ অন্যদিকে নেওয়া হয়।</td><td>Sentence-এর শুধু emphasized অংশ দেখিয়ে অন্য দাবি বোঝানো।</td></tr>
+<tr><td><b>Composition</b></td><td>Parts-এর গুণ দেখে whole-এর গুণ infer করা।</td><td>“প্রতিটি player excellent, তাই team অবশ্যই excellent।”</td></tr>
+<tr><td><b>Division</b></td><td>Whole-এর গুণ দেখে প্রতিটি part-এর একই গুণ infer করা।</td><td>“Company rich, তাই প্রত্যেক employee rich।”</td></tr></table>
+<h3>D. Weak or defective inductive reasoning</h3><p>Inductive fallacy হয় যখন evidence insufficient, unrepresentative, irrelevant বা ভুলভাবে interpret করা হয়।</p><div class="exam"><b>Fallacy question-এর formula:</b> (১) সংজ্ঞা, (২) ভুল reasoning pattern, (৩) নতুন উদাহরণ, (৪) এক লাইনে বলো কেন premises conclusion justify করে না।</div>
 </section>
-
 <section class="card" id="induction">
-<h2>9. Inductive Inference & Mill's Methods of Experimental Enquiry</h2>
-<h3>Inductive argument</h3>
-<p>An inductive argument is one in which the premises are intended to make the conclusion <b>probable</b> rather than guarantee it. Its conclusion goes beyond the information explicitly contained in the premises.</p>
-<h3>Mill's five methods</h3>
-<table>
-<tr><th>Method</th><th>Core idea</th><th>Simple illustration</th></tr>
-<tr><td><b>Method of Agreement</b></td><td>Find a factor common to all cases in which the phenomenon occurs.</td><td>Several people become ill after different meals; the common food item is suspected.</td></tr>
-<tr><td><b>Method of Difference</b></td><td>Compare a case where the phenomenon occurs with a similar case where it does not; the differing factor is treated as causally relevant.</td><td>Two otherwise similar groups, one receiving a treatment and one not.</td></tr>
-<tr><td><b>Joint Method of Agreement and Difference</b></td><td>Combines the two methods: the suspected factor is present in positive cases and absent in negative cases.</td><td>Factor appears in every sick case and never in comparable healthy cases.</td></tr>
-<tr><td><b>Method of Residues</b></td><td>After known causes explain known portions of an effect, the remaining portion is attributed to the remaining causal factor.</td><td>Subtract known contributors from a measured total to identify a residual cause.</td></tr>
-<tr><td><b>Method of Concomitant Variations</b></td><td>Changes in one factor are associated with regular changes in another.</td><td>As temperature rises, a physical measurement changes systematically.</td></tr>
-</table>
-<h3>Limitations of Mill's methods</h3>
-<ul>
-<li>Real phenomena often have <b>multiple interacting causes</b>.</li>
-<li>It may be impossible to control or hold all other factors constant.</li>
-<li>A correlation or regular variation does not by itself prove a unique causal explanation.</li>
-<li>Experimental situations can be too complex for clean agreement/difference comparisons.</li>
-<li>Results depend on how the cases are selected and described; hidden conditions can mislead the inquiry.</li>
-<li>These methods are best understood as systematic procedures for discovering and testing causal hypotheses, not as magical guarantees of certainty.</li>
-</ul>
+<h2>৯. Inductive Inference ও Mill-এর Methods</h2>
+<h3>Inductive argument</h3><p>Inductive argument-এ premises conclusion-কে <b>probable</b> করে, guarantee করে না। Conclusion premises-এ সরাসরি থাকা তথ্যের বাইরে যায়।</p>
+<h3>Mill-এর পাঁচটি method</h3><table><tr><th>Method</th><th>সহজ ধারণা</th><th>সহজ উদাহরণ</th></tr>
+<tr><td><b>Method of Agreement</b></td><td>যেসব case-এ phenomenon ঘটে, সবখানে common factor খোঁজা।</td><td>ভিন্ন খাবার খাওয়া কয়েকজন অসুস্থ, কিন্তু একটি খাবার সবার common।</td></tr>
+<tr><td><b>Method of Difference</b></td><td>একটি positive case ও কাছাকাছি negative case তুলনা করে যে factor আলাদা, তাকে causal factor হিসেবে ধরা।</td><td>এক group treatment পেল, অন্য similar group পেল না।</td></tr>
+<tr><td><b>Joint Method</b></td><td>Agreement ও Difference একসঙ্গে ব্যবহার করা।</td><td>সুস্থ ও অসুস্থ comparable case-এ factor-এর উপস্থিতি/অনুপস্থিতি দেখা।</td></tr>
+<tr><td><b>Method of Residues</b></td><td>Known causes দিয়ে known effect বাদ দিলে বাকি অংশকে remaining cause-এর সঙ্গে যুক্ত করা।</td><td>Total effect থেকে known contributors বাদ দিয়ে residual cause খোঁজা।</td></tr>
+<tr><td><b>Method of Concomitant Variations</b></td><td>এক factor নিয়মিত বদলালে অন্য factor-ও নিয়মিত বদলায় কি না দেখা।</td><td>Temperature বাড়ার সঙ্গে কোনো measurement নিয়মিত বদলায়।</td></tr></table>
+<h3>Mill-এর methods-এর সীমাবদ্ধতা</h3><ul><li>বাস্তবে অনেক সময় <b>একাধিক interacting cause</b> থাকে।</li><li>সব অন্য factor একই রাখা কঠিন।</li><li>Correlation নিজে একক causal explanation প্রমাণ করে না।</li><li>বাস্তব situation অনেক জটিল হতে পারে।</li><li>Case নির্বাচন বা hidden condition reasoning ভুল করাতে পারে।</li><li>এগুলো causal inquiry-এর systematic method, certainty-এর magic formula নয়।</li></ul>
 </section>
-
 <section class="card" id="probability">
-<h2>10. Probability & Analogical Argument</h2>
-<h3>Analogical argument</h3>
-<p>An <b>analogical argument</b> reasons from similarity. It points out that two or more cases resemble one another in relevant respects and then infers that they are likely to resemble one another in another respect as well.</p>
+<h2>১০. Probability ও Analogical Argument</h2>
+<h3>Analogical argument</h3><p><b>Analogical argument</b> similarity থেকে reasoning করে। দুই বা ততোধিক case-এর relevant similarity দেখিয়ে অন্য একটি মিলও সম্ভবত আছে বলে inference করা হয়।</p>
 <div class="formula">Object A has properties p, q, r, and s.
 Object B has properties p, q, and r.
 Therefore, B probably has property s.</div>
-<p><b>Strength depends on:</b> the number of relevant similarities, their degree of relevance, the absence of important dissimilarities, and the diversity/representativeness of the comparison cases.</p>
-
-<h3>Theories / interpretations of probability</h3>
-<table>
-<tr><th>Approach</th><th>Core idea</th><th>Main strength</th><th>Main limitation</th></tr>
-<tr><td><b>Classical / mathematical</b></td><td>Probability is based on ratios among equally possible outcomes.</td><td>Clear for symmetric games and finite equally likely cases.</td><td>“Equally possible” can be difficult to justify outside idealized cases.</td></tr>
-<tr><td><b>Statistical / relative-frequency</b></td><td>Probability is understood through relative frequency in a sufficiently large class or sequence of cases.</td><td>Connects probability to empirical data.</td><td>Single-case probabilities and the exact long-run interpretation can be difficult to handle.</td></tr>
-</table>
-<h3>Coin problems</h3>
-<div class="formula">For a fair coin:
+<p><b>Strength নির্ভর করে:</b> relevant similarity কতগুলো, সেগুলো কতটা গুরুত্বপূর্ণ, significant dissimilarity আছে কি না, এবং comparison cases কতটা representative।</p>
+<h3>Probability-এর theory / interpretation</h3><table><tr><th>Approach</th><th>মূল ধারণা</th><th>Strength</th><th>Limitation</th></tr>
+<tr><td><b>Classical / mathematical</b></td><td>Equally possible outcome-এর ratio দিয়ে probability নির্ধারণ।</td><td>Fair dice, coin-এর মতো symmetric case-এ পরিষ্কার।</td><td>বাস্তব ক্ষেত্রে “equally possible” প্রমাণ করা কঠিন।</td></tr>
+<tr><td><b>Statistical / relative-frequency</b></td><td>বড় class বা sequence-এ occurrence-এর relative frequency দিয়ে probability বোঝা।</td><td>Empirical data-এর সঙ্গে ভালোভাবে যুক্ত।</td><td>Single-case probability এবং exact long-run meaning নিয়ে সমস্যা থাকতে পারে।</td></tr></table>
+<h3>Coin problem</h3><div class="formula">Fair coin:
 P(T on one toss) = 1/2
 
 P(TTT in 3 tosses) = (1/2)^3 = 1/8
@@ -410,172 +281,37 @@ P(TTT in 3 tosses) = (1/2)^3 = 1/8
 P(at least one H in 3 tosses)
 = 1 - P(no H)
 = 1 - (1/2)^3
-= 7/8</div>
-<p>The complement method is usually the quickest: “at least one head” = 1 - “no heads.”</p>
+= 7/8</div><p><b>Shortcut:</b> “at least one head” = 1 - “no heads.”</p>
 </section>
-
 <section class="card" id="previous">
-<h2>11. Previous-Year Questions - Separate Full Answers</h2>
-<p class="small">These are written in an exam-ready style. For long-mark questions, start with a direct definition, then develop the explanation, then give the example/evaluation.</p>
-
-<details open>
-<summary>Group A - 5-mark questions</summary>
-<div class="inside">
-<h3>1. What is Logic? Explain after Copi, the central problem with which logic deals.</h3>
-<p><b>Answer:</b> Logic, according to Copi, is the study of the methods and principles used to distinguish correct reasoning from incorrect reasoning. Logic therefore concerns the evaluation of arguments rather than any particular subject matter. Its central problem is to determine whether a conclusion follows from its premises in the appropriate logical way. In deductive reasoning, the issue is whether the premises entail the conclusion; in inductive reasoning, the issue is whether the premises provide adequate probable support. Logic thus supplies standards by which reasoning can be examined, criticized, and improved.</p>
-
-<h3>2. Discuss briefly, the three basic functions of logic.</h3>
-<p><b>Answer:</b> The three basic functions may be stated as: (1) <b>analysis</b> - identify the propositions, premises, conclusion, and logical structure of reasoning; (2) <b>evaluation</b> - apply logical standards to determine whether an inference is correct, valid, strong, or defective; and (3) <b>error detection and correction</b> - recognize fallacies and other defects so that reasoning can be made more reliable.</p>
-
-<h3>3. What do you mean by analogical argument?</h3>
-<p><b>Answer:</b> An analogical argument is an inductive argument in which similarities between two or more cases are used as evidence for a further similarity. If object A and object B share several relevant properties, and A has another property, the argument infers that B probably has that property too. Its strength depends on the number and relevance of the similarities, the lack of significant dissimilarities, and the representativeness of the comparison.</p>
-
-<h3>4. Distribution in: a) All voters are citizens. b) Some citizens are not voters.</h3>
-<table><tr><th>Proposition</th><th>Form</th><th>Subject</th><th>Predicate</th></tr>
-<tr><td>a) All voters are citizens.</td><td>A</td><td><b>Distributed</b></td><td><b>Undistributed</b></td></tr>
-<tr><td>b) Some citizens are not voters.</td><td>O</td><td><b>Undistributed</b></td><td><b>Distributed</b></td></tr>
-</table>
-</div>
-</details>
-
-<details>
-<summary>Group B - Long questions</summary>
-<div class="inside">
-
-<h3>1. According to Copi, explain the relation between premises and conclusion. Discuss truth and validity. (12.5 marks)</h3>
-<p><b>Answer:</b> An argument consists of premises and a conclusion. The premises are propositions put forward as reasons for accepting the conclusion, while the conclusion is the proposition the argument seeks to establish. In a deductive argument, the essential logical relation is that the conclusion must follow from the premises in such a way that it is impossible for all the premises to be true while the conclusion is false. This property is called validity.</p>
-<p>Truth and validity must be carefully distinguished. <b>Truth is a property of propositions</b>; a proposition is true when it corresponds to the facts, and false otherwise. <b>Validity is a property of arguments</b>; it concerns the logical relation between premises and conclusion. Therefore an argument can be valid even if one or more premises are false.</p>
-<p><b>Example:</b> “All fish are mammals. All whales are fish. Therefore, all whales are mammals.” The form is valid, but the first premise is false, so the argument is unsound. Conversely, an argument can have true premises and a true conclusion yet still be invalid if the conclusion does not follow from those premises.</p>
-<p>Thus, <b>truth concerns individual propositions, while validity concerns the structure of an argument</b>. A sound deductive argument requires both valid reasoning and true premises.</p>
-
-<h3>2. What is Logical Definition? Explain with examples. (3.5 marks)</h3>
-<p><b>Answer:</b> A logical definition is a definition designed to state the meaning of a term with precision by identifying the attributes that are essential and applying to all and only the objects denoted by the term. A good logical definition should be neither too broad nor too narrow.</p>
-<p><b>Example:</b> “A triangle is a plane figure bounded by three straight lines.” This aims to identify the essential characteristics of a triangle rather than merely describing one example.</p>
-
-<h3>3. Explain the rules of definition and the fallacies involved in violating them. (9.5 marks)</h3>
-<p><b>Answer:</b></p>
-<ol>
-<li><b>A definition should state essential attributes where an intensional definition is intended.</b> Violation can produce a definition by accidental characteristics rather than the defining ones.</li>
-<li><b>A definition should not be circular.</b> The defining expression should not depend on the very term being defined. Otherwise the explanation does not genuinely explain the term. <b>Fallacy:</b> circular definition.</li>
-<li><b>A definition should be equivalent in denotation to the term defined.</b> It should not be too broad or too narrow. <b>Fallacies:</b> overly broad definition and overly narrow definition.</li>
-<li><b>A definition should not be obscure or ambiguous.</b> Replacing one unclear expression by another does not increase understanding. <b>Fallacy:</b> obscure/ambiguous definition.</li>
-<li><b>A definition should not normally be figurative when literal precision is required.</b> A metaphor may be memorable but fail to state exact meaning. <b>Fallacy:</b> figurative definition used as a logical definition.</li>
-<li><b>A definition should not be negative when an affirmative definition is available.</b> Saying what a thing is not may fail to identify what it is. <b>Fallacy:</b> improper negative definition.</li>
-</ol>
-
-<h3>4. What is fallacy? Discuss, with examples, the fallacies of relevance. (12.5 marks)</h3>
-<p><b>Answer:</b> A fallacy is a kind of erroneous reasoning. In a fallacious argument, the reasoning fails to provide the logical support required for the conclusion, even though it may seem persuasive.</p>
-<p>Fallacies of relevance occur when premises are not logically relevant to the conclusion, even though they may create the appearance of support. Important examples include:</p>
-<ul>
-<li><b>Appeal to force:</b> replaces reasons with threat or coercion.</li>
-<li><b>Abusive ad hominem:</b> attacks the person rather than the person's argument.</li>
-<li><b>Circumstantial ad hominem:</b> rejects an argument because of the speaker's circumstances or interests.</li>
-<li><b>Tu quoque:</b> answers criticism by accusing the critic of similar conduct.</li>
-<li><b>Appeal to ignorance:</b> treats lack of proof as proof of the opposite.</li>
-<li><b>Appeal to pity:</b> uses pity instead of relevant evidence.</li>
-<li><b>Appeal to the people:</b> relies on popularity or crowd emotion rather than relevant grounds.</li>
-<li><b>Red herring:</b> diverts attention to an irrelevant issue.</li>
-<li><b>Missing the point:</b> premises support a different conclusion from the one actually offered.</li>
-</ul>
-<p><b>Example:</b> “You should accept my political argument because thousands of people agree with me.” The popularity of a belief does not itself establish its truth, so the argument may commit an appeal to the people.</p>
-
-<h3>5. Standard-form categorical proposition: quality, quantity, distribution. (12.5 marks)</h3>
-<p><b>Answer:</b> A standard-form categorical proposition is composed of a subject term and a predicate term connected in one of four standard patterns: A, E, I, and O. Its <b>quality</b> is affirmative or negative; its <b>quantity</b> is universal or particular; and its <b>distribution</b> indicates whether a term is used to refer to every member of the class it denotes.</p>
-<table><tr><th>Type</th><th>Form</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr>
-<tr><td>A</td><td>All S are P</td><td>Affirmative</td><td>Universal</td><td>S distributed, P undistributed</td></tr>
-<tr><td>E</td><td>No S are P</td><td>Negative</td><td>Universal</td><td>S distributed, P distributed</td></tr>
-<tr><td>I</td><td>Some S are P</td><td>Affirmative</td><td>Particular</td><td>Neither distributed</td></tr>
-<tr><td>O</td><td>Some S are not P</td><td>Negative</td><td>Particular</td><td>S undistributed, P distributed</td></tr>
-</table>
-<p>Distribution is especially important in testing categorical syllogisms because rules concerning the middle term and terms in the conclusion depend on it.</p>
-
-<h3>6. Conversion, obversion, contraposition; existential import and Boolean interpretation. (12.5 marks)</h3>
-<p><b>Answer:</b> <b>Conversion</b> interchanges subject and predicate. “No S are P” converts validly to “No P are S”; “Some S are P” converts validly to “Some P are S.” Under traditional treatment, the universal affirmative may convert by limitation when existential import is assumed.</p>
-<p><b>Obversion</b> changes the quality of the proposition and replaces the predicate by its complement. It is valid for all four forms. For example, “All S are P” becomes “No S are non-P.”</p>
-<p><b>Contraposition</b> interchanges the subject and predicate while complementing both. It is valid for A and O forms in the standard treatment.</p>
-<p><b>Existential import</b> concerns whether a universal proposition presupposes that its subject class has members. Under the Boolean interpretation, universal propositions do not carry existential import. Thus “All S are P” can be true even when there are no S's.</p>
-
-<h3>7. What is a standard-form categorical syllogism? Mention characteristics. (7.5 marks)</h3>
-<p><b>Answer:</b> A standard-form categorical syllogism is a deductive argument consisting of two premises and one conclusion, all categorical propositions, containing exactly three terms. The terms are the <b>major term</b> (predicate of the conclusion), <b>minor term</b> (subject of the conclusion), and <b>middle term</b> (the term appearing in both premises but not in the conclusion). Each term occurs twice. A syllogism also has a <b>mood</b>, determined by the A/E/I/O forms of its propositions, and a <b>figure</b>, determined by the position of the middle term.</p>
-
-<h3>8. Test IAI-3 and EAE-3 using Venn Diagram Technique. (5 marks)</h3>
-<p><b>IAI-3:</b> Some M are P; All M are S; therefore Some S are P. The X required by the particular premise lies inside M∩P, and the universal premise places all M inside S. Therefore the X must also be inside S∩P. <b>VALID.</b></p>
-<p><b>EAE-3:</b> No M are P; All M are S; therefore No S are P. The premises control only the M-region. S may contain P-members outside M. Therefore the conclusion is not forced by the premises. <b>INVALID.</b></p>
-
-<h3>9. Mill's method of experimental enquiry and limitations. (12.5 marks)</h3>
-<p><b>Answer:</b> J. S. Mill formulated five methods for investigating causal relations:</p>
-<ol>
-<li><b>Agreement:</b> identify a factor common to all cases where the phenomenon occurs.</li>
-<li><b>Difference:</b> compare a positive case with a similar negative case; the crucial difference is treated as causally relevant.</li>
-<li><b>Joint agreement and difference:</b> combine the two procedures.</li>
-<li><b>Residues:</b> subtract known causal contributions from a total effect to identify the remaining cause.</li>
-<li><b>Concomitant variations:</b> infer causal connection from regular variation between factors.</li>
-</ol>
-<p><b>Limitations:</b> natural phenomena often have several interacting causes; complete control is difficult; cases may contain hidden differences; regular association is not automatically proof of unique causation; and complex systems may not fit the simplified conditions assumed by the methods. Therefore Mill's methods are powerful tools for causal inquiry but are not infallible substitutes for careful evidence and theory.</p>
-
-<h3>10. Explain and evaluate theories of probability. Probability questions. (12.5 marks)</h3>
-<p><b>Answer:</b> The classical interpretation treats probability as a ratio based on equally possible outcomes. Its advantage is clarity in symmetrical, finite situations such as fair dice or coins, but its limitation is the difficulty of establishing genuine equal possibility in many real cases.</p>
-<p>The statistical or relative-frequency interpretation connects probability with the frequency of occurrence in a sufficiently large class or sequence. Its strength is its empirical character, but it raises questions about single-case probabilities and the exact interpretation of limiting frequency.</p>
-<p><b>Three tosses, tails every time:</b> for a fair coin, each tail has probability 1/2, and the tosses are independent, so \(P(TTT)=(1/2)^3=1/8\).</p>
-<p><b>At least one head in three tosses:</b> use the complement. \(P(\text{at least one H})=1-P(\text{no H})=1-(1/2)^3=7/8\).</p>
-</div>
-</details>
+<h2>১১. Previous-Year Questions - পূর্ণ উত্তর</h2><p class="small">Long-mark answer-এ আগে direct definition, তারপর explanation, example বা evaluation।</p>
+<details open=""><summary>Group A - 5-mark questions</summary><div class="inside">
+<h3>১. What is Logic? Explain the central problem.</h3><p><b>Answer:</b> Logic হলো correct reasoning ও incorrect reasoning আলাদা করার methods ও principles-এর study। এর central problem হলো conclusion premises থেকে appropriate logical way-এ follow করে কি না। Deductive reasoning-এ entailment এবং inductive reasoning-এ adequate probable support দেখা হয়।</p>
+<h3>২. তিনটি basic function of logic</h3><p><b>Answer:</b> (১) <b>Analysis</b> - proposition, premise, conclusion ও structure চিহ্নিত করা; (২) <b>Evaluation</b> - reasoning valid, strong বা defective কি না যাচাই করা; (৩) <b>Error detection</b> - fallacy ও অন্য defect চিহ্নিত করা।</p>
+<h3>৩. Analogical argument কী?</h3><p><b>Answer:</b> Similarity-এর ভিত্তিতে একটি case-এর আরও একটি property অন্য case-এও সম্ভবত আছে বলে যে inductive inference করা হয়, সেটি analogical argument। এর strength relevant similarity, dissimilarity-এর অভাব এবং comparison-এর representativeness-এর ওপর নির্ভর করে।</p>
+<h3>৪. Distribution</h3><table><tr><th>Proposition</th><th>Form</th><th>Subject</th><th>Predicate</th></tr><tr><td>All voters are citizens.</td><td>A</td><td><b>Distributed</b></td><td><b>Undistributed</b></td></tr><tr><td>Some citizens are not voters.</td><td>O</td><td><b>Undistributed</b></td><td><b>Distributed</b></td></tr></table>
+</div></details>
+<details><summary>Group B - Long questions</summary><div class="inside">
+<h3>১. Premise ও Conclusion-এর relation. Truth ও Validity.</h3><p><b>Answer:</b> Premises হলো conclusion গ্রহণের কারণ এবং conclusion হলো যে proposition-কে establish করা হচ্ছে। Deductive argument valid যখন এমন কোনো possible case নেই যেখানে সব premises true অথচ conclusion false।</p><p><b>Truth</b> proposition-এর বৈশিষ্ট্য, আর <b>validity</b> argument-এর logical structure-এর বৈশিষ্ট্য। তাই valid argument-এর false premise থাকতে পারে। “All fish are mammals. All whales are fish. Therefore all whales are mammals.” form valid, কিন্তু প্রথম premise false, তাই unsound।</p><h3>২. Logical Definition কী?</h3><p><b>Answer:</b> Logical definition হলো এমন precise definition যা term-এর essential attributes বোঝায় এবং খুব broad বা খুব narrow হয় না। উদাহরণ: “A triangle is a plane figure bounded by three straight lines.”</p>
+<h3>৩. Rules of definition ও fallacy</h3><ol><li>Essential attributes দিতে হবে।</li><li>Circular হওয়া যাবে না।</li><li>Denotation-এ equivalent হতে হবে, খুব broad বা narrow নয়।</li><li>Obscure বা ambiguous হওয়া উচিত নয়।</li><li>Literal precision দরকার হলে শুধু figurative ভাষা ব্যবহার করা উচিত নয়।</li><li>যেখানে affirmative definition সম্ভব, সেখানে অপ্রয়োজনে negative definition দেওয়া ঠিক নয়।</li></ol>
+<h3>৪. Fallacy ও fallacies of relevance</h3><p><b>Answer:</b> Fallacy হলো erroneous reasoning। Relevance fallacy-এ premises conclusion-এর জন্য logically relevant support দেয় না। প্রধান উদাহরণ: appeal to force, abusive ad hominem, circumstantial ad hominem, tu quoque, appeal to ignorance, appeal to pity, appeal to the people, red herring, missing the point এবং straw man।</p>
+<h3>৫. Standard-form categorical proposition</h3><p><b>Answer:</b> এটি subject term ও predicate term নিয়ে A, E, I, O-এর একটি standard pattern। Quality affirmative বা negative; quantity universal বা particular; distribution দেখায় term-এর class-এর সব সদস্যকে বোঝানো হয়েছে কি না।</p><table><tr><th>Type</th><th>Form</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr><tr><td>A</td><td>All S are P</td><td>Affirmative</td><td>Universal</td><td>S distributed, P undistributed</td></tr><tr><td>E</td><td>No S are P</td><td>Negative</td><td>Universal</td><td>S distributed, P distributed</td></tr><tr><td>I</td><td>Some S are P</td><td>Affirmative</td><td>Particular</td><td>Neither distributed</td></tr><tr><td>O</td><td>Some S are not P</td><td>Negative</td><td>Particular</td><td>S undistributed, P distributed</td></tr></table>
+<h3>৬. Conversion, Obversion, Contraposition; Existential import</h3><p><b>Answer:</b> Conversion-এ subject ও predicate বদলায়। Obversion-এ quality বদলে predicate-এর complement বসে এবং সব form-এ valid। Contraposition-এ subject ও predicate বদলে দুটির complement নেওয়া হয়; standard treatment-এ A ও O valid। Boolean interpretation-এ universal proposition subject class-এ member থাকা বাধ্যতামূলক করে না।</p>
+<h3>৭. Standard-form categorical syllogism</h3><p><b>Answer:</b> দুই premise ও এক conclusion নিয়ে গঠিত categorical deductive argument, যেখানে exactly three terms থাকে: major, minor, middle। Mood A/E/I/O pattern এবং figure middle term-এর position থেকে আসে।</p>
+<h3>৮. IAI-3 ও EAE-3</h3><p><b>IAI-3:</b> Some M are P; All M are S; therefore Some S are P. <b>VALID.</b></p><p><b>EAE-3:</b> No M are P; All M are S; therefore No S are P. <b>INVALID.</b></p>
+<h3>৯. Mill-এর method ও limitations</h3><p><b>Answer:</b> Agreement, Difference, Joint Agreement and Difference, Residues এবং Concomitant Variations হলো পাঁচটি method। সীমাবদ্ধতা হলো multiple causes, control-এর সমস্যা, hidden differences, correlation ≠ unique cause এবং real-world complexity।</p>
+<h3>১০. Theories of probability</h3><p><b>Answer:</b> Classical interpretation equally possible outcomes-এর ratio ব্যবহার করে। Statistical বা relative-frequency interpretation বড় class বা sequence-এর frequency ব্যবহার করে। Fair coin-এ তিনবার tail হলে <b>1/8</b>; তিন toss-এ অন্তত এক head হলে complement method-এ <b>7/8</b>।</p>
+</div></details>
 </section>
-
-<section class="card" id="rapid">
-<h2>12. Last-Minute Revision Sheet</h2>
-<div class="grid3">
-<div>
-<h3>Argument basics</h3>
-<p>Premise = support.</p>
-<p>Conclusion = what is supported.</p>
-<p>Truth = proposition.</p>
-<p>Validity = argument.</p>
-<p>Sound = valid + true premises.</p>
-</div>
-<div>
-<h3>A/E/I/O</h3>
-<p>A = All S are P → S only distributed.</p>
-<p>E = No S are P → both distributed.</p>
-<p>I = Some S are P → neither.</p>
-<p>O = Some S are not P → P only distributed.</p>
-</div>
-<div>
-<h3>Immediate inference</h3>
-<p>Conversion = swap.</p>
-<p>Obversion = change quality + complement predicate.</p>
-<p>Contraposition = swap + complement.</p>
-</div>
-</div>
-<h3>Fallacy memory map</h3>
-<p><span class="badge">Relevance</span> force, ad hominem, ignorance, pity, people, red herring, missing point, straw man</p>
-<p><span class="badge">Presumption</span> accident, converse accident/hasty generalization, false cause, begging question, complex question</p>
-<p><span class="badge">Ambiguity</span> equivocation, amphiboly, accent, composition, division</p>
-<h3>Mill</h3>
-<p><b>A</b>greement - common factor &nbsp;|&nbsp; <b>D</b>ifference - positive vs negative case &nbsp;|&nbsp; <b>J</b>oint A+D &nbsp;|&nbsp; <b>R</b>esidues - remove known causes &nbsp;|&nbsp; <b>C</b>oncomitant variation - vary together.</p>
-<h3>Probability</h3>
-<p>Tails every time in 3 tosses = <b>1/8</b>.</p>
-<p>At least one head in 3 tosses = <b>7/8</b>.</p>
+<section class="card" id="rapid"><h2>১২. Last-Minute Revision Sheet</h2>
+<div class="grid3"><div><h3>Argument basics</h3><p>Premise = support.</p><p>Conclusion = যাকে support করা হচ্ছে।</p><p>Truth = proposition.</p><p>Validity = argument.</p><p>Sound = valid + true premises.</p></div><div><h3>A/E/I/O</h3><p>A = All S are P → S only distributed.</p><p>E = No S are P → both distributed.</p><p>I = Some S are P → neither.</p><p>O = Some S are not P → P only distributed.</p></div><div><h3>Immediate inference</h3><p>Conversion = swap.</p><p>Obversion = quality change + predicate complement.</p><p>Contraposition = swap + complement.</p></div></div>
+<h3>Fallacy memory map</h3><p><span class="badge">Relevance</span> force, ad hominem, ignorance, pity, people, red herring, missing point, straw man</p><p><span class="badge">Presumption</span> accident, converse accident/hasty generalization, false cause, begging question, complex question</p><p><span class="badge">Ambiguity</span> equivocation, amphiboly, accent, composition, division</p><h3>Mill</h3><p><b>A</b>greement - common factor | <b>D</b>ifference - positive vs negative case | <b>J</b>oint A+D | <b>R</b>esidues - known causes বাদ | <b>C</b>oncomitant variation - একসঙ্গে বদল।</p><h3>Probability</h3><p>৩ toss-এ সব tail = <b>1/8</b>.</p><p>৩ toss-এ অন্তত এক head = <b>7/8</b>.</p>
 </section>
-
-<section class="card">
-<h2>How to Write High-Scoring Logic Answers</h2>
-<ol>
-<li><b>Define first.</b> Start with one clean textbook-style sentence.</li>
-<li><b>Give the structure.</b> Use headings such as meaning, explanation, example, evaluation.</li>
-<li><b>Use the exact logical vocabulary.</b> Example: say “valid argument,” not “true argument.”</li>
-<li><b>For categorical logic, write the form.</b> A/E/I/O plus distribution.</li>
-<li><b>For fallacies, always include an example.</b> The example shows the examiner that you understand the error.</li>
-<li><b>For long questions, end with a conclusion.</b> One final sentence should state the exact result.</li>
-</ol>
-<div class="exam"><b>Golden rule:</b> In logic exams, a definition + precise explanation + example + correct terminology is much stronger than a vague paragraph of general discussion.</div>
-</section>
+<section class="card"><h2>উচ্চ নম্বর পাওয়ার জন্য Logic Answer কীভাবে লিখবে</h2><ol><li><b>প্রথমে সংজ্ঞা দাও।</b> একটি পরিষ্কার textbook-style sentence।</li><li><b>Structure দাও।</b> Meaning, explanation, example, evaluation-এর মতো heading ব্যবহার করো।</li><li><b>Exact logical vocabulary ব্যবহার করো।</b> “true argument” নয়, “valid argument” বলো।</li><li><b>Categorical logic-এ form লিখো।</b> A/E/I/O ও distribution।</li><li><b>Fallacy-তে example দাও।</b></li><li><b>Long answer শেষে conclusion দাও।</b></li></ol><div class="exam"><b>Golden rule:</b> Definition + precise explanation + example + correct terminology, vague general discussion-এর চেয়ে অনেক শক্তিশালী।</div></section>
 </main>
-
 <footer>
-  <p><b>Source basis:</b> Irving M. Copi, <i>Introduction to Logic</i>, using the standard Copi treatment of arguments, definitions, informal fallacies, categorical propositions and syllogisms, induction, Mill's methods, analogy, and probability. The uploaded class PDF is a scanned document without a readable text layer, so this page does not pretend to quote unreadable note text.</p>
+<p>Source basis: Irving M. Copi, Introduction to Logic. এই page-এ arguments, definitions, informal fallacies, categorical propositions ও syllogisms, induction, Mill-এর methods, analogy এবং probability-এর standard Copi treatment সহজ ভাষায় সাজানো হয়েছে।</p>
 </footer>
-
 <script>
 function filterContent(){
   const q=(document.getElementById('search').value||'').trim().toLowerCase();
@@ -587,5 +323,40 @@ function filterContent(){
 }
 document.getElementById('search').addEventListener('input', filterContent);
 </script>
-</body>
+<script>
+const EN_MAIN="\n<section class=\"card\">\n<h2 id=\"contents\">Contents</h2>\n<div class=\"toc\">\n<a href=\"#basics\">1. Core Logic: What You Must Know</a>\n<a href=\"#q1\">2. What Is Logic? + Central Problem</a>\n<a href=\"#definitions\">3. Definition Diary</a>\n<a href=\"#arguments\">4. Premises, Conclusion, Truth &amp; Validity</a>\n<a href=\"#categorical\">5. Categorical Propositions</a>\n<a href=\"#transformations\">6. Conversion, Obversion &amp; Contraposition</a>\n<a href=\"#syllogism\">7. Categorical Syllogism + Venn</a>\n<a href=\"#fallacies\">8. Fallacies - Types &amp; Examples</a>\n<a href=\"#induction\">9. Induction + Mill's Methods</a>\n<a href=\"#probability\">10. Probability + Analogy</a>\n<a href=\"#previous\">11. Previous-Year Questions - Full Answers</a>\n<a href=\"#rapid\">12. Last-Minute Revision Sheet</a>\n</div>\n</section>\n<section class=\"card\" id=\"basics\">\n<h2>1. Core Logic: Basic Knowledge You Should Know</h2>\n<div class=\"tip\"><b>Big picture:</b> Logic studies arguments and the standards by which arguments can be evaluated as correct or incorrect. It is not primarily the study of whether the subject matter is true; it is the study of whether conclusions follow from premises in the required way.</div>\n<div class=\"grid2\">\n<div>\n<h3>Argument</h3>\n<p>An <b>argument</b> is a group of propositions in which one proposition, the <b>conclusion</b>, is claimed to follow from one or more other propositions, the <b>premises</b>.</p>\n<p><b>Signal words for premises:</b> because, since, for, as, given that.</p>\n<p><b>Signal words for conclusions:</b> therefore, hence, so, thus, consequently.</p>\n</div>\n<div>\n<h3>Proposition</h3>\n<p>A <b>proposition</b> is what is asserted by a declarative sentence and is capable of being <b>true or false</b>.</p>\n<p>Questions, commands, and exclamations are not propositions because they do not assert something that is true or false.</p>\n</div>\n</div>\n<h3>Deduction vs. Induction</h3>\n<table>\n<tr><th>Deductive inference</th><th>Inductive inference</th></tr>\n<tr><td>Claims that the conclusion follows necessarily from the premises.</td><td>Claims that the premises make the conclusion probable or well supported.</td></tr>\n<tr><td>Evaluated mainly by <b>validity</b> (and, for a sound argument, truth of premises).</td><td>Evaluated by the degree of <b>inductive strength</b> / support.</td></tr>\n<tr><td>Example: All humans are mortal; Socrates is human; therefore Socrates is mortal.</td><td>Example: The observed crows have been black; therefore the next crow observed will probably be black.</td></tr>\n</table>\n<div class=\"exam\"><b>Exam habit:</b> Never write “valid = true.” Validity belongs to arguments; truth/falsity belongs to propositions.</div>\n</section>\n<section class=\"card\" id=\"q1\">\n<h2>2. What Is Logic? Discuss the Central Problem</h2>\n<h3>Exam-ready answer</h3>\n<p>According to Copi, <b>logic is the study of the methods and principles used to distinguish correct reasoning from incorrect reasoning</b>. Logic therefore deals with reasoning rather than with any one particular subject matter. Its concern is to provide standards by which arguments may be analyzed and evaluated.</p>\n<p>The <b>central problem of logic</b> is the problem of determining whether a conclusion follows from its premises in the appropriate way. In a deductive argument, the key question is whether the premises <b>entail</b> the conclusion; in an inductive argument, the question is whether the premises provide sufficient or probable support for the conclusion.</p>\n<div class=\"definition\"><b>Core distinction:</b> Logic asks “Does the conclusion follow from the premises?” It does not merely ask “Are the statements true?”</div>\n<h3>Three basic functions of logic</h3>\n<ol>\n<li><b>To clarify and analyze reasoning:</b> identify premises, conclusion, and logical structure.</li>\n<li><b>To provide standards for evaluation:</b> give criteria for distinguishing good reasoning from bad reasoning.</li>\n<li><b>To detect and avoid error:</b> expose invalid inference and common fallacies so that reasoning can be improved.</li>\n</ol>\n<div class=\"exam\"><b>5-mark version:</b> Define logic in one sentence, explain that its central problem is the relation between premises and conclusion, then state the three functions above with one sentence each.</div>\n</section>\n<section class=\"card\" id=\"definitions\">\n<h2>3. Definition Diary</h2>\n<table>\n<tr><th>Term</th><th>Exam definition</th></tr>\n<tr><td><span class=\"term\">Denotation</span></td><td>The class or collection of objects to which a term correctly applies.</td></tr>\n<tr><td><span class=\"term\">Connotation</span></td><td>The attributes or qualities implied by a term; the meaning-content associated with the term.</td></tr>\n<tr><td><span class=\"term\">Sentence</span></td><td>A grammatically complete expression. Not every sentence expresses a proposition.</td></tr>\n<tr><td><span class=\"term\">Proposition</span></td><td>What is asserted by a declarative sentence and is capable of being true or false.</td></tr>\n<tr><td><span class=\"term\">Judgement</span></td><td>The mental act of affirming or denying something; in logic, the judged content may be expressed as a proposition.</td></tr>\n<tr><td><span class=\"term\">Subject</span></td><td>In a categorical proposition, the term about which something is affirmed or denied.</td></tr>\n<tr><td><span class=\"term\">Predicate</span></td><td>In a categorical proposition, the term that is affirmed or denied of the subject.</td></tr>\n<tr><td><span class=\"term\">Connector</span></td><td>A word or expression linking parts of an argument or compound statement, such as “and,” “or,” “if...then,” or “therefore,” depending on context.</td></tr>\n<tr><td><span class=\"term\">Term</span></td><td>A word or group of words that functions as a component of a categorical proposition; a term refers to a class or category rather than asserting by itself.</td></tr>\n<tr><td><span class=\"term\">Universal affirmative (A)</span></td><td>“All S are P.” It affirms that every member of S is included in P.</td></tr>\n<tr><td><span class=\"term\">Distribution</span></td><td>The status of a term as referring to every member of the class designated by that term.</td></tr>\n<tr><td><span class=\"term\">Distributed</span></td><td>A term is distributed when the proposition refers to <b>all members</b> of the class denoted by that term.</td></tr>\n<tr><td><span class=\"term\">Undistributed</span></td><td>A term is undistributed when the proposition does not refer to all members of that class.</td></tr>\n<tr><td><span class=\"term\">Premise</span></td><td>A proposition offered as support for a conclusion.</td></tr>\n<tr><td><span class=\"term\">Assumption</span></td><td>A proposition temporarily accepted or taken for granted in an argument, proof, or analysis.</td></tr>\n<tr><td><span class=\"term\">Conclusion</span></td><td>The proposition that an argument attempts to establish on the basis of its premises.</td></tr>\n<tr><td><span class=\"term\">Deductive inference</span></td><td>An inference in which the conclusion is claimed to follow necessarily from the premises.</td></tr>\n<tr><td><span class=\"term\">Inductive inference</span></td><td>An inference in which the conclusion goes beyond the premises and is claimed to follow with some degree of probability.</td></tr>\n<tr><td><span class=\"term\">Immediate inference</span></td><td>An inference from one premise to one conclusion by a direct logical transformation, e.g. conversion, obversion, or contraposition.</td></tr>\n<tr><td><span class=\"term\">Mediate inference</span></td><td>An inference in which the conclusion is derived through two or more premises, as in a syllogism.</td></tr>\n<tr><td><span class=\"term\">Conversion</span></td><td>An immediate inference formed by interchanging the subject and predicate terms of a categorical proposition while preserving the original meaning where the form permits.</td></tr>\n</table>\n<div class=\"warning\"><b>Important wording:</b> “Distribution” does not mean “the term is true.” It means the proposition talks about <b>every member</b> of the class named by that term.</div>\n</section>\n<section class=\"card\" id=\"arguments\">\n<h2>4. Relation Between Premises and Conclusion: Truth vs. Validity</h2>\n<h3>Premise-conclusion relation</h3>\n<p>In an argument, the premises are the propositions offered as reasons for accepting the conclusion. The logical question is whether the conclusion follows from those premises. That relation is called <b>validity</b> in deductive logic.</p>\n<div class=\"grid2\">\n<div>\n<h3>Truth</h3>\n<p>Truth/falsity is a property of <b>propositions</b>.</p>\n<p>Example: “Dhaka is the capital of Bangladesh” is either true or false.</p>\n</div>\n<div>\n<h3>Validity</h3>\n<p>Validity/invalidity is a property of <b>arguments</b>.</p>\n<p>An argument is valid when there is no possible case in which all its premises are true and its conclusion is false.</p>\n</div>\n</div>\n<h3>Example showing why truth and validity are different</h3>\n<div class=\"formula\">All fish are mammals.\nAll whales are fish.\nTherefore, all whales are mammals.</div>\n<p>The form is valid. But the first premise is false. So the argument is <b>valid but unsound</b>.</p>\n<div class=\"formula\">All birds are animals.\nAll dogs are animals.\nTherefore, all dogs are birds.</div>\n<p>Here the premises may be true, but the conclusion does not follow. The argument is <b>invalid</b>.</p>\n<div class=\"formula\">All mammals are animals.\nAll whales are mammals.\nTherefore, all whales are animals.</div>\n<p>This is <b>valid and sound</b>, because the inference is valid and the premises are true.</p>\n<div class=\"exam\"><b>Key sentence to memorize:</b> “Truth is a property of propositions; validity is a property of arguments. A valid argument may have false premises, whereas a proposition cannot be called valid or invalid.”</div>\n</section>\n<section class=\"card\" id=\"categorical\">\n<h2>5. Standard-Form Categorical Propositions</h2>\n<p>A <b>standard-form categorical proposition</b> has a subject term (S), a predicate term (P), a quantifier/copula pattern, and one of four forms:</p>\n<table class=\"matrix\">\n<tr><th>Form</th><th>Pattern</th><th>Name</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr>\n<tr><td>A</td><td>All S are P.</td><td>Universal affirmative</td><td>Affirmative</td><td>Universal</td><td>S distributed; P undistributed</td></tr>\n<tr><td>E</td><td>No S are P.</td><td>Universal negative</td><td>Negative</td><td>Universal</td><td>S distributed; P distributed</td></tr>\n<tr><td>I</td><td>Some S are P.</td><td>Particular affirmative</td><td>Affirmative</td><td>Particular</td><td>S undistributed; P undistributed</td></tr>\n<tr><td>O</td><td>Some S are not P.</td><td>Particular negative</td><td>Negative</td><td>Particular</td><td>S undistributed; P distributed</td></tr>\n</table>\n<h3>Quality</h3>\n<p><b>Affirmative</b> propositions assert inclusion or agreement between S and P. <b>Negative</b> propositions deny that relation.</p>\n<h3>Quantity</h3>\n<p><b>Universal</b> propositions speak about all members of the subject class. <b>Particular</b> propositions speak about some member(s).</p>\n<h3>Distribution</h3>\n<p>A term is distributed if the proposition is about <b>every member of that term's class</b>.</p>\n<div class=\"exam\">\n<b>Question:</b> “All voters are citizens.” → A proposition. <b>Voters:</b> distributed. <b>Citizens:</b> undistributed.<br/>\n<b>Question:</b> “Some citizens are not voters.” → O proposition. <b>Citizens:</b> undistributed. <b>Voters:</b> distributed.\n</div>\n<h3>Mnemonic</h3>\n<p><b>A:</b> Subject only. <b>E:</b> Both. <b>I:</b> Neither. <b>O:</b> Predicate only.</p>\n</section>\n<section class=\"card\" id=\"transformations\">\n<h2>6. Conversion, Obversion &amp; Contraposition</h2>\n<div class=\"grid3\">\n<div>\n<h3>Conversion</h3>\n<p>Swap S and P.</p>\n<p><b>E and I:</b> valid.</p>\n<p><b>A:</b> valid by limitation in the traditional treatment when existential assumptions permit.</p>\n<p><b>O:</b> invalid.</p>\n</div>\n<div>\n<h3>Obversion</h3>\n<p>Keep subject, change quality, and replace predicate by its complement.</p>\n<p><b>Valid for A, E, I, O.</b></p>\n<p>Example: All S are P → No S are non-P.</p>\n</div>\n<div>\n<h3>Contraposition</h3>\n<p>Interchange subject and predicate and replace both by their complements in the appropriate way.</p>\n<p><b>A and O:</b> valid.</p>\n<p><b>E and I:</b> generally invalid.</p>\n</div>\n</div>\n<table>\n<tr><th>Original</th><th>Conversion</th><th>Obversion</th><th>Contraposition</th></tr>\n<tr><td>All S are P.</td><td>All P are S. (not generally valid)</td><td>No S are non-P. (valid)</td><td>All non-P are non-S. (valid)</td></tr>\n<tr><td>No S are P.</td><td>No P are S. (valid)</td><td>All S are non-P. (valid)</td><td>Not generally valid as a simple categorical inference</td></tr>\n<tr><td>Some S are P.</td><td>Some P are S. (valid)</td><td>Some S are not non-P. (valid)</td><td>Not generally valid</td></tr>\n<tr><td>Some S are not P.</td><td>Some P are not S. (invalid)</td><td>Some S are non-P. (valid)</td><td>Some non-P are not non-S. (valid)</td></tr>\n</table>\n<div class=\"warning\"><b>Do not memorize only the names.</b> In an exam, show the operation: what was swapped, what was negated/complemented, and whether the inference is valid.</div>\n<h3>Existential import and Boolean interpretation</h3>\n<p><b>Existential import</b> concerns whether a proposition asserts or presupposes that its subject class has members. Under the traditional interpretation, universal categorical propositions were often understood to carry existential import. Under the <b>Boolean interpretation</b>, universal A and E propositions do <b>not</b> imply that their subject classes actually have members.</p>\n<div class=\"exam\">This difference matters especially for immediate inference rules such as conversion by limitation and for syllogistic validity involving empty classes.</div>\n</section>\n<section class=\"card\" id=\"syllogism\">\n<h2>7. Standard-Form Categorical Syllogism &amp; Venn Diagram Technique</h2>\n<h3>Definition</h3>\n<p>A <b>standard-form categorical syllogism</b> is a deductive argument consisting of exactly three categorical propositions: two premises and one conclusion, involving exactly three terms. Each term occurs twice.</p>\n<h3>Three terms</h3>\n<table>\n<tr><th>Term</th><th>Meaning</th></tr>\n<tr><td>Major term (P)</td><td>Predicate of the conclusion.</td></tr>\n<tr><td>Minor term (S)</td><td>Subject of the conclusion.</td></tr>\n<tr><td>Middle term (M)</td><td>Occurs in both premises but not in the conclusion.</td></tr>\n</table>\n<h3>Characteristics of a syllogism</h3>\n<ul>\n<li>Three categorical propositions: two premises and one conclusion.</li>\n<li>Exactly three terms: S, P, and M.</li>\n<li>Each term occurs twice.</li>\n<li>The middle term links the minor and major terms in the premises.</li>\n<li>The syllogism has a <b>mood</b> (A/E/I/O pattern) and a <b>figure</b> (based on the position of M).</li>\n</ul>\n<h3>Figures</h3>\n<table class=\"matrix\">\n<tr><th>Figure</th><th>Major premise</th><th>Minor premise</th><th>Conclusion</th></tr>\n<tr><td>1</td><td>M-P</td><td>S-M</td><td>S-P</td></tr>\n<tr><td>2</td><td>P-M</td><td>S-M</td><td>S-P</td></tr>\n<tr><td>3</td><td>M-P</td><td>M-S</td><td>S-P</td></tr>\n<tr><td>4</td><td>P-M</td><td>M-S</td><td>S-P</td></tr>\n</table>\n<h3>Venn Diagram technique - exam procedure</h3>\n<ol>\n<li>Draw three overlapping circles labelled S, P, and M.</li>\n<li>Represent the <b>premises only</b>: shade regions that must be empty and place an X where existence is asserted.</li>\n<li>Do <b>not</b> diagram the conclusion initially.</li>\n<li>Check whether the conclusion is already forced by the completed premise diagram.</li>\n<li>If the conclusion is forced, the syllogism is valid; if not, it is invalid.</li>\n</ol>\n<h3>Requested examples</h3>\n<details><summary>IAI-3</summary><div class=\"inside\">\n<p><b>Figure 3:</b> Major = I, minor = A, conclusion = I.</p>\n<p>Read as: Some M are P; All M are S; therefore, Some S are P.</p>\n<p>From “Some M are P,” place an X in the M∩P region. “All M are S” forces every M to be inside S. Therefore that existing M∩P object must also lie in S∩P. The conclusion “Some S are P” is forced.</p>\n<p><b>Result: VALID.</b></p>\n</div></details>\n<details><summary>EAE-3</summary><div class=\"inside\">\n<p>Read as: No M are P; All M are S; therefore, No S are P.</p>\n<p>The premises only restrict M. S may still contain members outside M that are also P. Therefore the conclusion is not forced.</p>\n<p><b>Result: INVALID.</b></p>\n</div></details>\n</section>\n<section class=\"card\" id=\"fallacies\">\n<h2>8. Fallacies - Types, Definitions &amp; Examples</h2>\n<div class=\"tip\"><b>Definition:</b> A fallacy is a kind of erroneous reasoning. A fallacious argument may look persuasive while failing to provide the required logical support.</div>\n<h3>A. Fallacies of Relevance</h3>\n<table>\n<tr><th>Fallacy</th><th>What happens</th><th>Example</th></tr>\n<tr><td><b>Argumentum ad Baculum / Appeal to Force</b></td><td>Threat or force is used instead of relevant reasons.</td><td>“Agree with my proposal or you will lose your job.”</td></tr>\n<tr><td><b>Argumentum ad Hominem - Abusive</b></td><td>Attacks the person rather than the argument.</td><td>“His economic argument is false because he is stupid.”</td></tr>\n<tr><td><b>Argumentum ad Hominem - Circumstantial</b></td><td>Dismisses a claim by pointing to the speaker’s circumstances or interests.</td><td>“You support environmental rules only because you work for an environmental group.”</td></tr>\n<tr><td><b>Argumentum ad Hominem - Tu Quoque</b></td><td>Rejects criticism because the critic is accused of doing the same thing.</td><td>“You cannot say cheating is wrong; you cheated last year.”</td></tr>\n<tr><td><b>Argumentum ad Ignorantiam / Appeal to Ignorance</b></td><td>Claims a proposition is true merely because it has not been proved false, or false because it has not been proved true.</td><td>“Nobody has proved aliens do not exist, so they must exist.”</td></tr>\n<tr><td><b>Argumentum ad Misericordiam / Appeal to Pity</b></td><td>Uses pity as a substitute for relevant evidence.</td><td>“Please give me full marks; my family will be disappointed.”</td></tr>\n<tr><td><b>Argumentum ad Populum / Appeal to the People</b></td><td>Uses popularity, emotion, or crowd approval instead of relevant support.</td><td>“Millions believe it, so it must be true.”</td></tr>\n<tr><td><b>Red Herring</b></td><td>Introduces an irrelevant issue that diverts attention from the original point.</td><td>Question: “Did you falsify the report?” Answer: “Our company has created thousands of jobs.”</td></tr>\n<tr><td><b>Missing the Point / Ignoring the Question</b></td><td>The premises may support a different conclusion from the one being argued for.</td><td>“We need stricter traffic enforcement, therefore we should close the city park.”</td></tr>\n<tr><td><b>Straw Man</b></td><td>Replaces an opponent’s real claim with a weaker or distorted version, then attacks that version.</td><td>“She wants fewer exams, so she wants students to learn nothing.”</td></tr>\n</table>\n<h3>B. Fallacies of Presumption</h3>\n<table>\n<tr><th>Fallacy</th><th>What happens</th><th>Example</th></tr>\n<tr><td><b>Accident</b></td><td>Applies a general rule to an exceptional case where the rule does not properly fit.</td><td>“Freedom of speech is always good; therefore a person should be allowed to shout a fire alarm falsely in a crowded theater.”</td></tr>\n<tr><td><b>Converse Accident / Hasty Generalization</b></td><td>Moves from an insufficient or unrepresentative sample to a broad generalization.</td><td>“Two tourists were rude, so tourists are rude.”</td></tr>\n<tr><td><b>False Cause</b></td><td>Treats an inadequate or merely correlated cause as the true cause.</td><td>“I wore this shirt and we won the match; the shirt caused the victory.”</td></tr>\n<tr><td><b>Begging the Question</b></td><td>The conclusion is assumed, directly or indirectly, in the premises.</td><td>“This law is just because it is a fair law.”</td></tr>\n<tr><td><b>Complex Question</b></td><td>Two or more questions are packed into one so that answering it appears to concede an unjustified assumption.</td><td>“Have you stopped cheating on exams?”</td></tr>\n</table>\n<h3>C. Fallacies of Ambiguity</h3>\n<table>\n<tr><th>Fallacy</th><th>What happens</th><th>Example</th></tr>\n<tr><td><b>Equivocation</b></td><td>A key word or phrase changes meaning during the argument.</td><td>“A bank is on the river; a river bank is money-related; therefore...”</td></tr>\n<tr><td><b>Amphiboly</b></td><td>Ambiguity comes from grammatical structure rather than a single word.</td><td>“I saw the student with the telescope” used with two different possible structures.</td></tr>\n<tr><td><b>Accent</b></td><td>Meaning changes because emphasis or wording is shifted in a way that alters interpretation.</td><td>Quoting only the emphasized fragment of a sentence to imply a different claim.</td></tr>\n<tr><td><b>Composition</b></td><td>Infers something about the whole from properties of parts.</td><td>“Every player is excellent; therefore the team must be excellent.”</td></tr>\n<tr><td><b>Division</b></td><td>Infers something about parts merely because it is true of the whole.</td><td>“The company is rich; therefore every employee is rich.”</td></tr>\n</table>\n<h3>D. Weak or defective inductive reasoning</h3>\n<p>For Copi-style exam preparation, remember that inductive fallacies arise when the evidence is insufficient, unrepresentative, irrelevant, or misinterpreted. The names above are the ones most likely to appear when the course asks specifically for “fallacies.”</p>\n<div class=\"exam\"><b>How to answer a fallacy question:</b> (1) define the fallacy, (2) show the defective reasoning pattern, (3) give a fresh example, (4) explain in one sentence why the premises fail to justify the conclusion.</div>\n</section>\n<section class=\"card\" id=\"induction\">\n<h2>9. Inductive Inference &amp; Mill's Methods of Experimental Enquiry</h2>\n<h3>Inductive argument</h3>\n<p>An inductive argument is one in which the premises are intended to make the conclusion <b>probable</b> rather than guarantee it. Its conclusion goes beyond the information explicitly contained in the premises.</p>\n<h3>Mill's five methods</h3>\n<table>\n<tr><th>Method</th><th>Core idea</th><th>Simple illustration</th></tr>\n<tr><td><b>Method of Agreement</b></td><td>Find a factor common to all cases in which the phenomenon occurs.</td><td>Several people become ill after different meals; the common food item is suspected.</td></tr>\n<tr><td><b>Method of Difference</b></td><td>Compare a case where the phenomenon occurs with a similar case where it does not; the differing factor is treated as causally relevant.</td><td>Two otherwise similar groups, one receiving a treatment and one not.</td></tr>\n<tr><td><b>Joint Method of Agreement and Difference</b></td><td>Combines the two methods: the suspected factor is present in positive cases and absent in negative cases.</td><td>Factor appears in every sick case and never in comparable healthy cases.</td></tr>\n<tr><td><b>Method of Residues</b></td><td>After known causes explain known portions of an effect, the remaining portion is attributed to the remaining causal factor.</td><td>Subtract known contributors from a measured total to identify a residual cause.</td></tr>\n<tr><td><b>Method of Concomitant Variations</b></td><td>Changes in one factor are associated with regular changes in another.</td><td>As temperature rises, a physical measurement changes systematically.</td></tr>\n</table>\n<h3>Limitations of Mill's methods</h3>\n<ul>\n<li>Real phenomena often have <b>multiple interacting causes</b>.</li>\n<li>It may be impossible to control or hold all other factors constant.</li>\n<li>A correlation or regular variation does not by itself prove a unique causal explanation.</li>\n<li>Experimental situations can be too complex for clean agreement/difference comparisons.</li>\n<li>Results depend on how the cases are selected and described; hidden conditions can mislead the inquiry.</li>\n<li>These methods are best understood as systematic procedures for discovering and testing causal hypotheses, not as magical guarantees of certainty.</li>\n</ul>\n</section>\n<section class=\"card\" id=\"probability\">\n<h2>10. Probability &amp; Analogical Argument</h2>\n<h3>Analogical argument</h3>\n<p>An <b>analogical argument</b> reasons from similarity. It points out that two or more cases resemble one another in relevant respects and then infers that they are likely to resemble one another in another respect as well.</p>\n<div class=\"formula\">Object A has properties p, q, r, and s.\nObject B has properties p, q, and r.\nTherefore, B probably has property s.</div>\n<p><b>Strength depends on:</b> the number of relevant similarities, their degree of relevance, the absence of important dissimilarities, and the diversity/representativeness of the comparison cases.</p>\n<h3>Theories / interpretations of probability</h3>\n<table>\n<tr><th>Approach</th><th>Core idea</th><th>Main strength</th><th>Main limitation</th></tr>\n<tr><td><b>Classical / mathematical</b></td><td>Probability is based on ratios among equally possible outcomes.</td><td>Clear for symmetric games and finite equally likely cases.</td><td>“Equally possible” can be difficult to justify outside idealized cases.</td></tr>\n<tr><td><b>Statistical / relative-frequency</b></td><td>Probability is understood through relative frequency in a sufficiently large class or sequence of cases.</td><td>Connects probability to empirical data.</td><td>Single-case probabilities and the exact long-run interpretation can be difficult to handle.</td></tr>\n</table>\n<h3>Coin problems</h3>\n<div class=\"formula\">For a fair coin:\nP(T on one toss) = 1/2\n\nP(TTT in 3 tosses) = (1/2)^3 = 1/8\n\nP(at least one H in 3 tosses)\n= 1 - P(no H)\n= 1 - (1/2)^3\n= 7/8</div>\n<p>The complement method is usually the quickest: “at least one head” = 1 - “no heads.”</p>\n</section>\n<section class=\"card\" id=\"previous\">\n<h2>11. Previous-Year Questions - Separate Full Answers</h2>\n<p class=\"small\">These are written in an exam-ready style. For long-mark questions, start with a direct definition, then develop the explanation, then give the example/evaluation.</p>\n<details open=\"\">\n<summary>Group A - 5-mark questions</summary>\n<div class=\"inside\">\n<h3>1. What is Logic? Explain after Copi, the central problem with which logic deals.</h3>\n<p><b>Answer:</b> Logic, according to Copi, is the study of the methods and principles used to distinguish correct reasoning from incorrect reasoning. Logic therefore concerns the evaluation of arguments rather than any particular subject matter. Its central problem is to determine whether a conclusion follows from its premises in the appropriate logical way. In deductive reasoning, the issue is whether the premises entail the conclusion; in inductive reasoning, the issue is whether the premises provide adequate probable support. Logic thus supplies standards by which reasoning can be examined, criticized, and improved.</p>\n<h3>2. Discuss briefly, the three basic functions of logic.</h3>\n<p><b>Answer:</b> The three basic functions may be stated as: (1) <b>analysis</b> - identify the propositions, premises, conclusion, and logical structure of reasoning; (2) <b>evaluation</b> - apply logical standards to determine whether an inference is correct, valid, strong, or defective; and (3) <b>error detection and correction</b> - recognize fallacies and other defects so that reasoning can be made more reliable.</p>\n<h3>3. What do you mean by analogical argument?</h3>\n<p><b>Answer:</b> An analogical argument is an inductive argument in which similarities between two or more cases are used as evidence for a further similarity. If object A and object B share several relevant properties, and A has another property, the argument infers that B probably has that property too. Its strength depends on the number and relevance of the similarities, the lack of significant dissimilarities, and the representativeness of the comparison.</p>\n<h3>4. Distribution in: a) All voters are citizens. b) Some citizens are not voters.</h3>\n<table><tr><th>Proposition</th><th>Form</th><th>Subject</th><th>Predicate</th></tr>\n<tr><td>a) All voters are citizens.</td><td>A</td><td><b>Distributed</b></td><td><b>Undistributed</b></td></tr>\n<tr><td>b) Some citizens are not voters.</td><td>O</td><td><b>Undistributed</b></td><td><b>Distributed</b></td></tr>\n</table>\n</div>\n</details>\n<details>\n<summary>Group B - Long questions</summary>\n<div class=\"inside\">\n<h3>1. According to Copi, explain the relation between premises and conclusion. Discuss truth and validity. (12.5 marks)</h3>\n<p><b>Answer:</b> An argument consists of premises and a conclusion. The premises are propositions put forward as reasons for accepting the conclusion, while the conclusion is the proposition the argument seeks to establish. In a deductive argument, the essential logical relation is that the conclusion must follow from the premises in such a way that it is impossible for all the premises to be true while the conclusion is false. This property is called validity.</p>\n<p>Truth and validity must be carefully distinguished. <b>Truth is a property of propositions</b>; a proposition is true when it corresponds to the facts, and false otherwise. <b>Validity is a property of arguments</b>; it concerns the logical relation between premises and conclusion. Therefore an argument can be valid even if one or more premises are false.</p>\n<p><b>Example:</b> “All fish are mammals. All whales are fish. Therefore, all whales are mammals.” The form is valid, but the first premise is false, so the argument is unsound. Conversely, an argument can have true premises and a true conclusion yet still be invalid if the conclusion does not follow from those premises.</p>\n<p>Thus, <b>truth concerns individual propositions, while validity concerns the structure of an argument</b>. A sound deductive argument requires both valid reasoning and true premises.</p>\n<h3>2. What is Logical Definition? Explain with examples. (3.5 marks)</h3>\n<p><b>Answer:</b> A logical definition is a definition designed to state the meaning of a term with precision by identifying the attributes that are essential and applying to all and only the objects denoted by the term. A good logical definition should be neither too broad nor too narrow.</p>\n<p><b>Example:</b> “A triangle is a plane figure bounded by three straight lines.” This aims to identify the essential characteristics of a triangle rather than merely describing one example.</p>\n<h3>3. Explain the rules of definition and the fallacies involved in violating them. (9.5 marks)</h3>\n<p><b>Answer:</b></p>\n<ol>\n<li><b>A definition should state essential attributes where an intensional definition is intended.</b> Violation can produce a definition by accidental characteristics rather than the defining ones.</li>\n<li><b>A definition should not be circular.</b> The defining expression should not depend on the very term being defined. Otherwise the explanation does not genuinely explain the term. <b>Fallacy:</b> circular definition.</li>\n<li><b>A definition should be equivalent in denotation to the term defined.</b> It should not be too broad or too narrow. <b>Fallacies:</b> overly broad definition and overly narrow definition.</li>\n<li><b>A definition should not be obscure or ambiguous.</b> Replacing one unclear expression by another does not increase understanding. <b>Fallacy:</b> obscure/ambiguous definition.</li>\n<li><b>A definition should not normally be figurative when literal precision is required.</b> A metaphor may be memorable but fail to state exact meaning. <b>Fallacy:</b> figurative definition used as a logical definition.</li>\n<li><b>A definition should not be negative when an affirmative definition is available.</b> Saying what a thing is not may fail to identify what it is. <b>Fallacy:</b> improper negative definition.</li>\n</ol>\n<h3>4. What is fallacy? Discuss, with examples, the fallacies of relevance. (12.5 marks)</h3>\n<p><b>Answer:</b> A fallacy is a kind of erroneous reasoning. In a fallacious argument, the reasoning fails to provide the logical support required for the conclusion, even though it may seem persuasive.</p>\n<p>Fallacies of relevance occur when premises are not logically relevant to the conclusion, even though they may create the appearance of support. Important examples include:</p>\n<ul>\n<li><b>Appeal to force:</b> replaces reasons with threat or coercion.</li>\n<li><b>Abusive ad hominem:</b> attacks the person rather than the person's argument.</li>\n<li><b>Circumstantial ad hominem:</b> rejects an argument because of the speaker's circumstances or interests.</li>\n<li><b>Tu quoque:</b> answers criticism by accusing the critic of similar conduct.</li>\n<li><b>Appeal to ignorance:</b> treats lack of proof as proof of the opposite.</li>\n<li><b>Appeal to pity:</b> uses pity instead of relevant evidence.</li>\n<li><b>Appeal to the people:</b> relies on popularity or crowd emotion rather than relevant grounds.</li>\n<li><b>Red herring:</b> diverts attention to an irrelevant issue.</li>\n<li><b>Missing the point:</b> premises support a different conclusion from the one actually offered.</li>\n</ul>\n<p><b>Example:</b> “You should accept my political argument because thousands of people agree with me.” The popularity of a belief does not itself establish its truth, so the argument may commit an appeal to the people.</p>\n<h3>5. Standard-form categorical proposition: quality, quantity, distribution. (12.5 marks)</h3>\n<p><b>Answer:</b> A standard-form categorical proposition is composed of a subject term and a predicate term connected in one of four standard patterns: A, E, I, and O. Its <b>quality</b> is affirmative or negative; its <b>quantity</b> is universal or particular; and its <b>distribution</b> indicates whether a term is used to refer to every member of the class it denotes.</p>\n<table><tr><th>Type</th><th>Form</th><th>Quality</th><th>Quantity</th><th>Distribution</th></tr>\n<tr><td>A</td><td>All S are P</td><td>Affirmative</td><td>Universal</td><td>S distributed, P undistributed</td></tr>\n<tr><td>E</td><td>No S are P</td><td>Negative</td><td>Universal</td><td>S distributed, P distributed</td></tr>\n<tr><td>I</td><td>Some S are P</td><td>Affirmative</td><td>Particular</td><td>Neither distributed</td></tr>\n<tr><td>O</td><td>Some S are not P</td><td>Negative</td><td>Particular</td><td>S undistributed, P distributed</td></tr>\n</table>\n<p>Distribution is especially important in testing categorical syllogisms because rules concerning the middle term and terms in the conclusion depend on it.</p>\n<h3>6. Conversion, obversion, contraposition; existential import and Boolean interpretation. (12.5 marks)</h3>\n<p><b>Answer:</b> <b>Conversion</b> interchanges subject and predicate. “No S are P” converts validly to “No P are S”; “Some S are P” converts validly to “Some P are S.” Under traditional treatment, the universal affirmative may convert by limitation when existential import is assumed.</p>\n<p><b>Obversion</b> changes the quality of the proposition and replaces the predicate by its complement. It is valid for all four forms. For example, “All S are P” becomes “No S are non-P.”</p>\n<p><b>Contraposition</b> interchanges the subject and predicate while complementing both. It is valid for A and O forms in the standard treatment.</p>\n<p><b>Existential import</b> concerns whether a universal proposition presupposes that its subject class has members. Under the Boolean interpretation, universal propositions do not carry existential import. Thus “All S are P” can be true even when there are no S's.</p>\n<h3>7. What is a standard-form categorical syllogism? Mention characteristics. (7.5 marks)</h3>\n<p><b>Answer:</b> A standard-form categorical syllogism is a deductive argument consisting of two premises and one conclusion, all categorical propositions, containing exactly three terms. The terms are the <b>major term</b> (predicate of the conclusion), <b>minor term</b> (subject of the conclusion), and <b>middle term</b> (the term appearing in both premises but not in the conclusion). Each term occurs twice. A syllogism also has a <b>mood</b>, determined by the A/E/I/O forms of its propositions, and a <b>figure</b>, determined by the position of the middle term.</p>\n<h3>8. Test IAI-3 and EAE-3 using Venn Diagram Technique. (5 marks)</h3>\n<p><b>IAI-3:</b> Some M are P; All M are S; therefore Some S are P. The X required by the particular premise lies inside M∩P, and the universal premise places all M inside S. Therefore the X must also be inside S∩P. <b>VALID.</b></p>\n<p><b>EAE-3:</b> No M are P; All M are S; therefore No S are P. The premises control only the M-region. S may contain P-members outside M. Therefore the conclusion is not forced by the premises. <b>INVALID.</b></p>\n<h3>9. Mill's method of experimental enquiry and limitations. (12.5 marks)</h3>\n<p><b>Answer:</b> J. S. Mill formulated five methods for investigating causal relations:</p>\n<ol>\n<li><b>Agreement:</b> identify a factor common to all cases where the phenomenon occurs.</li>\n<li><b>Difference:</b> compare a positive case with a similar negative case; the crucial difference is treated as causally relevant.</li>\n<li><b>Joint agreement and difference:</b> combine the two procedures.</li>\n<li><b>Residues:</b> subtract known causal contributions from a total effect to identify the remaining cause.</li>\n<li><b>Concomitant variations:</b> infer causal connection from regular variation between factors.</li>\n</ol>\n<p><b>Limitations:</b> natural phenomena often have several interacting causes; complete control is difficult; cases may contain hidden differences; regular association is not automatically proof of unique causation; and complex systems may not fit the simplified conditions assumed by the methods. Therefore Mill's methods are powerful tools for causal inquiry but are not infallible substitutes for careful evidence and theory.</p>\n<h3>10. Explain and evaluate theories of probability. Probability questions. (12.5 marks)</h3>\n<p><b>Answer:</b> The classical interpretation treats probability as a ratio based on equally possible outcomes. Its advantage is clarity in symmetrical, finite situations such as fair dice or coins, but its limitation is the difficulty of establishing genuine equal possibility in many real cases.</p>\n<p>The statistical or relative-frequency interpretation connects probability with the frequency of occurrence in a sufficiently large class or sequence. Its strength is its empirical character, but it raises questions about single-case probabilities and the exact interpretation of limiting frequency.</p>\n<p><b>Three tosses, tails every time:</b> for a fair coin, each tail has probability 1/2, and the tosses are independent, so \\(P(TTT)=(1/2)^3=1/8\\).</p>\n<p><b>At least one head in three tosses:</b> use the complement. \\(P(\\text{at least one H})=1-P(\\text{no H})=1-(1/2)^3=7/8\\).</p>\n</div>\n</details>\n</section>\n<section class=\"card\" id=\"rapid\">\n<h2>12. Last-Minute Revision Sheet</h2>\n<div class=\"grid3\">\n<div>\n<h3>Argument basics</h3>\n<p>Premise = support.</p>\n<p>Conclusion = what is supported.</p>\n<p>Truth = proposition.</p>\n<p>Validity = argument.</p>\n<p>Sound = valid + true premises.</p>\n</div>\n<div>\n<h3>A/E/I/O</h3>\n<p>A = All S are P → S only distributed.</p>\n<p>E = No S are P → both distributed.</p>\n<p>I = Some S are P → neither.</p>\n<p>O = Some S are not P → P only distributed.</p>\n</div>\n<div>\n<h3>Immediate inference</h3>\n<p>Conversion = swap.</p>\n<p>Obversion = change quality + complement predicate.</p>\n<p>Contraposition = swap + complement.</p>\n</div>\n</div>\n<h3>Fallacy memory map</h3>\n<p><span class=\"badge\">Relevance</span> force, ad hominem, ignorance, pity, people, red herring, missing point, straw man</p>\n<p><span class=\"badge\">Presumption</span> accident, converse accident/hasty generalization, false cause, begging question, complex question</p>\n<p><span class=\"badge\">Ambiguity</span> equivocation, amphiboly, accent, composition, division</p>\n<h3>Mill</h3>\n<p><b>A</b>greement - common factor  |  <b>D</b>ifference - positive vs negative case  |  <b>J</b>oint A+D  |  <b>R</b>esidues - remove known causes  |  <b>C</b>oncomitant variation - vary together.</p>\n<h3>Probability</h3>\n<p>Tails every time in 3 tosses = <b>1/8</b>.</p>\n<p>At least one head in 3 tosses = <b>7/8</b>.</p>\n</section>\n<section class=\"card\">\n<h2>How to Write High-Scoring Logic Answers</h2>\n<ol>\n<li><b>Define first.</b> Start with one clean textbook-style sentence.</li>\n<li><b>Give the structure.</b> Use headings such as meaning, explanation, example, evaluation.</li>\n<li><b>Use the exact logical vocabulary.</b> Example: say “valid argument,” not “true argument.”</li>\n<li><b>For categorical logic, write the form.</b> A/E/I/O plus distribution.</li>\n<li><b>For fallacies, always include an example.</b> The example shows the examiner that you understand the error.</li>\n<li><b>For long questions, end with a conclusion.</b> One final sentence should state the exact result.</li>\n</ol>\n<div class=\"exam\"><b>Golden rule:</b> In logic exams, a definition + precise explanation + example + correct terminology is much stronger than a vague paragraph of general discussion.</div>\n</section>\n";
+const BN_MAIN=document.querySelector('main').innerHTML;
+const EN_H1="Irving M. Copi - Exam Study Guide";
+const EN_SUB="A structured undergraduate guide for definitions, arguments, categorical logic, definitions, fallacies, induction, probability, and the supplied previous-year questions. The emphasis is on <b>what to write in an exam</b>, not just memorizing isolated terms.";
+const EN_BADGE="INTRODUCTION TO LOGIC";
+const BN_H1='Irving M. Copi - Logic Exam Study Guide';
+const BN_SUB='পরীক্ষার জন্য সাজানো সহজ বাংলা guide। Definition, argument, categorical logic, fallacy, induction, probability এবং আগের বছরের প্রশ্ন একসঙ্গে অনুশীলন করার জন্য তৈরি। লক্ষ্য হলো শুধু মুখস্থ নয়, পরীক্ষায় কী লিখবে তা বুঝে যাওয়া।';
+const BN_BADGE='যুক্তিবিদ্যা';
+const EN_SEARCH_PLACEHOLDER='Search: distribution, fallacy, conversion, probability...';
+const BN_SEARCH_PLACEHOLDER='Search: distribution, fallacy, conversion, probability...';
+function setSearchLanguage(lang){
+  const input=document.getElementById('search');
+  const clear=input.nextElementSibling;
+  if(lang==='bn'){ input.placeholder='খুঁজুন: distribution, fallacy, conversion, probability...'; clear.textContent='পরিষ্কার'; }
+  else { input.placeholder=EN_SEARCH_PLACEHOLDER; clear.textContent='Clear'; }
+}
+let currentLang='en';
+function toggleLanguage(){
+  const main=document.querySelector('main');
+  const h1=document.querySelector('header h1');
+  const sub=document.querySelector('header .sub');
+  const badge=document.querySelector('header .badge');
+  const btn=document.getElementById('langToggle');
+  if(currentLang==='bn'){
+    main.innerHTML=EN_MAIN; h1.innerHTML=EN_H1; sub.innerHTML=EN_SUB; badge.innerHTML=EN_BADGE;
+    document.documentElement.lang='en'; document.body.classList.remove('lang-bn'); btn.textContent='বাংলা'; currentLang='en';
+  } else {
+    main.innerHTML=BN_MAIN; h1.innerHTML=BN_H1; sub.innerHTML=BN_SUB; badge.innerHTML=BN_BADGE;
+    document.documentElement.lang='bn'; document.body.classList.add('lang-bn'); btn.textContent='EN'; currentLang='bn';
+  }
+  document.getElementById('search').value=''; filterContent();
+}
+</script></body>
 </html>
+
+setSearchLanguage('en');
