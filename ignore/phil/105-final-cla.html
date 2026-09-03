@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Logic - Complete Study Guide (Copi)</title>
+<style>
+  :root {
+    --bg: #0b1622;
+    --surface: #112240;
+    --surface-2: #1b3260;
+    --border: #2a4070;
+    --gold: #c9a84c;
+    --gold-dim: #8a7030;
+    --text: #d9e4f5;
+    --text-muted: #8899bb;
+    --green: #4fcf95;
+    --red: #f87171;
+    --blue-light: #93c5fd;
+    --purple: #c084fc;
+    --font-body: Georgia, 'Times New Roman', serif;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --radius: 6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #071220 0%, #112240 60%, #1b3260 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 2.5rem 2rem 1.8rem;
+    text-align: center;
+  }
+  header .eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: normal;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+  header h1 span { color: var(--gold); }
+  header p {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  /* ── Tab Nav ── */
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #071220;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    padding: 0.9rem 1.4rem;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── Layout ── */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .container {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* ── Sections ── */
+  .section {
+    margin-bottom: 2.8rem;
+  }
+  .section-label {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.4rem;
+  }
+  h2.section-title {
+    font-size: 1.55rem;
+    font-weight: normal;
+    color: var(--gold);
+    border-left: 3px solid var(--gold);
+    padding-left: 0.9rem;
+    margin-bottom: 1.3rem;
+    line-height: 1.3;
+  }
+  h3 {
+    font-size: 1.1rem;
+    color: var(--blue-light);
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+  h4 {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-top: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+  p { margin-bottom: 0.8rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .card-gold {
+    background: #14213d;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+  .card-green {
+    background: #0d2318;
+    border-left: 3px solid var(--green);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .card-red {
+    background: #280f0f;
+    border-left: 3px solid var(--red);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .card-purple {
+    background: #1a0d2e;
+    border-left: 3px solid var(--purple);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .card-blue {
+    background: #0d1f38;
+    border-left: 3px solid var(--blue-light);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  /* ── Definition List ── */
+  .def-list { list-style: none; }
+  .def-list li {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+  }
+  .def-list li:last-child { border-bottom: none; }
+  .def-term {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .def-term .latin {
+    font-style: italic;
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.85rem;
+  }
+  .def-body { color: var(--text); }
+  .def-example {
+    margin-top: 0.4rem;
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  /* ── Quote / Copi ── */
+  .copi-quote {
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius);
+    background: #0f1c34;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+    font-style: italic;
+    color: #b8c9e8;
+  }
+  .copi-quote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: normal;
+    font-size: 0.8rem;
+    font-family: var(--font-ui);
+    color: var(--gold-dim);
+  }
+
+  /* ── Table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+  th {
+    background: var(--surface-2);
+    color: var(--gold);
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .valid-cell { color: var(--green); font-weight: bold; }
+  .invalid-cell { color: var(--red); font-weight: bold; }
+
+  /* ── Fallacy Grid ── */
+  .fallacy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .fallacy-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+  .fallacy-card .f-name {
+    font-family: var(--font-ui);
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 0.88rem;
+    margin-bottom: 0.2rem;
+  }
+  .fallacy-card .f-latin {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    margin-bottom: 0.5rem;
+  }
+  .fallacy-card .f-body { font-size: 0.88rem; }
+  .fallacy-card .f-eg {
+    margin-top: 0.4rem;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--red);
+    border-top: 1px solid var(--border);
+    padding-top: 0.4rem;
+  }
+
+  /* ── Collapsible ── */
+  details { margin-bottom: 0.9rem; }
+  details > summary {
+    cursor: pointer;
+    list-style: none;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.8rem 1.1rem;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--blue-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.15s;
+  }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::after { content: '+'; color: var(--gold); font-size: 1.2rem; }
+  details[open] > summary::after { content: '-'; }
+  details > summary:hover { background: #234; }
+  details > .details-body {
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--surface);
+  }
+
+  /* ── PYQ Section ── */
+  .pyq-section { margin-bottom: 3rem; }
+  .pyq-header {
+    background: var(--surface-2);
+    border-radius: var(--radius) var(--radius) 0 0;
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pyq-header h3 {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .marks-badge {
+    background: var(--gold);
+    color: #0b1622;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pyq-body {
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 1.4rem 1.5rem;
+    background: var(--surface);
+    margin-bottom: 1.5rem;
+  }
+  .pyq-question {
+    font-style: italic;
+    color: var(--text-muted);
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 0.8rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .pyq-answer h4 { margin-top: 1rem; }
+  .pyq-answer p { margin-bottom: 0.8rem; }
+  .answer-label {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Venn Diagrams ── */
+  .venn-wrapper {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+  }
+  .venn-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    flex: 1;
+    min-width: 280px;
+  }
+  .venn-box h4 { margin-top: 0; margin-bottom: 0.5rem; font-size: 0.9rem; }
+  .venn-verdict {
+    text-align: center;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 4px;
+  }
+  .verdict-valid { background: #0d2318; color: var(--green); }
+  .verdict-invalid { background: #280f0f; color: var(--red); }
+
+  svg { display: block; width: 100%; height: auto; }
+
+  /* ── Misc ── */
+  .formula {
+    background: #0f1c34;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    color: var(--blue-light);
+    margin: 0.8rem 0;
+    text-align: center;
+  }
+  .tag {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+  .tag-a { background: #1e3a2f; color: #6ee7b7; }
+  .tag-e { background: #3a1e1e; color: #fca5a5; }
+  .tag-i { background: #1e2e3a; color: #93c5fd; }
+  .tag-o { background: #2d1e3a; color: #c084fc; }
+  .tag-valid { background: #0d2318; color: var(--green); }
+  .tag-invalid { background: #280f0f; color: var(--red); }
+
+  strong { color: #f0e0aa; font-style: normal; }
+  em { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .container { padding: 1.5rem 1rem 3rem; }
+    h2.section-title { font-size: 1.3rem; }
+    .fallacy-grid { grid-template-columns: 1fr; }
+    .venn-wrapper { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Complete Study Guide &middot; Philosophy 105</div>
+  <h1><span>Introduction to Logic</span><br>Based on Irving M. Copi</h1>
+  <p>Compiled from class notes &middot; Covers all exam topics including Previous Year Questions</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('guide', this)">Study Guide</button>
+  <button class="tab-btn" onclick="switchTab('pyq-short', this)">PYQ - Short (5 marks)</button>
+  <button class="tab-btn" onclick="switchTab('pyq-long', this)">PYQ - Long Questions</button>
+</nav>
+
+<!-- ================================================================ -->
+<!-- TAB 1: STUDY GUIDE                                               -->
+<!-- ================================================================ -->
+<div id="tab-guide" class="tab-content active">
+<div class="container">
+
+  <!-- ── 1. WHAT IS LOGIC ── -->
+  <div class="section">
+    <div class="section-label">Section 1</div>
+    <h2 class="section-title">What is Logic? - The Central Problem</h2>
+
+    <div class="copi-quote">
+      "Logic is the study of the methods and principles used to distinguish correct from incorrect reasoning."
+      <cite>- Irving M. Copi, Introduction to Logic, 12th Edition, p. 3</cite>
+    </div>
+
+    <p>According to Copi, logic is not merely concerned with the rules of thought, nor with psychology (which studies how people actually think). Instead, logic is a normative discipline - it prescribes how reasoning <em>ought</em> to proceed. It provides the tools to evaluate arguments as good or bad, valid or invalid.</p>
+
+    <h3>The Central Problem</h3>
+    <p>The central problem with which logic deals is <strong>the distinction between correct and incorrect reasoning</strong> - that is, the distinction between valid and invalid arguments. Logic seeks a principled, systematic way to determine whether a conclusion follows from given premises.</p>
+
+    <div class="card-gold">
+      <h4>Why is this the "central" problem?</h4>
+      <p>Every intellectual activity - science, law, mathematics, philosophy - depends on reasoning. Without a systematic way to distinguish good from bad arguments, we have no reliable method for establishing truth. Logic provides that method. The moment we ask "does this conclusion really follow from these premises?", we are doing logic.</p>
+    </div>
+
+    <h3>Three Basic Functions of Language (Copi, Ch. 2)</h3>
+    <p>Copi emphasizes that before we can study logic, we must understand what language does. Language is not used only to convey facts - it has at least three fundamental functions:</p>
+
+    <div class="card-green">
+      <strong>1. Informative Function</strong>
+      <p>Language is used to describe the world - to assert that something is or is not the case. These are statements that can be true or false. This is the function most relevant to logic, since arguments consist of informative propositions. <span class="def-example">Example: "The earth revolves around the sun."</span></p>
+    </div>
+    <div class="card-purple">
+      <strong>2. Expressive Function</strong>
+      <p>Language is used to express feelings, emotions, and attitudes, and to arouse similar responses in others. Poetry and exclamations serve this function primarily. These utterances are not true or false in the logical sense. <span class="def-example">Example: "Oh, what a beautiful morning!"</span></p>
+    </div>
+    <div class="card-blue">
+      <strong>3. Directive Function</strong>
+      <p>Language is used to cause or prevent action - commands, requests, questions. These are not true or false; they are obeyed or disobeyed, answered or unanswered. <span class="def-example">Example: "Close the door." / "Please pass the salt."</span></p>
+    </div>
+
+    <p>In practice, most discourse blends all three functions. Logic is primarily concerned with the <strong>informative</strong> function, since only informative statements (propositions) can be true or false and thus can serve as premises and conclusions of arguments.</p>
+  </div>
+
+  <!-- ── 2. BASIC CONCEPTS ── -->
+  <div class="section">
+    <div class="section-label">Section 2</div>
+    <h2 class="section-title">Basic Knowledge - Arguments, Propositions &amp; Inferences</h2>
+
+    <h3>What is an Argument?</h3>
+    <div class="copi-quote">
+      "An argument, in the logician's sense, is any group of propositions of which one (the conclusion) is claimed to follow from the others (the premises), which are regarded as providing support or grounds for the truth of that one."
+      <cite>- Copi, Introduction to Logic, p. 4, 12th Edition</cite>
+    </div>
+
+    <p>An argument has two key components:</p>
+    <ul style="padding-left:1.5rem; margin-bottom:0.8rem;">
+      <li style="margin-bottom:0.5rem;"><strong>Premises</strong> - the propositions offered as evidence or reason</li>
+      <li style="margin-bottom:0.5rem;"><strong>Conclusion</strong> - the proposition whose truth the argument is intended to establish</li>
+    </ul>
+
+    <div class="card">
+      <strong>Indicator Words</strong><br>
+      Words that signal premises: <em>since, because, for, as, given that, inasmuch as</em><br>
+      Words that signal conclusions: <em>therefore, hence, thus, consequently, so, it follows that, we may conclude that</em>
+    </div>
+
+    <h3>Deductive vs. Inductive Inference</h3>
+    <table>
+      <tr>
+        <th>Feature</th>
+        <th>Deductive Inference</th>
+        <th>Inductive Inference</th>
+      </tr>
+      <tr>
+        <td>Claim</td>
+        <td>Conclusion follows <em>necessarily</em> from premises</td>
+        <td>Conclusion follows <em>probably</em> from premises</td>
+      </tr>
+      <tr>
+        <td>Direction</td>
+        <td>General to specific (top-down)</td>
+        <td>Specific to general (bottom-up)</td>
+      </tr>
+      <tr>
+        <td>Evaluation</td>
+        <td>Valid or Invalid</td>
+        <td>Strong or Weak</td>
+      </tr>
+      <tr>
+        <td>Example</td>
+        <td>All men are mortal; Socrates is a man; therefore Socrates is mortal.</td>
+        <td>The sun has risen every day so far; therefore it will rise tomorrow.</td>
+      </tr>
+    </table>
+
+    <h3>Immediate vs. Mediate Inference</h3>
+    <div class="card-blue">
+      <strong>Immediate Inference</strong>: A conclusion drawn directly from a <em>single</em> premise, with no intermediate steps. The three operations - conversion, obversion, and contraposition - are all immediate inferences.
+      <div class="def-example">Example: From "All S is P" (obversion) we get "No S is non-P".</div>
+    </div>
+    <div class="card-purple">
+      <strong>Mediate Inference</strong>: A conclusion drawn from <em>two or more</em> premises via intermediate steps. The categorical syllogism is the classical example.
+      <div class="def-example">Example: All mammals are warm-blooded. All whales are mammals. Therefore, all whales are warm-blooded.</div>
+    </div>
+
+    <h3>Analogical Argument</h3>
+    <p>An analogical argument is one that draws a conclusion about a <em>particular case</em> on the basis of its resemblance to other cases. We reason: if two (or more) things share certain known properties, they are likely to share an unknown property as well.</p>
+    <div class="card-gold">
+      <strong>Structure</strong>: A and B share properties P1, P2, P3 ... Pn. A also has property Q. Therefore, B probably also has Q.
+      <br><br>
+      <strong>Example</strong>: The heart pumps blood and has valves that prevent backflow, much like a mechanical pump has a chamber and non-return valves. Since mechanical pumps can develop blockages, the heart (by analogy) may also develop blockages.
+    </div>
+    <p>The strength of an analogical argument depends on: (1) the number of similarities, (2) the relevance of those similarities to the conclusion, (3) the number of cases compared, and (4) the absence of relevant dissimilarities.</p>
+  </div>
+
+  <!-- ── 3. PREMISES, CONCLUSION, TRUTH & VALIDITY ── -->
+  <div class="section">
+    <div class="section-label">Section 3</div>
+    <h2 class="section-title">Premises, Conclusion - Truth of Proposition &amp; Validity of Argument</h2>
+
+    <h3>The Relation Between Premises and Conclusion</h3>
+    <p>In any argument, the premises are the propositions put forward as reasons, and the conclusion is the proposition those reasons are meant to establish. The logical relation between them is one of <strong>entailment or support</strong>: the premises are claimed to make the conclusion true (or probable).</p>
+
+    <p>Copi stresses that the connection between premises and conclusion is <em>formal</em> - it depends on the logical structure of the argument, not on the content or subject matter.</p>
+
+    <h3>Truth of a Proposition vs. Validity of an Argument</h3>
+    <div class="card-gold">
+      <strong>Truth/Falsity</strong> applies to <em>propositions</em> (individual statements). A proposition is true if it corresponds to reality, false if it does not.
+      <br><br>
+      <strong>Validity/Invalidity</strong> applies to <em>arguments</em>. An argument is valid when, <em>if its premises were true</em>, its conclusion would necessarily be true. Validity is about the <em>form</em>, not the actual truth of the statements.
+    </div>
+
+    <div class="copi-quote">
+      "An argument is valid when its premises, if true, would provide conclusive grounds for its conclusion."
+      <cite>- Copi, Introduction to Logic</cite>
+    </div>
+
+    <h3>The Eight Possible Combinations</h3>
+    <p>Copi demonstrates that truth and validity are <em>independent</em> properties. There are eight logical combinations of true/false premises and true/false conclusions, and all but one are possible for either valid or invalid arguments:</p>
+
+    <table>
+      <tr>
+        <th>Argument Type</th>
+        <th>Premises</th>
+        <th>Conclusion</th>
+        <th>Possible?</th>
+      </tr>
+      <tr><td><strong>Valid</strong></td><td>All True</td><td>True</td><td class="valid-cell">Yes (Case I)</td></tr>
+      <tr><td><strong>Valid</strong></td><td>At least one False</td><td>True</td><td class="valid-cell">Yes (Case II)</td></tr>
+      <tr><td><strong>Valid</strong></td><td>At least one False</td><td>False</td><td class="valid-cell">Yes (Case III)</td></tr>
+      <tr><td><strong>Valid</strong></td><td>All True</td><td>False</td><td class="invalid-cell">IMPOSSIBLE</td></tr>
+      <tr><td><strong>Invalid</strong></td><td>All True</td><td>True</td><td class="valid-cell">Yes (Case V)</td></tr>
+      <tr><td><strong>Invalid</strong></td><td>At least one False</td><td>True</td><td class="valid-cell">Yes (Case VI)</td></tr>
+      <tr><td><strong>Invalid</strong></td><td>At least one False</td><td>False</td><td class="valid-cell">Yes (Case VII)</td></tr>
+      <tr><td><strong>Invalid</strong></td><td>All True</td><td>False</td><td class="valid-cell">Yes (Case VIII)</td></tr>
+    </table>
+
+    <div class="card-red">
+      <strong>The one impossible combination:</strong> A VALID argument with ALL TRUE premises and a FALSE conclusion. This combination is logically impossible by the very definition of validity. A valid argument preserves truth from premises to conclusion.
+    </div>
+
+    <h3>Illustrated Examples</h3>
+
+    <details>
+      <summary>Case I: Valid, True Premises, True Conclusion</summary>
+      <div class="details-body">
+        <p>All mammals are warm-blooded. (True)</p>
+        <p>All whales are mammals. (True)</p>
+        <p>Therefore, all whales are warm-blooded. (True)</p>
+        <p>This is the ideal case - a <em>sound argument</em>: both valid and with true premises.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Case III: Valid, False Premise, False Conclusion</summary>
+      <div class="details-body">
+        <p>All birds can fly. (False - penguins cannot)</p>
+        <p>Penguins are birds. (True)</p>
+        <p>Therefore, penguins can fly. (False)</p>
+        <p>The argument is still VALID - if both premises were true, the conclusion would have to be true. The falsity of the conclusion comes from the false premise.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Case V: Invalid, True Premises, True Conclusion</summary>
+      <div class="details-body">
+        <p>All cats are animals. (True)</p>
+        <p>All dogs are animals. (True)</p>
+        <p>Therefore, all cats are dogs. (False? No, let's use a different example.)</p>
+        <br>
+        <p>Some politicians are liars. (True)</p>
+        <p>Some teachers are honest. (True)</p>
+        <p>Therefore, some humans are mortal. (True)</p>
+        <p>Despite the true premises and true conclusion, the argument is INVALID because the conclusion does not follow from those premises. True premises and a true conclusion do NOT guarantee validity.</p>
+      </div>
+    </details>
+
+    <div class="card-green">
+      <strong>Key Takeaway:</strong> The only case that is logically impossible is a VALID argument with ALL TRUE premises and a FALSE conclusion. All other combinations can occur. Therefore, we cannot determine whether an argument is valid simply by looking at whether the premises and conclusion happen to be true.
+    </div>
+  </div>
+
+  <!-- ── 4. DEFINITION DIARY ── -->
+  <div class="section">
+    <div class="section-label">Section 4</div>
+    <h2 class="section-title">Definition Diary - Key Terms Explained</h2>
+
+    <ul class="def-list">
+
+      <li>
+        <div class="def-term">Denotation <span class="latin">(Extension)</span></div>
+        <div class="def-body">The set of objects or individuals to which a term correctly applies. Every term that names a class has a denotation - the collection of all things that fall under that name. If a term applies to nothing, it has an <em>empty</em> denotation.</div>
+        <div class="def-example">Example: The denotation of "planet in our solar system" is {Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune}.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Connotation <span class="latin">(Intension / Comprehension)</span></div>
+        <div class="def-body">The set of properties, attributes, or characteristics that an object must possess in order to be correctly named by the term. It is the meaning of the term in terms of defining qualities. Connotation and denotation are inversely related: the greater the connotation (more specific attributes), the smaller the denotation.</div>
+        <div class="def-example">Example: The connotation of "triangle" = {closed plane figure, bounded by three straight sides, having three angles}.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Sentence</div>
+        <div class="def-body">A grammatical unit formed by words or a group of words that expresses a complete thought and can be meaningfully uttered or written. Not all sentences express propositions - commands and questions are sentences but not propositions.</div>
+        <div class="def-example">Example: "All humans are mortal" is both a sentence and a proposition. "Close the window!" is a sentence but not a proposition.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Proposition</div>
+        <div class="def-body">When two terms are related through affirmation or denial, we form a proposition. A proposition is the <em>meaning</em> expressed by a declarative sentence - it is either true or false. Different sentences in different languages can express the same proposition. Logic deals with propositions, not sentences as such.</div>
+        <div class="def-example">Example: "Snow is white" (English) and "La neige est blanche" (French) are different sentences expressing the same proposition.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Judgement</div>
+        <div class="def-body">The mental act of forming a proposition - the act of affirming or denying a relationship between two ideas or concepts. A judgement is the psychological correlate of a proposition: the proposition is the logical object; the judgement is the mental event of entertaining or asserting it.</div>
+        <div class="def-example">Example: When you mentally affirm that "2 + 2 = 4," the mental act is a judgement; the content affirmed is the proposition.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Subject <span class="latin">(of a proposition)</span></div>
+        <div class="def-body">The term in a categorical proposition about which something is said or affirmed. In standard form "S is P," S is the subject term. The subject denotes the class about which we are making a claim.</div>
+        <div class="def-example">Example: In "All politicians are mortal," <em>politicians</em> is the subject term.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Predicate <span class="latin">(of a proposition)</span></div>
+        <div class="def-body">The term in a categorical proposition that is affirmed or denied of the subject. In standard form "S is P," P is the predicate term. The predicate denotes a class into which (or out of which) the subject is placed.</div>
+        <div class="def-example">Example: In "All politicians are mortal," <em>mortal</em> is the predicate term.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Connector <span class="latin">(Copula)</span></div>
+        <div class="def-body">The word or phrase linking the subject and predicate in a categorical proposition. In English this is typically "is," "are," "is not," or "are not." The copula asserts the relationship (inclusion or exclusion) between the classes denoted by the subject and predicate.</div>
+        <div class="def-example">Example: In "Some birds are not penguins," the connector is "are not."</div>
+      </li>
+
+      <li>
+        <div class="def-term">Term <span class="latin">(logical term)</span></div>
+        <div class="def-body">A word or phrase that can function as the subject or predicate of a logical proposition. Terms must denote a class of things (even if empty). Not all words are terms in the logical sense - conjunctions ("and," "or") and prepositions are not logical terms.</div>
+        <div class="def-example">Example: "mortal beings," "philosophers," "things that can fly" are all terms.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Universal Affirmative Proposition <span class="latin">(A proposition)</span></div>
+        <div class="def-body">A standard-form categorical proposition of the form <em>"All S is P."</em> It affirms that every member of the class S is also a member of the class P. The letter "A" comes from the Latin <em>Affirmo</em> (I affirm). In Boolean interpretation, it asserts that the class S-and-not-P is empty (S - P = 0).</div>
+        <div class="def-example">Example: "All voters are citizens." (Every person who is a voter is also a citizen.)</div>
+      </li>
+
+      <li>
+        <div class="def-term">Distribution</div>
+        <div class="def-body">Distribution refers to whether a term in a proposition is used to make a claim about <em>every</em> member of the class it denotes. A term is either distributed (the proposition says something about every member of its class) or undistributed (it does not).</div>
+      </li>
+
+      <li>
+        <div class="def-term">Distributed</div>
+        <div class="def-body">A term is said to be distributed when, in a given proposition, the proposition makes a claim about <em>every</em> member of the class that term denotes - the term's extension is fully referenced.<br>
+        Distribution rules:
+        <ul style="padding-left:1.2rem; margin-top:0.4rem;">
+          <li><span class="tag tag-a">A</span> proposition: <strong>Subject is distributed</strong>, Predicate is NOT.</li>
+          <li><span class="tag tag-e">E</span> proposition: <strong>Both Subject and Predicate are distributed</strong>.</li>
+          <li><span class="tag tag-i">I</span> proposition: <strong>Neither</strong> Subject nor Predicate is distributed.</li>
+          <li><span class="tag tag-o">O</span> proposition: Subject is NOT distributed; <strong>Predicate is distributed</strong>.</li>
+        </ul>
+        </div>
+      </li>
+
+      <li>
+        <div class="def-term">Undistributed</div>
+        <div class="def-body">A term is undistributed when the proposition makes a claim about only <em>some</em> (not all) members of the class the term denotes. The I proposition's subject and predicate are both undistributed; the A proposition's predicate is undistributed.</div>
+        <div class="def-example">Example: In "All cats are animals" (A prop), "animals" is undistributed - we are not saying something about all animals, only about the subset of animals that are cats.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Premise <span class="latin">(Premiss)</span></div>
+        <div class="def-body">A proposition offered as evidence or support in an argument. It is the statement (or statements) whose truth is claimed to provide grounds for accepting the conclusion. An argument must have at least one premise.</div>
+        <div class="def-example">Example: "All men are mortal" and "Socrates is a man" are the two premises of the classic syllogism.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Assumption</div>
+        <div class="def-body">A proposition taken for granted, without explicit proof, as a basis for reasoning. Unlike a premise that is explicitly stated, an assumption is often implicit - it is the unstated premise an argument relies upon. Identifying hidden assumptions is a key critical-thinking skill.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Conclusion</div>
+        <div class="def-body">The proposition in an argument whose truth the argument aims to establish. The conclusion is what the arguer is trying to prove, using the premises as justification. It is claimed to follow from (or be supported by) the premises.</div>
+        <div class="def-example">Example: "Therefore, Socrates is mortal" is the conclusion of the classic syllogism.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Deductive Inference</div>
+        <div class="def-body">An inference in which the conclusion is claimed to follow with <em>necessity</em> from the premises. If the premises are true and the inference is valid, the conclusion <em>must</em> be true. Deductive inference does not add new information beyond what is already contained in the premises; it makes explicit what was implicit.</div>
+        <div class="def-example">Example: From "All planets orbit the sun" and "Earth is a planet," we deduce "Earth orbits the sun."</div>
+      </li>
+
+      <li>
+        <div class="def-term">Inductive Inference</div>
+        <div class="def-body">An inference in which the conclusion is claimed to follow with <em>probability</em> (not necessity) from the premises. Even if all premises are true and the inference is as strong as possible, the conclusion might still be false. Inductive inferences expand knowledge beyond the evidence - they make generalizations from instances.</div>
+        <div class="def-example">Example: "Every swan I have ever seen is white; therefore all swans are white." (This was actually falsified when black swans were discovered in Australia.)</div>
+      </li>
+
+      <li>
+        <div class="def-term">Immediate Inference</div>
+        <div class="def-body">An inference drawn from a <em>single</em> premise directly, without requiring any other proposition as an intermediary. The three classical immediate inferences are conversion, obversion, and contraposition. Immediate inferences manipulate the form of a single categorical proposition.</div>
+        <div class="def-example">Example: From "No S is P" (E), by conversion, we immediately infer "No P is S" (E).</div>
+      </li>
+
+      <li>
+        <div class="def-term">Mediate Inference</div>
+        <div class="def-body">An inference that requires <em>two or more</em> premises and involves intermediate steps. The conclusion is reached indirectly, through the mediation of other propositions. The syllogism is the paradigmatic example of mediate inference.</div>
+        <div class="def-example">Example: A categorical syllogism connects S and P through a middle term M using two premises.</div>
+      </li>
+
+      <li>
+        <div class="def-term">Conversion</div>
+        <div class="def-body">An immediate inference in which the <em>subject and predicate terms are interchanged</em>. Valid conversion rules:
+        <ul style="padding-left:1.2rem; margin-top:0.4rem;">
+          <li><span class="tag tag-e">E</span>: "No S is P" converts to "No P is S" - <span class="tag tag-valid">Valid</span> (simple conversion)</li>
+          <li><span class="tag tag-i">I</span>: "Some S is P" converts to "Some P is S" - <span class="tag tag-valid">Valid</span> (simple conversion)</li>
+          <li><span class="tag tag-a">A</span>: "All S is P" converts to "Some P is S" - <span class="tag tag-valid">Valid by limitation only</span></li>
+          <li><span class="tag tag-o">O</span>: "Some S is not P" - <span class="tag tag-invalid">Cannot be converted validly</span></li>
+        </ul>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- ── 5. FALLACIES ── -->
+  <div class="section">
+    <div class="section-label">Section 5</div>
+    <h2 class="section-title">Fallacies - Types, Names, and Explanations</h2>
+
+    <div class="copi-quote">
+      "A fallacy is a type of incorrect argument. Since not all incorrect arguments are of the same type, different fallacies have been given different names."
+      <cite>- Copi, Introduction to Logic</cite>
+    </div>
+
+    <p>Copi classifies fallacies into four major categories. A fallacy is not just any false belief - it is a pattern of <em>faulty reasoning</em> that can appear compelling on the surface but is logically flawed.</p>
+
+    <!-- RELEVANCE -->
+    <h3>I. Fallacies of Relevance</h3>
+    <p>The premises of these arguments are logically irrelevant to the conclusion. They may feel emotionally compelling, but they do not provide genuine logical support.</p>
+
+    <div class="fallacy-grid">
+      <div class="fallacy-card">
+        <div class="f-name">1. Ad Hominem - Abusive</div>
+        <div class="f-latin">Argumentum ad Hominem (against the person)</div>
+        <div class="f-body">Attacking the character, motives, or personal circumstances of the person making an argument, rather than the argument itself.</div>
+        <div class="f-eg">eg: "You can't trust John's argument about economics - he's a drunk and a liar."</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">2. Ad Hominem - Circumstantial</div>
+        <div class="f-latin">Argumentum ad Hominem (circumstantial)</div>
+        <div class="f-body">Dismissing an argument by pointing to the arguer's circumstances - arguing they believe what they do because of self-interest or position.</div>
+        <div class="f-eg">eg: "Of course the oil company CEO denies climate change - he profits from fossil fuels."</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">3. Tu Quoque</div>
+        <div class="f-latin">"You also"</div>
+        <div class="f-body">Dismissing someone's argument by pointing out that they themselves act contrary to it. "You too" does nothing to refute the argument.</div>
+        <div class="f-eg">eg: A parent says "Don't smoke," and the child replies, "But you smoke too!" That doesn't make smoking safe.</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">4. Appeal to Force</div>
+        <div class="f-latin">Argumentum ad Baculum</div>
+        <div class="f-body">Using threats or coercion (implicit or explicit) to "win" an argument. Force is irrelevant to the truth of a claim.</div>
+        <div class="f-eg">eg: "Agree with my proposal or I will cut your funding." The threat does not make the proposal sound.</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">5. Appeal to Pity</div>
+        <div class="f-latin">Argumentum ad Misericordiam</div>
+        <div class="f-body">Appealing to the listener's sympathy or pity to gain acceptance of a conclusion, rather than giving logical reasons.</div>
+        <div class="f-eg">eg: "You must give me an extension - I have been very depressed." (Pity does not make the work deserve more time.)</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">6. Appeal to the People</div>
+        <div class="f-latin">Argumentum ad Populum</div>
+        <div class="f-body">Appealing to the emotions, prejudices, or enthusiasm of a crowd rather than using reason. "Everyone believes it" or "join the crowd" thinking.</div>
+        <div class="f-eg">eg: "Millions of people use this supplement - it must work!"</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">7. Irrelevant Conclusion</div>
+        <div class="f-latin">Ignoratio Elenchi (missing the point)</div>
+        <div class="f-body">Arguing for a conclusion that is different from what is required. The premises may be good, but they support a conclusion other than the one being debated.</div>
+        <div class="f-eg">eg: In a murder trial, proving the defendant had a hard childhood instead of proving innocence.</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">8. Accident</div>
+        <div class="f-latin">Fallacia Accidentis</div>
+        <div class="f-body">Applying a general rule to a specific case where the circumstances make the rule inapplicable. The rule is true in general but not in this exception.</div>
+        <div class="f-eg">eg: "Lying is always wrong. Therefore, lying to a murderer about where your friend is hiding is wrong."</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">9. Converse Accident</div>
+        <div class="f-latin">Hasty Generalization</div>
+        <div class="f-body">Moving too quickly from specific (often exceptional) cases to a general rule. The reverse of Accident: generalizing from exceptions.</div>
+        <div class="f-eg">eg: "I met two rude people from that city, therefore people from that city are rude."</div>
+      </div>
+    </div>
+
+    <!-- DEFECTIVE INDUCTION -->
+    <h3>II. Fallacies of Defective Induction</h3>
+    <p>The premises are relevant but provide <em>insufficient</em> evidence for the conclusion. The inductive leap is too great.</p>
+
+    <div class="fallacy-grid">
+      <div class="fallacy-card">
+        <div class="f-name">10. Appeal to Ignorance</div>
+        <div class="f-latin">Argumentum ad Ignorantiam</div>
+        <div class="f-body">Arguing that something is true because it has not been proved false (or false because not proved true). The absence of proof is not proof of absence.</div>
+        <div class="f-eg">eg: "No one has ever proved that ghosts don't exist, so ghosts must exist."</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">11. Appeal to Inappropriate Authority</div>
+        <div class="f-latin">Argumentum ad Verecundiam</div>
+        <div class="f-body">Citing the opinion of an authority in a field <em>unrelated</em> to the matter at hand. Authority in one domain does not transfer to another.</div>
+        <div class="f-eg">eg: "Einstein was a genius, and he believed in God, so God exists." (Einstein's physics expertise does not extend to theology.)</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">12. False Cause</div>
+        <div class="f-latin">Post Hoc Ergo Propter Hoc / Non Causa Pro Causa</div>
+        <div class="f-body">Assuming that because A preceded B, A caused B ("after this, therefore because of this"). Correlation is mistaken for causation.</div>
+        <div class="f-eg">eg: "I wore my lucky socks and our team won; therefore my socks caused the win."</div>
+      </div>
+    </div>
+
+    <!-- PRESUMPTION -->
+    <h3>III. Fallacies of Presumption</h3>
+    <p>These arguments assume more than what the evidence warrants - they sneak an unproven assumption into the argument structure.</p>
+
+    <div class="fallacy-grid">
+      <div class="fallacy-card">
+        <div class="f-name">13. Begging the Question</div>
+        <div class="f-latin">Petitio Principii / Circular Reasoning</div>
+        <div class="f-body">Assuming the conclusion (or its equivalent) in the premises. The argument is circular - the very thing to be proved is used as a reason.</div>
+        <div class="f-eg">eg: "The Bible is true because it is the word of God, and we know it is the word of God because the Bible says so."</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">14. Complex Question</div>
+        <div class="f-latin">Fallacy of Many Questions / Loaded Question</div>
+        <div class="f-body">Posing a question that presupposes a false (or unproven) assumption. Any direct answer concedes the assumption.</div>
+        <div class="f-eg">eg: "Have you stopped cheating on your exams?" (Any yes/no answer implies you were cheating.)</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">15. False Dichotomy</div>
+        <div class="f-latin">False Dilemma / Either-Or Fallacy</div>
+        <div class="f-body">Presenting only two options as if they are the only possibilities, when other alternatives exist.</div>
+        <div class="f-eg">eg: "You are either with us or against us." (Many intermediate positions are possible.)</div>
+      </div>
+    </div>
+
+    <!-- AMBIGUITY -->
+    <h3>IV. Fallacies of Ambiguity</h3>
+    <p>These fallacies arise from shifting or unclear meanings of words or phrases within an argument.</p>
+
+    <div class="fallacy-grid">
+      <div class="fallacy-card">
+        <div class="f-name">16. Equivocation</div>
+        <div class="f-body">Using the same word with two or more different meanings in the same argument, trading on the ambiguity.</div>
+        <div class="f-eg">eg: "The end of a thing is its perfection. Death is the end of life. Therefore, death is the perfection of life." ("End" means both "final stage" and "goal/purpose.")</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">17. Amphiboly</div>
+        <div class="f-body">Ambiguity arising from faulty grammatical structure rather than from individual words. The sentence can be parsed in two ways.</div>
+        <div class="f-eg">eg: "I saw the man with a telescope." (Did I use the telescope to see him, or does he have a telescope?)</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">18. Accent</div>
+        <div class="f-body">Changing the meaning of a statement by placing emphasis (stress) on different words, or by quoting out of context.</div>
+        <div class="f-eg">eg: "We should not speak ill of our friends" vs. "We should not speak ill of our friends." (Different emphases imply different meanings.)</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">19. Composition</div>
+        <div class="f-body">Inferring that a whole has a property because its parts have it. What is true of the parts is not necessarily true of the whole.</div>
+        <div class="f-eg">eg: "Each player on this team is the best in their position; therefore this team is the best team." (Individual excellence does not guarantee team excellence.)</div>
+      </div>
+      <div class="fallacy-card">
+        <div class="f-name">20. Division</div>
+        <div class="f-body">Inferring that a part has a property because the whole has it. The reverse of Composition.</div>
+        <div class="f-eg">eg: "Salt is harmless. Therefore, sodium (a component of salt) is harmless." (Sodium alone is highly reactive and dangerous.)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BONUS: Rules of Definition ── -->
+  <div class="section">
+    <div class="section-label">Section 6 (Bonus)</div>
+    <h2 class="section-title">Logical Definition - Rules &amp; Their Violations</h2>
+
+    <h3>What is Logical (Real) Definition?</h3>
+    <p>A logical definition (or <em>definition per genus et differentiam</em>) is one that defines a term by stating its <strong>genus</strong> (the broader class it belongs to) and its <strong>differentia</strong> (the characteristic that distinguishes it from other members of the genus). This is Copi's primary model of a good definition.</p>
+
+    <div class="card-gold">
+      <strong>Classic Example</strong>: "A human being is a <em>rational animal</em>."<br>
+      Genus: animal (the broader class)<br>
+      Differentia: rational (what distinguishes humans from other animals)
+    </div>
+
+    <h3>Rules of Definition and Fallacies in Violation</h3>
+    <table>
+      <tr>
+        <th>Rule</th>
+        <th>What it requires</th>
+        <th>Fallacy if violated</th>
+        <th>Example of violation</th>
+      </tr>
+      <tr>
+        <td><strong>Rule 1</strong></td>
+        <td>A definition must state the essential attributes of the species</td>
+        <td>Non-essential definition</td>
+        <td>"A bachelor is a man who has never danced" (not essential)</td>
+      </tr>
+      <tr>
+        <td><strong>Rule 2</strong></td>
+        <td>A definition must not be circular</td>
+        <td>Circular / petitio principii</td>
+        <td>"Logic is the study of logical thinking" (circular)</td>
+      </tr>
+      <tr>
+        <td><strong>Rule 3</strong></td>
+        <td>A definition must be neither too broad nor too narrow</td>
+        <td>Too broad / Too narrow</td>
+        <td>Too broad: "A human is an animal" (includes all animals). Too narrow: "A human is a European human" (excludes Asians, Africans, etc.)</td>
+      </tr>
+      <tr>
+        <td><strong>Rule 4</strong></td>
+        <td>A definition must not be expressed in ambiguous, obscure, or figurative language</td>
+        <td>Obscure / Metaphorical definition</td>
+        <td>"Life is a dream" (poetic but not logical)</td>
+      </tr>
+      <tr>
+        <td><strong>Rule 5</strong></td>
+        <td>A definition should not be negative where it can be affirmative</td>
+        <td>Negative definition</td>
+        <td>"A chair is not a table, not a bed, and not a shelf" (negative, unhelpful)</td>
+      </tr>
+    </table>
+
+    <h3>Standard-Form Categorical Propositions</h3>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Symbol</th>
+        <th>Form</th>
+        <th>Quantity</th>
+        <th>Quality</th>
+        <th>Subject</th>
+        <th>Predicate</th>
+      </tr>
+      <tr>
+        <td>Universal Affirmative</td>
+        <td><span class="tag tag-a">A</span></td>
+        <td>All S is P</td>
+        <td>Universal</td>
+        <td>Affirmative</td>
+        <td class="valid-cell">Distributed</td>
+        <td class="invalid-cell">Undistributed</td>
+      </tr>
+      <tr>
+        <td>Universal Negative</td>
+        <td><span class="tag tag-e">E</span></td>
+        <td>No S is P</td>
+        <td>Universal</td>
+        <td>Negative</td>
+        <td class="valid-cell">Distributed</td>
+        <td class="valid-cell">Distributed</td>
+      </tr>
+      <tr>
+        <td>Particular Affirmative</td>
+        <td><span class="tag tag-i">I</span></td>
+        <td>Some S is P</td>
+        <td>Particular</td>
+        <td>Affirmative</td>
+        <td class="invalid-cell">Undistributed</td>
+        <td class="invalid-cell">Undistributed</td>
+      </tr>
+      <tr>
+        <td>Particular Negative</td>
+        <td><span class="tag tag-o">O</span></td>
+        <td>Some S is not P</td>
+        <td>Particular</td>
+        <td>Negative</td>
+        <td class="invalid-cell">Undistributed</td>
+        <td class="valid-cell">Distributed</td>
+      </tr>
+    </table>
+
+    <h3>Conversion, Obversion, Contraposition</h3>
+
+    <details>
+      <summary>Conversion (interchange S and P)</summary>
+      <div class="details-body">
+        <table>
+          <tr><th>Original</th><th>Original Form</th><th>Converse</th><th>Valid?</th></tr>
+          <tr><td><span class="tag tag-e">E</span></td><td>No S is P</td><td>No P is S</td><td class="valid-cell">Yes (simple)</td></tr>
+          <tr><td><span class="tag tag-i">I</span></td><td>Some S is P</td><td>Some P is S</td><td class="valid-cell">Yes (simple)</td></tr>
+          <tr><td><span class="tag tag-a">A</span></td><td>All S is P</td><td>Some P is S</td><td class="valid-cell">Yes (by limitation)</td></tr>
+          <tr><td><span class="tag tag-o">O</span></td><td>Some S is not P</td><td>-</td><td class="invalid-cell">Not valid</td></tr>
+        </table>
+      </div>
+    </details>
+
+    <details>
+      <summary>Obversion (change quality + negate predicate)</summary>
+      <div class="details-body">
+        <p>To obvert, (1) change the quality of the proposition (affirmative to negative or vice versa), and (2) replace the predicate with its complement (non-P).</p>
+        <table>
+          <tr><th>Original</th><th>Original Form</th><th>Obverse</th></tr>
+          <tr><td><span class="tag tag-a">A</span></td><td>All S is P</td><td>No S is non-P <span class="tag tag-e">E</span></td></tr>
+          <tr><td><span class="tag tag-e">E</span></td><td>No S is P</td><td>All S is non-P <span class="tag tag-a">A</span></td></tr>
+          <tr><td><span class="tag tag-i">I</span></td><td>Some S is P</td><td>Some S is not non-P <span class="tag tag-o">O</span></td></tr>
+          <tr><td><span class="tag tag-o">O</span></td><td>Some S is not P</td><td>Some S is non-P <span class="tag tag-i">I</span></td></tr>
+        </table>
+        <p>Obversion is valid for all four proposition types.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Contraposition (replace S with complement of P; replace P with complement of S)</summary>
+      <div class="details-body">
+        <table>
+          <tr><th>Original</th><th>Original Form</th><th>Contrapositive</th><th>Valid?</th></tr>
+          <tr><td><span class="tag tag-a">A</span></td><td>All S is P</td><td>All non-P is non-S</td><td class="valid-cell">Yes (simple)</td></tr>
+          <tr><td><span class="tag tag-e">E</span></td><td>No S is P</td><td>Some non-P is not non-S</td><td class="valid-cell">Yes (by limitation)</td></tr>
+          <tr><td><span class="tag tag-i">I</span></td><td>Some S is P</td><td>-</td><td class="invalid-cell">Not valid</td></tr>
+          <tr><td><span class="tag tag-o">O</span></td><td>Some S is not P</td><td>Some non-P is not non-S</td><td class="valid-cell">Yes (simple)</td></tr>
+        </table>
+      </div>
+    </details>
+
+    <h3>Existential Import and the Boolean Interpretation</h3>
+    <div class="card-gold">
+      <strong>Existential Import</strong>: A proposition has existential import if it implies that the class denoted by its subject (or predicate) is non-empty - that members of that class actually exist.
+    </div>
+    <p>Under the <strong>traditional (Aristotelian) interpretation</strong>, universal propositions (A and E) were assumed to have existential import - "All S is P" implied there are some S's. This led to the validity of certain inferences (like subalternation from A to I).</p>
+    <div class="card-blue">
+      <strong>The Boolean Interpretation</strong> (modern logic, named for George Boole): Universal propositions (A and E) are interpreted as <em>conditional</em> statements with NO existential import. "All S is P" simply means "If anything is an S, then it is a P" - it makes no claim about whether any S exists. Only particular propositions (I and O) carry existential import.
+      <br><br>
+      This avoids paradoxes about empty classes (e.g., "All unicorns are white" can be true even though no unicorns exist). The Boolean interpretation is now standard in modern logic.
+    </div>
+
+    <h3>Mill's Methods of Experimental Enquiry</h3>
+    <p>John Stuart Mill formulated five methods for identifying causal relationships in scientific inquiry. Copi includes these as part of inductive logic.</p>
+
+    <details>
+      <summary>1. Method of Agreement</summary>
+      <div class="details-body"><p>If two or more instances of the phenomenon under investigation have only one circumstance in common, that one circumstance is the cause (or effect) of the given phenomenon.</p>
+      <div class="formula">A,B,C → E | A,D,F → E | Therefore: A causes E</div>
+      <div class="def-example">Example: Several people at a dinner party get food poisoning. The only food all of them ate was the shrimp. Conclusion: the shrimp caused the poisoning.</div></div>
+    </details>
+
+    <details>
+      <summary>2. Method of Difference</summary>
+      <div class="details-body"><p>If an instance in which the phenomenon occurs and an instance in which it does not occur have every circumstance in common save one, that one circumstance is the cause, or an indispensable part of the cause.</p>
+      <div class="formula">A,B,C → E | B,C → no E | Therefore: A causes E</div>
+      <div class="def-example">Example: One field is treated with fertilizer (A); the adjacent field is identical but untreated (no A). Only the treated field shows improved yield. A causes the improved yield.</div></div>
+    </details>
+
+    <details>
+      <summary>3. Joint Method of Agreement and Difference</summary>
+      <div class="details-body"><p>Combines the first two methods: Agreement identifies common positive instances; Difference confirms by finding cases where absence of the factor means absence of the effect. This double cross-check strengthens the causal inference.</p></div>
+    </details>
+
+    <details>
+      <summary>4. Method of Concomitant Variations</summary>
+      <div class="details-body"><p>Whatever phenomenon varies in any manner whenever another phenomenon varies in some particular manner, is either a cause or an effect of that phenomenon, or is connected with it through some fact of causation.</p>
+      <div class="def-example">Example: As smoking increases (decreases), the rate of lung cancer increases (decreases). This concomitant variation suggests a causal relationship.</div></div>
+    </details>
+
+    <details>
+      <summary>5. Method of Residues</summary>
+      <div class="details-body"><p>Subduct from any phenomenon such part as is known by previous inductions to be the effect of certain antecedents, and the residue of the phenomenon is the effect of the remaining antecedents.</p>
+      <div class="formula">E = e1 + e2 + e3 + e4; A→e1, B→e2, C→e3; Therefore D→e4</div>
+      <div class="def-example">Example: A compound phenomenon E is explained by known causes A, B, C. Once their effects are subtracted, the remaining portion must be caused by D.</div></div>
+    </details>
+
+    <div class="card-red">
+      <strong>Limitations of Mill's Methods</strong>
+      <ul style="padding-left:1.2rem; margin-top:0.5rem;">
+        <li style="margin-bottom:0.4rem;">They presuppose that all relevant antecedents are known and listed - in complex phenomena this is impossible.</li>
+        <li style="margin-bottom:0.4rem;">They assume simple, one-to-one causation; they struggle with multiple causes (plurality of causes) and reciprocal causation.</li>
+        <li style="margin-bottom:0.4rem;">The Method of Agreement cannot distinguish INUS conditions (Insufficient but Non-redundant parts of Unnecessary but Sufficient conditions).</li>
+        <li style="margin-bottom:0.4rem;">They establish correlation, not logical necessity; the connection may be coincidental.</li>
+        <li style="margin-bottom:0.4rem;">Direction of causation is not established by the methods alone.</li>
+        <li>They are not applicable to unique, non-repeatable events.</li>
+      </ul>
+    </div>
+
+    <h3>Theories of Probability</h3>
+
+    <details>
+      <summary>1. Classical (A Priori) Theory</summary>
+      <div class="details-body">
+        <p>Associated with Pierre-Simon Laplace. Probability is defined as the ratio of favorable outcomes to total equally possible outcomes, determined <em>before</em> any experiment takes place.</p>
+        <div class="formula">P(E) = Number of favorable outcomes / Total equally possible outcomes</div>
+        <p><strong>Strength</strong>: Works well for symmetrical situations (fair dice, coins, cards).</p>
+        <p><strong>Weakness</strong>: Assumes equal likelihood, which itself cannot be determined without empirical testing (circularity). Cannot handle events where outcomes are not equally probable or not finite.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>2. Relative Frequency (Empirical) Theory</summary>
+      <div class="details-body">
+        <p>Associated with Von Mises and Reichenbach. Probability is defined as the long-run relative frequency of an event in an infinite sequence of trials.</p>
+        <div class="formula">P(E) = lim (m/n) as n &rarr; &infin;</div>
+        <p>where m = number of occurrences of E in n trials.</p>
+        <p><strong>Strength</strong>: Grounded in observable, empirical data. Good for repeatable events.</p>
+        <p><strong>Weakness</strong>: Actual infinite trials are impossible; only approximations can be made. Cannot assign probabilities to single, unique events (e.g., "What is the probability it will rain tomorrow in this specific location?").</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>3. Subjective (Personal) Theory</summary>
+      <div class="details-body">
+        <p>Associated with Ramsey, de Finetti, and Savage. Probability is a measure of an individual's degree of belief in a proposition. It is subjective and personal, but must conform to the axioms of probability to be coherent.</p>
+        <p><strong>Strength</strong>: Can handle unique events. More flexible and applicable to Bayesian reasoning.</p>
+        <p><strong>Weakness</strong>: Different people may assign different probabilities to the same event without either being "wrong." It is difficult to measure or operationalize subjective degrees of belief precisely.</p>
+      </div>
+    </details>
+  </div>
+
+</div>
+</div><!-- end tab-guide -->
+
+
+<!-- ================================================================ -->
+<!-- TAB 2: PYQ - SHORT (5 MARKS)                                     -->
+<!-- ================================================================ -->
+<div id="tab-pyq-short" class="tab-content">
+<div class="container">
+
+  <div class="section-label" style="margin-bottom:1rem;">Previous Year Questions</div>
+  <h2 class="section-title">Short Questions (5 Marks Each)</h2>
+
+  <!-- Q1 -->
+  <div class="pyq-header">
+    <h3>Question 1</h3>
+    <span class="marks-badge">5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">What is Logic? Explain after Copi, the central problem with which logic deals.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p><strong>What is Logic?</strong> According to Irving M. Copi, <em>"Logic is the study of the methods and principles used to distinguish correct from incorrect reasoning."</em> (Introduction to Logic, 12th ed., p. 3)</p>
+
+      <p>It is important to note that logic is not concerned with how people actually think (that is the concern of psychology). Logic is a <strong>normative discipline</strong> - it tells us how reasoning <em>ought</em> to proceed, and gives us tools to evaluate arguments as correct or incorrect, valid or invalid.</p>
+
+      <p><strong>The Central Problem:</strong> The central problem with which logic deals is the identification and characterization of the distinction between <em>correct (valid) and incorrect (invalid) reasoning</em>. In other words, the central task of logic is to determine - in a principled, systematic way - whether a given conclusion actually follows from given premises.</p>
+
+      <p>Copi points out that this problem arises because not all arguments that appear compelling are actually valid. People can be persuaded by bad arguments, or fail to be persuaded by good ones. Logic provides the rigorous standards by which any argument can be objectively evaluated.</p>
+
+      <p>The central problem has two dimensions: (1) formulating general criteria for valid inference, and (2) applying those criteria to concrete arguments in all fields - science, law, philosophy, everyday life. Without solving this central problem, no reliable knowledge can be established, since all knowledge depends on reasoning from evidence to conclusion.</p>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="pyq-header">
+    <h3>Question 2</h3>
+    <span class="marks-badge">5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">Discuss briefly, the three basic functions of logic.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+      <p>Copi, in his discussion of language and logic, identifies three fundamental functions of language that are relevant to the study of logic:</p>
+
+      <p><strong>1. Informative Function:</strong> Language is used to convey factual information - to describe, assert, or deny that something is the case. Statements serving this function are propositions: they have truth values (true or false). This is the function <em>most directly relevant to logic</em>, since logical arguments are composed of informative propositions. Scientific statements, historical claims, and mathematical assertions all serve this function.</p>
+
+      <p><strong>2. Expressive Function:</strong> Language is used to express feelings, emotions, and attitudes, and to evoke similar responses in others. Poetry, literature, and exclamatory speech primarily serve this function. These utterances do not have truth values in the logical sense - they are not "true" or "false" but rather sincere or insincere, moving or unmemorable. Copi emphasizes that while this function is important in human life, it is not directly the subject matter of deductive logic.</p>
+
+      <p><strong>3. Directive Function:</strong> Language is used to cause or prevent actions - through commands, requests, questions, and instructions. "Sit down," "Please help me," and "What time is it?" are all directive uses. Like expressive language, directive language does not express propositions with truth values. We cannot say a command is "true" or "false," only whether it is followed or ignored.</p>
+
+      <p>In ordinary discourse these three functions are intermingled. Logic's primary focus is the <strong>informative</strong> function, because only informative propositions can constitute valid premises and conclusions.</p>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="pyq-header">
+    <h3>Question 3</h3>
+    <span class="marks-badge">5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">What do you mean by analogical argument?</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p>An <strong>analogical argument</strong> is an argument in which a conclusion about one particular case is drawn on the basis of that case's resemblance or similarity to other cases. We reason from the fact that two or more things share certain known properties, to the conclusion that they likely share some further property.</p>
+
+      <p><strong>Logical Form:</strong><br>
+      Entity A has properties P1, P2, P3, ..., Pn, and also has property Q.<br>
+      Entity B has properties P1, P2, P3, ..., Pn (i.e., B resembles A in all these ways).<br>
+      Therefore, entity B probably also has property Q.</p>
+
+      <p><strong>Example:</strong> The human heart pumps blood around the body, has valves to prevent backflow, and works cyclically under pressure - much like a mechanical pump. Since mechanical pumps can develop blockages or valve failure, we argue by analogy that the human heart is also susceptible to blockages and valve defects. This analogy has guided much of cardiovascular medicine.</p>
+
+      <p><strong>Factors Determining Strength:</strong> An analogical argument is stronger when (a) there are more relevant similarities between the cases, (b) there are fewer relevant differences, (c) more instances are compared, and (d) the conclusion is narrow and modest rather than sweeping.</p>
+
+      <p>Analogical arguments are inductive - the conclusion follows probably, not necessarily. They are among the most common and useful forms of inductive reasoning in science, law, and everyday life.</p>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="pyq-header">
+    <h3>Question 4</h3>
+    <span class="marks-badge">5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">State whether the subject and predicate terms of the following propositions written in ordinary English are distributed or undistributed: (a) All voters are citizens. (b) Some citizens are not voters.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p><strong>Background - Distribution Rules:</strong></p>
+      <table>
+        <tr><th>Proposition</th><th>Subject</th><th>Predicate</th></tr>
+        <tr><td><span class="tag tag-a">A</span> All S is P</td><td class="valid-cell">Distributed</td><td class="invalid-cell">Undistributed</td></tr>
+        <tr><td><span class="tag tag-e">E</span> No S is P</td><td class="valid-cell">Distributed</td><td class="valid-cell">Distributed</td></tr>
+        <tr><td><span class="tag tag-i">I</span> Some S is P</td><td class="invalid-cell">Undistributed</td><td class="invalid-cell">Undistributed</td></tr>
+        <tr><td><span class="tag tag-o">O</span> Some S is not P</td><td class="invalid-cell">Undistributed</td><td class="valid-cell">Distributed</td></tr>
+      </table>
+
+      <p><strong>(a) "All voters are citizens."</strong></p>
+      <p>This is an <span class="tag tag-a">A</span> proposition (Universal Affirmative) - "All S is P."<br>
+      Subject = <em>voters</em> - <strong class="valid-cell">DISTRIBUTED</strong> (We are talking about ALL voters - the full extension of the term.)<br>
+      Predicate = <em>citizens</em> - <strong class="invalid-cell">UNDISTRIBUTED</strong> (We are not saying something about all citizens - only that voters form a subset of citizens. Many citizens may not be voters.)</p>
+
+      <p><strong>(b) "Some citizens are not voters."</strong></p>
+      <p>This is an <span class="tag tag-o">O</span> proposition (Particular Negative) - "Some S is not P."<br>
+      Subject = <em>citizens</em> - <strong class="invalid-cell">UNDISTRIBUTED</strong> (We are referring only to some citizens, not all.)<br>
+      Predicate = <em>voters</em> - <strong class="valid-cell">DISTRIBUTED</strong> (By saying "some citizens are NOT voters," we are effectively saying the entire class of voters is excluded from consideration for those some citizens - the full extension of "voters" is referenced in the denial.)</p>
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab-pyq-short -->
+
+
+<!-- ================================================================ -->
+<!-- TAB 3: PYQ - LONG QUESTIONS                                      -->
+<!-- ================================================================ -->
+<div id="tab-pyq-long" class="tab-content">
+<div class="container">
+
+  <div class="section-label" style="margin-bottom:1rem;">Previous Year Questions</div>
+  <h2 class="section-title">Long Answer Questions</h2>
+
+  <!-- LQ 1 -->
+  <div class="pyq-header">
+    <h3>Long Question 1</h3>
+    <span class="marks-badge">6 + 6.5 = 12.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">According to Copi, explain the relation between premises and conclusion of an argument. Discuss with example in this connection, the relation between truth of proposition and validity of an argument.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Part A (6 marks) - Relation between Premises and Conclusion</div>
+
+      <p>According to Copi, an argument is defined as any group of propositions in which one proposition (the conclusion) is claimed to follow from the others (the premises). The premises are those propositions that provide the grounds, evidence, or reasons for accepting the conclusion. The conclusion is the proposition that the argument seeks to establish.</p>
+
+      <p>The logical relation between premises and conclusion is one of <strong>entailment or support</strong>. In a deductive argument, the premises are said to entail the conclusion: if the premises are true, the conclusion <em>must necessarily</em> be true. In an inductive argument, the premises support (but do not guarantee) the conclusion.</p>
+
+      <p>Copi identifies several key features of this relation:</p>
+      <p>(i) <strong>Direction</strong>: The relationship flows from premises to conclusion. The premises do the logical work; the conclusion is the result.<br>
+      (ii) <strong>The claim</strong>: Every argument contains an implicit claim that the conclusion follows from the premises. This claim may be explicit (signaled by "therefore," "hence") or implicit.<br>
+      (iii) <strong>The structure</strong>: The relation is formal - it depends on the logical form of the argument, not on what the sentences happen to be about.</p>
+
+      <div class="card-gold">
+        <strong>Example:</strong><br>
+        Premise 1: All politicians seek power.<br>
+        Premise 2: Machiavelli was a politician.<br>
+        Conclusion: Therefore, Machiavelli sought power.<br><br>
+        The relation between premises and conclusion here is one of formal entailment: accepting both premises compels acceptance of the conclusion.
+      </div>
+
+      <div class="answer-label" style="margin-top:1.5rem;">Part B (6.5 marks) - Truth of Proposition vs. Validity of Argument</div>
+
+      <p><strong>Proposition and Truth</strong>: A proposition is a statement that is either true or false. Truth is a property of individual propositions - it is a relation between the proposition and reality. If what the proposition asserts corresponds to fact, it is true; otherwise false.</p>
+
+      <p><strong>Argument and Validity</strong>: Validity is a property of arguments, not of individual propositions. An argument is valid when the conclusion follows necessarily from the premises - equivalently, when it is <em>impossible for all the premises to be true while the conclusion is false</em>. Validity is about logical form, not about whether the propositions happen to be true.</p>
+
+      <p>Copi demonstrates that truth and validity are logically independent. An argument can be:</p>
+
+      <div class="card-green">
+        <strong>Valid with True Premises and True Conclusion (Sound Argument)</strong><br>
+        P1: All human beings are mortal. (True)<br>
+        P2: Socrates is a human being. (True)<br>
+        C: Therefore, Socrates is mortal. (True)<br>
+        This is both valid AND has all true premises - it is a <em>sound</em> argument.
+      </div>
+
+      <div class="card-purple">
+        <strong>Valid with False Premises but True Conclusion</strong><br>
+        P1: All fish are mammals. (False)<br>
+        P2: All dolphins are fish. (False)<br>
+        C: Therefore, all dolphins are mammals. (True!)<br>
+        The argument is VALID (the conclusion follows from the premises), yet the premises are false. The conclusion happens to be true for independent reasons.
+      </div>
+
+      <div class="card-red">
+        <strong>The ONE Impossible Case: Valid + All True Premises + False Conclusion</strong><br>
+        This can NEVER happen. If an argument is valid and all its premises are true, the conclusion must be true. Finding a false conclusion reveals either that the argument is invalid or that at least one premise is false.
+      </div>
+
+      <div class="card-blue">
+        <strong>Invalid with All True Premises and True Conclusion</strong><br>
+        P1: Some cats are pets. (True)<br>
+        P2: Some pets are dogs. (True)<br>
+        C: Therefore, some cats are dogs. (False!)<br>
+        This shows that even with true premises, an invalid argument can lead to a false conclusion.
+      </div>
+
+      <p>The key insight from Copi is: <strong>validity does not guarantee true premises, and true premises alone do not guarantee validity.</strong> We need BOTH a valid argument form AND true premises (soundness) to guarantee a true conclusion. The study of logic equips us to check validity; empirical inquiry checks the truth of premises.</p>
+    </div>
+  </div>
+
+  <!-- LQ 2 -->
+  <div class="pyq-header">
+    <h3>Long Question 2</h3>
+    <span class="marks-badge">3.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">What is Logical Definition? Explain with examples.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+      <p>A <strong>logical definition</strong> (called <em>definition per genus et differentiam</em> - by genus and differentia) is the most fundamental type of definition in Copi's logic. It defines a term by specifying two things: (1) the <em>genus</em> - the broader, more general class to which the thing belongs, and (2) the <em>differentia</em> - the characteristic(s) that distinguish the thing from all other members of that broader class.</p>
+
+      <div class="formula">Definition = Genus + Differentia</div>
+
+      <p><strong>Examples:</strong></p>
+
+      <div class="card-gold">
+        "A human being is a <em>rational animal</em>."<br>
+        Genus: animal (humans belong to the animal kingdom)<br>
+        Differentia: rational (distinguishes humans from all other animals)
+      </div>
+      <div class="card-gold">
+        "A triangle is a <em>closed plane figure bounded by three straight lines</em>."<br>
+        Genus: closed plane figure<br>
+        Differentia: bounded by three straight lines
+      </div>
+      <div class="card-gold">
+        "A bachelor is an <em>unmarried adult male</em>."<br>
+        Genus: adult male<br>
+        Differentia: unmarried
+      </div>
+
+      <p>Logical definition is called "real definition" because it reveals the essential nature of the thing defined - it tells us what kind of thing it is and what makes it the specific kind it is. It differs from a merely verbal (nominal) definition, which only tells us how a word is used. A good logical definition successfully captures the <em>essence</em> of the concept.</p>
+    </div>
+  </div>
+
+  <!-- LQ 3 -->
+  <div class="pyq-header">
+    <h3>Long Question 3</h3>
+    <span class="marks-badge">9.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">Explain the rules of definition. Indicate the fallacies involved in the violation of these rules.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p>Copi formulates five rules that a good logical definition must satisfy. Violation of each rule constitutes a specific fallacy or defect:</p>
+
+      <h4>Rule 1: A definition must state the essential attributes of the species.</h4>
+      <p>The differentia must capture what is truly essential and distinctive about the thing being defined - not merely an accidental or incidental feature. A definition by non-essential attributes fails to communicate the nature of the thing.</p>
+      <div class="card-red">
+        <strong>Fallacy of violation</strong>: Defining by accident or non-essential property.<br>
+        <em>Defective example</em>: "A human is a featherless biped." (Plucking a chicken makes it a biped without feathers - the definition is not truly essential to humanity.)
+      </div>
+
+      <h4>Rule 2: A definition must not be circular (non-circular).</h4>
+      <p>A circular definition uses the term being defined (or its cognates) in the definition itself. It provides no real information - anyone who does not already know what the term means will learn nothing from the definition.</p>
+      <div class="card-red">
+        <strong>Fallacy</strong>: Petitio principii / Circular definition.<br>
+        <em>Defective example</em>: "Logic is the science of logical thinking." (Uses "logical" to define "logic.")
+      </div>
+
+      <h4>Rule 3: A definition must be neither too broad nor too narrow.</h4>
+      <p>A good definition must cover exactly the right extension. If it is too broad, it includes things it should not. If too narrow, it excludes things it should include.</p>
+      <div class="card-red">
+        <strong>Fallacy (Too Broad)</strong>: "A human being is an animal." (Includes all animals.)<br>
+        <strong>Fallacy (Too Narrow)</strong>: "A human being is a European adult." (Excludes billions of people.)
+      </div>
+
+      <h4>Rule 4: A definition must not be expressed in ambiguous, obscure, or figurative language.</h4>
+      <p>A definition must illuminate, not confuse. Metaphors, jargon, and vague language violate this rule because they substitute one obscurity for another.</p>
+      <div class="card-red">
+        <strong>Fallacy</strong>: Obscure or metaphorical definition.<br>
+        <em>Defective example</em>: "Architecture is frozen music." (Evocative, but logically useless as a definition.) / "Life is a journey." (A metaphor, not a definition.)
+      </div>
+
+      <h4>Rule 5: A definition should not be negative where it can be affirmative.</h4>
+      <p>A negative definition - one that states what the term does NOT mean - is typically uninformative. It should be used only when the concept is truly defined by contrast (e.g., "odd number" = a number that is not divisible by two, which is acceptable because it genuinely captures the concept).</p>
+      <div class="card-red">
+        <strong>Fallacy</strong>: Negative definition without necessity.<br>
+        <em>Defective example</em>: "A chair is not a table, not a bed, not a shelf." (Technically true but gives no positive understanding of what a chair is.)
+      </div>
+    </div>
+  </div>
+
+  <!-- LQ 4 -->
+  <div class="pyq-header">
+    <h3>Long Question 4</h3>
+    <span class="marks-badge">3 + 9.5 = 12.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">What is fallacy? (3 marks) Discuss with examples the fallacies of relevance. (9.5 marks)</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Part A (3 marks) - What is Fallacy?</div>
+
+      <p>A <strong>fallacy</strong>, according to Copi, is a type of incorrect argument. More precisely, it is a form of reasoning that appears valid or compelling but contains a logical flaw that makes it unreliable. A fallacy is not merely a false statement - it is a defective pattern of inference. The defect may lie in the irrelevance of the premises, the insufficiency of the evidence, the use of ambiguous language, or unwarranted assumptions.</p>
+
+      <p>Copi distinguishes fallacies from mere mistakes: a fallacy is a <em>type</em> of error - a recurring pattern of bad reasoning that is common enough to deserve a name and classification. Logic catalogs fallacies so that they can be recognized and avoided.</p>
+
+      <div class="answer-label" style="margin-top:1.5rem;">Part B (9.5 marks) - Fallacies of Relevance</div>
+
+      <p>Fallacies of relevance are arguments in which the premises are <em>logically irrelevant</em> to the truth of the conclusion. Despite their psychological appeal - they may feel compelling, emotionally moving, or forceful - the premises provide no genuine logical support for the conclusion. Copi identifies the following major fallacies of relevance:</p>
+
+      <h4>1. Ad Hominem - Abusive</h4>
+      <p>Instead of addressing the logical merits of an argument, the arguer attacks the personal character or reputation of the person who made it. The truth of an argument is independent of who presents it.</p>
+      <div class="card-red"><em>"You can't believe his economic theory - he was once convicted of fraud."</em></div>
+
+      <h4>2. Ad Hominem - Circumstantial</h4>
+      <p>Dismissing an argument by suggesting that the arguer holds the position only because of their circumstances, interests, or affiliations - rather than addressing the argument's logic.</p>
+      <div class="card-red"><em>"Of course she supports higher teacher salaries - she's a teacher herself."</em></div>
+
+      <h4>3. Tu Quoque ("You too")</h4>
+      <p>Evading an argument by pointing out that the arguer themselves acts contrary to it. Even if true, this does not address the logical force of the argument.</p>
+      <div class="card-red"><em>"You tell me not to drink alcohol, but you drink at parties!"</em></div>
+
+      <h4>4. Appeal to Force (Ad Baculum)</h4>
+      <p>Using threats of harm or force to compel acceptance of a conclusion, rather than giving logical reasons. Might does not make right in matters of truth.</p>
+      <div class="card-red"><em>"Sign the contract or I will ensure you never work in this industry again."</em></div>
+
+      <h4>5. Appeal to Pity (Ad Misericordiam)</h4>
+      <p>Appealing to the listener's compassion or sympathy to secure agreement, rather than offering genuine reasons for the conclusion.</p>
+      <div class="card-red"><em>"You must accept my late assignment - I have been under enormous personal stress."</em></div>
+
+      <h4>6. Appeal to the People (Ad Populum)</h4>
+      <p>Appealing to the emotions, prejudices, or desires of a crowd rather than to logic. Popularity does not establish truth.</p>
+      <div class="card-red"><em>"Millions of people believe in this remedy - it must be effective."</em></div>
+
+      <h4>7. Accident</h4>
+      <p>Applying a general rule to a specific case where the circumstances make the rule inappropriate. General rules always have exceptions.</p>
+      <div class="card-red"><em>"Returning what you borrow is a moral duty. Therefore, I must return this knife to my friend, even though he is now threatening to use it to harm someone."</em></div>
+
+      <h4>8. Converse Accident (Hasty Generalization)</h4>
+      <p>Rushing to a general conclusion from a small, unrepresentative, or exceptional sample of cases. The reverse of Accident.</p>
+      <div class="card-red"><em>"I know three people from that region who were dishonest. Therefore, people from that region are dishonest."</em></div>
+
+      <h4>9. Irrelevant Conclusion (Ignoratio Elenchi)</h4>
+      <p>Proving a conclusion that is different from what was actually supposed to be proved. The argument "misses the point" of the discussion entirely.</p>
+      <div class="card-red"><em>A defense lawyer in a murder case proves only that the victim was disliked, instead of proving the defendant's innocence.</em></div>
+
+      <p>In all these fallacies, the common thread is: the premises, however forceful they feel, do not actually bear on the truth of the conclusion. Recognizing this irrelevance is the essence of critical logical thinking.</p>
+    </div>
+  </div>
+
+  <!-- LQ 5 -->
+  <div class="pyq-header">
+    <h3>Long Question 5</h3>
+    <span class="marks-badge">12.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">What do you mean by Standard-form categorical proposition? Explain the notions of quality, quantity and distribution of standard-form categorical proposition.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p>A <strong>standard-form categorical proposition</strong> is a proposition that relates two classes (or terms) by asserting that one class is wholly or partially included in, or excluded from, another. To be in standard form, a categorical proposition must have the following structure:</p>
+
+      <div class="formula">[Quantifier] + [Subject term] + [Copula] + [Predicate term]</div>
+
+      <p>The four quantifiers recognized are: "All," "No," "Some," and "Some...not." Together with the copula "is/are" and the subject and predicate terms, these generate exactly four standard-form categorical propositions, traditionally designated by the letters A, E, I, and O.</p>
+
+      <table>
+        <tr><th>Letter</th><th>Standard Form</th><th>Name</th></tr>
+        <tr><td><span class="tag tag-a">A</span></td><td>All S is P</td><td>Universal Affirmative</td></tr>
+        <tr><td><span class="tag tag-e">E</span></td><td>No S is P</td><td>Universal Negative</td></tr>
+        <tr><td><span class="tag tag-i">I</span></td><td>Some S is P</td><td>Particular Affirmative</td></tr>
+        <tr><td><span class="tag tag-o">O</span></td><td>Some S is not P</td><td>Particular Negative</td></tr>
+      </table>
+
+      <h4>Quality</h4>
+      <p>The <strong>quality</strong> of a standard-form categorical proposition is determined by whether it is <em>affirmative</em> or <em>negative</em>.</p>
+      <p>An affirmative proposition (A and I) asserts that the subject class is included (wholly or partially) in the predicate class. A negative proposition (E and O) denies that the subject class is included - it asserts exclusion.</p>
+      <ul style="padding-left:1.2rem;">
+        <li><span class="tag tag-a">A</span> and <span class="tag tag-i">I</span> are <strong>affirmative</strong> in quality.</li>
+        <li><span class="tag tag-e">E</span> and <span class="tag tag-o">O</span> are <strong>negative</strong> in quality.</li>
+      </ul>
+
+      <h4>Quantity</h4>
+      <p>The <strong>quantity</strong> of a proposition is determined by whether it refers to <em>all</em> or <em>some</em> members of the subject class.</p>
+      <ul style="padding-left:1.2rem;">
+        <li><span class="tag tag-a">A</span> and <span class="tag tag-e">E</span> are <strong>universal</strong> in quantity (they are about ALL members of the subject class).</li>
+        <li><span class="tag tag-i">I</span> and <span class="tag tag-o">O</span> are <strong>particular</strong> in quantity (they are about SOME members of the subject class).</li>
+      </ul>
+
+      <h4>Distribution</h4>
+      <p>A term is said to be <strong>distributed</strong> in a proposition if the proposition makes a claim about every member of the class that term denotes. Otherwise it is <strong>undistributed</strong>.</p>
+      <p>The distribution rules for each proposition type:</p>
+
+      <table>
+        <tr><th>Proposition</th><th>Subject</th><th>Predicate</th><th>Explanation</th></tr>
+        <tr>
+          <td><span class="tag tag-a">A</span> All S is P</td>
+          <td class="valid-cell">Distributed</td>
+          <td class="invalid-cell">Undistributed</td>
+          <td>Speaks of ALL of S; says only that S is a subset of P, not all of P</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-e">E</span> No S is P</td>
+          <td class="valid-cell">Distributed</td>
+          <td class="valid-cell">Distributed</td>
+          <td>Excludes ALL of S from ALL of P; speaks about entire extensions of both terms</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-i">I</span> Some S is P</td>
+          <td class="invalid-cell">Undistributed</td>
+          <td class="invalid-cell">Undistributed</td>
+          <td>Speaks only of SOME S; says they are in P but not all of P need be involved</td>
+        </tr>
+        <tr>
+          <td><span class="tag tag-o">O</span> Some S is not P</td>
+          <td class="invalid-cell">Undistributed</td>
+          <td class="valid-cell">Distributed</td>
+          <td>Some S are excluded from ALL of P - the entire class P is referenced in the exclusion</td>
+        </tr>
+      </table>
+
+      <p>Distribution is crucial in determining the validity of syllogisms. The key rules involving distribution are: (1) the middle term must be distributed in at least one premise, and (2) no term may be distributed in the conclusion if it is not distributed in its corresponding premise.</p>
+    </div>
+  </div>
+
+  <!-- LQ 6 -->
+  <div class="pyq-header">
+    <h3>Long Question 6</h3>
+    <span class="marks-badge">6.5 + 6 = 12.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">Discuss with example conversion, obversion and contraposition (6.5 marks). What is existential import of proposition? Discuss the 'Boolean interpretation' of categorical propositions. (6 marks)</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Part A (6.5 marks) - Conversion, Obversion, Contraposition</div>
+
+      <p>These are the three classical <strong>immediate inferences</strong> - each derives a new proposition from a single original proposition by a defined manipulation of its terms or quality.</p>
+
+      <h4>Conversion</h4>
+      <p>Conversion interchanges the subject and predicate terms of the original proposition.</p>
+      <table>
+        <tr><th>Original</th><th>Type</th><th>Converse</th><th>Valid?</th></tr>
+        <tr><td>No politicians are saints (<span class="tag tag-e">E</span>)</td><td>Simple</td><td>No saints are politicians</td><td class="valid-cell">Valid</td></tr>
+        <tr><td>Some students are athletes (<span class="tag tag-i">I</span>)</td><td>Simple</td><td>Some athletes are students</td><td class="valid-cell">Valid</td></tr>
+        <tr><td>All cats are animals (<span class="tag tag-a">A</span>)</td><td>By limitation</td><td>Some animals are cats</td><td class="valid-cell">Valid (with limitation)</td></tr>
+        <tr><td>Some birds are not parrots (<span class="tag tag-o">O</span>)</td><td>-</td><td>Not convertible</td><td class="invalid-cell">Invalid</td></tr>
+      </table>
+      <p>Note: Simple conversion of A ("All S is P" to "All P is S") is INVALID because it would imply all animals are cats, which does not follow. Only conversion by limitation is valid for A propositions.</p>
+
+      <h4>Obversion</h4>
+      <p>Obversion: (1) change the quality (affirmative becomes negative, negative becomes affirmative), and (2) replace the predicate with its complement (non-P). Valid for all four proposition types.</p>
+      <table>
+        <tr><th>Original</th><th>Obverse</th></tr>
+        <tr><td>All politicians are citizens <span class="tag tag-a">A</span></td><td>No politicians are non-citizens <span class="tag tag-e">E</span></td></tr>
+        <tr><td>No birds are mammals <span class="tag tag-e">E</span></td><td>All birds are non-mammals <span class="tag tag-a">A</span></td></tr>
+        <tr><td>Some soldiers are brave <span class="tag tag-i">I</span></td><td>Some soldiers are not non-brave <span class="tag tag-o">O</span></td></tr>
+        <tr><td>Some cats are not pets <span class="tag tag-o">O</span></td><td>Some cats are non-pets <span class="tag tag-i">I</span></td></tr>
+      </table>
+
+      <h4>Contraposition</h4>
+      <p>Replace the subject with the complement of the predicate (non-P), and replace the predicate with the complement of the subject (non-S).</p>
+      <table>
+        <tr><th>Original</th><th>Contrapositive</th><th>Valid?</th></tr>
+        <tr><td>All scientists are curious <span class="tag tag-a">A</span></td><td>All non-curious are non-scientists</td><td class="valid-cell">Valid</td></tr>
+        <tr><td>No heroes are cowards <span class="tag tag-e">E</span></td><td>Some non-cowards are not non-heroes</td><td class="valid-cell">Valid (by limitation)</td></tr>
+        <tr><td>Some birds are parrots <span class="tag tag-i">I</span></td><td>-</td><td class="invalid-cell">Not valid</td></tr>
+        <tr><td>Some cats are not pets <span class="tag tag-o">O</span></td><td>Some non-pets are not non-cats</td><td class="valid-cell">Valid</td></tr>
+      </table>
+
+      <div class="answer-label" style="margin-top:1.5rem;">Part B (6 marks) - Existential Import and Boolean Interpretation</div>
+
+      <p><strong>Existential Import:</strong> A proposition has existential import with respect to a term if and only if it implies or presupposes that the class denoted by that term is non-empty - that at least one member of that class actually exists in reality.</p>
+
+      <p>Under the traditional (Aristotelian) interpretation, both universal propositions (A and E) were assumed to have existential import. "All S is P" implied that there are actually some S's. This allowed certain inferences (like inferring "Some S is P" from "All S is P") that seem natural in ordinary speech.</p>
+
+      <p>However, this leads to problems: "All mermaids are sea-dwellers" implies mermaids exist, which is false. Logic needs to handle statements about empty or hypothetical classes.</p>
+
+      <div class="card-gold">
+        <strong>The Boolean Interpretation</strong> (after George Boole, 1815-1864): Under this modern interpretation, universal propositions (A and E) are treated as <em>conditional statements with no existential import</em>. "All S is P" means simply "If anything is an S, then it is a P" - it does not assert that any S actually exists. In Boolean notation: S - P = 0 (the class of things that are S but not P is empty), without asserting S itself is non-empty.
+        <br><br>
+        Only particular propositions (I and O) carry existential import. "Some S is P" asserts that at least one thing is both an S and a P. "Some S is not P" asserts that at least one S exists that is not a P.
+      </div>
+
+      <p>Consequences of the Boolean interpretation:</p>
+      <ul style="padding-left:1.2rem;">
+        <li>Subalternation (inferring I from A, or O from E) is no longer valid for empty subject classes.</li>
+        <li>The traditional square of opposition is partially undermined - A and O may both be "true" when the subject class is empty (vacuously).</li>
+        <li>Venn diagram technique naturally embodies the Boolean interpretation: shading represents that a region is empty, an X represents that a region is non-empty.</li>
+        <li>This interpretation is now standard in modern formal logic and avoids paradoxes about non-existent entities.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LQ 7 -->
+  <div class="pyq-header">
+    <h3>Long Question 7</h3>
+    <span class="marks-badge">7.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">What is a standard-form categorical syllogism? Mention the characteristics of syllogism.</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p>A <strong>standard-form categorical syllogism</strong> is a deductive argument consisting of exactly <em>three categorical propositions</em> (two premises and one conclusion), each in standard form, and containing exactly <em>three terms</em>, each of which appears in exactly two of the three propositions.</p>
+
+      <div class="card-gold">
+        <strong>Classic Example:</strong><br>
+        All men are mortal. (Major Premise)<br>
+        Socrates is a man. (Minor Premise)<br>
+        Therefore, Socrates is mortal. (Conclusion)
+      </div>
+
+      <h4>The Three Terms of a Syllogism</h4>
+      <ul style="padding-left:1.2rem;">
+        <li><strong>Major Term (P)</strong>: The predicate of the conclusion. It appears in the major premise.</li>
+        <li><strong>Minor Term (S)</strong>: The subject of the conclusion. It appears in the minor premise.</li>
+        <li><strong>Middle Term (M)</strong>: The term that appears in both premises but NOT in the conclusion. It is the bridge term that connects S and P.</li>
+      </ul>
+
+      <h4>Characteristics of a Standard-Form Categorical Syllogism</h4>
+
+      <p><strong>1. Exactly three propositions</strong>: Two premises (major and minor) and one conclusion. No more, no less.</p>
+      <p><strong>2. Exactly three terms</strong>: Major, minor, and middle. Each term must be used consistently with the same meaning throughout.</p>
+      <p><strong>3. Each term appears exactly twice</strong>: Each term occurs in exactly two of the three propositions.</p>
+      <p><strong>4. Standard form</strong>: Each proposition must be in standard categorical form (A, E, I, or O).</p>
+      <p><strong>5. Major premise is stated first</strong>: By convention, the major premise (containing the major term) is stated first, followed by the minor premise, then the conclusion.</p>
+      <p><strong>6. The middle term never appears in the conclusion</strong>: The middle term's role is to mediate between the other two terms. Once its job is done in the premises, it does not appear in the conclusion.</p>
+
+      <h4>Mood and Figure</h4>
+      <p>Every syllogism has a <strong>mood</strong> (the combination of proposition types: e.g., AAA, EAE, IAI) and a <strong>figure</strong> (determined by the position of the middle term in the premises). There are four figures and 64 possible moods, giving 256 possible syllogistic forms. Of these, only 24 are valid (15 unconditionally valid, 9 conditionally valid).</p>
+
+      <table>
+        <tr><th>Figure</th><th>Major Premise (M position)</th><th>Minor Premise (M position)</th></tr>
+        <tr><td>Figure 1</td><td>M - P</td><td>S - M</td></tr>
+        <tr><td>Figure 2</td><td>P - M</td><td>S - M</td></tr>
+        <tr><td>Figure 3</td><td>M - P</td><td>M - S</td></tr>
+        <tr><td>Figure 4</td><td>P - M</td><td>M - S</td></tr>
+      </table>
+
+      <h4>Rules for Valid Syllogisms</h4>
+      <ul style="padding-left:1.2rem;">
+        <li>The middle term must be distributed in at least one premise.</li>
+        <li>If a term is distributed in the conclusion, it must be distributed in its premise.</li>
+        <li>No valid syllogism can have two negative premises.</li>
+        <li>If one premise is negative, the conclusion must be negative.</li>
+        <li>No valid syllogism can have two particular premises (no I-I or O-O premises, etc.).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LQ 8 -->
+  <div class="pyq-header">
+    <h3>Long Question 8</h3>
+    <span class="marks-badge">2.5 + 2.5 = 5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">Test the validity or invalidity of the following syllogism by using the Venn Diagram Technique. (i) IAI-3 (ii) EAE-3</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <h4>How to Read Syllogism Notation</h4>
+      <p>The notation gives the mood (three letters = types of major premise, minor premise, conclusion) followed by the figure number. Figure 3 means the middle term (M) is the <em>subject</em> of both premises.</p>
+
+      <p><strong>In Figure 3:</strong><br>
+      Major Premise: M _ P<br>
+      Minor Premise: M _ S<br>
+      Conclusion: S _ P</p>
+
+      <h4>(i) IAI - 3</h4>
+      <div class="card-blue">
+        Major Premise <span class="tag tag-i">I</span>: Some M is P<br>
+        Minor Premise <span class="tag tag-a">A</span>: All M is S<br>
+        Conclusion <span class="tag tag-i">I</span>: Some S is P
+      </div>
+
+      <p><strong>Venn Diagram Method:</strong> Draw three overlapping circles for S, P, and M. Always diagram universal propositions before particular ones.</p>
+      <p>Step 1 (Minor Premise - A): "All M is S" - shade the region of M that lies outside S. This means M - (M∩S) = 0.</p>
+      <p>Step 2 (Major Premise - I): "Some M is P" - place an X in M∩P. Since we have already shaded M outside S (from step 1), the entire M circle is now within S. Therefore, the X in M∩P must fall in M∩P∩S (the triple intersection).</p>
+      <p>Step 3 (Check conclusion): The conclusion "Some S is P" requires an X in S∩P. We have an X in M∩P∩S, which is indeed part of S∩P. The conclusion is confirmed in the diagram.</p>
+
+      <div class="venn-wrapper">
+        <div class="venn-box">
+          <h4>IAI - 3</h4>
+          <!-- SVG Venn for IAI-3 -->
+          <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hatch1" width="8" height="8" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="8" stroke="#8a7030" stroke-width="1.5"/>
+              </pattern>
+              <!-- mask: M outside S -->
+              <mask id="m-not-s-iai">
+                <rect fill="black" width="300" height="260"/>
+                <circle cx="180" cy="175" r="75" fill="white"/>
+                <circle cx="105" cy="105" r="75" fill="black"/>
+              </mask>
+            </defs>
+            <!-- Circles (fill transparent, stroke visible) -->
+            <circle cx="105" cy="105" r="75" fill="rgba(147,197,253,0.06)" stroke="#93c5fd" stroke-width="1.5"/>
+            <circle cx="195" cy="105" r="75" fill="rgba(192,132,252,0.06)" stroke="#c084fc" stroke-width="1.5"/>
+            <circle cx="150" cy="185" r="75" fill="rgba(74,207,149,0.06)" stroke="#4fcf95" stroke-width="1.5"/>
+            <!-- Shade: M outside S (IAI step 1: All M is S) -->
+            <rect x="0" y="0" width="300" height="260" fill="url(#hatch1)" mask="url(#m-not-s-iai)" opacity="0.9"/>
+            <!-- X in triple intersection (M ∩ P ∩ S) -->
+            <text x="152" y="147" fill="#f87171" font-size="16" text-anchor="middle" font-weight="bold">X</text>
+            <!-- Labels -->
+            <text x="55" y="88" fill="#93c5fd" font-size="13" font-family="sans-serif">S</text>
+            <text x="238" y="88" fill="#c084fc" font-size="13" font-family="sans-serif">P</text>
+            <text x="150" y="248" fill="#4fcf95" font-size="13" font-family="sans-serif">M</text>
+            <!-- Legend -->
+            <rect x="10" y="235" width="12" height="8" fill="url(#hatch1)" opacity="0.9"/>
+            <text x="26" y="243" fill="#8a9aba" font-size="9" font-family="sans-serif">Shaded = empty region</text>
+          </svg>
+          <div class="venn-verdict verdict-valid">VALID</div>
+          <p style="font-size:0.82rem; margin-top:0.5rem; color: var(--text-muted);">The X (some M is P) lands in M∩P∩S because all M is in S. So Some S is P is confirmed.</p>
+        </div>
+
+        <div class="venn-box">
+          <h4>EAE - 3</h4>
+          <!-- SVG Venn for EAE-3 -->
+          <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hatch2" width="8" height="8" patternTransform="rotate(45)">
+                <line x1="0" y1="0" x2="0" y2="8" stroke="#8a7030" stroke-width="1.5"/>
+              </pattern>
+              <pattern id="hatch3" width="8" height="8" patternTransform="rotate(-45)">
+                <line x1="0" y1="0" x2="0" y2="8" stroke="#a05050" stroke-width="1.5"/>
+              </pattern>
+              <!-- mask: M outside S -->
+              <mask id="m-not-s-eae">
+                <rect fill="black" width="300" height="260"/>
+                <circle cx="180" cy="175" r="75" fill="white"/>
+                <circle cx="105" cy="105" r="75" fill="black"/>
+              </mask>
+              <!-- mask: M intersect P -->
+              <mask id="m-and-p-eae">
+                <rect fill="black" width="300" height="260"/>
+                <circle cx="195" cy="105" r="75" fill="white"/>
+                <circle cx="180" cy="175" r="75" fill="white"/>
+                <!-- intersection = only where both circles overlap -->
+                <!-- Use clip approach: show only M∩P region -->
+              </mask>
+              <clipPath id="clip-m-eae">
+                <circle cx="180" cy="175" r="75"/>
+              </clipPath>
+            </defs>
+            <!-- Circles -->
+            <circle cx="105" cy="105" r="75" fill="rgba(147,197,253,0.06)" stroke="#93c5fd" stroke-width="1.5"/>
+            <circle cx="195" cy="105" r="75" fill="rgba(192,132,252,0.06)" stroke="#c084fc" stroke-width="1.5"/>
+            <circle cx="180" cy="175" r="75" fill="rgba(74,207,149,0.06)" stroke="#4fcf95" stroke-width="1.5"/>
+            <!-- Shade M outside S (EAE step 2: All M is S) -->
+            <rect x="0" y="0" width="300" height="260" fill="url(#hatch2)" mask="url(#m-not-s-eae)" opacity="0.9"/>
+            <!-- Shade M ∩ P (EAE step 1: No M is P) - using clip path on a P-fill -->
+            <circle cx="195" cy="105" r="75" fill="url(#hatch3)" clip-path="url(#clip-m-eae)" opacity="0.85"/>
+            <!-- Unshaded S∩P (not M) - the gap that makes it invalid -->
+            <text x="153" y="72" fill="#f0e0aa" font-size="9" font-family="sans-serif" text-anchor="middle">?</text>
+            <text x="153" y="82" fill="#f0e0aa" font-size="7.5" font-family="sans-serif" text-anchor="middle">unshaded</text>
+            <!-- Labels -->
+            <text x="45" y="88" fill="#93c5fd" font-size="13" font-family="sans-serif">S</text>
+            <text x="245" y="88" fill="#c084fc" font-size="13" font-family="sans-serif">P</text>
+            <text x="178" y="248" fill="#4fcf95" font-size="13" font-family="sans-serif">M</text>
+            <text x="150" y="60" fill="#f87171" font-size="8" font-family="sans-serif" text-anchor="middle">S &amp; P (not M) not shaded!</text>
+          </svg>
+          <div class="venn-verdict verdict-invalid">INVALID</div>
+          <p style="font-size:0.82rem; margin-top:0.5rem; color: var(--text-muted);">S∩P (the top overlap of S and P, outside M) is unshaded. "No S is P" would require it to be empty - but the diagram does not force it to be.</p>
+        </div>
+      </div>
+
+      <h4>Explanation of IAI-3 Validity</h4>
+      <p>After diagramming both premises, the X representing "some M is P" necessarily falls in the triple intersection (S∩P∩M), because the entire M circle has been shaded except for the part inside S. This X also lies within S∩P, which is exactly what the conclusion "Some S is P" requires. Therefore IAI-3 is <strong class="valid-cell">VALID</strong>.</p>
+
+      <h4>Explanation of EAE-3 Invalidity</h4>
+      <p>The two premises ("No M is P" and "All M is S") shade M∩P entirely and shade M outside S entirely. However, the region S∩P that lies <em>outside</em> M (the top overlap of S and P circles) remains unshaded. The conclusion "No S is P" requires that ALL of S∩P be empty (shaded). Since the diagram does not shade that top region, the conclusion is not supported. Therefore EAE-3 is <strong class="invalid-cell">INVALID</strong>.</p>
+    </div>
+  </div>
+
+  <!-- LQ 9 -->
+  <div class="pyq-header">
+    <h3>Long Question 9</h3>
+    <span class="marks-badge">12.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">Discuss Mill's methods of experimental enquiry. What are the limitations of them?</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Answer</div>
+
+      <p>John Stuart Mill (1806-1873) formulated five systematic methods for discovering causal relationships in nature through inductive enquiry. These methods appear in his major work <em>A System of Logic</em> (1843) and are incorporated by Copi into his treatment of inductive reasoning.</p>
+
+      <p>A <strong>causal law</strong>, in Mill's sense, is a universal conditional: "Whenever A occurs, B occurs." Mill's methods are designed to identify which antecedent conditions are causally responsible for a given phenomenon.</p>
+
+      <h4>1. Method of Agreement</h4>
+      <div class="card-gold">
+        <em>"If two or more instances of the phenomenon under investigation have only one circumstance in common, the circumstance in which alone all the instances agree, is the cause (or effect) of the given phenomenon."</em>
+      </div>
+      <p>We look at multiple cases where the effect (E) is present, and identify the single common antecedent.</p>
+      <div class="formula">Case 1: A, B, C → E | Case 2: A, D, F → E | Case 3: A, G, H → E | ∴ A causes E</div>
+      <p><em>Example</em>: Several people develop food poisoning after different meals, but all of them consumed prawns. The prawn is identified as the cause by agreement.</p>
+
+      <h4>2. Method of Difference</h4>
+      <div class="card-gold">
+        <em>"If an instance in which the phenomenon under investigation occurs, and an instance in which it does not occur, have every circumstance in common save one, that one occurring only in the former; the circumstance in which alone the two instances differ, is the effect, or cause, or a necessary part of the cause, of the phenomenon."</em>
+      </div>
+      <div class="formula">Case +: A, B, C → E | Case -: B, C → no E | ∴ A causes E</div>
+      <p><em>Example</em>: Two identical test fields, one treated with a new fertilizer (A), one not. Only the treated field yields more. A is the cause of increased yield.</p>
+
+      <h4>3. Joint Method of Agreement and Difference</h4>
+      <p>A combined application of Methods 1 and 2: Agreement identifies positive instances (cases where E occurs) sharing a common factor A; Difference confirms by showing that where A is absent, E does not occur. This double check provides stronger inductive support.</p>
+
+      <h4>4. Method of Concomitant Variations</h4>
+      <div class="card-gold">
+        <em>"Whatever phenomenon varies in any manner whenever another phenomenon varies in some particular manner, is either a cause or an effect of that phenomenon, or is connected with it through some fact of causation."</em>
+      </div>
+      <p>If as A increases, E increases (or decreases), then A and E are causally related. This method is especially useful when we cannot eliminate or hold constant the suspected causal factor.</p>
+      <p><em>Example</em>: As altitude increases, atmospheric pressure decreases, and the boiling point of water also decreases. Concomitant variation indicates a causal link between altitude and boiling point.</p>
+
+      <h4>5. Method of Residues</h4>
+      <div class="card-gold">
+        <em>"Subduct from any phenomenon such part as is known by previous inductions to be the effect of certain antecedents, and the residue of the phenomenon is the effect of the remaining antecedents."</em>
+      </div>
+      <div class="formula">Phenomenon E = e1 + e2 + e3 | A causes e1 | B causes e2 | ∴ C causes e3</div>
+      <p><em>Example</em>: The orbit of Uranus showed perturbations not accounted for by any known planet. The "residue" of the perturbation led scientists to predict (and later discover) Neptune as the cause of that residue.</p>
+
+      <h4>Limitations of Mill's Methods</h4>
+      <div class="card-red">
+        <ul style="padding-left:1.2rem;">
+          <li style="margin-bottom:0.6rem;"><strong>Plurality of causes</strong>: The same effect can have multiple different causes. The Method of Agreement may fail if different instances of E have different causes, yet the method assumes one common cause.</li>
+          <li style="margin-bottom:0.6rem;"><strong>Requirement of complete enumeration</strong>: All relevant antecedent circumstances must be listed. In complex real-world situations this is impossible. Unknown variables may invalidate the results.</li>
+          <li style="margin-bottom:0.6rem;"><strong>Correlation vs. causation</strong>: The methods identify association or correlation, not logical necessity. Even a perfect correlation can be coincidental or due to a third, unmeasured common cause.</li>
+          <li style="margin-bottom:0.6rem;"><strong>Direction of causation</strong>: The methods cannot determine which way causation runs. A may cause B, or B may cause A, or both may be caused by C.</li>
+          <li style="margin-bottom:0.6rem;"><strong>INUS conditions</strong>: Real causes are often complex (Insufficient but Non-redundant parts of Unnecessary but Sufficient conditions). Mill's methods, designed for simple single-factor causation, cannot handle such complexity.</li>
+          <li style="margin-bottom:0.6rem;"><strong>Non-repeatable events</strong>: The Method of Difference requires nearly identical cases differing in one factor. For unique historical events, this is impossible.</li>
+          <li><strong>Theory-ladenness</strong>: What we identify as a "circumstance" or "factor" depends on our prior theoretical assumptions. The methods do not tell us how to individuate factors.</li>
+        </ul>
+      </div>
+      <p>Despite these limitations, Mill's methods remain foundational in scientific methodology, particularly in experimental design (the Method of Difference is the basis of the controlled experiment), and continue to be used in medical, social, and natural science research.</p>
+    </div>
+  </div>
+
+  <!-- LQ 10 -->
+  <div class="pyq-header">
+    <h3>Long Question 10</h3>
+    <span class="marks-badge">6.5 + 3 + 3 = 12.5 Marks</span>
+  </div>
+  <div class="pyq-body">
+    <div class="pyq-question">Explain and evaluate the theories of probability. (6.5 marks) What is the probability of getting tails every time in three tosses of a coin? (3 marks) What is the probability of getting head at least one time in three tosses of a coin? (3 marks)</div>
+    <div class="pyq-answer">
+      <div class="answer-label">Part A (6.5 marks) - Theories of Probability</div>
+
+      <p>Probability theory attempts to assign a numerical value between 0 and 1 to events, measuring the "likelihood" of their occurrence. Three major theories have been developed:</p>
+
+      <h4>1. The Classical (A Priori) Theory</h4>
+      <p>Developed by Pierre-Simon Laplace, this theory defines probability as a purely mathematical ratio, determined before any experiment:</p>
+      <div class="formula">P(E) = Number of favorable outcomes / Total number of equally possible outcomes</div>
+      <p><strong>Evaluation - Strengths</strong>: Elegant and mathematically tractable. Works perfectly for symmetrical experiments (fair coins, unbiased dice, well-shuffled cards) where outcomes can be enumerated.</p>
+      <p><strong>Evaluation - Weaknesses</strong>: The theory presupposes that all outcomes are "equally possible" - but determining equal possibility requires knowing probabilities in advance (circularity). It cannot handle situations where outcomes are not finite and symmetric (e.g., "What is the probability of rain tomorrow?"). It provides no guidance for new or novel situations where we cannot enumerate equally possible outcomes.</p>
+
+      <h4>2. The Relative Frequency (Empirical) Theory</h4>
+      <p>Proposed by Von Mises and Reichenbach, this theory grounds probability in empirical observation:</p>
+      <div class="formula">P(E) = lim(m/n) as n &rarr; &infin; [where m = occurrences of E in n trials]</div>
+      <p><strong>Evaluation - Strengths</strong>: Objective and empirically grounded. Avoids the circularity of the classical theory. Well-suited to repeated, observable phenomena (mortality rates, industrial failure rates, sports statistics).</p>
+      <p><strong>Evaluation - Weaknesses</strong>: Actual infinite sequences are empirically impossible; we always deal with finite data. The theory can only yield approximations. Cannot meaningfully apply to singular, non-repeatable events (e.g., the probability of a specific historical event occurring). The concept of a "limiting frequency" is a mathematical idealization with no direct empirical correlate.</p>
+
+      <h4>3. The Subjective (Personal) Theory</h4>
+      <p>Associated with Frank Ramsey, Bruno de Finetti, and Leonard Savage, this theory holds that probability is a measure of an individual's rational degree of belief:</p>
+      <p><strong>Evaluation - Strengths</strong>: Highly flexible - can assign probabilities to any event, including unique ones. Naturally incorporates Bayesian reasoning (updating beliefs as evidence arrives). Suitable for decision-making under uncertainty.</p>
+      <p><strong>Evaluation - Weaknesses</strong>: Probabilities are subjective; two rational people may assign different probabilities to the same event without either being "wrong." It is difficult to measure or operationalize degrees of belief. It may not satisfy the requirements of intersubjective science, which demands objective, publicly verifiable results.</p>
+
+      <div class="card-gold">
+        <strong>Overall Assessment</strong>: Each theory captures something important about probability. The classical theory works for symmetrical a priori situations; the frequency theory works for empirical phenomena; the subjective theory is most general. Modern philosophy of probability tends toward either a sophisticated frequency account or a Bayesian (subjective/epistemic) framework.
+      </div>
+
+      <div class="answer-label" style="margin-top:1.5rem;">Part B (3 marks) - Probability of Tails Every Time in Three Tosses</div>
+
+      <p>We use the classical theory and the multiplication rule for independent events.</p>
+      <p>For a fair coin: P(Tails on one toss) = 1/2</p>
+      <p>The three tosses are independent events. Probability of tails on ALL three:</p>
+      <div class="formula">P(T, T, T) = P(T) &times; P(T) &times; P(T) = (1/2) &times; (1/2) &times; (1/2) = 1/8 = 0.125</div>
+      <p>There is exactly one favorable outcome {TTT} out of 2&sup3; = 8 equally possible outcomes {HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}.</p>
+      <p><strong>Answer: The probability of getting tails every time in three tosses is 1/8 (12.5%)</strong></p>
+
+      <div class="answer-label" style="margin-top:1.5rem;">Part C (3 marks) - Probability of At Least One Head in Three Tosses</div>
+
+      <p>We use the complementary method, which is simpler than counting all favorable outcomes directly.</p>
+      <p>P(at least one Head) = 1 - P(no Heads at all) = 1 - P(all Tails)</p>
+      <p>From Part B, we know P(all Tails) = P(T, T, T) = 1/8</p>
+      <div class="formula">P(at least one H) = 1 - 1/8 = 7/8 = 0.875</div>
+      <p>Verification: Out of the 8 possible outcomes, only 1 has no heads (TTT). The remaining 7 ({HHH, HHT, HTH, HTT, THH, THT, TTH}) all have at least one head.</p>
+      <p><strong>Answer: The probability of getting at least one head in three tosses is 7/8 (87.5%)</strong></p>
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab-pyq-long -->
+
+<script>
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
