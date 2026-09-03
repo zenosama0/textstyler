@@ -6,7 +6,20 @@
 <title>Cram Sheet - Study Notes Formatter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Mono:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true
+    },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   // Anti-flash theming: applied before first paint so returning visitors
   // never see a flicker of the default light/teal theme before their
@@ -29,6 +42,8 @@
     --ink:#212A38;
     --muted:#6B7280;
     --yellow:#FFD34D;
+    --highlight-bg:rgba(255,211,77,.38);
+    --highlight-fg:inherit;
     --accent:#2F9C95;
     --accent-fill:#2F9C95;
     --accent-2:#E8556E;
@@ -43,6 +58,11 @@
     --code-fg:#B14D5F;
     --zebra:#FAFAF6;
     --input-bg:#FBFBF8;
+    --accent-soft:rgba(47,156,149,.10);
+    --accent-line:rgba(47,156,149,.24);
+    --accent-wash:rgba(47,156,149,.055);
+    --accent-button:#2F9C95;
+    --accent-button-fg:#FFFFFF;
   }
   [data-theme="dark"]{
     --paper:#1B1C17;
@@ -50,6 +70,8 @@
     --ink:#ECEAE2;
     --muted:#9A9C93;
     --yellow:#FFD34D;
+    --highlight-bg:rgba(255,211,77,.16);
+    --highlight-fg:#F1EFE6;
     --accent:#3DBDB3;
     --accent-fill:#3DBDB3;
     --accent-2:#FF7A90;
@@ -64,6 +86,11 @@
     --code-fg:#FF8FA3;
     --zebra:#262820;
     --input-bg:#1E201B;
+    --accent-soft:rgba(61,189,179,.10);
+    --accent-line:rgba(61,189,179,.20);
+    --accent-wash:rgba(61,189,179,.045);
+    --accent-button:#3DBDB3;
+    --accent-button-fg:#132321;
   }
   *{box-sizing:border-box;}
   ::selection{ background:var(--accent-fill); color:#fff; }
@@ -75,7 +102,7 @@
     background:
       repeating-linear-gradient(
         to bottom,
-        transparent 0px, transparent 31px, var(--rule) 31px, var(--rule) 32px
+        transparent 0px, transparent 31px, var(--accent-line) 31px, var(--accent-line) 32px
       ),
       var(--paper);
     color:var(--ink);
@@ -96,7 +123,7 @@
   .brand-mark-link{ text-decoration:none; display:block; }
   .brand-mark{
     width:40px; height:40px; border-radius:10px;
-    background:var(--stamp); color:var(--stamp-fg);
+    background:var(--accent-button); color:var(--accent-button-fg);
     display:flex; align-items:center; justify-content:center;
     font-size:20px; flex-shrink:0;
     transform:rotate(-4deg);
@@ -118,7 +145,7 @@
   }
   .btn:hover{ transform:translateY(-1px); border-color:var(--accent); }
   .btn:active{ transform:translateY(0); }
-  .btn-accent{ background:var(--stamp); color:var(--stamp-fg); border-color:var(--ink); }
+  .btn-accent{ background:var(--accent-button); color:var(--accent-button-fg); border-color:var(--accent-button); box-shadow:2px 2px 0 var(--accent-line); }
 
   /* ---------- Icon buttons (dark mode + accent color) ---------- */
   .iconbtn{
@@ -136,7 +163,7 @@
   .popover{
     position:absolute; top:calc(100% + 8px); right:0; z-index:50;
     min-width:236px; background:var(--card); border:1.5px solid var(--ink);
-    border-radius:12px; box-shadow:4px 4px 0 var(--ink); padding:14px;
+    border-radius:12px; box-shadow:4px 4px 0 var(--accent-line); padding:14px;
     display:none; flex-direction:column; gap:10px;
     animation:popIn .14s ease-out;
     transition:background .2s ease, border-color .2s ease;
@@ -170,7 +197,7 @@
   .custom-row{ display:none; gap:6px; }
   .custom-row.show{ display:flex; }
   .custom-row input{
-    flex:1; min-width:0; padding:7px 9px; border:1.5px solid var(--rule); border-radius:7px;
+    flex:1; min-width:0; padding:7px 9px; border:1.5px solid var(--accent-line); border-radius:7px;
     font-family:'IBM Plex Mono', monospace; font-size:0.76rem; color:var(--ink); background:var(--input-bg);
     outline:none; transition:border-color .12s ease;
   }
@@ -245,8 +272,10 @@
   .prose p{ line-height:1.65; margin:10px 0; font-size:0.97rem; }
 
   .prose strong{
-    background:linear-gradient(180deg, transparent 60%, var(--yellow) 60%);
-    padding:0 1px; font-weight:600;
+    background:linear-gradient(180deg, transparent 55%, var(--highlight-bg) 55%);
+    color:var(--highlight-fg);
+    padding:0 1px; font-weight:650;
+    box-decoration-break:clone; -webkit-box-decoration-break:clone;
   }
 
   .prose ul, .prose ol{ padding-left:1.3em; margin:10px 0; }
@@ -260,7 +289,7 @@
     border:1px solid var(--rule);
   }
   .prose thead th{
-    background:var(--stamp); color:var(--stamp-fg); text-align:left;
+    background:var(--accent-button); color:var(--accent-button-fg); text-align:left;
     padding:9px 12px; font-weight:600; font-family:'IBM Plex Mono', monospace;
     font-size:0.8rem; letter-spacing:.02em;
   }
@@ -268,7 +297,7 @@
     padding:9px 12px; border-top:1px solid var(--rule);
     font-family:'IBM Plex Mono', monospace; font-size:0.83rem;
   }
-  .prose tbody tr:nth-child(even){ background:var(--zebra); }
+  .prose tbody tr:nth-child(even){ background:var(--accent-wash); }
 
   .prose blockquote{
     background:var(--note-bg); border:1.5px dashed var(--accent-2); border-radius:8px;
@@ -289,15 +318,78 @@
     padding:1px 6px; border-radius:4px; font-size:0.85em; color:var(--code-fg);
   }
 
+  /* Fenced code blocks */
+  .code-wrap{
+    position:relative; margin:16px 0; border:1px solid var(--rule);
+    border-radius:10px; overflow:hidden; background:#0d1117;
+  }
+  .code-wrap pre{
+    margin:0; padding:16px; overflow:auto; -webkit-overflow-scrolling:touch;
+    font:0.84rem/1.65 'IBM Plex Mono', monospace; tab-size:2;
+  }
+  .code-wrap pre code{
+    display:block; padding:0; background:transparent; color:inherit;
+    border-radius:0; font-size:inherit; white-space:pre;
+  }
+  .code-toolbar{
+    display:flex; justify-content:flex-end; gap:8px; padding:7px 9px;
+    border-bottom:1px solid rgba(255,255,255,.09); background:#161b22;
+  }
+  .copy-code{
+    border:1px solid rgba(255,255,255,.18); border-radius:6px;
+    background:transparent; color:#c9d1d9; padding:5px 9px; cursor:pointer;
+    font:600 .72rem 'Source Sans 3',sans-serif;
+  }
+  .copy-code:hover{ border-color:var(--accent); color:#fff; }
+
+  /* KaTeX-like/MathJax comfort */
+  mjx-container[display="true"]{
+    overflow-x:auto; overflow-y:hidden; padding:5px 2px; max-width:100%;
+  }
+  mjx-container{ font-size:1.03em; }
+  .prose img{ max-width:100%; height:auto; border-radius:8px; }
+  .prose a{ color:var(--accent); overflow-wrap:anywhere; }
+  .prose pre{ max-width:100%; }
+
   footer.credit{
     text-align:center; color:var(--muted); font-size:0.75rem; margin-top:18px;
   }
 
-  @media (max-width:560px){
-    .brand h1{ font-size:1.25rem; }
-    .prose h1{ font-size:1.55rem; }
-    .prose{ padding:18px 16px 26px; }
-    .actions .btn{ padding:8px 10px; font-size:0.8rem; }
+  @media (max-width:700px){
+    .app{ width:100%; max-width:none; padding:12px 10px 48px; }
+    .topbar{ align-items:flex-start; padding:10px 0 14px; gap:10px; }
+    .brand{ min-width:0; flex:1 1 100%; }
+    .brand h1{ font-size:1.22rem; }
+    .brand p{ font-size:.76rem; }
+    .brand-mark{ width:36px; height:36px; font-size:18px; }
+    .actions{ width:100%; display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:7px; }
+    .actions .btn{ min-height:42px; padding:8px 10px; font-size:.79rem; }
+    .iconbtn{ width:42px; height:42px; }
+    .theme-wrap{ position:static; }
+    .popover{
+      position:fixed; left:10px; right:10px; top:auto; bottom:10px;
+      width:auto; min-width:0; max-height:60vh; overflow:auto;
+      box-shadow:0 8px 30px rgba(0,0,0,.28);
+    }
+    .editor-panel{ padding:12px; margin-bottom:14px; }
+    #mdInput{ min-height:42vh; font-size:.82rem; }
+    .editor-actions{ flex-wrap:wrap; gap:8px; }
+    .sheet{ border-radius:10px; box-shadow:3px 3px 0 var(--ink); }
+    .prose{ padding:18px 14px 24px; min-width:0; overflow-wrap:anywhere; }
+    .prose h1{ font-size:1.5rem; }
+    .prose h2{ font-size:1.12rem; max-width:100%; margin-top:26px; }
+    .prose p,.prose li{ font-size:.94rem; }
+    .prose table{ display:block; overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+    .prose blockquote{ margin-left:0; margin-right:0; }
+    .code-wrap{ margin-left:0; margin-right:0; }
+    .code-wrap pre{ padding:13px; font-size:.77rem; }
+    .hint{ flex:1 1 100%; }
+    body{ overflow-x:hidden; }
+  }
+  @media (max-width:380px){
+    .actions{ grid-template-columns:1fr 42px 42px; }
+    .actions .btn-accent{ font-size:.74rem; }
+    .prose{ padding-left:12px; padding-right:12px; }
   }
 
   @media print{
@@ -308,12 +400,13 @@
        accent overrides so these resets can actually take effect.) */
     :root, [data-theme="dark"]{
       --paper:#fff; --rule:#E1E4DA; --ink:#212A38; --muted:#6B7280;
-      --yellow:#FFD34D; --accent:#2F9C95; --card:#fff;
+      --yellow:#FFD34D; --highlight-bg:rgba(255,211,77,.38); --highlight-fg:inherit; --accent:#2F9C95; --card:#fff;
       --accent-fill:#2F9C95; --accent-2:#E8556E; --accent-3:#3E5C76; --accent-grad:#E8556E;
       --stamp:#212A38; --stamp-fg:#FFD34D;
       --note-bg:#FFF9E5; --note-fg:#5c4a1f;
       --code-bg:#EFF1EA; --code-fg:#B14D5F;
       --zebra:#FAFAF6; --input-bg:#FBFBF8;
+      --accent-soft:rgba(47,156,149,.09); --accent-line:rgba(47,156,149,.18); --accent-wash:rgba(47,156,149,.035); --accent-button:#2F9C95; --accent-button-fg:#fff;
     }
     body{ background:#fff; }
     .topbar, .editor-panel{ display:none !important; }
@@ -515,7 +608,7 @@ Conditional sentences express a condition and its result, using **if-clauses**.
 </textarea>
       <div class="editor-actions">
         <button id="renderBtn" class="btn btn-accent">Render</button>
-        <span class="hint">Updates live as you type too — paste the cheat sheet text here to switch documents.</span>
+        <span class="hint">Live Markdown · LaTeX math ($...$, $$...$$) · fenced code blocks with syntax highlighting.</span>
       </div>
     </section>
 
@@ -537,9 +630,65 @@ Conditional sentences express a condition and its result, using **if-clauses**.
     return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), wait); };
   }
 
+  // Marked configuration: GitHub-ish Markdown + fenced code, while preserving
+  // raw LaTeX delimiters so MathJax can typeset them after Markdown renders.
+  marked.setOptions({
+    gfm: true,
+    breaks: false,
+    mangle: false,
+    headerIds: true,
+    highlight(code, lang) {
+      if (window.hljs && lang && hljs.getLanguage(lang)) {
+        try { return hljs.highlight(code, {language: lang}).value; } catch(e) {}
+      }
+      return window.hljs ? hljs.highlightAuto(code).value : code;
+    }
+  });
+
+  const renderer = new marked.Renderer();
+  renderer.code = function(code, infostring) {
+    const raw = typeof code === 'object' ? code.text : code;
+    const lang = (infostring || '').trim().split(/\s+/)[0];
+    const escapeHtml = (text) => text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#39;');
+    let html = escapeHtml(raw);
+    let cls = '';
+    if (window.hljs) {
+      try {
+        const result = lang && hljs.getLanguage(lang)
+          ? hljs.highlight(raw, {language:lang})
+          : hljs.highlightAuto(raw);
+        html = result.value;
+        cls = ' class="language-' + (lang || 'plaintext') + ' hljs"';
+      } catch(e) {}
+    }
+    return '<div class="code-wrap">' +
+      '<div class="code-toolbar"><button class="copy-code" type="button">Copy</button></div>' +
+      '<pre><code' + cls + '>' + html + '</code></pre></div>';
+  };
+
+  marked.use({ renderer });
+
   function render(){
     try{
       preview.innerHTML = marked.parse(input.value);
+      preview.querySelectorAll('.copy-code').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const code = btn.closest('.code-wrap')?.querySelector('code')?.textContent || '';
+          try{
+            await navigator.clipboard.writeText(code);
+            const old = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = old, 1200);
+          }catch(e){
+            btn.textContent = 'Copy failed';
+            setTimeout(() => btn.textContent = 'Copy', 1200);
+          }
+        });
+      });
+      if (window.MathJax?.typesetPromise) {
+        MathJax.typesetClear?.([preview]);
+        MathJax.typesetPromise([preview]).catch(()=>{});
+      }
     }catch(e){
       preview.innerHTML = '<p style="color:#B14D5F">Could not render — check your Markdown formatting.</p>';
     }
@@ -697,17 +846,36 @@ Conditional sentences express a condition and its result, using **if-clauses**.
       ? { bg:{minS:28,maxS:45,minL:16,maxL:22}, fg:{minS:35,maxS:55,minL:76,maxL:86} }
       : { bg:{minS:22,maxS:42,minL:90,maxL:95}, fg:{minS:45,maxS:65,minL:22,maxL:32} };
   }
-  const ACCENT_VARS = ['--accent','--accent-fill','--accent-2','--accent-3','--accent-grad','--note-bg','--note-fg','--code-bg','--code-fg'];
+  const ACCENT_VARS = ['--accent','--accent-fill','--accent-2','--accent-3','--accent-grad','--note-bg','--note-fg','--code-bg','--code-fg','--accent-soft','--accent-line','--accent-wash','--accent-button','--accent-button-fg'];
 
   // Split-complementary scheme: the base accent (0°), plus two colors
   // 150°/210° around the wheel from it (i.e. ±30° from its true
   // complement). That trio reads as "designed together" for the three
   // rotating heading colors, while the h1 underline gradient goes all
   // the way to the true 180° complement for maximum contrast/pop.
+  function rgbaFromHex(hex, alpha){
+    const {r,g,b}=hexToRgb(hex);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  function buttonForeground(hex){
+    return contrastWithWhite(hex) >= 4.5 ? '#FFFFFF' : '#16211F';
+  }
+
   function applyPalette(accentHex){
     const root = document.documentElement.style;
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const t = tintRanges(isDark);
+    const rootAccent = isDark ? harmonize(accentHex, 0, {minS:50,maxS:80,minL:52,maxL:68}) : harmonize(accentHex, 0, {minS:50,maxS:80,minL:38,maxL:52});
+    root.setProperty('--accent-soft', rgbaFromHex(rootAccent, isDark ? .13 : .09));
+    root.setProperty('--accent-line', rgbaFromHex(rootAccent, isDark ? .22 : .18));
+    root.setProperty('--accent-wash', rgbaFromHex(rootAccent, isDark ? .055 : .035));
+    const button = harmonize(accentHex, 0, RANGE_FILL, MIN_CONTRAST_WHITE);
+    root.setProperty('--accent-button', button);
+    root.setProperty('--accent-button-fg', buttonForeground(button));
+    root.setProperty('--stamp', button);
+    root.setProperty('--stamp-fg', buttonForeground(button));
+    root.setProperty('--rule', rgbaFromHex(rootAccent, isDark ? .13 : .16));
 
     root.setProperty('--accent-fill', harmonize(accentHex, 0, RANGE_FILL, MIN_CONTRAST_WHITE));
     root.setProperty('--accent-2', harmonize(accentHex, 150, RANGE_FILL, MIN_CONTRAST_WHITE));
