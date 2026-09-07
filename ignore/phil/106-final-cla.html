@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Ancient Civilizations - Study Guide</title>
+<style>
+:root {
+  --bg: #1a1208;
+  --surface: #221a0c;
+  --surface2: #2e2210;
+  --border: #3d2e14;
+  --accent: #c9963a;
+  --accent2: #e8c876;
+  --jade: #5a9e7a;
+  --rust: #c05a3a;
+  --sand: #d4b87a;
+  --text: #ece0c8;
+  --muted: #9a8a6a;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  line-height: 1.75;
+  overflow-x: hidden;
+  width: 100%;
+}
+.wrap { max-width: 820px; margin: 0 auto; padding: 0 15px 60px; width: 100%; }
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 36px 12px 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  background: radial-gradient(ellipse at top, rgba(201,150,58,0.08) 0%, transparent 70%);
+}
+.hero .sub { font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: 3px; color: var(--accent); margin-bottom: 10px; }
+.hero h1 { font-size: clamp(20px, 5vw, 34px); color: var(--accent2); margin-bottom: 8px; }
+.hero p { color: var(--muted); font-size: 13px; font-family: 'Courier New', monospace; }
+
+/* TAB NAV */
+.tab-nav {
+  display: flex; gap: 5px; overflow-x: auto; padding-bottom: 4px;
+  margin-bottom: 22px; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0; padding: 7px 14px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted); font-size: 11px; cursor: pointer;
+  transition: all 0.2s; white-space: nowrap; font-family: 'Courier New', monospace;
+}
+.tab-btn.active, .tab-btn:hover { background: var(--accent); color: #1a1208; border-color: var(--accent); font-weight: 700; }
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* SECTION BADGE */
+.sbadge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 2px;
+  padding: 4px 10px; border-radius: 20px; margin-bottom: 16px;
+}
+.sbadge.sq { background: rgba(90,158,122,0.12); color: var(--jade); border: 1px solid rgba(90,158,122,0.25); }
+.sbadge.lq { background: rgba(201,150,58,0.12); color: var(--accent); border: 1px solid rgba(201,150,58,0.25); }
+.sbadge.memo { background: rgba(232,200,118,0.1); color: var(--accent2); border: 1px solid rgba(232,200,118,0.2); }
+.sbadge.civ { background: rgba(192,90,58,0.12); color: var(--rust); border: 1px solid rgba(192,90,58,0.25); }
+
+/* CARDS */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 13px; overflow: hidden;
+}
+.card-hd {
+  padding: 14px 16px; cursor: pointer; display: flex;
+  align-items: flex-start; justify-content: space-between; gap: 10px;
+  user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.card-hd:hover { background: var(--surface2); }
+.card-hd .qm { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; }
+.qnum {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-family: 'Courier New', monospace; font-weight: 700;
+}
+.card.sq .qnum { background: rgba(90,158,122,0.15); color: var(--jade); }
+.card.lq .qnum { background: rgba(201,150,58,0.15); color: var(--accent); }
+.card.civ .qnum { background: rgba(192,90,58,0.15); color: var(--rust); }
+.qtitle { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.qmarks {
+  flex-shrink: 0; font-family: 'Courier New', monospace; font-size: 10px;
+  padding: 2px 7px; border-radius: 10px; white-space: nowrap; margin-top: 2px;
+}
+.card.sq .qmarks { background: rgba(90,158,122,0.1); color: var(--jade); }
+.card.lq .qmarks { background: rgba(201,150,58,0.1); color: var(--accent); }
+.card.civ .qmarks { background: rgba(192,90,58,0.1); color: var(--rust); }
+.chev { flex-shrink: 0; color: var(--muted); transition: transform 0.25s; font-size: 15px; margin-top: 4px; }
+.card.open .chev { transform: rotate(180deg); }
+.card-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+.card.open .card-body { display: block; }
+
+/* CONTENT STYLES */
+.alabel { font-size: 11px; font-family: 'Courier New', monospace; color: var(--muted); margin: 13px 0 8px; letter-spacing: 1px; }
+.atext p { margin-bottom: 11px; color: #d4c4a8; font-size: 14px; word-break: break-word; }
+.atext strong { color: var(--text); }
+.atext em { color: var(--accent2); font-style: italic; }
+
+.def-box {
+  background: var(--surface2); border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 11px 13px; margin: 10px 0; font-size: 13px; color: #d4c4a8; word-break: break-word;
+}
+.kp { margin: 10px 0; }
+.kp li {
+  list-style: none; padding: 6px 0 6px 18px; position: relative;
+  font-size: 14px; color: #d4c4a8; border-bottom: 1px solid rgba(61,46,20,0.5); word-break: break-word;
+}
+.kp li:last-child { border-bottom: none; }
+.kp li::before { content: '›'; position: absolute; left: 3px; color: var(--accent); font-size: 15px; line-height: 1; top: 8px; }
+
+.subh { font-size: 12px; font-weight: 700; color: var(--accent); margin: 13px 0 5px; font-family: 'Courier New', monospace; letter-spacing: 1px; text-transform: uppercase; }
+
+.cmp-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; table-layout: fixed; }
+.cmp-table th { background: var(--surface2); padding: 7px 9px; text-align: left; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); border: 1px solid var(--border); word-break: break-word; font-family: 'Courier New', monospace; }
+.cmp-table td { padding: 7px 9px; border: 1px solid var(--border); color: #d4c4a8; vertical-align: top; word-break: break-word; font-size: 13px; }
+.cmp-table tr:nth-child(even) td { background: rgba(46,34,16,0.4); }
+
+.callout { border-radius: var(--radius-sm); padding: 11px 13px; margin: 10px 0; font-size: 13px; word-break: break-word; }
+.callout.warn { background: rgba(232,200,118,0.07); border: 1px solid rgba(232,200,118,0.2); color: #d4b870; }
+.callout.info { background: rgba(90,158,122,0.07); border: 1px solid rgba(90,158,122,0.2); color: #8ecaac; }
+.callout.imp { background: rgba(192,90,58,0.07); border: 1px solid rgba(192,90,58,0.2); color: #d4906a; }
+
+.memo-box { background: rgba(232,200,118,0.05); border: 1px dashed rgba(232,200,118,0.25); border-radius: var(--radius-sm); padding: 11px 13px; margin: 10px 0; }
+.memo-label { font-size: 10px; font-family: 'Courier New', monospace; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+.memo-box ul { padding-left: 15px; }
+.memo-box ul li { font-size: 13px; color: #c8b070; margin-bottom: 4px; }
+
+.timeline { margin: 10px 0; }
+.tl-item { display: flex; gap: 12px; margin-bottom: 10px; }
+.tl-dot { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+.tl-circle { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); margin-top: 5px; }
+.tl-line { width: 2px; flex: 1; background: var(--border); margin-top: 4px; }
+.tl-content { flex: 1; min-width: 0; }
+.tl-date { font-family: 'Courier New', monospace; font-size: 11px; color: var(--accent); }
+.tl-text { font-size: 13px; color: #d4c4a8; word-break: break-word; }
+
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 22px; }
+.ov-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px; }
+.ov-card .ov-n { font-size: 26px; font-weight: 700; font-family: 'Courier New', monospace; line-height: 1; margin-bottom: 3px; }
+.ov-card .ov-l { font-size: 11px; color: var(--muted); font-family: 'Courier New', monospace; }
+.c1 .ov-n { color: var(--jade); }
+.c2 .ov-n { color: var(--accent); }
+.c3 .ov-n { color: var(--rust); }
+.c4 .ov-n { color: var(--accent2); }
+
+.footer { text-align: center; padding-top: 28px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; font-family: 'Courier New', monospace; }
+
+@media (max-width: 400px) {
+  .overview-grid { grid-template-columns: 1fr 1fr; }
+  .cmp-table th, .cmp-table td { padding: 5px 6px; font-size: 12px; }
+  body { font-size: 14px; }
+  .card-hd { padding: 12px 13px; }
+  .card-body { padding: 0 13px 13px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="sub">First Year Undergraduate - Philosophy</div>
+  <h1>History of Ancient Civilizations</h1>
+  <p>Complete Exam Study Guide — Short &amp; Long Questions, Civilizations, Memorization</p>
+</div>
+
+<div class="overview-grid">
+  <div class="ov-card c1"><div class="ov-n">4×5</div><div class="ov-l">Short Questions (20 marks)</div></div>
+  <div class="ov-card c2"><div class="ov-n">8×12.5</div><div class="ov-l">Long Questions (100 marks)</div></div>
+  <div class="ov-card c3"><div class="ov-n">19+</div><div class="ov-l">Civilizations Covered</div></div>
+  <div class="ov-card c4"><div class="ov-n">All</div><div class="ov-l">Past Paper Qs Answered</div></div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('sq')">Short Qs (5M)</button>
+  <button class="tab-btn" onclick="switchTab('lq')">Long Qs (12.5M)</button>
+  <button class="tab-btn" onclick="switchTab('greek')">Greek Philosophy</button>
+  <button class="tab-btn" onclick="switchTab('athens')">Athens &amp; Sparta</button>
+  <button class="tab-btn" onclick="switchTab('egypt')">Egypt</button>
+  <button class="tab-btn" onclick="switchTab('meso')">Mesopotamia</button>
+  <button class="tab-btn" onclick="switchTab('persia')">Persia &amp; Phoenicia</button>
+  <button class="tab-btn" onclick="switchTab('rome')">Rome</button>
+  <button class="tab-btn" onclick="switchTab('indus')">Indus &amp; Others</button>
+  <button class="tab-btn" onclick="switchTab('memo')">Memorize</button>
+</div>
+
+<!-- ===== SHORT QUESTIONS ===== -->
+<div class="panel active" id="panel-sq">
+  <div class="sbadge sq">Short Questions — 5 Marks Each</div>
+  <div class="callout info">Write 150–200 words. Start with a direct definition, give specific points, close with significance. Name dates, key figures, and specific contributions.</div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Contributions of Egyptians to the Development of Writing</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Model Answer</div>
+      <div class="atext">
+        <p>The ancient Egyptians made one of the most significant contributions to human civilization through the development of <strong>writing</strong>. Their writing system, known as <em>hieroglyphics</em> (from Greek: hieros = sacred, glyphe = carving), emerged around <strong>3200 BCE</strong> and represents one of the earliest writing systems in history.</p>
+        <p><strong>Key contributions include:</strong></p>
+      </div>
+      <div class="kp">
+        <li><strong>Hieroglyphics:</strong> A complex system combining pictographic, ideographic, and phonetic elements. Around 700 signs were in use, representing sounds, objects, and ideas simultaneously.</li>
+        <li><strong>Hieratic Script:</strong> A simplified, cursive form of hieroglyphics used by priests and scribes for administrative records, making writing more practical for daily use.</li>
+        <li><strong>Demotic Script:</strong> An even simpler everyday script that emerged around 650 BCE, used for commerce, legal documents, and personal correspondence.</li>
+        <li><strong>Papyrus:</strong> Egyptians invented the papyrus writing medium - thin sheets made from the papyrus plant - making writing portable, lightweight, and storable. This replaced heavy stone and clay tablets.</li>
+        <li><strong>Scribal education:</strong> Egypt developed specialized schools called <em>Houses of Life</em> (Per Ankh) to train scribes, making writing a formal profession and preserving knowledge across generations.</li>
+        <li><strong>Rosetta Stone connection:</strong> The Egyptian writing tradition eventually produced the Rosetta Stone (196 BCE), which in modern times allowed scholars to decode ancient languages.</li>
+      </div>
+      <div class="atext"><p>Egypt's writing system laid the conceptual foundation for alphabetic writing. The Phoenicians, heavily influenced by Egyptian scripts, developed the first alphabet, which then became the basis for Greek, Latin, and most modern writing systems. Egypt's contribution to writing is therefore a cornerstone of global literacy and intellectual civilization.</p></div>
+    </div>
+  </div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Characteristics of Assyrian Militarism</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Model Answer</div>
+      <div class="atext"><p>The <strong>Assyrian Empire</strong> (c. 900–612 BCE), centered in northern Mesopotamia, is considered one of the most militaristic civilizations of the ancient world. Their entire state was organized around war and conquest.</p></div>
+      <div class="kp">
+        <li><strong>Professional standing army:</strong> The Assyrians were among the first to maintain a permanent, full-time army rather than seasonal militias. This gave them a decisive strategic advantage over their neighbors.</li>
+        <li><strong>Advanced weaponry:</strong> They pioneered the use of iron weapons - iron swords, spears, and armor - which were far superior to the bronze weapons of rival states. Iron gave Assyrian soldiers a decisive edge.</li>
+        <li><strong>Siege warfare mastery:</strong> Assyrians developed sophisticated siege techniques including battering rams, siege towers, and tunneling, allowing them to conquer walled cities that had previously been impregnable.</li>
+        <li><strong>War chariots and cavalry:</strong> Their armies used both chariots and cavalry divisions effectively, combining speed and firepower in coordinated tactical maneuvers.</li>
+        <li><strong>Psychological terror:</strong> Assyrian kings deliberately used systematic terror - mass deportations, public executions, and the destruction of cities - as a deliberate military and political strategy to discourage resistance.</li>
+        <li><strong>Organized logistics:</strong> Their campaigns were supported by a well-organized supply chain, military roads, and communication systems, enabling campaigns deep into foreign territories.</li>
+        <li><strong>Intelligence network:</strong> They used spies and intelligence networks to assess enemy strengths before campaigns, showing sophisticated pre-modern strategic thinking.</li>
+      </div>
+      <div class="atext"><p>The Assyrian military model influenced later empires, particularly the Persian and Roman military organizations. However, their reliance on terror ultimately fostered widespread resentment, and the empire collapsed in <strong>612 BCE</strong> when a coalition of Babylonians and Medes sacked their capital Nineveh.</p></div>
+    </div>
+  </div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">3</div><div class="qtitle">Brief Note on the Neapolitan Revolution</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Model Answer</div>
+      <div class="callout warn">Note: "Neapolitan Revolution" refers to the 1799 revolt in Naples (Kingdom of Naples). This is a somewhat unusual inclusion in an Ancient Civilizations course - it may appear as a general history question.</div>
+      <div class="atext">
+        <p>The <strong>Neapolitan Revolution of 1799</strong> was a short-lived republican uprising in the Kingdom of Naples, inspired by the ideals of the French Revolution. It resulted in the brief establishment of the <em>Parthenopean Republic</em> (January–June 1799).</p>
+        <p><strong>Background:</strong> Following Napoleon Bonaparte's Italian campaigns, French revolutionary ideas of liberty, equality, and fraternity spread throughout southern Italy. Neapolitan intellectuals, liberals, and educated classes embraced Enlightenment ideals and sought to overthrow the Bourbon monarchy of King Ferdinand IV.</p>
+      </div>
+      <div class="kp">
+        <li><strong>Cause:</strong> French military presence in Italy emboldened Neapolitan republicans. When French forces entered Naples in January 1799, local republicans declared a republic.</li>
+        <li><strong>Parthenopean Republic:</strong> The new republic attempted reforms including abolishing feudalism, creating a constitution, and reorganizing education - inspired by French revolutionary principles.</li>
+        <li><strong>Failure:</strong> The republic lasted only five months. Cardinal Ruffo led a counter-revolutionary peasant army (Sanfedist Army) supported by British naval forces under Admiral Nelson. The republic was crushed and its leaders executed.</li>
+        <li><strong>Result:</strong> King Ferdinand IV was restored to power. The revolution failed largely because it lacked popular support among the peasantry, who remained loyal to the Church and monarchy.</li>
+        <li><strong>Significance:</strong> Despite its failure, the Neapolitan Revolution contributed to the growth of Italian national consciousness that would eventually lead to the Risorgimento (Italian unification) in the 19th century.</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">4</div><div class="qtitle">Hammurabi's Code of Law</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Model Answer</div>
+      <div class="atext"><p><strong>Hammurabi's Code</strong> is one of the oldest and most complete legal codes in human history, promulgated by <em>Hammurabi</em>, the sixth king of the First Babylonian Dynasty, around <strong>1754 BCE</strong>. It was inscribed on a 7.5-foot tall black basalt stele discovered at Susa in 1901, now housed in the Louvre Museum, Paris.</p></div>
+      <div class="kp">
+        <li><strong>Structure:</strong> The code contains <strong>282 laws</strong>, preceded by a prologue in which Hammurabi declares he received the laws from Shamash, the sun god and god of justice. This divine legitimation was intentional - to make the laws seem sacred and unquestionable.</li>
+        <li><strong>Principle of Lex Talionis ("eye for an eye"):</strong> The code is famous for its retributive principle - "If a man destroys the eye of another man, they shall destroy his eye." Punishment was proportional to the offense.</li>
+        <li><strong>Class distinctions:</strong> Punishments varied based on social class. Crimes against free citizens (awilum), freed people (mushkenum), and slaves (wardum) carried different penalties, reflecting Babylonian social hierarchy.</li>
+        <li><strong>Scope:</strong> Covered family law (marriage, divorce, inheritance), property rights, trade and commerce, labor wages, medical malpractice, and criminal law - making it a comprehensive civil and criminal code.</li>
+        <li><strong>Women's rights:</strong> Notably, the code granted certain protections to women - they could own property, conduct business, and receive divorce settlements.</li>
+        <li><strong>Presumption of innocence:</strong> The code included early concepts of evidence and testimony, requiring proof before punishment - a proto-judicial procedure.</li>
+      </div>
+      <div class="atext"><p>Hammurabi's Code represents a monumental step in the development of jurisprudence. It established the idea that law should be written, public, and uniform - principles that form the foundation of modern legal systems. Its influence extended to Biblical law and later Greek and Roman legal traditions.</p></div>
+    </div>
+  </div>
+
+  <!-- Additional likely short Qs -->
+  <div class="subh" style="margin: 18px 0 10px; color: var(--accent2);">Additional Short Questions (Likely to Appear)</div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">+</div><div class="qtitle">Write a note on the Pre-Socratic Philosophers</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="atext"><p>The <strong>Pre-Socratic philosophers</strong> (6th–5th century BCE) were the earliest Greek thinkers who attempted to explain the natural world through reason rather than mythology. They are called "Pre-Socratic" because they came before Socrates and focused on <em>nature (physis)</em> rather than ethics.</p></div>
+      <div class="kp">
+        <li><strong>Thales of Miletus (c. 624–546 BCE):</strong> First Western philosopher. Proposed that <em>water</em> is the fundamental substance (arche) of all reality. He also predicted a solar eclipse (585 BCE), demonstrating early scientific reasoning.</li>
+        <li><strong>Anaximenes (c. 585–528 BCE):</strong> Proposed <em>air (aer)</em> as the primary substance. Introduced condensation and rarefaction to explain how air becomes different materials.</li>
+        <li><strong>Heraclitus of Ephesus (c. 535–475 BCE):</strong> Proposed that <em>fire</em> is the primary element and that constant change (flux) is the fundamental nature of reality. Famous for: "You cannot step into the same river twice." Introduced the concept of <em>Logos</em> - a rational principle governing change.</li>
+        <li><strong>Parmenides of Elea (c. 515–450 BCE):</strong> Argued the opposite of Heraclitus - <em>reality is unchanging, eternal, and one</em>. Change and plurality are illusions perceived by the senses. Only reason (not senses) reveals truth. This debate between change (Heraclitus) and permanence (Parmenides) influenced all subsequent philosophy.</li>
+      </div>
+      <div class="atext"><p>The Pre-Socratics pioneered rational inquiry into nature - the foundation of both philosophy and natural science. Their shift from mythos to logos marked the birth of Western intellectual tradition.</p></div>
+    </div>
+  </div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">+</div><div class="qtitle">Write a note on Zoroastrianism / Zarathustra</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="atext"><p><strong>Zoroastrianism</strong> is one of the world's oldest monotheistic religions, founded by the prophet <em>Zarathustra</em> (Greek: Zoroaster) in ancient Persia, approximately between 1500–600 BCE. Its sacred text is the <em>Avesta</em>.</p></div>
+      <div class="kp">
+        <li><strong>Core belief - Monotheism with Dualism:</strong> Zoroastrianism worships one supreme god, <em>Ahura Mazda</em> ("Wise Lord"), the creator of all that is good. Opposed to Ahura Mazda is <em>Angra Mainyu</em> (Ahriman), the spirit of evil and darkness. This cosmic dualism between good and evil is central.</li>
+        <li><strong>Free Will:</strong> Humans have free will and must choose between good and evil. One chooses through good thoughts (Humata), good words (Hukhta), and good deeds (Hvarshta).</li>
+        <li><strong>Afterlife and Judgment:</strong> After death, souls are judged at the Chinvat Bridge. The righteous cross to heaven (the House of Song); the wicked fall into hell.</li>
+        <li><strong>Fire as symbol:</strong> Sacred fire (Atar) represents Ahura Mazda's divine light and wisdom. Fire temples (Atash Behrams) are central to worship.</li>
+        <li><strong>Influence on other religions:</strong> Zoroastrianism profoundly influenced Judaism, Christianity, and Islam - concepts of heaven, hell, Satan, final judgment, and the Messiah trace back to Zoroastrian theology.</li>
+      </div>
+      <div class="atext"><p>Zarathustra's teaching that the universe is a moral battleground between good and evil, and that humans are free moral agents, was a revolutionary idea that shaped the entire course of Western and Middle Eastern religious thought.</p></div>
+    </div>
+  </div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">+</div><div class="qtitle">Write a note on Solon and Athenian Democracy</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="atext"><p><strong>Solon</strong> (c. 638–558 BCE) was an Athenian statesman, poet, and lawmaker who is considered one of the founding fathers of Athenian democracy. He was appointed as <em>archon</em> (chief magistrate) around <strong>594 BCE</strong> to resolve Athens' severe social and economic crisis.</p></div>
+      <div class="kp">
+        <li><strong>Seisachtheia ("Shaking Off of Burdens"):</strong> Solon cancelled all debts, freed debt-slaves, and banned the practice of using one's person as collateral for loans - a revolutionary reform that addressed the suffering of the poor.</li>
+        <li><strong>Property-based classes:</strong> He reorganized Athenian society into four property-based classes (pentakosiomedimnoi, hippeis, zeugitai, thetes), giving political rights based on wealth rather than birth - breaking the monopoly of the aristocracy.</li>
+        <li><strong>Council of 400 (Boule):</strong> He created a new council representing all four classes to prepare legislation, distributing political power more broadly.</li>
+        <li><strong>Courts open to all citizens:</strong> Solon allowed any citizen to bring cases to the courts (Heliaea), ensuring legal protection for the common people.</li>
+        <li><strong>Limitations:</strong> Solon did not establish full democracy - highest offices remained restricted to the wealthy. But he laid the essential groundwork that Cleisthenes would later complete.</li>
+      </div>
+      <div class="atext"><p>Solon is rightly called the "Father of Athenian Law." His reforms prevented a revolution by peacefully redistributing power, establishing the principle that laws - not birth or force - should govern the state.</p></div>
+    </div>
+  </div>
+
+  <div class="card sq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">+</div><div class="qtitle">Write a note on Spartan Society and its Military System</div></div>
+      <span class="qmarks">5 marks</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="atext"><p><strong>Sparta</strong> (Lacedaemon) was a city-state in the Peloponnese peninsula of ancient Greece, renowned throughout antiquity as the supreme military power of the Greek world. Its entire social and political system was organized around the production of warrior citizens.</p></div>
+      <div class="kp">
+        <li><strong>Agoge system:</strong> At age 7, Spartan boys entered the <em>agoge</em> - a brutal state-run educational and military training program lasting until age 18 (and continued until 30). It emphasized endurance, discipline, obedience, and combat above all academic subjects.</li>
+        <li><strong>Social classes:</strong> Sparta had three main classes: the <em>Spartiates</em> (full citizens and warriors), the <em>Perioikoi</em> (free non-citizens who managed trade and crafts), and the <em>Helots</em> (enslaved population of conquered Messenians who worked the land).</li>
+        <li><strong>Helot system:</strong> The Helots outnumbered Spartiates roughly 7:1, creating constant fear of rebellion. This drove the militaristic paranoia that defined Spartan culture.</li>
+        <li><strong>Dual kings:</strong> Sparta had a unique system of two hereditary kings from different royal families, checked by a council of elders (Gerousia) and five elected magistrates (Ephors).</li>
+        <li><strong>Women's status:</strong> Spartan women enjoyed unusual freedom compared to other Greek women - they received physical training, could own property, and managed households while men were at war.</li>
+        <li><strong>Decline:</strong> Sparta's refusal to allow population growth among Spartiates, combined with heavy casualties at battles like Leuctra (371 BCE), led to demographic collapse and eventual decline.</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LONG QUESTIONS ===== -->
+<div class="panel" id="panel-lq">
+  <div class="sbadge lq">Long Questions — 12.5 Marks Each (Past Paper)</div>
+  <div class="callout info">Write 400–600 words per question. Use an introduction, organized sections, specific dates and names, and a conclusion. These are the actual past paper questions answered fully.</div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Location and Period of the Indus Valley Civilization; Evaluate its Contributions</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Indus Valley Civilization</strong> (also called the Harappan Civilization) is one of the four great river valley civilizations of the ancient world, alongside Mesopotamia, Egypt, and China. It represents the earliest known urban culture of the Indian subcontinent and stands as a testament to the remarkable sophistication of Bronze Age society.</p></div>
+      <div class="subh">Location</div>
+      <div class="atext"><p>The civilization flourished in the <strong>Indus River valley</strong>, which today encompasses most of modern <strong>Pakistan</strong> and parts of northwestern <strong>India</strong> and eastern <strong>Afghanistan</strong>. Its core area extended across the provinces of <em>Sindh, Punjab, Balochistan</em> (Pakistan) and <em>Rajasthan, Gujarat</em> (India). The civilization covered an area of approximately <strong>1.25 million square kilometers</strong> - larger than ancient Egypt and Mesopotamia combined.</p></div>
+      <div class="subh">Timeline</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 7000 BCE</div><div class="tl-text">Early farming communities at Mehrgarh (pre-Indus agriculture)</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 3300 BCE</div><div class="tl-text">Early Harappan Phase - emergence of towns and trade networks</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 2600–1900 BCE</div><div class="tl-text">Mature Harappan Phase - peak urban development (Mohenjo-daro, Harappa)</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1900–1300 BCE</div><div class="tl-text">Late Harappan Phase - decline and eastward migration</div></div></div>
+      </div>
+      <div class="subh">Major Cities</div>
+      <div class="atext"><p>The two greatest cities were <strong>Mohenjo-daro</strong> ("Mound of the Dead," in Sindh) and <strong>Harappa</strong> (in Punjab), each housing an estimated 40,000–80,000 people. Other important sites include Dholavira, Lothal, Kalibangan, and Rakhigarhi.</p></div>
+      <div class="subh">Contributions and Achievements</div>
+      <div class="kp">
+        <li><strong>Urban planning:</strong> The Indus cities featured a revolutionary grid-pattern street layout with main avenues up to 10 meters wide and smaller perpendicular lanes. City blocks were uniform and organized. This represents the world's first systematic urban planning.</li>
+        <li><strong>Advanced sanitation:</strong> The Indus Valley had the world's first known sophisticated drainage and sewage system. Nearly every house connected to covered brick drains running beneath the streets. This public health infrastructure would not be matched in the West until the Roman Empire, 2,000 years later.</li>
+        <li><strong>Standardized weights and measures:</strong> A remarkably uniform system of weights and measures was used across thousands of kilometers - evidence of either centralized authority or standardized trade practices. Cuboid weights followed a binary ratio system (1:2:4:8:16:32...) suggesting advanced mathematical understanding.</li>
+        <li><strong>Indus Script:</strong> The civilization produced a writing system of approximately 400 signs, still largely <em>undeciphered</em> today. Found on clay seals, pottery, and tablets, it remains one of the greatest unsolved puzzles of ancient history.</li>
+        <li><strong>Trade networks:</strong> Archaeological evidence shows extensive trade with Mesopotamia, the Persian Gulf, and Central Asia. The discovery of Indus seals at Ur and Mesopotamian goods at Harappa proves a sophisticated long-distance trade network existed around 2500 BCE.</li>
+        <li><strong>Technology and craft:</strong> They produced high-quality pottery, jewelry, bronze tools, cotton textiles (among the world's earliest cotton weavers), and terracotta figurines of great artistic quality.</li>
+        <li><strong>Architecture:</strong> Buildings were constructed of standardized, kiln-fired baked bricks (a ratio of 1:2:4), ensuring uniform quality. The famous Great Bath of Mohenjo-daro is a large public bathing structure, possibly used for ritual purification - evidence of organized religious or civic life.</li>
+        <li><strong>Peaceful society:</strong> Unlike other ancient civilizations, the Indus Valley shows remarkably little evidence of warfare - no monumental fortifications, no weapons caches, no depictions of battle. Society appears to have been relatively egalitarian.</li>
+      </div>
+      <div class="subh">Decline</div>
+      <div class="atext"><p>The civilization declined around <strong>1900–1700 BCE</strong>. Theories include: climate change and desertification reducing agricultural productivity; tectonic shifts altering river courses; epidemic disease; and the gradual eastward migration of populations. The once-popular "Aryan invasion" theory is now largely discredited by archaeologists.</p></div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>The Indus Valley Civilization demonstrates that advanced urban society, democratic-style governance, sophisticated engineering, and international trade were achieved in South Asia contemporaneously with Egypt and Mesopotamia. Its undeciphered script, peaceful character, and extraordinary urban organization continue to fascinate scholars. Its legacy lives on in the cultural foundations of South Asian civilization.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Introduction to Mesopotamian Civilization; Contributions of the Sumerians</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p><strong>Mesopotamia</strong> (Greek: "Land between the rivers") refers to the fertile region between the <em>Tigris and Euphrates rivers</em>, corresponding to modern-day <strong>Iraq</strong>, eastern Syria, and southeastern Turkey. It is widely regarded as the "Cradle of Civilization" - the region where several of humanity's most fundamental inventions first appeared. Multiple civilizations flourished here successively: Sumerians, Akkadians, Babylonians, and Assyrians.</p></div>
+      <div class="subh">Geography and Significance</div>
+      <div class="atext"><p>The region's <em>alluvial soil</em> - deposited by the annual flooding of the Tigris and Euphrates - was extraordinarily fertile, enabling agricultural surplus that supported dense urban populations. However, the flat, exposed terrain offered no natural defenses, making political history a succession of conquests and empires. The need to manage flood irrigation collectively drove the development of organized government and administration.</p></div>
+      <div class="subh">Sumerian Civilization (c. 4500–2000 BCE)</div>
+      <div class="atext"><p>The <strong>Sumerians</strong> were the earliest known civilization of Mesopotamia, establishing the world's first cities in the region of southern Mesopotamia called <em>Sumer</em>. Major cities included <strong>Ur, Uruk, Eridu, Nippur, and Lagash</strong>. At its height, Uruk (biblical Erech) may have had a population of 50,000–80,000 people around 3000 BCE.</p></div>
+      <div class="subh">Contributions of the Sumerians</div>
+      <div class="kp">
+        <li><strong>Writing - Cuneiform:</strong> The Sumerians invented <em>cuneiform</em> (Latin: cuneus = wedge) around <strong>3400–3200 BCE</strong> - the world's earliest known writing system. Initially pictographic, it evolved into wedge-shaped marks pressed into clay tablets. Used for accounting, law, literature, and diplomacy, it was later adapted by Akkadians, Babylonians, Hittites, and Persians.</li>
+        <li><strong>Epic of Gilgamesh:</strong> The world's oldest known literary work, the <em>Epic of Gilgamesh</em>, was composed by the Sumerians (written down c. 2100 BCE). This epic poem explores themes of friendship, mortality, and the search for eternal life - themes that resonate to this day.</li>
+        <li><strong>City-states and governance:</strong> Sumerians established the world's first city-states, each with its own temple, government, and laws. The concept of a written code of law (predating Hammurabi) was pioneered by Sumerian rulers, especially the <em>Code of Ur-Nammu</em> (c. 2100 BCE) - the oldest known legal code.</li>
+        <li><strong>Mathematics:</strong> Sumerians used a <em>sexagesimal</em> (base-60) number system - which is why we have 60 seconds in a minute, 60 minutes in an hour, and 360 degrees in a circle. They developed arithmetic, multiplication tables, division, and early algebraic calculations.</li>
+        <li><strong>Astronomy:</strong> Sumerian astronomers charted the movements of the moon, sun, and planets. They created the first known lunar calendar and developed the concept of the zodiac - a 12-part division of the sky used to track celestial events and guide agricultural activities.</li>
+        <li><strong>Ziggurats:</strong> Massive stepped pyramid-temples called <em>ziggurats</em> were built as dwelling places for patron gods of each city. The ziggurat at Ur (c. 2100 BCE, built by Ur-Nammu) is among the best-preserved. Ziggurats represent an extraordinary feat of construction and served as administrative, religious, and economic centers.</li>
+        <li><strong>Wheel and technology:</strong> While exact attribution is debated, Mesopotamia produced evidence of the <em>wheel</em> (c. 3500 BCE, first for pottery, then for transport), bronze tools, irrigation systems using canals and levees, and the plow - transformative technologies that shaped civilization for millennia.</li>
+        <li><strong>Religion:</strong> Sumerians practiced <em>polytheism</em> with a pantheon of gods associated with natural forces and city-states. An, Enlil, Enki, Ninhursag, Inanna (Ishtar) - these deities represented cosmic powers. Sumerian religious mythology profoundly influenced later Babylonian, Assyrian, and (through the Hebrew Bible) Jewish and Christian traditions.</li>
+        <li><strong>Trade:</strong> Sumerians established long-distance trade networks extending to the Indus Valley, Egypt, Anatolia, and the Persian Gulf. They used silver as a medium of exchange and developed early banking practices.</li>
+      </div>
+      <div class="subh">Legacy</div>
+      <div class="atext"><p>The Sumerians bequeathed to humanity writing, law, mathematics, organized religion, urban planning, and literary tradition. Every subsequent Mesopotamian civilization - Akkadian, Babylonian, Assyrian - was built upon Sumerian foundations. Their influence, transmitted through the Fertile Crescent and Mediterranean, forms part of the bedrock of global civilization.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">3</div><div class="qtitle">Evaluate the Contributions of the Phoenicians to Ancient Civilization</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Phoenicians</strong> were a Semitic civilization that flourished in the coastal regions of the eastern Mediterranean, primarily in what is now <strong>Lebanon</strong> and parts of Syria and Israel, roughly from <strong>1500–300 BCE</strong>. Their major cities were <em>Tyre, Sidon, Byblos, and Carthage</em>. Though they left no great empires or monumental architecture, the Phoenicians achieved something arguably more lasting: they became the greatest maritime traders of the ancient world and gave humanity the <em>alphabet</em>.</p></div>
+      <div class="subh">Geographical Context</div>
+      <div class="atext"><p>The Phoenicians lived on a narrow coastal strip hemmed in by the Lebanon mountains to the east and the Mediterranean to the west. This geography made agriculture difficult but the sea unavoidable - driving them toward maritime trade as their primary activity. The Mediterranean became their highway.</p></div>
+      <div class="subh">Major Contributions</div>
+      <div class="kp">
+        <li><strong>The Phoenician Alphabet - Humanity's Most Important Invention:</strong> Around <strong>1050 BCE</strong>, the Phoenicians standardized a consonantal alphabet of <strong>22 letters</strong> - the world's first widely used phonetic alphabet. Unlike Egyptian hieroglyphics or Sumerian cuneiform (which were complex syllabic/logographic systems requiring years to learn), the Phoenician alphabet was simple enough for merchants to learn quickly. The Greeks adapted it around 800 BCE, adding vowels to create the complete Greek alphabet - which then became the basis for Latin, Cyrillic, Arabic, and most modern writing systems. The word "alphabet" comes from the first two Phoenician letters: <em>Aleph</em> and <em>Beth</em>.</li>
+        <li><strong>Maritime trade and navigation:</strong> Phoenician sailors were the master navigators of the ancient world. Their ships called <em>galleys</em> carried cedar wood from Lebanon (the famous "Cedars of Lebanon"), purple dye, glass, silver, and textiles across the entire Mediterranean and beyond. They were the first to navigate by the North Star (Polaris), enabling night sailing and open-sea travel.</li>
+        <li><strong>Colonization:</strong> The Phoenicians established trading colonies throughout the Mediterranean: in <em>Cyprus, Sardinia, Sicily, Spain, North Africa</em>, and most famously <strong>Carthage</strong> (in modern Tunisia, founded c. 814 BCE). Carthage grew into a major power that challenged Rome for centuries.</li>
+        <li><strong>Purple dye (Tyrian purple):</strong> The Phoenicians discovered and monopolized the production of a famous purple dye made from the murex sea snail. This dye was extraordinarily expensive and became the color of royalty throughout the ancient world. The name "Phoenicia" itself may derive from the Greek word for "purple."</li>
+        <li><strong>Glassmaking:</strong> Ancient sources credit the Phoenicians with developing or greatly advancing the art of glass production. Phoenician glass products were traded across the known world and represented significant technological innovation.</li>
+        <li><strong>Cedars of Lebanon and shipbuilding:</strong> The renowned cedar forests of Lebanon gave the Phoenicians both building material for their ships and the region's most valuable export commodity. Egyptian pharaohs and Solomon's Temple were built partly with Phoenician cedar.</li>
+        <li><strong>Cultural transmission:</strong> The Phoenicians served as cultural intermediaries - transmitting Egyptian, Mesopotamian, and Near Eastern cultural achievements (art styles, religious motifs, technological knowledge) to Greece, Rome, and the western Mediterranean. Greek art and religion show clear Phoenician influences.</li>
+      </div>
+      <div class="subh">Criticism</div>
+      <div class="atext"><p>The Phoenicians have been criticized for their practice of child sacrifice at sacred enclosures called <em>Tophet</em>, attested at Carthage and other Phoenician colonies. Ancient sources (Diodorus Siculus, Plutarch) describe the sacrifice of infants to the gods Baal Hammon and Tanit, though the extent and frequency remain debated among modern scholars.</p></div>
+      <div class="subh">Influence on Greek and Roman Civilization</div>
+      <div class="atext"><p>The Greek alphabet - and through it the Latin alphabet - derives directly from the Phoenician script. Greek mythology absorbed Phoenician themes (the myth of <em>Europa</em> involves a Phoenician princess). Roman Carthage, the city the Phoenicians founded, forced Rome into the three devastating Punic Wars that shaped Roman military and political history. The very concept of Mediterranean commerce as the vehicle of cultural exchange is a Phoenician legacy.</p></div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>The Phoenicians may not have built pyramids or written philosophical treatises, but their contributions were transformative in a quiet, enduring way. The alphabet alone places them among the most consequential civilizations in history. Every time a word is written in any language using an alphabetic script - from Arabic to English to Hindi - the Phoenician genius is silently at work.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">4</div><div class="qtitle">Contributions of the Persians to Human Civilization with Special Reference to Their Religion</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Persian (Achaemenid) Empire</strong>, founded by <em>Cyrus the Great</em> in <strong>550 BCE</strong>, became the largest empire the world had yet seen, stretching from the Aegean Sea and Egypt in the west to the Indus Valley in the east. At its height under <em>Darius I</em> and <em>Xerxes</em>, it encompassed over 5 million square kilometers and governed approximately 50 million people - roughly 44% of the world's population at the time. Persian civilization made enduring contributions to governance, religion, culture, and human thought.</p></div>
+      <div class="subh">Political and Administrative Contributions</div>
+      <div class="kp">
+        <li><strong>Satrapy system:</strong> Darius I divided the empire into <strong>20–23 satrapies</strong> (provinces), each governed by a <em>satrap</em> (governor). Satraps were usually Persian nobles but had considerable local autonomy. This system of provincial governance was an administrative masterpiece that allowed efficient control of vast, diverse territories.</li>
+        <li><strong>Royal Road:</strong> Darius built the famous <em>Royal Road</em> stretching approximately 2,700 km from Sardis (Turkey) to Susa (Iran). Royal couriers (the ancient world's first postal service) could cover this distance in 7 days. Herodotus wrote: "Neither snow, nor rain, nor heat, nor darkness of night prevents these couriers from completing their designated stages with utmost speed."</li>
+        <li><strong>Cyrus Cylinder - First Human Rights Declaration:</strong> When Cyrus conquered Babylon in 539 BCE, he issued the <em>Cyrus Cylinder</em> - a clay cylinder inscribed with policies of religious freedom, prohibition of slavery, and return of deported peoples. It has been called the world's first charter of human rights. Cyrus allowed the Jews, exiled by the Babylonians, to return to Judah.</li>
+        <li><strong>Standardized currency:</strong> Darius introduced the <em>daric</em>, a standardized gold coin, facilitating trade across the empire. A standardized system of weights and measures complemented this.</li>
+        <li><strong>Tolerance of conquered peoples:</strong> Unlike the Assyrians (who used mass deportation and terror), the Persians generally respected local customs, religions, and administrative traditions of conquered peoples. This tolerance was a revolutionary approach to empire.</li>
+      </div>
+      <div class="subh">Religion: Zoroastrianism</div>
+      <div class="atext"><p>The most profound Persian contribution to human civilization is arguably their religion, <strong>Zoroastrianism</strong>, founded by the prophet <em>Zarathustra</em> (Zoroaster). It became the state religion of successive Persian empires.</p></div>
+      <div class="kp">
+        <li><strong>Ahura Mazda:</strong> The supreme god, creator of all good. The universe is a cosmic struggle between Ahura Mazda (good/light) and Angra Mainyu (evil/darkness).</li>
+        <li><strong>Moral dualism:</strong> The universe is a battleground between Good (Spenta Mainyu) and Evil (Angra Mainyu). Humans must choose sides through their thoughts, words, and deeds.</li>
+        <li><strong>Free Will:</strong> Zoroastrianism was revolutionary in insisting that every human being has complete moral freedom. Virtue is meaningless without the genuine capacity to choose evil instead.</li>
+        <li><strong>Eschatology:</strong> A detailed theology of the end of time - a final battle between good and evil, a general resurrection of the dead, a last judgment, and a renovation of the world (Frashokereti). These concepts profoundly influenced Judaism (especially during the Babylonian Exile, when Jews were exposed to Zoroastrian theology), and through Judaism influenced Christianity and Islam.</li>
+        <li><strong>Sacred Fire:</strong> Fire temples and the eternal sacred flame symbolize divine wisdom and purity. Priests called <em>Magi</em> (origin of the word "magic") tended the sacred fires.</li>
+      </div>
+      <div class="subh">Cultural and Scientific Contributions</div>
+      <div class="kp">
+        <li><strong>Persepolis:</strong> The ceremonial capital built by Darius I and Xerxes I at <em>Persepolis</em> (c. 518 BCE) featured monumental architecture, magnificent relief sculptures, and the Apadana (audience hall) - a masterpiece of ancient art and architecture reflecting imperial grandeur.</li>
+        <li><strong>Persian arts:</strong> Persian metalwork, carpet weaving, and decorative arts achieved extraordinary refinement. Persian artistic motifs (animal combat scenes, royal hunting imagery) spread across the Hellenistic world after Alexander's conquests.</li>
+        <li><strong>Medicine and astronomy:</strong> Persian scholars synthesized Babylonian astronomical knowledge with their own observations. Persian medical practice was advanced, drawing from Mesopotamian and Indian traditions.</li>
+        <li><strong>Persian language and literature:</strong> Old Persian, inscribed at Bisitun (Behistun) by Darius I, provides invaluable historical documentation. The Persian poetic tradition later flourished in the Islamic Golden Age.</li>
+      </div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>The Persian Empire's legacy is vast and underappreciated in popular history. Its administrative innovations (satrapies, royal road, standardized currency), its policies of religious tolerance (the Cyrus Cylinder), and above all the profound theological ideas of Zoroastrianism - heaven, hell, free will, final judgment, the Messiah - have shaped the course of Western and Middle Eastern religious thought for 2,500 years. The Persians demonstrate that great civilizations are built not only on military power, but on the wisdom to govern with tolerance and the courage to ask fundamental moral questions about the universe.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">5</div><div class="qtitle">Review the Chinese Philosophical Ideas in Ancient Civilization</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>Ancient Chinese philosophy represents one of humanity's greatest intellectual achievements, flourishing primarily during the <strong>Spring and Autumn Period</strong> (770–476 BCE) and the <strong>Warring States Period</strong> (475–221 BCE) - an era of political fragmentation that paradoxically produced extraordinary philosophical creativity. This era is known as the "Hundred Schools of Thought" (<em>Baijia Zhengming</em>), during which competing philosophical traditions emerged to address questions of governance, ethics, the nature of reality, and the proper ordering of human society. The major schools were Confucianism, Taoism (Daoism), Legalism, Mohism, and the School of Naturalists.</p></div>
+      <div class="subh">1. Confucianism</div>
+      <div class="atext"><p><strong>Kong Qiu (Confucius)</strong> (551–479 BCE) is the most influential thinker in Chinese history. His ideas, compiled by disciples in the <em>Analects</em>, focus on social harmony, moral self-cultivation, and the proper relationships that structure human society.</p></div>
+      <div class="kp">
+        <li><strong>Ren (Benevolence/Humaneness):</strong> The central virtue - treating others with kindness, empathy, and respect. "Do not impose on others what you yourself do not want." (The Confucian Golden Rule).</li>
+        <li><strong>Li (Ritual propriety):</strong> Proper conduct according to social roles and traditional rituals structures a harmonious society. Every relationship has appropriate behaviors.</li>
+        <li><strong>Five Relationships:</strong> Ruler-subject, father-son, husband-wife, elder brother-younger brother, friend-friend. Each relationship involves reciprocal duties. Social harmony depends on each party fulfilling their role.</li>
+        <li><strong>Junzi (Gentleman/Superior Man):</strong> The ideal moral person who governs himself by virtue and serves as a model for others. Good government requires virtuous rulers who cultivate their moral character.</li>
+        <li><strong>Education and meritocracy:</strong> Confucius believed education was the means of moral self-improvement and that government should be served by the most educated and virtuous, not simply the most powerful - a revolutionary idea that influenced the Chinese civil service examination system for 1,300 years.</li>
+      </div>
+      <div class="subh">2. Taoism (Daoism)</div>
+      <div class="atext"><p><strong>Laozi</strong> (6th century BCE, possibly legendary) is credited with the foundational text of Taoism, the <em>Tao Te Ching</em> (The Way and Its Power). <strong>Zhuangzi</strong> (c. 369–286 BCE) further developed Taoist philosophy.</p></div>
+      <div class="kp">
+        <li><strong>Tao (The Way):</strong> An ineffable, eternal principle underlying all reality. It cannot be named or defined, only intuited. "The Tao that can be told is not the eternal Tao."</li>
+        <li><strong>Wu Wei (Non-action / Effortless action):</strong> Acting in harmony with the natural flow of the Tao. Not forcing or striving, but allowing things to unfold naturally. The best government governs least.</li>
+        <li><strong>Yin and Yang:</strong> All phenomena contain opposing but complementary forces - light/dark, active/passive, male/female. Balance between these forces is the natural state of the universe.</li>
+        <li><strong>Naturalism:</strong> Taoism advocates returning to nature, simplicity, and spontaneity as against the elaborate ritual structures of Confucianism.</li>
+      </div>
+      <div class="subh">3. Legalism</div>
+      <div class="atext"><p><strong>Han Feizi</strong> (c. 280–233 BCE) and <strong>Shang Yang</strong> were the primary Legalist thinkers. Legalism argued that human nature is inherently self-interested and cannot be reformed by moral education. Only strict laws, rewards, and punishments can produce social order. Legalism became the state philosophy of the <em>Qin Dynasty</em> (221–206 BCE) and enabled its unification of China, but its harshness led to the dynasty's rapid collapse.</p></div>
+      <div class="subh">4. Mohism</div>
+      <div class="atext"><p><strong>Mozi</strong> (c. 470–391 BCE) founded Mohism, which advocated <em>universal love</em> (jian ai) - extending equal concern and care to all people, not just family and state. Mohism also contributed to early Chinese logic, physics, and military defensive technology.</p></div>
+      <div class="subh">Significance and Legacy</div>
+      <div class="atext"><p>Chinese philosophical traditions shaped governance, ethics, social structure, art, and culture across East Asia for more than 2,000 years. Confucianism became the dominant ideology of Chinese imperial governance. Taoism profoundly influenced Chinese art, poetry, and medicine. These philosophies also shaped Korea, Japan, Vietnam, and other East Asian societies. Today, Confucian values of education, family loyalty, and social harmony remain central to Chinese, Korean, Japanese, and Vietnamese cultures. The dialogue between Confucianism, Taoism, and Buddhism forms one of the richest intellectual traditions in human history.</p></div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>Ancient Chinese philosophy addressed the deepest questions of human existence - how to live virtuously, how to govern justly, and what is the proper relationship between the individual, society, and the cosmos - with sophistication, depth, and practical wisdom that places it alongside Greek philosophy as one of the twin peaks of ancient human intellectual achievement.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">6</div><div class="qtitle">What is Hellenistic Civilization? Identify its Contributions</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The term <strong>Hellenistic</strong> (from Greek: Hellas = Greece; coined by historian J.G. Droysen in the 19th century) refers to the period and culture that emerged after the conquests of <em>Alexander the Great</em> (336–323 BCE) and lasted until the Roman conquest of Egypt in <strong>30 BCE</strong>. It represents a fusion of classical Greek (<em>Hellenic</em>) culture with the traditions of Egypt, Persia, Mesopotamia, and the Near East - a cosmopolitan, multicultural synthesis that profoundly shaped the ancient world and the civilizations that followed.</p></div>
+      <div class="subh">Historical Background</div>
+      <div class="atext"><p>Alexander of Macedon conquered the Persian Empire, Egypt, Central Asia, and northwestern India between 334–323 BCE. At his death, his empire was divided among his generals (the <em>Diadochi</em>), producing three major kingdoms: the <em>Ptolemaic Kingdom</em> (Egypt), the <em>Seleucid Empire</em> (Persia/Middle East), and the <em>Antigonid Kingdom</em> (Macedon/Greece). Despite their political division, these kingdoms shared a common Greek administrative language (<em>Koine Greek</em>) and cultural orientation.</p></div>
+      <div class="subh">Contributions of Hellenistic Civilization</div>
+      <div class="kp">
+        <li><strong>Alexandria and the Great Library:</strong> The city of <em>Alexandria</em> (founded by Alexander in 331 BCE) became the intellectual capital of the world. The <em>Library of Alexandria</em> and associated <em>Mouseion</em> (Museum) collected and preserved hundreds of thousands of scrolls, attracting scholars from across the known world. It was the ancient world's greatest center of learning.</li>
+        <li><strong>Science and Mathematics:</strong>
+          <br>- <em>Euclid</em> (c. 300 BCE): systematized geometry in <em>Elements</em>, foundational to mathematics for 2,000 years.
+          <br>- <em>Archimedes of Syracuse</em> (c. 287–212 BCE): calculated pi, discovered the principle of the lever and buoyancy (Archimedes' Principle), invented war machines.
+          <br>- <em>Eratosthenes</em> (c. 276–194 BCE): calculated the Earth's circumference with remarkable accuracy using shadow angles.
+          <br>- <em>Aristarchus of Samos</em> (c. 310–230 BCE): proposed the first heliocentric model of the solar system.
+          <br>- <em>Hipparchus</em>: developed trigonometry and star catalogues.</li>
+        <li><strong>Philosophy:</strong> New schools emerged: <em>Epicureanism</em> (Epicurus - pursue tranquil pleasure, avoid pain, fear not death), <em>Stoicism</em> (Zeno of Citium - live according to reason and nature, accept what you cannot control), and <em>Skepticism</em> (suspend judgment on uncertain matters). These philosophies addressed the individual's place in a vast, uncertain world - highly relevant in the cosmopolitan Hellenistic age.</li>
+        <li><strong>Art and Sculpture:</strong> Hellenistic art moved beyond classical idealism to emotional realism. Famous works: the <em>Winged Victory of Samothrace</em>, the <em>Venus de Milo</em>, and the <em>Laocoön Group</em>. Sculpture showed intense emotion, drama, and naturalism - a dramatic departure from the serene classicism of Phidias.</li>
+        <li><strong>Medicine:</strong> <em>Herophilus</em> and <em>Erasistratus</em> conducted systematic anatomical studies in Alexandria (including dissections), distinguishing veins from arteries, discovering the nervous system, and measuring the pulse.</li>
+        <li><strong>Cultural synthesis:</strong> The spread of Greek language and culture (Hellenization) across the Near East created a cultural koine (common standard) that facilitated the later spread of Christianity. The New Testament was written in Koine Greek. Jewish scriptures were translated into Greek (the <em>Septuagint</em>), crucial for the eventual Christian Bible.</li>
+        <li><strong>Trade and economics:</strong> The Hellenistic period saw unprecedented expansion of trade networks linking the Mediterranean with India and Central Asia (via the Silk Road precursors), Egypt, and sub-Saharan Africa.</li>
+      </div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>Hellenistic civilization represents one of history's most creative periods - the meeting of cultures produced an explosion of scientific discovery, philosophical innovation, and artistic achievement. It transformed Greek culture from a local Mediterranean tradition into a world culture. The Hellenistic legacy shaped Roman civilization, early Christianity, Byzantine culture, and the Islamic Golden Age. When scholars speak of the "Greek miracle," they speak not only of classical Athens but of the vast Hellenistic world that carried Greek ideas to the farthest corners of the ancient world.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">7</div><div class="qtitle">Analyze the Causes and Fall of the Western Roman Empire</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>fall of the Western Roman Empire</strong> in <strong>476 CE</strong> - when the Germanic chieftain Odoacer deposed the last Western emperor, Romulus Augustulus - is one of the most discussed events in world history. It marks the conventional end of antiquity and the beginning of the European Middle Ages. The question of why Rome fell has occupied historians from Edward Gibbon in the 18th century to modern scholars, with explanations ranging from military pressure to moral decline to economic collapse. In reality, the fall resulted from a convergence of multiple, interrelated causes.</p></div>
+      <div class="subh">Internal Causes</div>
+      <div class="kp">
+        <li><strong>Political instability and the crisis of leadership:</strong> The 3rd century CE saw the "Crisis of the Third Century" (235–284 CE) during which over 50 emperors ruled in 50 years - most dying violently. This constant political instability prevented consistent policy and undermined institutional authority. The lack of a stable succession mechanism was a chronic structural weakness.</li>
+        <li><strong>Military overextension:</strong> Rome's vast borders (over 10,000 km) required enormous military resources to defend. As the empire expanded, the cost of maintaining frontier legions escalated beyond the capacity of the tax base to support. Gradual "barbarization" of the army - recruiting Germanic foederati (allied troops) who had less loyalty to Rome than to their own commanders - further weakened military cohesion.</li>
+        <li><strong>Economic decline:</strong> Roman economic prosperity depended heavily on conquest (providing slaves and loot) and long-distance trade. As conquest ceased in the 2nd century CE, economic growth stagnated. Severe debasement of currency (reducing silver content in coins) caused runaway inflation. The tax burden fell increasingly on the poor, leading to rural depopulation and economic contraction.</li>
+        <li><strong>Decline of civic values:</strong> Edward Gibbon, in his monumental <em>Decline and Fall of the Roman Empire</em> (1776–1789), famously argued that Christianity - by diverting energies from civic and military virtues to otherworldly concerns - weakened Rome's martial spirit. He also cited corruption and the decline of senatorial responsibility. Modern historians debate but do not entirely dismiss these factors.</li>
+        <li><strong>Administrative division:</strong> The empire was permanently divided into Eastern and Western halves in 395 CE. The wealthier Eastern Empire (Byzantium) survived for another thousand years, while the poorer, more exposed Western Empire lacked the resources to defend itself. This division concentrated resources in the east at the west's expense.</li>
+        <li><strong>Disease:</strong> The <em>Antonine Plague</em> (165–180 CE) and the <em>Plague of Cyprian</em> (249–262 CE) killed millions, reducing the agricultural and military labor force and causing profound psychological disruption. Some estimates suggest these plagues killed up to one-third of the Roman population in affected areas.</li>
+      </div>
+      <div class="subh">External Causes</div>
+      <div class="kp">
+        <li><strong>Germanic invasions:</strong> From the 3rd century onward, Germanic tribes - Visigoths, Vandals, Ostrogoths, Franks, Angles, Saxons - pressed against Rome's Rhine-Danube frontier with increasing pressure. The Visigoths sacked Rome in <strong>410 CE</strong> (the first time in 800 years), and the Vandals sacked it again in <strong>455 CE</strong>.</li>
+        <li><strong>The Huns:</strong> The nomadic <em>Huns</em> from Central Asia, led by <em>Attila</em> (r. 434–453 CE), swept into Europe creating a "domino effect" - pushing Germanic tribes before them into Roman territory. The Huns' devastating raids deep into Roman territory in the 5th century accelerated the final collapse.</li>
+        <li><strong>Sassanid Persian pressure:</strong> The Sassanid Persian Empire constantly pressured Rome's eastern frontier, forcing the deployment of legions that would otherwise have defended the west.</li>
+      </div>
+      <div class="subh">Gibbon vs. Modern Historians</div>
+      <div class="atext"><p>Gibbon's thesis (Christianity + moral decline = fall) has been substantially revised. Modern historians like <em>Peter Heather</em> (<em>The Fall of the Roman Empire</em>, 2006) emphasize external barbarian pressure as decisive - Rome was ultimately overwhelmed by forces beyond its control, not simply weakened from within. <em>Bryan Ward-Perkins</em> (<em>The Fall of Rome and the End of Civilization</em>) emphasizes the genuine catastrophic nature of the fall - archaeological evidence of dramatically reduced material prosperity, literacy, and urban life across the former Western Empire. Others, like <em>Peter Brown</em>, prefer the term "transformation" over "fall" - seeing late antiquity as a period of creative cultural change rather than collapse.</p></div>
+      <div class="subh">Consequences</div>
+      <div class="kp">
+        <li>The Western Roman Empire fragmented into Germanic kingdoms - Franks (France), Visigoths (Spain), Ostrogoths (Italy), Angles and Saxons (England) - forming the basis of modern European nation-states.</li>
+        <li>The Catholic Church, centered in Rome, became the primary cultural and institutional authority in the medieval West, preserving much classical learning.</li>
+        <li>Long-distance trade collapsed; urban populations plummeted; literacy declined sharply in the West - a genuine civilizational regression lasting centuries.</li>
+        <li>The Eastern Empire (Byzantine) continued for 1,000 more years, preserving Greek and Roman knowledge that eventually re-entered Western Europe during the Renaissance.</li>
+      </div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>The fall of Rome was not a single event but a long process spanning centuries. No single cause explains it - it resulted from the catastrophic interaction of military overextension, political dysfunction, economic deterioration, epidemic disease, and relentless external pressure. The fall of Rome remains history's most studied political collapse, and its lessons about the fragility of even the greatest civilizations remain deeply relevant today.</p></div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">8</div><div class="qtitle">Expansion of the Persian Empire and its Administrative System</div></div>
+      <span class="qmarks">12.5 M</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="alabel">// Full Essay Answer</div>
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Achaemenid Persian Empire</strong> (550–330 BCE) represents the first true world empire in history - stretching from the Balkans and North Africa in the west to the Indus Valley in the east. It was remarkable not only for its size but for the sophistication of its administrative systems and the relative tolerance with which it governed its diverse subjects. The empire's expansion unfolded through the reigns of three great rulers: Cyrus II, Cambyses II, and Darius I.</p></div>
+      <div class="subh">Expansion of the Empire</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">550 BCE</div><div class="tl-text"><strong>Cyrus II (the Great)</strong> defeats Median Empire, unites Persians and Medes. Conquers Lydia (Croesus of Lydia defeated) and Greek cities of Ionia.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">539 BCE</div><div class="tl-text">Cyrus conquers Babylon without a battle (Babylonians surrendered). Issues the Cyrus Cylinder - allows exiled peoples (including Jews) to return home.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">525 BCE</div><div class="tl-text"><strong>Cambyses II</strong> conquers Egypt - Persia reaches its greatest extent under his reign in Africa.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">522–486 BCE</div><div class="tl-text"><strong>Darius I (the Great)</strong> consolidates the empire, codifies administration, extends to the Indus, invades Greek mainland (Marathon, 490 BCE - defeat).</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">486–465 BCE</div><div class="tl-text"><strong>Xerxes I</strong> invades Greece (Thermopylae, Salamis). Defeats at Salamis (480) and Plataea (479) halt Persian expansion westward.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">330 BCE</div><div class="tl-text">Alexander the Great defeats Darius III, conquering the entire Persian Empire and ending Achaemenid rule.</div></div></div>
+      </div>
+      <div class="subh">Administrative System</div>
+      <div class="kp">
+        <li><strong>Satrapy System:</strong> Darius I divided the empire into <strong>20–23 satrapies</strong> (provinces). Each was governed by a <em>satrap</em> (Old Persian: "protector of the realm"), typically a Persian noble - often a royal relative - with broad civil and military authority. Satrapies paid annual tribute in silver or goods and supplied soldiers. Key satrapies included Egypt, Babylonia, India (Sindh), Lydia, Bactria, and Media.</li>
+        <li><strong>Checks on satrapal power:</strong> Darius used several mechanisms to prevent satraps from becoming too powerful: (a) <em>Royal secretaries</em> attached to each satrap who reported directly to the king; (b) <em>Military commanders</em> appointed independently of the satrap; (c) <em>"Eyes and Ears of the King"</em> - royal inspectors who traveled the empire auditing satrapal performance and reporting abuses.</li>
+        <li><strong>Royal Road and communication:</strong> The 2,700 km Royal Road from Sardis to Susa enabled rapid communication and troop movement. A system of relay stations (every 25 km) with fresh horses and royal messengers allowed news to travel the entire road in 7 days. Herodotus famously praised this postal system.</li>
+        <li><strong>Standardized coinage:</strong> Darius introduced the <em>daric</em> (gold) and <em>siglos</em> (silver) coins, facilitating taxation and trade across the empire. Tribute, however, was often collected in kind (grain, livestock, labor) or in uncoined precious metal.</li>
+        <li><strong>Taxation:</strong> Each satrapy paid fixed annual tribute assessed by Darius. The total tribute was reportedly 14,560 Euboic talents per year. Egypt and Babylon were the wealthiest provinces. Local tax collection was managed by subordinate officials within each satrapy.</li>
+        <li><strong>Legal system:</strong> Persian kings claimed to uphold "truth" (arta) and "justice" (data). A centralized legal code applied across the empire, though local legal traditions were often preserved. The king was the supreme judge and court of last appeal.</li>
+        <li><strong>Military administration:</strong> The imperial army was divided into national contingents fighting under their own commanders but subordinate to Persian generals. The elite royal guard, the <em>Immortals</em> (10,000 strong), were exclusively Persian and always maintained at exactly 10,000 men - a fallen soldier was immediately replaced.</li>
+        <li><strong>Toleration of local religions and customs:</strong> Persian imperial policy explicitly permitted conquered peoples to maintain their own gods, laws, languages, and customs. Persian royal inscriptions frequently invoke local deities alongside Ahura Mazda. This policy reduced rebellion and made governance vastly more efficient.</li>
+      </div>
+      <div class="subh">Significance</div>
+      <div class="atext"><p>The Persian administrative system was the most sophisticated the ancient world had yet produced. The satrapy model became a template for subsequent empires - Alexander the Great largely retained the Persian administrative structure after his conquest. The concept of provincial governance by appointed governors answerable to a central authority is a Persian political invention that survives in modified form to the present day.</p></div>
+      <div class="subh">Conclusion</div>
+      <div class="atext"><p>Persian imperial expansion was driven by military prowess but sustained by administrative genius. The combination of centralized authority with local autonomy, the Royal Road communication system, standardized coinage, and a policy of religious and cultural tolerance enabled the Persian Empire to govern more than 50 million people across three continents with remarkable stability for over two centuries. Its administrative legacy outlasted the empire itself, shaping Alexander's empire, the Seleucid state, and ultimately Roman provincial administration.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GREEK PHILOSOPHY ===== -->
+<div class="panel" id="panel-greek">
+  <div class="sbadge civ">Greek Philosophy - Key Notes</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Pre-Socratic Era: Nature Philosophy (Thales, Anaximenes, Heraclitus, Parmenides)</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="atext"><p>The Pre-Socratics (6th–5th c. BCE) pioneered the shift from <em>mythos</em> to <em>logos</em> - from mythological to rational explanation of the universe. They asked: what is the fundamental substance (arche) underlying all reality?</p></div>
+      <table class="cmp-table">
+        <tr><th>Philosopher</th><th>Dates</th><th>Arche (Primary Substance)</th><th>Key Idea</th></tr>
+        <tr><td>Thales of Miletus</td><td>c. 624–546 BCE</td><td>Water</td><td>Everything is derived from water. Predicted solar eclipse 585 BCE. "First Western philosopher."</td></tr>
+        <tr><td>Anaximander</td><td>c. 610–546 BCE</td><td>Apeiron (the Boundless, Indefinite)</td><td>The arche is infinite and undefined. First to propose cosmic evolution.</td></tr>
+        <tr><td>Anaximenes</td><td>c. 585–528 BCE</td><td>Air (aer)</td><td>Air condenses into water and earth; rarefies into fire. Process: condensation and rarefaction.</td></tr>
+        <tr><td>Heraclitus</td><td>c. 535–475 BCE</td><td>Fire</td><td>Reality is constant change/flux. Logos governs change. "You cannot step in the same river twice." Coined the unity of opposites.</td></tr>
+        <tr><td>Parmenides</td><td>c. 515–450 BCE</td><td>The One (Being)</td><td>Change is illusion. Reality is eternal, unchanging, singular Being. Reason reveals truth; senses deceive. Counter to Heraclitus.</td></tr>
+        <tr><td>Zeno of Elea</td><td>c. 490–430 BCE</td><td>Supported Parmenides</td><td>Famous paradoxes (Achilles and the tortoise) to prove that motion is logically impossible - defending Parmenidean monism.</td></tr>
+        <tr><td>Democritus</td><td>c. 460–370 BCE</td><td>Atoms (atomism)</td><td>All matter consists of indivisible atoms moving in void. Earliest atomic theory in history.</td></tr>
+      </table>
+      <div class="callout warn">Exam Tip: The Heraclitus vs. Parmenides debate (change vs. permanence) is foundational. Plato was influenced by both - Forms are Parmenidean (eternal, unchanging); the sensory world is Heraclitean (always changing).</div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Sophists and Protagoras; Socrates; Plato; Aristotle</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">The Sophists and Protagoras (5th century BCE)</div>
+      <div class="atext"><p>The <strong>Sophists</strong> were professional teachers of rhetoric, philosophy, and argumentation who traveled from city to city charging fees. They shifted philosophy from nature (physics) to <em>human affairs</em> (ethics, politics, rhetoric). They held that truth and morality are relative, not absolute.</p><p><strong>Protagoras of Abdera</strong> (c. 490–420 BCE) is the most important Sophist. His famous dictum: <em>"Man is the measure of all things"</em> - meaning truth and morality are subjective and relative to each individual or community. There is no objective truth, only human perception. This is philosophical <em>relativism</em> and <em>skepticism</em>.</p></div>
+      <div class="subh">Socrates (c. 470–399 BCE) - Creator of Moral Philosophy</div>
+      <div class="atext"><p>Socrates wrote nothing himself - we know him through Plato's dialogues. He shifted philosophy decisively toward <em>ethics</em> and <em>self-knowledge</em>. Key contributions:</p></div>
+      <div class="kp">
+        <li><strong>The Socratic Method (Elenchus):</strong> Systematic questioning to expose contradictions in interlocutors' beliefs and lead toward truth through dialogue. "I know that I know nothing." Knowledge begins with recognizing ignorance.</li>
+        <li><strong>Ethics as the primary concern:</strong> "An unexamined life is not worth living." Philosophy's purpose is self-knowledge and moral improvement.</li>
+        <li><strong>Objective morality:</strong> Against the Sophists, Socrates insisted that moral truth is objective - virtue (arete) can be known and is not merely relative.</li>
+        <li><strong>Death:</strong> Convicted of impiety and corrupting Athenian youth (399 BCE), he was executed by hemlock. His trial and death are documented in Plato's <em>Apology</em>, <em>Crito</em>, and <em>Phaedo</em>.</li>
+      </div>
+      <div class="subh">Plato (c. 428–348 BCE)</div>
+      <div class="kp">
+        <li><strong>Theory of Forms:</strong> The material world is a mere shadow of a higher realm of eternal, perfect Forms (Ideas). The Form of the Good is the highest Form. True knowledge is knowledge of Forms, not sense experience.</li>
+        <li><strong>The Republic:</strong> His masterwork on justice, the ideal state, and philosophy of education. Philosopher-kings should govern; society should be organized by virtue. Divided the soul into reason, spirit, and appetite.</li>
+        <li><strong>Allegory of the Cave:</strong> People chained in a cave mistake shadows for reality; philosophy is the journey toward the sunlight of true knowledge (Forms).</li>
+        <li><strong>Founded the Academy (c. 387 BCE):</strong> The world's first institution of higher learning in the Western world.</li>
+      </div>
+      <div class="subh">Aristotle (384–322 BCE)</div>
+      <div class="kp">
+        <li><strong>Against Plato's Forms:</strong> Forms do not exist separately from matter - the universal exists within particulars. Empirical observation is the foundation of knowledge.</li>
+        <li><strong>Logic:</strong> Created formal logic (syllogism) in his <em>Organon</em> - the first systematic science of reasoning.</li>
+        <li><strong>Ethics:</strong> <em>Nicomachean Ethics</em> - virtue ethics, eudaimonia, the Golden Mean (see Ethics guide).</li>
+        <li><strong>Politics:</strong> <em>Politics</em> - man is a "political animal" (zoon politikon). Analyzed 158 city-state constitutions. Best practical government is a "polity" (mixed democracy/oligarchy).</li>
+        <li><strong>Biology, physics, metaphysics:</strong> First systematic biologist. His four causes (material, formal, efficient, final) shaped scientific thinking for 1,500 years.</li>
+        <li><strong>Tutor of Alexander the Great:</strong> His influence spread throughout the Hellenistic world and later shaped medieval Islamic and Christian thought (Avicenna, Aquinas).</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">3</div><div class="qtitle">Hellenistic Era and Effect of Greek Philosophy</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Hellenistic Philosophy (323–30 BCE)</div>
+      <div class="kp">
+        <li><strong>Epicureanism (Epicurus, 341–270 BCE):</strong> Highest good is <em>ataraxia</em> (tranquility) and <em>aponia</em> (absence of pain). Avoid politics, live simply, seek friendship. "Death is nothing to us" - remove fear of death to live peacefully.</li>
+        <li><strong>Stoicism (Zeno of Citium, c. 334–262 BCE):</strong> Live according to <em>Logos</em> (universal reason). Virtue is the only true good; external goods are "indifferent." Control only your own judgments and responses; accept what you cannot control with equanimity.</li>
+        <li><strong>Skepticism (Pyrrho of Elis, c. 360–270 BCE):</strong> Suspend judgment (epoche) on all questions. True knowledge is impossible; peace of mind comes from withholding belief.</li>
+        <li><strong>Neo-Platonism (Plotinus, 204–270 CE):</strong> Later synthesis of Platonic thought with mysticism. The "One" is the ultimate reality from which all emanates. Profoundly influenced early Christian theology.</li>
+      </div>
+      <div class="subh">Effect of Greek Philosophy on World Civilization</div>
+      <div class="kp">
+        <li><strong>Roman philosophy:</strong> Roman thinkers (Cicero, Seneca, Marcus Aurelius) were deeply influenced by Stoicism. Roman law borrowed Greek philosophical concepts of natural law and justice.</li>
+        <li><strong>Christianity:</strong> Neo-Platonic ideas (especially the concept of the Logos) shaped early Christian theology. Augustine synthesized Platonism with Christianity.</li>
+        <li><strong>Islamic Golden Age:</strong> Arab scholars translated and preserved Greek philosophical and scientific works. Avicenna and Averroes wrote major commentaries on Aristotle, transmitting him back to medieval Europe.</li>
+        <li><strong>Renaissance:</strong> Recovery of Greek texts sparked the Renaissance. Humanism, natural science, political philosophy, and democratic ideals all trace to Greek sources.</li>
+        <li><strong>Modern science:</strong> Greek empiricism (Aristotle), logic, mathematics (Euclid), and natural philosophy are the direct ancestors of modern scientific method.</li>
+        <li><strong>Democracy:</strong> Athenian democratic ideals - citizen participation, rule of law, free speech (isegoria), equality before the law (isonomia) - directly influenced modern democratic theory.</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ATHENS AND SPARTA ===== -->
+<div class="panel" id="panel-athens">
+  <div class="sbadge civ">Athens and Sparta</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Athens: Cradle of Democracy - Full Notes</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Geopolitical Situation</div>
+      <div class="atext"><p>Athens is situated in the region of <em>Attica</em> in central Greece, on the Attic Peninsula extending into the Aegean Sea. Its natural harbor at <em>Piraeus</em> made it a major maritime power. Surrounded by hills (Hymettus, Penteli, Parnitha) and the rocky plain of Attica, Athens was not exceptionally fertile, pushing its population toward trade and commerce.</p></div>
+      <div class="subh">Social Classes</div>
+      <div class="kp">
+        <li><strong>Citizens (Politai):</strong> Free adult males born of Athenian parents (after Pericles' citizenship law of 451 BCE: both parents must be Athenian). Only citizens had political rights.</li>
+        <li><strong>Metics (Metoikoi):</strong> Free foreign residents. Could engage in trade and crafts but had no political rights and could not own land. Paid a special tax (metoikion). Many were skilled craftsmen, traders, and some philosophers (Aristotle was a metic).</li>
+        <li><strong>Slaves (Douloi):</strong> Estimated to comprise 30–40% of the population. They worked in households, agriculture, mines (notably the silver mines at Laurion), and workshops. Without rights of any kind.</li>
+        <li><strong>Women:</strong> Even citizen women had no political rights and were largely confined to the domestic sphere (oikos). They could not vote, participate in the assembly, or own property independently.</li>
+      </div>
+      <div class="subh">Development of Democracy - Key Stages</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 594 BCE</div><div class="tl-text"><strong>Solon:</strong> Cancelled debts (Seisachtheia), freed debt-slaves, created property-based classes, opened courts to all citizens, established Council of 400.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">560–510 BCE</div><div class="tl-text"><strong>Peisistratos and his sons:</strong> Tyranny - seized power but maintained Solon's laws. Promoted Athenian culture and festivals. Ended with expulsion of Hippias (510 BCE).</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">508/7 BCE</div><div class="tl-text"><strong>Cleisthenes:</strong> True founder of democracy. Reorganized tribes by territory (not family). Created the Council of 500 (Boule). Introduced ostracism. Extended citizenship.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">461–429 BCE</div><div class="tl-text"><strong>Age of Pericles:</strong> Full radical democracy. Pay for jury duty (allowing poor citizens to participate). Ostracism of Cimon. Building of the Parthenon. Athens at its cultural peak.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">431–404 BCE</div><div class="tl-text"><strong>Peloponnesian War:</strong> Athens vs. Sparta. Plague kills Pericles (429 BCE). Athens ultimately defeated by Sparta (404 BCE). Brief oligarchic rule ("Thirty Tyrants").</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">338 BCE</div><div class="tl-text">Philip II of Macedon defeats Athens at Chaeronea. Athenian independence ends. Macedonia dominates Greece.</div></div></div>
+      </div>
+      <div class="subh">Pericles' Funeral Oration (c. 430 BCE) - Key Democratic Principles</div>
+      <div class="def-box">"Our constitution does not copy the laws of neighboring states; we are rather a pattern to others than imitators ourselves. Its administration favors the many instead of the few; this is why it is called a democracy... the law secures equal justice to all alike in their private disputes... advancement in public life falls to reputation for capacity, class considerations not being allowed to interfere with merit." - Pericles (recorded by Thucydides)</div>
+      <div class="subh">Philosophical and Cultural Importance of Athens</div>
+      <div class="kp">
+        <li>Athens produced Socrates, Plato, and Aristotle - the three figures who define Western philosophy.</li>
+        <li>The tragedies of Sophocles, Aeschylus, and Euripides; the comedies of Aristophanes - all created in Athens.</li>
+        <li>The Parthenon (447–432 BCE), built under Pericles on the Acropolis, remains one of the supreme achievements of world architecture.</li>
+        <li>Athens established the concept of the polis (city-state) as the ideal unit of political life and democratic governance as the ideal form of that life - ideas that still shape political thinking today.</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Sparta: The Military State - Full Notes</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Geopolitical Situation</div>
+      <div class="atext"><p>Sparta (Lacedaemon) was located in the <em>Laconia</em> region of the southeastern Peloponnese peninsula, in the valley of the Eurotas River. Surrounded by mountains, Sparta was naturally defensible and somewhat isolated. This isolation contributed to its inward-looking, militaristic character, unlike maritime Athens. Sparta controlled the surrounding region of <em>Messenia</em> (conquered c. 740 and 640 BCE), whose population became the Helot slave class.</p></div>
+      <div class="subh">Society and Classes</div>
+      <div class="kp">
+        <li><strong>Spartiates (Homoioi - "Equals"):</strong> Full Spartan citizens. All were warriors; land and Helots provided their subsistence. From age 7 to 30, they lived in military barracks. They were the only class with full political rights.</li>
+        <li><strong>Perioikoi ("Dwellers Around"):</strong> Free non-citizens living in communities around Sparta. Managed trade, manufacturing, and crafts (Spartans could not engage in commerce). Provided military service but had no political role in Sparta.</li>
+        <li><strong>Helots:</strong> State-owned serfs, descendants of conquered Messenians and Laconians. Worked the land for Spartiate masters. Outnumbered Spartans roughly 7:1 (some estimates higher). Annual declaration of war on Helots (krypteia) legally permitted their killing by Spartiate youths as part of military training.</li>
+      </div>
+      <div class="subh">The Lycurgan System (Evolution)</div>
+      <div class="atext"><p>Spartan society was attributed (possibly legendarily) to the lawgiver <strong>Lycurgus</strong> (date disputed - perhaps 9th or 8th century BCE). His reforms created the uniquely militaristic Spartan constitution:</p></div>
+      <div class="kp">
+        <li><strong>Land redistribution:</strong> Equal plots (kleroi) allocated to each Spartiate, worked by Helots, ensuring economic equality among citizens.</li>
+        <li><strong>Iron currency:</strong> Spartan currency was deliberately made in heavy iron bars (useless for foreign trade) to discourage commerce and prevent luxury - keeping citizens focused on military virtue.</li>
+        <li><strong>Common meals (syssitia):</strong> Spartiate men ate together in communal military messes, even after marriage. This reinforced military brotherhood over family ties.</li>
+        <li><strong>The Agoge:</strong> At age 7, boys were removed from their families and enrolled in the state education system. They lived in groups (agelai - "herds") under older boys' supervision. Training emphasized: endurance of cold, hunger, and pain; theft (but punishment if caught - for lack of skill, not for stealing); fighting; and absolute obedience to authority.</li>
+        <li><strong>Women's training:</strong> Spartan women uniquely received physical training (wrestling, running) to produce strong children. They managed the entire household economy while men were at war, enjoying considerable independence compared to Athenian women.</li>
+      </div>
+      <div class="subh">Political System</div>
+      <div class="kp">
+        <li><strong>Two Kings:</strong> Sparta had two hereditary kings simultaneously - one from the Agiad dynasty, one from the Eurypontid. Each checked the other's power. Kings commanded the army in the field and had religious duties.</li>
+        <li><strong>Gerousia (Council of Elders):</strong> 28 men over 60 (elected for life) plus the two kings. Prepared legislation and served as the highest court. Only elders could propose laws.</li>
+        <li><strong>Apella (Assembly):</strong> All adult male Spartiates could vote (by shouting, not ballot). They voted yes or no on proposals from the Gerousia but could not debate or propose.</li>
+        <li><strong>Ephors (5 Overseers):</strong> Five citizens elected annually. Supervised the kings and could summon them for trial. The most powerful institution in daily governance.</li>
+      </div>
+      <div class="subh">Economic System</div>
+      <div class="atext"><p>Sparta's economy was entirely agricultural, dependent on Helot labor. Spartiate citizens were legally prohibited from engaging in trade or crafts. This economic system kept Spartans focused on military life but left the economy stagnant and entirely dependent on the servile Helot class. The lack of economic development also meant Sparta had no coinage useful for commerce and lagged far behind Athens in artistic and intellectual production.</p></div>
+      <div class="subh">Decline of Sparta</div>
+      <div class="kp">
+        <li>Battle of Leuctra (371 BCE): Theban general Epaminondas destroyed a Spartan army - the first major Spartan land defeat. The myth of Spartan invincibility was shattered.</li>
+        <li>Demographic collapse: Heavy battlefield losses among Spartiates (who could not be easily replaced) caused oliganthropy - a critical shortage of full citizens. By 4th century, Sparta had fewer than 1,000 Spartiates.</li>
+        <li>Helot liberation: Epaminondas liberated Messenia, depriving Sparta of its economic base.</li>
+        <li>Macedonian domination: Philip II's victory at Chaeronea (338 BCE) ended Spartan regional dominance permanently.</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EGYPT ===== -->
+<div class="panel" id="panel-egypt">
+  <div class="sbadge civ">Egypt - Complete Notes</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Egypt's Place in Ancient Civilization - Introduction and Overview</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>Ancient Egypt is one of the oldest, most enduring, and most culturally influential civilizations in human history, spanning over <strong>3,000 years</strong> from approximately <strong>3100 BCE</strong> (unification under Narmer) to <strong>30 BCE</strong> (Roman conquest). Located in the northeastern corner of Africa, centered on the Nile Valley, Egypt achieved extraordinary heights in architecture, art, religion, science, medicine, and government that left an indelible mark on succeeding civilizations.</p></div>
+      <div class="subh">Herodotus and Will Durant on Egypt</div>
+      <div class="atext"><p>The Greek historian <strong>Herodotus</strong> (c. 484–425 BCE) called Egypt the "Gift of the Nile" - recognizing that the annual flooding of the Nile deposited rich alluvial soil that made Egyptian agriculture extraordinarily productive and supported a dense civilization in an otherwise arid desert. He wrote extensively about Egyptian customs, religion, and monuments in his <em>Histories</em>.</p><p><strong>Will Durant</strong>, in <em>The Story of Civilization</em>, praised Egypt's contributions as foundational: "Egypt gave us geometry, medicine, the calendar, and much else that has come to us through the Greeks." Durant recognized Egypt as a primary source of the Greco-Roman-Western civilizational tradition.</p></div>
+      <div class="subh">Barry Kemp's Contribution to Egyptology</div>
+      <div class="atext"><p><strong>Barry Kemp</strong>, in his influential work <em>Ancient Egypt: Anatomy of a Civilization</em>, argues that Egyptian civilization was driven by a unique ideological coherence - the pharaoh as divine mediator between the gods and humanity ordered and maintained the cosmos (concept of <em>Ma'at</em> - truth, justice, cosmic order). This ideological structure, not merely economic or military factors, explains Egypt's extraordinary longevity and stability.</p></div>
+      <div class="subh">The Nile: Foundation of Egyptian Civilization</div>
+      <div class="kp">
+        <li>Egypt is divided into <em>Upper Egypt</em> (narrow southern Nile valley) and <em>Lower Egypt</em> (broad northern Nile delta). Unified under Pharaoh Narmer c. 3100 BCE.</li>
+        <li>Annual Nile floods (July–October) deposited rich black silt (<em>kemet</em> - "black land") enabling agriculture. The desert beyond (<em>deshret</em> - "red land") provided a natural barrier against invasion - contributing to Egypt's stability.</li>
+        <li>The Nile also served as the primary transportation artery - boats traveled north with the current, and south with the prevailing winds.</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Egyptian Kingdoms: Old, Middle, New, Late Period</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Old Kingdom (2686–2181 BCE) - "Age of the Pyramids"</div>
+      <div class="kp">
+        <li><strong>Politics and rulers:</strong> Dynasties 3–6. Capital: Memphis. Strong centralized pharaonic authority. Key pharaohs: <em>Djoser</em> (1st pyramid builder), <em>Sneferu</em> (perfected pyramid shape), <em>Khufu (Cheops)</em>, <em>Khafre</em>, <em>Menkaure</em>.</li>
+        <li><strong>Achievements:</strong> Step Pyramid of Djoser at Saqqara (c. 2650 BCE) - first monumental stone structure in history. <em>Great Pyramid of Giza</em> (c. 2560 BCE) under Khufu - for 3,800 years the world's tallest human-made structure. The Great Sphinx. Sophisticated hieroglyphic writing, administrative bureaucracy, religious texts (Pyramid Texts).</li>
+        <li><strong>Effects/Fall:</strong> Gradual decentralization of power to regional nobles (nomarchs) weakened central authority. Combination of droughts, famines (possible climate event c. 2200 BCE), and political fragmentation led to collapse into the First Intermediate Period (2181–2055 BCE).</li>
+      </div>
+      <div class="subh">Middle Kingdom (2055–1650 BCE) - "Classical Age"</div>
+      <div class="kp">
+        <li><strong>Politics and rulers:</strong> Dynasties 11–12. Reunified by Mentuhotep II (c. 2055 BCE). Capital moved to Thebes then Itj-tawy. Key pharaohs: <em>Mentuhotep II</em> (reunifier), <em>Amenemhat I, II, III, IV</em>, <em>Senusret I, II, III</em>.</li>
+        <li><strong>Achievements:</strong> Egyptian literature reached its highest form (<em>Story of Sinuhe</em> - a masterpiece). Expansion into Nubia. Land reclamation and irrigation projects in the Faiyum oasis. Coffin Texts democratized afterlife access beyond pharaohs. Sophisticated foreign trade networks.</li>
+        <li><strong>Well-known pharaohs:</strong> <em>Senusret III</em> - a great warrior-pharaoh who pushed Egypt's borders deep into Nubia and reduced the power of the nomarchs. <em>Amenemhat III</em> - an administrator of genius who developed Egypt's agricultural resources extensively.</li>
+        <li><strong>Effects/Fall:</strong> Ended with the Second Intermediate Period (1650–1550 BCE) and the invasion and rule of the <em>Hyksos</em> - Semitic peoples from the Levant who introduced the horse and chariot to Egypt.</li>
+      </div>
+      <div class="subh">New Kingdom (1550–1070 BCE) - "Empire Age"</div>
+      <div class="kp">
+        <li><strong>Politics and rulers:</strong> Dynasties 18–20. Thebes as capital. Egypt became an imperial power. Key pharaohs: <em>Ahmose I</em> (expelled Hyksos, founder of New Kingdom), <em>Thutmose I, II, III</em>, <em>Hatshepsut</em>, <em>Amenhotep III</em>, <em>Akhenaten</em>, <em>Tutankhamun</em>, <em>Ramesses II</em>.</li>
+        <li><strong>Achievements:</strong> Egyptian empire extended to Syria-Palestine in the north and Nubia/Sudan in the south. <em>Hatshepsut</em> (r. c. 1479–1458 BCE): one of Egypt's few female pharaohs; known for extensive building and trade expeditions to Punt. <em>Akhenaten</em> (r. 1353–1336 BCE): radical religious revolution - promoted worship of Aten (sun disk) as sole deity - proto-monotheism. <em>Ramesses II "The Great"</em> (r. 1279–1213 BCE): greatest military pharaoh, builder of Abu Simbel temples, signed the world's first known peace treaty (Treaty of Kadesh with the Hittites, c. 1259 BCE). Valley of the Kings - royal tombs cut into the rock at Thebes.</li>
+        <li><strong>Fall:</strong> "Sea Peoples" invasions (c. 1200 BCE), internal power struggles between pharaoh and Amun priesthood, economic strain from military campaigns. Egypt's imperial power collapsed; divided rule under Libyan and Nubian dynasties followed.</li>
+      </div>
+      <div class="subh">Late Period (664–30 BCE)</div>
+      <div class="kp">
+        <li><strong>26th Dynasty (Saite Period, 664–525 BCE):</strong> Egyptian revival under native kings. Greek merchants given trading rights at <em>Naucratis</em> - Egypt's first Greek trading colony. Massive Greek influence begins.</li>
+        <li><strong>525 BCE:</strong> Persian conquest under Cambyses II. Egypt becomes a Persian satrapy (First and Second Persian Periods).</li>
+        <li><strong>332 BCE:</strong> Alexander the Great conquers Egypt, welcomed as liberator from Persian rule. Founds Alexandria. Visits the oracle of Amun at Siwa.</li>
+        <li><strong>305–30 BCE:</strong> Ptolemaic Dynasty (Greek pharaohs descended from Alexander's general Ptolemy I). The Ptolemies adopted pharaonic titles and customs. Cleopatra VII (r. 51–30 BCE) was the last Ptolemaic ruler and the first to learn the Egyptian language. After her death and Antony's defeat, Egypt became a Roman province.</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">3</div><div class="qtitle">Egyptian Scientific, Cultural, and Architectural Contributions</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Writing System</div>
+      <div class="kp">
+        <li><strong>Hieroglyphics</strong> (c. 3200 BCE): 700 signs; pictographic, ideographic, and phonetic elements combined. Used for religious and monumental texts.</li>
+        <li><strong>Hieratic script:</strong> Cursive form of hieroglyphics used by priests and administrators on papyrus.</li>
+        <li><strong>Demotic script</strong> (c. 650 BCE): Everyday script for commerce and personal use.</li>
+        <li><strong>Papyrus:</strong> Revolutionary writing material made from papyrus plant (Cyperus papyrus) stems cut into thin strips, laid in crosswise layers, pressed and dried. Lightweight, portable, durable. Egypt dominated papyrus production and export for millennia. The English word "paper" derives from "papyrus."</li>
+        <li><strong>Scribes:</strong> Trained in specialized schools (<em>Houses of Life</em>). An honored, elite profession. Scribes administered the state, recorded religious texts, and preserved medical and scientific knowledge.</li>
+      </div>
+      <div class="subh">Mathematics and Geometry</div>
+      <div class="kp">
+        <li>The <em>Rhind Mathematical Papyrus</em> (c. 1550 BCE) and <em>Moscow Mathematical Papyrus</em> document Egyptian mathematical knowledge.</li>
+        <li>Egyptians developed practical arithmetic for surveying, building, and tax calculation.</li>
+        <li>They understood geometry sufficient to design and build the pyramids - including knowledge of the area of circles, volumes of pyramids, and complex proportional relationships.</li>
+        <li>A decimal system (without positional notation) was used. Fractions were expressed as unit fractions (1/n).</li>
+      </div>
+      <div class="subh">Astronomy and Calendar</div>
+      <div class="kp">
+        <li>Egypt developed one of the earliest solar calendars: 365 days divided into 12 months of 30 days each, plus 5 epagomenal days. This was more accurate than the lunar calendars used in Mesopotamia.</li>
+        <li>Egyptian astronomers tracked the heliacal rising of <em>Sirius (Sopdet)</em> to predict the Nile flood - a critical agricultural calculation.</li>
+        <li>The 24-hour day and division of the night into 12 hours (using star clocks, "decans") were Egyptian inventions adopted by the Greeks and still used today.</li>
+      </div>
+      <div class="subh">Medical Contributions</div>
+      <div class="kp">
+        <li>The <em>Edwin Smith Papyrus</em> (c. 1600 BCE) is the world's oldest known surgical text, describing 48 cases with rational diagnoses and treatments (not magical).</li>
+        <li>The <em>Ebers Papyrus</em> (c. 1550 BCE) contains 700 magical and medical prescriptions - the world's largest known ancient medical document.</li>
+        <li>Egyptian physicians specialized by body part - evidence of early medical specialization.</li>
+        <li>They understood basic anatomy (especially from mummification), treated wounds, set bones, and used plant-based medicines. Honey, willow bark (natural aspirin), and castor oil appear in prescriptions.</li>
+      </div>
+      <div class="subh">Architectural Contributions</div>
+      <div class="kp">
+        <li><strong>Pyramids:</strong> The Great Pyramid of Giza (c. 2560 BCE), originally 146.5m tall, used an estimated 2.3 million stone blocks. Remains one of the most extraordinary engineering achievements in history.</li>
+        <li><strong>Temples:</strong> The temple complexes of Karnak and Luxor at Thebes represent the largest religious buildings ever constructed. The Hypostyle Hall at Karnak has 134 massive columns.</li>
+        <li><strong>Abu Simbel:</strong> Two rock-cut temples of Ramesses II (c. 1264 BCE) in Nubia, with four colossal 20-meter statues of the pharaoh.</li>
+        <li><strong>Obelisks:</strong> Monumental single-shaft stone structures inscribed with hieroglyphics. Egyptian obelisks were later taken to Rome, Constantinople, Paris, London, and New York as symbols of grandeur.</li>
+      </div>
+      <div class="subh">Effect on Succeeding Civilizations</div>
+      <div class="kp">
+        <li>Greek mathematics and geometry (Euclid, Pythagoras) built directly on Egyptian foundations. Thales and Pythagoras reportedly visited Egypt to learn from its priests.</li>
+        <li>Egyptian religious concepts (afterlife, resurrection, divine kingship, judgment of the dead) influenced Hebrew, Greek, and early Christian religious thought.</li>
+        <li>The Egyptian calendar became the basis for the Julian and Gregorian calendars still in use today.</li>
+        <li>Egyptian hieroglyphics influenced Phoenician script, which became the basis of the Greek alphabet and all Western writing systems.</li>
+        <li>Roman and Byzantine architecture adopted Egyptian obelisks and motifs. "Egyptomania" periodically swept the Greco-Roman, Renaissance, and modern worlds.</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MESOPOTAMIA ===== -->
+<div class="panel" id="panel-meso">
+  <div class="sbadge civ">Mesopotamia: Sumer, Babylon, Assyria</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Babylonian Civilization - Science, Culture, Code of Hammurabi</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Babylonian Empire</strong> emerged in Mesopotamia with its capital at <strong>Babylon</strong> (on the Euphrates, near modern Hillah, Iraq). Two major empires are distinguished: the <em>Old Babylonian Empire</em> (c. 1894–1595 BCE), reaching its peak under <em>Hammurabi</em>, and the <em>Neo-Babylonian (Chaldean) Empire</em> (626–539 BCE), reaching its peak under <em>Nebuchadnezzar II</em>.</p></div>
+      <div class="subh">Code of Hammurabi (detailed - see also Short Q4)</div>
+      <div class="kp">
+        <li>282 laws covering family, property, trade, labor, and criminal matters.</li>
+        <li>Lex talionis: "An eye for an eye, a tooth for a tooth."</li>
+        <li>Class-differentiated punishments - freemen, freed persons, and slaves treated differently.</li>
+        <li>Prologue: Hammurabi received law from Shamash (sun god of justice) - divine legitimation.</li>
+        <li>Notable laws: Law 229 - "If a builder build a house and the house collapses and causes the death of the owner, the builder shall be put to death." (Liability in construction). Law 196 - "If a man destroys the eye of another man, they shall destroy his eye." Law 53 - canal maintenance obligations. Law 138 - divorce rights for both sexes.</li>
+      </div>
+      <div class="subh">Scientific and Cultural Contributions</div>
+      <div class="kp">
+        <li><strong>Astronomy:</strong> Babylonian astronomers compiled detailed star catalogues, tracked the movements of Jupiter, Venus, Mars, Mercury, and Saturn, and could predict lunar and solar eclipses. The <em>Saros cycle</em> (18-year eclipse prediction cycle) was discovered by Babylonian astronomers.</li>
+        <li><strong>Mathematics:</strong> Advanced the Sumerian sexagesimal (base-60) system. Solved quadratic equations. Created multiplication and reciprocal tables. Calculated square roots.</li>
+        <li><strong>The Hanging Gardens:</strong> Allegedly built by Nebuchadnezzar II for his Median wife, one of the Seven Wonders of the Ancient World (though its existence is disputed by some modern historians).</li>
+        <li><strong>Ishtar Gate:</strong> A magnificent ceremonial gate of glazed blue brick with animal reliefs, built by Nebuchadnezzar II (c. 575 BCE). Partially reconstructed in the Pergamon Museum, Berlin.</li>
+        <li><strong>Religion:</strong> Marduk became the chief god of Babylon. The <em>Enuma Elish</em> (Babylonian creation epic) describes Marduk defeating the chaos-monster Tiamat to create the world - influenced later Near Eastern creation stories.</li>
+        <li><strong>Ziggurat of Babylon (Etemenanki):</strong> The "Tower of Babel" of the Bible was likely inspired by this massive stepped temple tower dedicated to Marduk.</li>
+      </div>
+      <div class="subh">Medical Contributions</div>
+      <div class="kp">
+        <li>The <em>Diagnostic Handbook</em> (compiled by Esagil-kin-apli, c. 1050 BCE) is the world's first systematic medical text - 40 tablets describing symptoms, diagnoses, and prognoses organized by body part from head to foot.</li>
+        <li>Babylonian physicians distinguished between two healing traditions: <em>ashipu</em> (exorcist-priests who used magic and religious ritual) and <em>asu</em> (physicians who used medicines and physical treatments). Both traditions operated simultaneously.</li>
+        <li>They documented numerous medicinal plant substances, including opium, myrrh, and various herbs - a proto-pharmacopoeia.</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Assyrian Civilization - Military, Culture, Comparison</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Assyrian Empire</strong> was a Semitic civilization centered in northern Mesopotamia, in the upper Tigris region (modern northern Iraq). Three periods are distinguished: Old Assyrian (c. 2000–1400 BCE), Middle Assyrian (1400–912 BCE), and <em>Neo-Assyrian Empire</em> (912–612 BCE) - the greatest period of Assyrian power.</p></div>
+      <div class="subh">Military System (see also Short Q2)</div>
+      <div class="kp">
+        <li><strong>Iron weapons:</strong> First major civilization to deploy iron weapons systematically - giving a decisive military advantage over bronze-armed opponents.</li>
+        <li><strong>The Immortal's counterpart - Royal Guard:</strong> Elite units of professional soldiers who formed the core of the army.</li>
+        <li><strong>Siege technology:</strong> Battering rams, siege towers, undermining walls. Assyrian relief sculptures show detailed depictions of their siege techniques at cities like Lachish.</li>
+        <li><strong>Terror policy:</strong> Systematic use of psychological terror - impalement, flaying, beheading, and mass deportation of conquered populations (Israelites among them, per the Bible's Assyrian exile). This reduced resistance but also fostered deep hatred.</li>
+        <li><strong>Intelligence and logistics:</strong> Networks of spies; supply depots along campaign routes; military roads.</li>
+      </div>
+      <div class="subh">Cultural Contributions</div>
+      <div class="kp">
+        <li><strong>Library of Ashurbanipal</strong> (Nineveh, c. 668–627 BCE): King Ashurbanipal collected over 30,000 clay tablets from across the Near East - one of the ancient world's greatest libraries. The <em>Epic of Gilgamesh</em> was preserved in its most complete form here.</li>
+        <li><strong>Palace reliefs:</strong> Extraordinary narrative bas-relief sculptures depicting royal hunts and military campaigns (now in the British Museum) represent the pinnacle of ancient Near Eastern art.</li>
+        <li><strong>Astronomy:</strong> Assyrian astronomers contributed to the growing body of astronomical knowledge, systematically observing celestial phenomena for astrological and practical purposes.</li>
+      </div>
+      <div class="subh">Comparison: Assyrian vs. Greek and Roman Military</div>
+      <table class="cmp-table">
+        <tr><th>Feature</th><th>Assyrian</th><th>Greek (Classical)</th><th>Roman</th></tr>
+        <tr><td>Core formation</td><td>Infantry + chariots + cavalry</td><td>Hoplite phalanx</td><td>Legionary maniple/cohort</td></tr>
+        <tr><td>Weapons</td><td>Iron swords, bows, spears</td><td>Bronze/iron spear, hoplon shield</td><td>Gladius (sword), pilum (javelin), scutum (shield)</td></tr>
+        <tr><td>Siege capability</td><td>Highly advanced (first sophisticated siege warfare)</td><td>Limited initially; improved in Macedonian era</td><td>Extremely advanced (SPQR engineering)</td></tr>
+        <tr><td>Standing army</td><td>Yes - first major example</td><td>Mainly citizen militia (except Sparta)</td><td>Yes - professional legions from Marian reforms</td></tr>
+        <tr><td>Strategy</td><td>Terror and mass deportation</td><td>Citizen defense; decisive battle</td><td>Systematic conquest and integration</td></tr>
+        <tr><td>Treatment of defeated</td><td>Brutal - mass deportation, destruction</td><td>Varied - slavery, ransom, alliance</td><td>Integration, citizenship offered eventually</td></tr>
+        <tr><td>Decline</td><td>Coalition revolt (612 BCE)</td><td>Macedonian unification (338 BCE)</td><td>Barbarian invasions + internal collapse (476 CE)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PERSIA AND PHOENICIA ===== -->
+<div class="panel" id="panel-persia">
+  <div class="sbadge civ">Persia, Phoenicia, and Zoroastrianism</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Zoroastrianism / Zarathustra - Detailed Notes</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Zarathustra (Zoroaster) - Life and Context</div>
+      <div class="atext"><p>The prophet <strong>Zarathustra</strong> (Greek: Zoroaster) is believed to have lived in ancient Iran/Central Asia, with dates disputed - scholars propose anywhere from <strong>1500 BCE to 600 BCE</strong>. He received a divine vision of Ahura Mazda and began preaching a reformed religion against the polytheistic <em>daeva</em> worship of his contemporaries. His teachings were compiled in the <em>Gathas</em> (hymns) within the larger sacred text, the <em>Avesta</em>.</p></div>
+      <div class="subh">View on God</div>
+      <div class="kp">
+        <li><strong>Ahura Mazda</strong> ("Wise Lord"): The one supreme, uncreated deity. Creator of all existence, the embodiment of truth, righteousness, and light. Unlike the gods of other ancient religions, Ahura Mazda is entirely good - evil is not his creation.</li>
+        <li><strong>Angra Mainyu / Ahriman</strong> ("Destructive Spirit"): The opponent of Ahura Mazda, source of all evil, darkness, and destruction. Not equal to Ahura Mazda in ultimate power, but powerful in this age.</li>
+      </div>
+      <div class="subh">Cosmic Dualism</div>
+      <div class="atext"><p>The central Zoroastrian teaching is the cosmic battle between good (<em>asha</em> - truth/righteousness) and evil (<em>druj</em> - falsehood/deceit). This dualism operates at every level: cosmic, social, and individual. Every human being, every thought, word, and deed, participates in this cosmic struggle.</p></div>
+      <div class="subh">Free Will and Morality</div>
+      <div class="kp">
+        <li>Zoroastrianism was revolutionary in insisting that <strong>all human beings have free will</strong> to choose between good and evil.</li>
+        <li>The <em>Threefold Path</em>: Good Thoughts (Humata), Good Words (Hukhta), Good Deeds (Hvarshta). Moral life consists in consistently choosing these over their opposites.</li>
+        <li>Moral choices have cosmic significance - each virtuous act strengthens Ahura Mazda; each evil act strengthens Angra Mainyu.</li>
+      </div>
+      <div class="subh">Eschatology and Afterlife</div>
+      <div class="kp">
+        <li><strong>Chinvat Bridge:</strong> After death, the soul crosses the Chinvat Bridge of Judgment. For the righteous, it widens into a paradise road; for the wicked, it narrows to a knife's edge and they fall into hell.</li>
+        <li><strong>Heaven (Vohu Garo) and Hell (Druj Demana):</strong> Temporary states until the Final Renovation of the World.</li>
+        <li><strong>Frashokereti (Final Renovation):</strong> At the end of time, Ahura Mazda will defeat Angra Mainyu definitively, the dead will be resurrected, and the world will be renewed into a perfect, evil-free existence.</li>
+        <li><strong>Saoshyant (Savior/Messiah):</strong> A future world-savior, born of a virgin from Zarathustra's preserved seed, who will lead humanity in the final battle against evil.</li>
+      </div>
+      <div class="subh">Symbolism and Religious Practice</div>
+      <div class="kp">
+        <li><strong>Fire (Atar):</strong> Sacred fire represents Ahura Mazda's divine light and wisdom. Fire temples maintain eternal sacred flames. Fire ceremonies (Yasna) are central rituals.</li>
+        <li><strong>Magi:</strong> The priestly class of Zoroastrianism. The word "magic" derives from "Magi" - reflecting their reputation for esoteric knowledge. The Three Wise Men of the Christian nativity story are traditionally identified as Zoroastrian Magi.</li>
+        <li><strong>Navjote:</strong> Initiation ceremony in which a child formally enters the Zoroastrian faith, receiving the sacred shirt (sudreh) and cord (kusti).</li>
+      </div>
+      <div class="subh">View of Philosophy</div>
+      <div class="atext"><p>Zoroastrianism introduced a rational, ethical framework to religion - emphasizing that the universe is morally ordered, that human reason can discern right from wrong, and that moral progress is possible and required. This philosophical dimension distinguished it from the largely magical and polytheistic religions of the ancient Near East. Zarathustra's insistence on the primacy of moral choice over ritual observance was philosophically revolutionary.</p></div>
+      <div class="subh">Influence on Other Religions - Critical Point for Exams</div>
+      <div class="kp">
+        <li><strong>Judaism:</strong> During the Babylonian Exile (586–539 BCE), Jews were exposed to Zoroastrian theology. Concepts of Satan (as a supernatural evil opponent), heaven and hell, resurrection of the dead, final judgment, and the Messiah all appear in later Judaism after this contact.</li>
+        <li><strong>Christianity:</strong> The concept of Satan, the Last Judgment, heaven and hell, the resurrection, and the virgin birth of the Saoshyant all have Zoroastrian parallels. Early Christian theology is deeply shaped by ideas that entered Judaism from Zoroastrianism.</li>
+        <li><strong>Islam:</strong> The moral dualism, final judgment, heaven and hell, and messianic concepts in Islam also reflect this tradition.</li>
+      </div>
+      <div class="subh">Criticism</div>
+      <div class="atext"><p>Critics note that Zoroastrian dualism presents a logical problem: if Ahura Mazda is all-good and all-powerful, why did he permit Angra Mainyu to exist and create evil? Zoroastrianism addresses this by making Angra Mainyu a self-created, uncreated evil spirit - but this effectively limits Ahura Mazda's omnipotence. Later Zurvanism (a heterodox Zoroastrian school) attempted to resolve this by positing a supreme deity, Zurvan (Time), who fathered both Ahura Mazda and Angra Mainyu - but this contradicted strict Zoroastrian monotheism.</p></div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Phoenician Civilization - Sea Trade, Alphabet, Successors</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="atext"><p>See <strong>Long Question 3</strong> in the Long Questions tab for the complete essay. Key additional notes:</p></div>
+      <div class="subh">Timeline</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 3000 BCE</div><div class="tl-text">Early Byblos established as trading port. Egyptian-Phoenician trade begins.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1050 BCE</div><div class="tl-text">Phoenician alphabet standardized (22 letters). Spread through Mediterranean trade.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 814 BCE</div><div class="tl-text">Carthage founded by Tyre. Becomes greatest Phoenician colony.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 800 BCE</div><div class="tl-text">Greeks adopt and adapt the Phoenician alphabet, adding vowels.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">264–146 BCE</div><div class="tl-text">Three Punic Wars between Rome and Carthage. Carthage destroyed 146 BCE.</div></div></div>
+      </div>
+      <div class="subh">Effect on Greek Civilization</div>
+      <div class="kp">
+        <li>The Greek alphabet (and through it, all Western alphabets) derives directly from Phoenician.</li>
+        <li>Greek artistic development in the "Orientalizing Period" (c. 750–600 BCE) shows massive Phoenician influence - animal friezes, mythological hybrid creatures (sphinx, griffin), decorative techniques.</li>
+        <li>Greek myth absorbed Phoenician elements: <em>Europa</em> (Phoenician princess abducted by Zeus), <em>Cadmus</em> (Phoenician who brought the alphabet to Greece), <em>Adonis</em> (Phoenician dying-and-rising deity adopted into Greek religion).</li>
+        <li>Phoenician merchants introduced the olive oil and wine trade to the Greeks, who then developed and expanded these exports throughout the Mediterranean.</li>
+      </div>
+      <div class="subh">Effect on Roman Civilization</div>
+      <div class="kp">
+        <li><strong>The Punic Wars</strong> (264–146 BCE) were triggered by Phoenician Carthage's dominance in the western Mediterranean threatening Roman expansion. These wars profoundly shaped Roman military organization, naval power, and imperial ambition.</li>
+        <li>Hannibal Barca's invasion of Italy (218–202 BCE) - crossing the Alps with war elephants - came within a stroke of destroying Rome and remains one of history's greatest military campaigns.</li>
+        <li>The destruction of Carthage (146 BCE) left Rome the undisputed master of the western Mediterranean, enabling the full development of the Roman Empire.</li>
+        <li>Latin absorbed Phoenician/Punic loanwords; Punic culture in North Africa influenced early Christianity (Tertullian and Augustine were North Africans in the Roman Carthage tradition).</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ROME ===== -->
+<div class="panel" id="panel-rome">
+  <div class="sbadge civ">Roman Civilization</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Roman Economic System, Slavery, and Tax System</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Economic Structure of the Roman Empire</div>
+      <div class="atext"><p>The Roman Empire's economy was predominantly agricultural (perhaps 80% of the population engaged in farming), supplemented by trade, manufacturing, and mining. Unlike modern market economies, Rome did not develop capitalism or industrial production; its economy relied heavily on slave labor and conquest-funded wealth transfers.</p></div>
+      <div class="subh">Agriculture</div>
+      <div class="kp">
+        <li>Large slave-worked estates (<em>latifundia</em>) dominated Italian agriculture, gradually displacing small free farmers who could not compete with slave labor.</li>
+        <li>Main crops: grain (especially wheat from Egypt and North Africa), olives, grapes/wine. Roman trade in grain was the lifeline of the empire's urban populations.</li>
+        <li>The <em>annona</em> (grain supply system) distributed subsidized or free grain to Roman citizens - "bread and circuses" policy to maintain urban social stability.</li>
+      </div>
+      <div class="subh">Slavery</div>
+      <div class="kp">
+        <li>Slavery was fundamental to the Roman economy. Slaves comprised approximately 30–40% of the Italian population at the empire's height (perhaps 2–3 million slaves in Italy alone).</li>
+        <li>Slaves were acquired primarily through conquest, purchase, and birth to enslaved mothers. Major slave markets operated at Delos (Aegean) and Rome's Forum.</li>
+        <li>Slave work ranged from agricultural labor on latifundia, to domestic service, to skilled crafts, teaching, medicine, and administration. Educated Greek slaves were highly valued as tutors and secretaries.</li>
+        <li>The most brutal slave labor was in Roman mines (gold, silver, copper) where life expectancy was extremely short.</li>
+        <li>Legal status: slaves were property (res) with no legal rights. A master could legally kill his own slave (though later laws restricted this). Manumission (freeing of slaves) was common - freedmen (liberti) formed a distinct social class.</li>
+      </div>
+      <div class="subh">Slave Wars (Social and Economic Effects)</div>
+      <div class="kp">
+        <li><strong>First Servile War (135–132 BCE, Sicily):</strong> Led by Eunus (a slave claiming prophetic powers). Up to 200,000 slaves revolted in Sicily, briefly controlling much of the island before Roman suppression.</li>
+        <li><strong>Second Servile War (104–100 BCE, Sicily):</strong> Another major Sicilian slave revolt. Suppressed by Manius Aquillius.</li>
+        <li><strong>Third Servile War / Spartacus Revolt (73–71 BCE):</strong> Led by <em>Spartacus</em> (a Thracian gladiator), with perhaps 70,000–120,000 slaves. Defeated three Roman armies. Eventually crushed by Marcus Licinius Crassus; 6,000 survivors crucified along the Appian Way.</li>
+        <li><strong>Effects on Rome:</strong> Slave wars demonstrated the systemic risk of the slave economy; prompted debates on slave treatment; accelerated the shift toward <em>coloni</em> (tenant farmers) in late antiquity as slave supplies diminished after conquest ceased.</li>
+      </div>
+      <div class="subh">Tax System</div>
+      <div class="kp">
+        <li><strong>Tributum (direct tax):</strong> Property and poll taxes levied on inhabitants of provinces. Roman citizens in Italy were initially exempt (until later periods).</li>
+        <li><strong>Portoria (customs duties):</strong> Taxes on goods passing through Roman territory, typically 2–5% of value.</li>
+        <li><strong>Vicesima hereditatium:</strong> 5% inheritance tax on Roman citizens, introduced by Augustus.</li>
+        <li><strong>Tax farming (publicani):</strong> The Roman state contracted private tax collectors (publicani) to collect provincial taxes, paying a lump sum upfront and keeping the excess - a notoriously corrupt system that oppressed provincial populations.</li>
+        <li><strong>Late Empire crisis:</strong> Increased military costs drove continuous tax increases in the 3rd-4th centuries CE. Heavy taxation, combined with currency debasement, devastated the middle classes and drove rural peasants into debt-serfdom, contributing to the empire's economic collapse.</li>
+      </div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Social Classes and Rebellions in Rome</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Roman Social Structure</div>
+      <table class="cmp-table">
+        <tr><th>Class</th><th>Who They Were</th><th>Rights/Status</th></tr>
+        <tr><td>Patricians</td><td>Ancient noble families, hereditary aristocracy</td><td>Originally monopolized all political offices, priesthoods, and the Senate</td></tr>
+        <tr><td>Equites (Knights)</td><td>Wealthy property-owning class below patricians</td><td>Could hold military and administrative posts; major role in commerce and tax farming</td></tr>
+        <tr><td>Plebeians</td><td>Free Roman citizens of non-patrician birth</td><td>Political rights won gradually through Struggle of the Orders (494–287 BCE)</td></tr>
+        <tr><td>Liberti (Freedmen)</td><td>Freed slaves; could gain Roman citizenship</td><td>Social stigma remained; limited political access but could accumulate wealth</td></tr>
+        <tr><td>Peregrini</td><td>Free non-citizen provincials</td><td>No Roman political rights until Edict of Caracalla (212 CE) granted universal citizenship</td></tr>
+        <tr><td>Slaves</td><td>Property, no legal personhood</td><td>No rights whatsoever; could be freed (manumission)</td></tr>
+      </table>
+      <div class="subh">Struggle of the Orders (494–287 BCE)</div>
+      <div class="atext"><p>The <strong>Conflict of the Orders</strong> was a political struggle between the patrician aristocracy and the plebeian majority over political rights. Plebeians gradually won key concessions:</p></div>
+      <div class="kp">
+        <li>494 BCE: First Secession of the Plebs - plebeians withdrew from Rome, forcing patricians to create the <em>Tribune of the Plebs</em> (Tribuni Plebis) - magistrates with power to veto patrician actions (tribunician veto, sacrosanctity).</li>
+        <li>450 BCE: <em>Twelve Tables</em> - first written Roman law code, making law public and accessible to plebeians.</li>
+        <li>367 BCE: <em>Licinian-Sextian Laws</em> - one of the two consuls must be plebeian.</li>
+        <li>287 BCE: <em>Lex Hortensia</em> - decisions of the Plebeian Assembly (plebiscita) binding on all Romans, including patricians. Formal end of the Conflict.</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INDUS AND OTHERS ===== -->
+<div class="panel" id="panel-indus">
+  <div class="sbadge civ">Indus Valley, Aegean, Neolithic &amp; Paleolithic</div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">1</div><div class="qtitle">Minoan / Aegean Civilization</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Minoan Civilization</strong> (c. 3000–1100 BCE) was Europe's first advanced civilization, centered on the island of <strong>Crete</strong> in the Aegean Sea. Named by archaeologist <em>Arthur Evans</em> after the legendary King Minos of Greek myth, the Minoans were a sophisticated Bronze Age culture that preceded and influenced classical Greek civilization.</p></div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 3000 BCE</div><div class="tl-text">Early Minoan settlements on Crete. Bronze Age begins in Aegean.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 2000 BCE</div><div class="tl-text">First palace period. Palace of Knossos built. Linear A script (still undeciphered) in use.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1700 BCE</div><div class="tl-text">Earthquake destroys palaces; new Neo-palatial period. Knossos rebuilt on grander scale. Minoan influence spreads across Aegean.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1600 BCE</div><div class="tl-text">Mycenaean Greeks (from mainland) rise. Begin adopting and competing with Minoan culture.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1450 BCE</div><div class="tl-text">Sudden collapse of Minoan civilization. Mycenaeans take control of Knossos. Linear B script (Greek) replaces Linear A.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1200 BCE</div><div class="tl-text">"Bronze Age Collapse" - Mycenaean civilization also collapses. Greek Dark Ages begin.</div></div></div>
+      </div>
+      <div class="subh">Key Features of Minoan Civilization</div>
+      <div class="kp">
+        <li><strong>Palace culture:</strong> Large, complex palaces (Knossos, Phaistos, Malia, Zakros) served as administrative, religious, and economic centers. The Palace of Knossos covered approximately 13,000 square meters with multi-story buildings and elaborate drainage systems.</li>
+        <li><strong>Trade network:</strong> Minoan merchants traded pottery, olive oil, timber, and textiles across the eastern Mediterranean - Egypt, Levant, Anatolia, and mainland Greece. Egyptian tomb paintings depict "Keftiu" (Cretans) bringing gifts.</li>
+        <li><strong>Writing:</strong> Two writing systems - <em>Linear A</em> (undeciphered, possibly administrative records) and the earlier <em>Cretan Hieroglyphics</em>. Linear B (an early form of Greek used at Knossos after Mycenaean takeover) was deciphered by Michael Ventris in 1952.</li>
+        <li><strong>Religion:</strong> A prominent female deity (possibly a Mother Goddess), bull symbolism (<em>bull-leaping</em> rituals depicted in frescoes), and sacred double axes (labrys) are prominent features. The labyrinth legend (home of the Minotaur) may originate in the complex palace of Knossos.</li>
+        <li><strong>Art:</strong> Vibrant frescoes depicting nature scenes (dolphins, flowers, birds), athletic contests (bull-leaping), and processions. Minoan art is notable for its joyfulness, naturalism, and sophistication.</li>
+        <li><strong>Decline:</strong> The cause of the sudden Minoan collapse around 1450 BCE remains debated. The <em>Thera (Santorini) volcanic eruption</em> (c. 1628 BCE) caused massive destruction and a tsunami that devastated Minoan ports. Mycenaean invasion and takeover likely followed the civilization's weakening.</li>
+      </div>
+      <div class="subh">Influence on Greek Civilization</div>
+      <div class="atext"><p>The Minoans were the first great civilizers of the Aegean. Greek myths (the Minotaur, King Minos, Daedalus) preserve memories of Minoan Crete. Minoan artistic motifs (sea creatures, spirals, naturalistic figures) were adopted by Mycenaean Greeks. Minoan trade established the interconnected Aegean world that Greek civilization would later dominate. In this sense, the Minoans are the "grandparents" of classical Greek civilization.</p></div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">2</div><div class="qtitle">Neolithic Age: Cultural Progress and Civilization</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Neolithic Age</strong> ("New Stone Age") is the final phase of the Stone Age, dated approximately <strong>10,000–3,000 BCE</strong> (varying by region). It is defined by the development of agriculture, animal domestication, settled communities, pottery, and weaving - the "Neolithic Revolution" that fundamentally transformed human life from nomadic hunter-gatherer existence to settled agricultural civilization.</p></div>
+      <div class="subh">Timeline</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 10,000 BCE</div><div class="tl-text">Neolithic Revolution begins in the "Fertile Crescent" (modern Iraq/Syria/Turkey/Israel). First agriculture: wheat and barley cultivation.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 9000 BCE</div><div class="tl-text">Animal domestication begins: goats, sheep, pigs, cattle. First permanent villages (Jericho, one of world's oldest towns).</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 7000 BCE</div><div class="tl-text">Çatalhöyük (Turkey): large Neolithic settlement with thousands of inhabitants. Evidence of art, religious symbols, domesticated crops.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 5000–3000 BCE</div><div class="tl-text">Metal use begins (Chalcolithic/Copper Age). Neolithic transitions into Bronze Age across different regions. Proto-writing and complex societies emerge.</div></div></div>
+      </div>
+      <div class="subh">Cultural Progress of the Neolithic Age</div>
+      <div class="kp">
+        <li><strong>Agriculture (Neolithic Revolution):</strong> The shift from hunting and gathering to farming was the most consequential transformation in human history. Domestication of plants (wheat, barley, rice, maize - in different regions) created food surpluses, enabling population growth, specialization, and the development of civilization.</li>
+        <li><strong>Animal domestication:</strong> Dogs (for herding and protection), sheep and goats (wool, milk, meat), cattle (labor, meat, milk), pigs (meat) - all domesticated during the Neolithic. This transformed subsistence strategy and enabled pastoral societies alongside agricultural ones.</li>
+        <li><strong>Pottery:</strong> Ceramic vessels (fired clay) appeared in the Neolithic, enabling food storage, cooking, and transport. Pottery styles are key archaeological markers for identifying and dating Neolithic cultures.</li>
+        <li><strong>Weaving and textiles:</strong> Evidence of loom weights and woven fabrics shows that textile production emerged in the Neolithic, using plant fibers (flax) and animal fibers (wool). Clothing became more practical and varied.</li>
+        <li><strong>Architecture:</strong> Permanent settlements required permanent architecture. Neolithic buildings were initially circular pit-houses; later rectangular mud-brick structures. Megalithic monuments (<em>Stonehenge</em>, c. 3000 BCE; <em>Newgrange</em>, Ireland; dolmens) reflect sophisticated engineering and communal organization.</li>
+        <li><strong>Religion and ritual:</strong> Evidence of burial practices (bodies interred with grave goods), ancestor veneration, fertility figurines ("Venus figurines"), and communal religious structures suggests complex religious life in the Neolithic. Çatalhöyük shows elaborate wall paintings of hunting and religious scenes.</li>
+        <li><strong>Social organization:</strong> Settled life created social differentiation. Evidence of wealth disparities in burials indicates emerging social hierarchies. Communities required governance, conflict resolution, and collective labor organization (irrigation, monument building).</li>
+        <li><strong>Trade:</strong> Neolithic communities traded obsidian (volcanic glass for tools), flint, pottery, and shells across considerable distances, demonstrating early economic networks.</li>
+      </div>
+      <div class="subh">Significance</div>
+      <div class="atext"><p>The Neolithic Age is the foundation of all subsequent human civilization. Every complex society - from ancient Egypt and Mesopotamia to modern states - was built on the agricultural and social foundations laid during this period. The philosopher Gordon Childe called it the "Neolithic Revolution" - recognizing its world-historical importance comparable to the later Industrial Revolution.</p></div>
+    </div>
+  </div>
+
+  <div class="card civ" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">3</div><div class="qtitle">Paleolithic Age - Timeline, Art, Humanity's Progress</div></div>
+      <span class="qmarks">Notes</span><span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">Introduction</div>
+      <div class="atext"><p>The <strong>Paleolithic Age</strong> ("Old Stone Age," from Greek: palaios = old, lithos = stone) spans the vast majority of human prehistory, from approximately <strong>2.5 million years ago to 10,000 BCE</strong>. It covers the period from the earliest stone tool use by hominids to the development of agriculture. The Paleolithic is subdivided into: <em>Lower Paleolithic</em> (2.5 million–300,000 BCE), <em>Middle Paleolithic</em> (300,000–50,000 BCE), and <em>Upper Paleolithic</em> (50,000–10,000 BCE).</p></div>
+      <div class="subh">Timeline</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 2.5 million BCE</div><div class="tl-text">Homo habilis uses first stone tools (Oldowan tools) in Africa. Lower Paleolithic begins.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 1.7 million BCE</div><div class="tl-text">Homo erectus. More sophisticated Acheulean tools (hand axes). First use of fire (contested; perhaps 1 million BCE). Migration out of Africa begins.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 300,000 BCE</div><div class="tl-text">Homo sapiens (anatomically modern humans) appear in Africa. Middle Paleolithic. Neanderthals dominant in Europe.</td></div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 70,000 BCE</div><div class="tl-text">Behavioral modernity: symbolic thinking, language, planning. "Cognitive Revolution" (Yuval Noah Harari's term). Out-of-Africa migration intensifies.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 40,000 BCE</div><div class="tl-text">Upper Paleolithic. Homo sapiens reach Europe. Neanderthals extinct by c. 30,000 BCE. Explosion of cave art, bone flutes, figurines.</div></div></div>
+        <div class="tl-item"><div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-date">c. 10,000 BCE</div><div class="tl-text">End of last Ice Age. Paleolithic ends. Neolithic Revolution begins. Megafauna extinction (mammoths, mastodons).</div></div></div>
+      </div>
+      <div class="subh">Paleolithic Art</div>
+      <div class="kp">
+        <li><strong>Cave paintings:</strong> The earliest known art - paintings of animals (horses, bison, mammoths, aurochs) in caves at <em>Lascaux</em> (France, c. 17,000 BCE), <em>Altamira</em> (Spain, c. 14,000 BCE), and <em>Chauvet</em> (France, c. 36,000 BCE - oldest known). Painted with natural pigments (ochre, manganese, charcoal). These paintings demonstrate remarkable artistic sophistication - perspective, movement, shading.</li>
+        <li><strong>Venus figurines:</strong> Small portable sculptures of female figures with exaggerated reproductive features (breasts, hips). Found across Europe (the <em>Venus of Willendorf</em>, c. 25,000 BCE). Possibly fertility symbols or representations of a mother goddess.</li>
+        <li><strong>Portable art:</strong> Carved bone, ivory, and antler objects depicting animals and humans. The <em>Lion Man of Hohlenstein-Stadel</em> (Germany, c. 40,000 BCE) - a lion-headed human figurine - may be the world's oldest known mythological/religious image.</li>
+        <li><strong>Music:</strong> Bone flutes (the <em>Divje Babe flute</em> from Slovenia, c. 60,000 BCE) suggest music was part of Paleolithic culture - possibly the oldest known musical instrument.</li>
+      </div>
+      <div class="subh">Humanity's Progress in the Paleolithic</div>
+      <div class="kp">
+        <li><strong>Tool development:</strong> From crude Oldowan pebble tools to sophisticated Acheulean hand axes to the refined Mousterian (Neanderthal) and Aurignacian (modern human) industries. Tool-making drove cognitive development.</li>
+        <li><strong>Fire mastery:</strong> Control of fire (possibly 1 million BCE; certain by 400,000 BCE) transformed human life - enabling warmth, cooking (which improved caloric intake and brain development), protection from predators, and light for nighttime activities.</li>
+        <li><strong>Language:</strong> While direct evidence is impossible, the cognitive complexity demonstrated by Paleolithic art, ritual, and long-distance trade suggests sophisticated language existed in the Upper Paleolithic (perhaps earlier).</li>
+        <li><strong>Social organization:</strong> Hunter-gatherer bands of 20–50 people. Evidence of care for injured and elderly individuals suggests social bonds and empathy (a Neanderthal burial at Shanidar Cave, Iraq, shows an elderly disabled man who was cared for by his community).</li>
+        <li><strong>Ritual and religion:</strong> Burial of the dead with grave goods, use of ochre (red pigment) in burials, and deliberate placement of bodies suggests belief in an afterlife even in the Paleolithic.</li>
+      </div>
+      <div class="subh">Value / Significance</div>
+      <div class="atext"><p>The Paleolithic represents 99% of human history. Every fundamental capacity that makes us human - language, art, social cooperation, symbolic thought, spiritual feeling, tool use, fire control - was developed during this vast period. The Paleolithic is not "primitive" in a pejorative sense; Paleolithic humans were anatomically and cognitively identical to modern humans, living lives of remarkable complexity within their ecological context. The transition to the Neolithic did not make humans "smarter" - it made their social organizations larger and more complex.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MEMORIZE ===== -->
+<div class="panel" id="panel-memo">
+  <div class="sbadge memo">Key Facts to Memorize</div>
+  <div class="callout warn">These are the dates, names, quotes, and lists most likely to appear in exam answers. Review this tab the night before your exam.</div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">A</div><div class="qtitle">Critical Dates - Civilizations Timeline</div></div>
+      <span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <table class="cmp-table">
+        <tr><th>Date</th><th>Event</th><th>Civilization</th></tr>
+        <tr><td>c. 3200–3100 BCE</td><td>Hieroglyphics writing + unification of Egypt</td><td>Egypt</td></tr>
+        <tr><td>c. 3400–3200 BCE</td><td>Cuneiform writing invented</td><td>Sumer/Mesopotamia</td></tr>
+        <tr><td>c. 2686–2181 BCE</td><td>Old Kingdom (pyramids)</td><td>Egypt</td></tr>
+        <tr><td>c. 2560 BCE</td><td>Great Pyramid of Giza built (Khufu)</td><td>Egypt</td></tr>
+        <tr><td>c. 2600–1900 BCE</td><td>Mature Harappan Phase</td><td>Indus Valley</td></tr>
+        <tr><td>c. 2100 BCE</td><td>Ziggurat of Ur; Code of Ur-Nammu</td><td>Sumer</td></tr>
+        <tr><td>c. 1754 BCE</td><td>Code of Hammurabi</td><td>Babylon</td></tr>
+        <tr><td>c. 1550–1070 BCE</td><td>New Kingdom</td><td>Egypt</td></tr>
+        <tr><td>c. 1279–1213 BCE</td><td>Reign of Ramesses II (Treaty of Kadesh c. 1259)</td><td>Egypt</td></tr>
+        <tr><td>c. 1050 BCE</td><td>Phoenician alphabet standardized</td><td>Phoenicia</td></tr>
+        <tr><td>912–612 BCE</td><td>Neo-Assyrian Empire</td><td>Assyria</td></tr>
+        <tr><td>814 BCE</td><td>Carthage founded</td><td>Phoenicia</td></tr>
+        <tr><td>770–221 BCE</td><td>Hundred Schools of Thought (Confucius, Laozi, etc.)</td><td>China</td></tr>
+        <tr><td>594 BCE</td><td>Solon's reforms in Athens</td><td>Athens</td></tr>
+        <tr><td>550 BCE</td><td>Cyrus the Great founds Persian Empire</td><td>Persia</td></tr>
+        <tr><td>539 BCE</td><td>Cyrus conquers Babylon; Cyrus Cylinder</td><td>Persia</td></tr>
+        <tr><td>508/7 BCE</td><td>Cleisthenes' democratic reforms</td><td>Athens</td></tr>
+        <tr><td>499–449 BCE</td><td>Greco-Persian Wars (Marathon 490, Salamis 480)</td><td>Greece/Persia</td></tr>
+        <tr><td>470–399 BCE</td><td>Life of Socrates</td><td>Greece</td></tr>
+        <tr><td>461–429 BCE</td><td>Age of Pericles</td><td>Athens</td></tr>
+        <tr><td>431–404 BCE</td><td>Peloponnesian War (Athens vs. Sparta)</td><td>Greece</td></tr>
+        <tr><td>428–348 BCE</td><td>Life of Plato; Academy founded c. 387 BCE</td><td>Greece</td></tr>
+        <tr><td>384–322 BCE</td><td>Life of Aristotle</td><td>Greece</td></tr>
+        <tr><td>336–323 BCE</td><td>Alexander the Great's conquests</td><td>Greece/Hellenistic</td></tr>
+        <tr><td>323–30 BCE</td><td>Hellenistic Period</td><td>Hellenistic</td></tr>
+        <tr><td>c. 300 BCE</td><td>Euclid's Elements</td><td>Hellenistic</td></tr>
+        <tr><td>264–146 BCE</td><td>Three Punic Wars</td><td>Rome/Carthage</td></tr>
+        <tr><td>73–71 BCE</td><td>Spartacus Revolt</td><td>Rome</td></tr>
+        <tr><td>31 BCE–476 CE</td><td>Roman Empire</td><td>Rome</td></tr>
+        <tr><td>410 CE</td><td>Visigoths sack Rome</td><td>Rome</td></tr>
+        <tr><td>476 CE</td><td>Fall of Western Roman Empire (Romulus Augustulus deposed)</td><td>Rome</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">B</div><div class="qtitle">Key Rulers to Know by Civilization</div></div>
+      <span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="memo-box">
+        <div class="memo-label">★ Egypt</div>
+        <ul>
+          <li>Narmer / Menes - unifier of Egypt (c. 3100 BCE)</li>
+          <li>Djoser - first pyramid (Step Pyramid)</li>
+          <li>Khufu (Cheops) - Great Pyramid of Giza</li>
+          <li>Hatshepsut - great female pharaoh, trader</li>
+          <li>Akhenaten - monotheistic revolution (Aten)</li>
+          <li>Tutankhamun - "Boy King" restored Amun worship</li>
+          <li>Ramesses II "The Great" - builder, warrior, Treaty of Kadesh</li>
+          <li>Cleopatra VII - last pharaoh (Ptolemaic)</li>
+        </ul>
+      </div>
+      <div class="memo-box">
+        <div class="memo-label">★ Persia (Achaemenid)</div>
+        <ul>
+          <li>Cyrus II (the Great) - founder, conquered Lydia and Babylon; Cyrus Cylinder</li>
+          <li>Cambyses II - conquered Egypt</li>
+          <li>Darius I (the Great) - codified administration; satrapy system; Royal Road</li>
+          <li>Xerxes I - invaded Greece (Thermopylae, Salamis)</li>
+          <li>Darius III - defeated by Alexander the Great (330 BCE)</li>
+        </ul>
+      </div>
+      <div class="memo-box">
+        <div class="memo-label">★ Athens (Democratic Development)</div>
+        <ul>
+          <li>Draco (621 BCE) - first written Athenian laws (extremely harsh - "draconian")</li>
+          <li>Solon (594 BCE) - debt cancellation, property-class reform</li>
+          <li>Peisistratos (560–527 BCE) - tyrant; promoted arts and Athenian identity</li>
+          <li>Cleisthenes (508 BCE) - true founder of democracy; 10 tribal demes</li>
+          <li>Pericles (461–429 BCE) - radical democracy; Parthenon; Athenian empire</li>
+        </ul>
+      </div>
+      <div class="memo-box">
+        <div class="memo-label">★ Rome</div>
+        <ul>
+          <li>Romulus and Remus - legendary founders (753 BCE)</li>
+          <li>Julius Caesar (100–44 BCE) - end of Republic; dictator; assassinated Ides of March</li>
+          <li>Augustus (r. 27 BCE–14 CE) - first emperor; Pax Romana begins</li>
+          <li>Nero (54–68 CE) - notoriously cruel; Great Fire of Rome</li>
+          <li>Hadrian (117–138 CE) - builder (Pantheon, Hadrian's Wall)</li>
+          <li>Constantine I (r. 306–337 CE) - legalized Christianity (Edict of Milan 313 CE)</li>
+          <li>Romulus Augustulus (475–476 CE) - last Western Roman Emperor</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">C</div><div class="qtitle">Scholar Quotes and Attributions to Use in Answers</div></div>
+      <span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="def-box"><strong>Herodotus on Egypt:</strong> "Egypt is the gift of the Nile." - Herodotus, <em>Histories</em>. Use when discussing Egypt's geography and agricultural basis.</div>
+      <div class="def-box"><strong>Will Durant on Egypt:</strong> "Egypt gave us geometry, medicine, the calendar, and much else that has come to us through the Greeks." - <em>The Story of Civilization</em>. Use when evaluating Egyptian contributions.</div>
+      <div class="def-box"><strong>Pericles' Funeral Oration:</strong> "Our constitution... favors the many instead of the few; this is why it is called a democracy." - Thucydides, <em>History of the Peloponnesian War</em>. Use when discussing Athenian democracy.</div>
+      <div class="def-box"><strong>Socrates:</strong> "An unexamined life is not worth living." - Plato, <em>Apology</em>. Use when discussing Greek philosophy and the purpose of ethics.</div>
+      <div class="def-box"><strong>Heraclitus:</strong> "You cannot step into the same river twice." Use when discussing Pre-Socratic philosophy and the concept of flux.</div>
+      <div class="def-box"><strong>Protagoras:</strong> "Man is the measure of all things." Use when discussing Sophism and moral relativism.</div>
+      <div class="def-box"><strong>Aristotle:</strong> "Man is by nature a political animal." - <em>Politics</em>. Use when discussing Aristotle, Athens, democracy.</div>
+      <div class="def-box"><strong>Edward Gibbon on Rome's fall:</strong> "The decline of Rome was the natural and inevitable effect of immoderate greatness." - <em>Decline and Fall of the Roman Empire</em> (1776). Use when discussing Roman decline.</div>
+      <div class="def-box"><strong>Confucius:</strong> "Do not impose on others what you yourself do not want." (The Confucian Golden Rule) - <em>Analects</em>. Use when discussing Chinese philosophy.</div>
+      <div class="def-box"><strong>Barry Kemp on Egypt:</strong> Egyptian civilization was driven by a unique ideological coherence centered on Ma'at (truth, justice, cosmic order). - <em>Ancient Egypt: Anatomy of a Civilization</em>. Use when discussing Egyptian political ideology.</div>
+    </div>
+  </div>
+
+  <div class="card lq" onclick="toggleCard(this)">
+    <div class="card-hd">
+      <div class="qm"><div class="qnum">D</div><div class="qtitle">Exam Writing Strategy</div></div>
+      <span class="chev">&#8964;</span>
+    </div>
+    <div class="card-body">
+      <div class="subh">For Short Questions (5 marks, ~150–200 words)</div>
+      <div class="kp">
+        <li>Open with a direct definition or statement - no wasted words on a general introduction.</li>
+        <li>Give 4–6 specific, numbered or clear bullet-style points.</li>
+        <li>Include at least one date, one name, and one specific achievement per answer.</li>
+        <li>Close with a sentence on historical significance or legacy.</li>
+        <li>Avoid lengthy introductions - get to the substance immediately.</li>
+      </div>
+      <div class="subh">For Long Questions (12.5 marks, ~400–600 words)</div>
+      <div class="kp">
+        <li>Write a short introduction naming the civilization, its period, location, and significance.</li>
+        <li>Organize into clear sections - use subheadings if the exam allows.</li>
+        <li>Use specific names, dates, and places - vague generalizations lose marks.</li>
+        <li>Include a scholar quote where appropriate (Herodotus, Gibbon, Durant, etc.).</li>
+        <li>Write a genuine conclusion that synthesizes your argument and states historical importance.</li>
+        <li>For "evaluate" or "analyze" questions: present both strengths AND criticisms/limitations.</li>
+      </div>
+      <div class="subh">Common Mistakes to Avoid</div>
+      <div class="kp">
+        <li>Do NOT confuse Sumerians with Babylonians - Sumerians came first (4500–2000 BCE); Babylonians built on their legacy.</li>
+        <li>Do NOT call Hammurabi a Sumerian - he was Babylonian (Amorite).</li>
+        <li>Do NOT confuse Cyrus (founder of Persia) with Darius (who built the administrative system).</li>
+        <li>Do NOT forget that Cleisthenes (not Solon) is the true founder of Athenian democracy.</li>
+        <li>Do NOT confuse the Phoenician alphabet with Egyptian hieroglyphics - they are entirely different systems.</li>
+        <li>Do NOT say the Roman Empire "suddenly" fell - emphasize that it was a centuries-long process.</li>
+        <li>When writing about the Indus Valley, mention that the script remains undeciphered - this demonstrates awareness of scholarly debates.</li>
+      </div>
+      <div class="callout imp">Most important: use specific names and dates in every answer. A history answer without specific names and dates rarely earns full marks. Facts, not generalities, are what examiners reward.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Ancient Civilizations Study Guide — Philosophy Undergraduate, Year 1</p>
+  <p style="margin-top:5px; font-size:11px;">Tap any question to expand. All past paper questions answered in the Long Qs tab.</p>
+</div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>
