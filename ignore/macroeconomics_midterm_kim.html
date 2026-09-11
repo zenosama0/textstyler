@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macroeconomics Study Guide</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --surface:#f7f7f8;
+  --text:#1a1a1a;
+  --muted:#666666;
+  --border:#e3e3e6;
+  --accent:#1a4a8a;
+  --accent-soft:#eaf1f9;
+  --code-bg:#f0f0f2;
+}
+[data-theme="dark"]{
+  --bg:#141517;
+  --surface:#1d1e21;
+  --text:#e8e8ea;
+  --muted:#9a9aa0;
+  --border:#2e2f33;
+  --accent:#7aa7e0;
+  --accent-soft:#232a36;
+  --code-bg:#232428;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Georgia,'Times New Roman',serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  transition:background .2s,color .2s;
+}
+.wrap{max-width:760px;margin:0 auto;padding:24px 20px 80px}
+header{border-bottom:1px solid var(--border);padding:16px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{font-size:1.35rem;font-weight:600}
+header p{color:var(--muted);font-size:.9rem}
+.theme-btn{
+  font:inherit;font-size:.85rem;padding:6px 14px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface);color:var(--text);cursor:pointer;
+}
+.theme-btn:hover{border-color:var(--accent)}
+nav{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin:24px 0}
+nav h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+nav ul{list-style:none;columns:2;column-gap:24px}
+nav li{margin-bottom:4px;break-inside:avoid}
+nav a{color:var(--accent);text-decoration:none;font-size:.92rem}
+nav a:hover{text-decoration:underline}
+@media(max-width:520px){nav ul{columns:1}}
+section{margin-top:44px}
+h2{font-size:1.25rem;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:16px}
+h3{font-size:1.02rem;margin:20px 0 8px;color:var(--accent)}
+p{margin-bottom:12px}
+ul,ol{margin:0 0 14px 22px}
+li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.92rem}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--surface);font-weight:600}
+tr:nth-child(even) td{background:var(--surface)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin:12px 0;font-size:.95rem}
+.formula{
+  font-family:Consolas,'Courier New',monospace;
+  background:var(--code-bg);border:1px solid var(--border);border-radius:6px;
+  padding:10px 14px;margin:10px 0;overflow-x:auto;font-size:.92rem;
+}
+.tag{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:4px;padding:1px 8px;font-size:.78rem;margin-right:6px;font-family:sans-serif}
+.note{color:var(--muted);font-size:.88rem;font-style:italic}
+.key{background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 14px;margin:12px 0;font-size:.94rem}
+hr{border:none;border-top:1px solid var(--border);margin:36px 0}
+footer{color:var(--muted);font-size:.82rem;text-align:center;margin-top:56px;padding-top:20px;border-top:1px solid var(--border)}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+</style>
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>Macroeconomics &mdash; Exam Study Guide</h1>
+    <p>Lecture 1 &amp; 2 &middot; Hasan Al Banna, Southeast University</p>
+  </div>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle dark mode">&#9790; Dark</button>
+</header>
+
+<nav>
+  <h2>Contents</h2>
+  <ul>
+    <li><a href="#l1-what">1. What is Economics?</a></li>
+    <li><a href="#l1-branches">2. Micro vs Macro</a></li>
+    <li><a href="#l1-vars">3. Macroeconomic Variables</a></li>
+    <li><a href="#l1-links">4. Variable Relationships</a></li>
+    <li><a href="#l1-obj">5. Macro Objectives</a></li>
+    <li><a href="#l1-stockflow">6. Stock vs Flow</a></li>
+    <li><a href="#l1-srlr">7. Short Run &amp; Long Run</a></li>
+    <li><a href="#l2-gdp">8. Measuring GDP</a></li>
+    <li><a href="#l2-comp">9. Components of GDP</a></li>
+    <li><a href="#l2-nomreal">10. Nominal &amp; Real GDP</a></li>
+    <li><a href="#l2-deflator">11. GDP Deflator</a></li>
+    <li><a href="#l2-inflation">12. Inflation Rate</a></li>
+    <li><a href="#l2-exp">13. Expenditure Approach</a></li>
+    <li><a href="#l2-inc">14. Income Approach</a></li>
+    <li><a href="#l2-quick">15. Quick Reference</a></li>
+  </ul>
+</nav>
+
+<!-- ============ LECTURE 1 ============ -->
+
+<section id="l1-what">
+<h2>Lecture 1 &middot; What is Economics?</h2>
+<p><strong>Economics</strong> is the study of how society uses <strong>scarce resources</strong> to produce goods and services and distribute them among people. <strong>Scarcity</strong> means resources are limited but wants are unlimited.</p>
+<div class="card">
+  <span class="tag">1776</span><strong>Adam Smith</strong> &mdash; <em>The Wealth of Nations</em>: free markets, competition, and self-interest can drive prosperity with limited government.
+</div>
+<div class="card">
+  <span class="tag">1936</span><strong>J.M. Keynes</strong> &mdash; <em>The General Theory</em>: after the Great Depression, argued government spending and policy are needed to manage the economy.
+</div>
+</section>
+
+<section id="l1-branches">
+<h2>Microeconomics vs Macroeconomics</h2>
+<table>
+  <tr><th>Basis</th><th>Microeconomics</th><th>Macroeconomics</th></tr>
+  <tr><td>Scope of Study</td><td>Individual consumers, firms, and specific markets</td><td>The economy as a whole</td></tr>
+  <tr><td>Main Focus</td><td>Price determination, consumer behavior, firm decisions</td><td>National income, inflation, unemployment, growth</td></tr>
+  <tr><td>Key Variables</td><td>Demand, supply, elasticity, costs, profit</td><td>GDP, inflation rate, unemployment rate, interest rates</td></tr>
+  <tr><td>Level of Analysis</td><td>Individual or industry level</td><td>Aggregate or national level</td></tr>
+  <tr><td>Policy Relevance</td><td>Pricing, taxation, market regulation</td><td>Fiscal and monetary policy</td></tr>
+  <tr><td>Example</td><td>Price of a single product like rice</td><td>Inflation rate or GDP growth of a country</td></tr>
+</table>
+<div class="key"><strong>Micro &harr; Macro Linkage:</strong> Macro outcomes result from millions of micro-level decisions by households and firms. In turn, macro policies (taxation, interest rates) shape micro-level behavior &mdash; the two are closely linked.</div>
+<p class="note">Example: Increased government spending during a recession (macro) can boost overall economic activity and reduce unemployment.</p>
+</section>
+
+<section id="l1-vars">
+<h2>Macroeconomic Variables</h2>
+<ul>
+  <li><strong>GDP</strong> &mdash; total value of goods &amp; services produced</li>
+  <li><strong>National Income</strong> &mdash; total income earned by factors of production</li>
+  <li><strong>Interest Rate</strong> &mdash; cost of borrowing / return on saving</li>
+  <li><strong>Money Supply</strong> &mdash; total money circulating in the economy</li>
+  <li><strong>Exchange Rate</strong> &mdash; value of domestic vs foreign currency</li>
+  <li><strong>Balance of Payments</strong> &mdash; record of international transactions</li>
+  <li><strong>Inflation Rate</strong> &mdash; rate at which the general price level rises</li>
+  <li><strong>Fiscal Deficit</strong> &mdash; gap between govt. expenditure &amp; revenue</li>
+  <li><strong>Growth Rate</strong> &mdash; annual increase in real GDP</li>
+  <li><strong>Unemployment Rate</strong> &mdash; % of labor force without jobs</li>
+  <li><strong>Public Debt</strong> &mdash; total government borrowings</li>
+  <li><strong>Aggregate Demand</strong> &mdash; total spending by households &amp; firms</li>
+</ul>
+<p class="note">Grouped: <strong>Output &amp; Growth</strong> (GDP, GNP, NNP, National Income) &middot; <strong>Prices</strong> (Inflation) &middot; <strong>Labor Market</strong> (Unemployment) &middot; <strong>Money &amp; Spending</strong> (Consumption, Investment, Money Demand &amp; Supply, Interest Rate)</p>
+</section>
+
+<section id="l1-links">
+<h2>Relationships Among Macroeconomic Variables</h2>
+<div class="card"><strong>Growth Channel:</strong> Consumption + Investment &rarr; Aggregate Demand &rarr; GDP &uarr; &rarr; Employment &uarr;</div>
+<div class="card"><strong>Inflation Channel:</strong> Money Supply / Aggregate Demand &uarr; &rarr; Inflation &uarr; &rarr; Central Bank raises Interest Rates &rarr; Borrowing/Growth &darr;, Inflation eases</div>
+<div class="card"><strong>Unemployment (Okun&rsquo;s Law):</strong> Output &uarr; &rarr; Unemployment &darr; &mdash; fiscal &amp; monetary policy influence output.</div>
+<p>Macroeconomic variables are closely interrelated &mdash; a change in one often ripples through many others.</p>
+</section>
+
+<section id="l1-obj">
+<h2>Macroeconomic Objectives</h2>
+<ul>
+  <li>Economic growth &mdash; increase in Real GDP</li>
+  <li>Full employment / reducing unemployment</li>
+  <li>Reducing inflation / stable price level</li>
+  <li>Reducing inequality of income</li>
+  <li>Foreign exchange management</li>
+  <li>Debt management</li>
+  <li>Sustainable development</li>
+</ul>
+<h3>Real-Life Examples</h3>
+<ul>
+  <li>Government wants to reduce unemployment &rarr; uses macroeconomic policies (e.g. public works programs).</li>
+  <li>Government wants to control price rises &rarr; studies inflation and adjusts monetary policy.</li>
+  <li>Government wants long-term growth without harming the environment &rarr; promotes sustainable development.</li>
+</ul>
+<h3>Why Study Macroeconomics?</h3>
+<ul>
+  <li><strong>Understanding National Income</strong> &mdash; measures how rich or poor a country is, using indicators like GDP, GNP, and NNP.</li>
+  <li><strong>Solving Unemployment</strong> &mdash; explains why unemployment exists and how government policy can reduce it.</li>
+  <li><strong>Controlling Inflation</strong> &mdash; inflation means a continuous rise in general prices; macroeconomics suggests monetary and fiscal policy responses.</li>
+</ul>
+</section>
+
+<section id="l1-stockflow">
+<h2>Stock vs Flow Variables</h2>
+<table>
+  <tr><th></th><th>Stock Variables</th><th>Flow Variables</th></tr>
+  <tr><td><strong>Measurement</strong></td><td>At a point in time &mdash; no time period involved (like the water level in a bathtub)</td><td>Over a period of time &mdash; e.g. per year or per month (like water flowing into the tub)</td></tr>
+  <tr><td><strong>Analogy</strong></td><td>A photo &mdash; a snapshot captured at one moment</td><td>A video &mdash; recorded over a period</td></tr>
+  <tr><td><strong>Examples</strong></td><td>Wealth on 31st March; Population on 1st January; Money supply today</td><td>National income per year; Salary per month; GDP per year</td></tr>
+</table>
+<div class="key"><strong>N.B.</strong> Income is a <em>flow</em>; wealth is a <em>stock</em>.</div>
+</section>
+
+<section id="l1-srlr">
+<h2>Short Run and Long Run</h2>
+<h3>In Microeconomics &mdash; Short Run</h3>
+<p>A period in which <strong>at least one factor of production is fixed</strong> &mdash; the firm cannot change it immediately.</p>
+<p class="note">Example (shoe factory): Capital (machines) = fixed FOP; Labor = variable FOP.</p>
+<h3>In Microeconomics &mdash; Long Run</h3>
+<p>A period in which <strong>all factors of production are variable</strong> &mdash; the firm can change factory size, buy more machines, enter or exit the market. In the long run, there are no fixed factors.</p>
+<h3>In Macroeconomics &mdash; Short Run</h3>
+<p>A period in which <strong>prices are sticky</strong> &mdash; they do not adjust immediately. <strong>Sticky prices</strong> are prices that do not change immediately or adjust slowly, due to contracts, wages, or menu costs.</p>
+<p class="note">Example: Workers sign a 1-year salary contract. If the economy slows, wages cannot immediately fall.</p>
+<p><strong>Key features of short-run macro:</strong> output fluctuates; unemployment changes; demand affects production; business cycles occur.</p>
+<h3>In Macroeconomics &mdash; Long Run</h3>
+<ul>
+  <li>Prices are fully flexible &mdash; wages and prices adjust, and the economy returns to its natural level of output.</li>
+  <li>Output depends on <strong>real factors</strong> &mdash; technology, capital, labor, institutions &mdash; instead of the money supply.</li>
+</ul>
+</section>
+
+<hr>
+
+<!-- ============ LECTURE 2 ============ -->
+
+<section id="l2-gdp">
+<h2>Lecture 2 &middot; Measuring GDP</h2>
+<p><strong>GDP</strong> is the <strong>market value of all final goods and services produced within a country in a given period of time</strong>.</p>
+<ul>
+  <li><strong>&ldquo;Market Value&rdquo;</strong> &mdash; market prices measure the amount people are willing to pay, reflecting the value of goods. If an apple costs twice as much as an orange, it contributes twice as much to GDP.</li>
+  <li><strong>&ldquo;of All&rdquo;</strong> &mdash; all items produced in the economy and sold legally in markets. GDP excludes illegal goods (like illicit drugs) and items produced and consumed at home, which never enter the marketplace.</li>
+  <li><strong>&ldquo;Final&rdquo;</strong> &mdash; only final goods &amp; services (intermediate goods are already counted in the final price).</li>
+  <li><strong>&ldquo;Produced&rdquo;</strong> &mdash; currently produced; used goods sold today do not count.</li>
+  <li><strong>&ldquo;Within a Country&rdquo;</strong> &mdash; production within a country&rsquo;s borders.</li>
+  <li><strong>&ldquo;In a Given Time Period&rdquo;</strong> &mdash; measured per year or quarter.</li>
+</ul>
+<h3>Why &ldquo;Domestic&rdquo; and Why &ldquo;Gross&rdquo;?</h3>
+<ul>
+  <li><strong>Domestic</strong> &mdash; production within a country. Contrasts with <em>national</em> product: value of goods and services produced anywhere in the world by residents of a country.</li>
+  <li><strong>Gross</strong> &mdash; before subtracting the depreciation of capital. The opposite, <em>net</em>, means after subtracting depreciation.</li>
+</ul>
+<h3>What GDP Excludes</h3>
+<ul>
+  <li>Intermediate goods (already counted in final price)</li>
+  <li>Sale of used goods (counted when first produced)</li>
+  <li>Financial asset purchases (not current production)</li>
+  <li>Transfer payments (no current production)</li>
+  <li>Home-produced goods (no market transaction)</li>
+  <li>Illegal / unreported activities (unmeasured)</li>
+  <li>Also excluded: leisure time, happiness, environmental quality, and income distribution</li>
+</ul>
+</section>
+
+<section id="l2-comp">
+<h2>The Components of GDP</h2>
+<div class="formula">Y = C + I + G + NX</div>
+<p>This is an <strong>identity</strong> &mdash; it must be true because of how the variables are defined.</p>
+<table>
+  <tr><th>Component</th><th>Definition</th></tr>
+  <tr><td><strong>Consumption (C)</strong></td><td>Spending by households on goods and services, except purchases of new housing.</td></tr>
+  <tr><td><strong>Investment (I)</strong></td><td>Purchase of capital goods that will be used in the future to produce more goods and services.</td></tr>
+  <tr><td><strong>Government Purchases (G)</strong></td><td>Spending on goods and services by local, state, and federal governments, excluding transfer payments.</td></tr>
+  <tr><td><strong>Net Exports (NX)</strong></td><td>Spending on domestically produced goods by foreigners (exports) minus spending on foreign goods by domestic residents (imports).</td></tr>
+</table>
+<h3>Real vs Nominal GDP</h3>
+<ul>
+  <li><strong>Nominal GDP</strong> &mdash; production of goods and services valued at <em>current prices</em>.</li>
+  <li><strong>Real GDP</strong> &mdash; production of goods and services valued at <em>constant (base-year) prices</em>.</li>
+</ul>
+</section>
+
+<section id="l2-nomreal">
+<h2>Calculating Nominal GDP</h2>
+<div class="formula">Nominal GDP = &Sigma; (Current Year Price &times; Current Year Quantity)<br>= (P&#8321; &times; Q&#8321;) + (P&#8322; &times; Q&#8322;) + ... + (P&#8345; &times; Q&#8345;)</div>
+<table>
+  <tr><th>Good</th><th>Year 1 Price</th><th>Year 1 Qty</th><th>Year 2 Price</th><th>Year 2 Qty</th></tr>
+  <tr><td>Rice</td><td>Tk. 50</td><td>1,000 kg</td><td>Tk. 60</td><td>1,100 kg</td></tr>
+  <tr><td>Mobile Phones</td><td>Tk. 20,000</td><td>100 units</td><td>Tk. 22,000</td><td>120 units</td></tr>
+</table>
+<details>
+  <summary>Worked solution &mdash; click to expand</summary>
+  <div class="card">
+    <p><strong>Nominal GDP (Year 1)</strong> = (50 &times; 1,000) + (20,000 &times; 100) = 50,000 + 2,000,000 = <strong>Tk. 2,050,000</strong></p>
+    <p><strong>Nominal GDP (Year 2)</strong> = (60 &times; 1,100) + (22,000 &times; 120) = 66,000 + 2,640,000 = <strong>Tk. 2,706,000</strong></p>
+  </div>
+</details>
+<p class="note">Nominal GDP rose because <em>both prices and quantities</em> rose. Nominal GDP does not distinguish whether the increase is due to higher production, higher prices, or both &mdash; this is why economists use Real GDP.</p>
+
+<h3>Calculating Real GDP</h3>
+<p>To see real growth, use a <strong>base-year price</strong> for every year. This &ldquo;freezes&rdquo; prices so we can see changes in production volume.</p>
+<div class="formula">Real GDP = &Sigma; (Base Year Price &times; Current Year Quantity)</div>
+<details>
+  <summary>Worked solution &mdash; click to expand (Year 1 = base year)</summary>
+  <div class="card">
+    <p><strong>Real GDP (Year 2)</strong> = (50 &times; 1,100) + (20,000 &times; 120) = 55,000 + 2,400,000 = <strong>Tk. 2,455,000</strong></p>
+  </div>
+</details>
+<ul>
+  <li>In the base year (Year 1), <strong>Nominal GDP equals Real GDP</strong>.</li>
+  <li>In Year 2, Nominal GDP (Tk. 2,706,000) is higher than Real GDP (Tk. 2,455,000) because <strong>prices increased</strong>.</li>
+  <li>Real GDP measures changes in <strong>production (output) only</strong>; Nominal GDP reflects changes in <strong>both prices and quantities</strong>.</li>
+</ul>
+</section>
+
+<section id="l2-deflator">
+<h2>The GDP Deflator</h2>
+<p>A price index measuring the change in prices of <strong>all final goods and services produced within a country</strong> &mdash; used to gauge overall inflation.</p>
+<div class="formula">GDP Deflator = (Nominal GDP / Real GDP) &times; 100</div>
+<table>
+  <tr><th>Year</th><th>Nominal GDP (Tk.)</th><th>Real GDP (Tk.)</th></tr>
+  <tr><td>Year 1</td><td>2,050,000</td><td>2,050,000</td></tr>
+  <tr><td>Year 2</td><td>2,706,000</td><td>2,455,000</td></tr>
+</table>
+<div class="card">
+  <p><strong>GDP Deflator (Year 2)</strong> = (2,706,000 / 2,455,000) &times; 100 = 1.1022 &times; 100 = <strong>110.22</strong></p>
+  <ul style="margin-top:8px">
+    <li>Year 1 is the base year, so the deflator is <strong>100</strong>.</li>
+    <li>A deflator of <strong>110.22</strong> means the overall price level is <strong>10.22% higher</strong> than in the base year.</li>
+    <li>Unlike the Consumer Price Index (CPI), which tracks a <em>fixed basket</em> of consumer goods, the GDP Deflator reflects price changes for <em>all domestically produced</em> final goods and services.</li>
+  </ul>
+</div>
+</section>
+
+<section id="l2-inflation">
+<h2>Calculating the Inflation Rate</h2>
+<div class="formula">Inflation Rate = [(Deflator&#8343; &minus; Deflator&#8343;&minus;&#8321;) / Deflator&#8343;&minus;&#8321;] &times; 100</div>
+<div class="card">
+  <p><strong>Inflation Rate (Year 2)</strong> = [(110.22 &minus; 100) / 100] &times; 100 = <strong>10.22%</strong></p>
+  <p style="margin-top:8px">The overall price level of domestically produced final goods and services increased by 10.22% from Year 1 to Year 2, as measured by the GDP deflator.</p>
+</div>
+</section>
+
+<section id="l2-exp">
+<h2>National Income: The Expenditure Approach</h2>
+<p>Measures GDP as the sum of consumption, investment, government expenditure on goods and services, and net exports:</p>
+<div class="formula">GDP = C + I + G + (X &minus; M)</div>
+<ul>
+  <li>C &mdash; consumption expenditure by households</li>
+  <li>I &mdash; investment expenditure by firms</li>
+  <li>G &mdash; government expenditure</li>
+  <li>X &minus; M &mdash; exports minus imports = net exports</li>
+</ul>
+<details>
+  <summary>Worked example &mdash; click to expand</summary>
+  <div class="card">
+    <p><em>Given:</em> C = 1,500,000; I = 600,000; G = 400,000; NX = 200,000</p>
+    <p><strong>Step 1:</strong> Net exports: X &minus; M = 350,000 &minus; 150,000 = 200,000</p>
+    <p><strong>Step 2:</strong> GDP = 1,500,000 + 600,000 + 400,000 + 200,000 = <strong>Tk. 2,700,000</strong></p>
+    <p class="note" style="margin-top:6px">Households spent Tk. 1.5 million; firms invested Tk. 0.6 million; government spent Tk. 0.4 million; exports exceeded imports by Tk. 0.2 million. The economy&rsquo;s GDP is Tk. 2.7 million.</p>
+  </div>
+</details>
+</section>
+
+<section id="l2-inc">
+<h2>The Income Approach</h2>
+<p>When firms produce goods and services, they pay factors of production:</p>
+<ul>
+  <li><strong>Wages</strong> &rarr; to workers</li>
+  <li><strong>Rent</strong> &rarr; to landowners</li>
+  <li><strong>Interest</strong> &rarr; to capital owners</li>
+  <li><strong>Profit</strong> &rarr; to entrepreneurs</li>
+</ul>
+<div class="formula">GDP = Wages + Rent + Interest + Profit<br>GDP = Factor Income + Indirect Taxes + Depreciation</div>
+<details>
+  <summary>Worked example &mdash; click to expand</summary>
+  <div class="card">
+    <p><em>Given:</em> Wages = 500; Rent = 100; Interest = 80; Profit = 120; Indirect Tax = 50; Depreciation = 30</p>
+    <p>GDP = 500 + 100 + 80 + 120 + 50 + 30 = <strong>880</strong></p>
+  </div>
+</details>
+<p class="note">In real-world GDP calculation, we add indirect taxes (VAT, sales tax) and depreciation (consumption of fixed capital) to factor income.</p>
+</section>
+
+<section id="l2-quick">
+<h2>Quick Reference &mdash; Formula Sheet</h2>
+<table>
+  <tr><th>Concept</th><th>Formula</th></tr>
+  <tr><td>GDP (expenditure)</td><td class="formula" style="border:none;margin:0;padding:0;background:none;font-family:Consolas,monospace">Y = C + I + G + NX</td></tr>
+  <tr><td>Nominal GDP</td><td class="formula" style="border:none;margin:0;padding:0;background:none;font-family:Consolas,monospace">&Sigma; (Current Price &times; Current Qty)</td></tr>
+  <tr><td>Real GDP</td><td class="formula" style="border:none;margin:0;padding:0;background:none;font-family:Consolas,monospace">&Sigma; (Base Year Price &times; Current Qty)</td></tr>
+  <tr><td>GDP Deflator</td><td class="formula" style="border:none;margin:0;padding:0;background:none;font-family:Consolas,monospace">(Nominal GDP / Real GDP) &times; 100</td></tr>
+  <tr><td>Inflation Rate</td><td class="formula" style="border:none;margin:0;padding:0;background:none;font-family:Consolas,monospace">[(Deflator&#8343; &minus; Deflator&#8343;&minus;&#8321;) / Deflator&#8343;&minus;&#8321;] &times; 100</td></tr>
+  <tr><td>Income Approach GDP</td><td class="formula" style="border:none;margin:0;padding:0;background:none;font-family:Consolas,monospace">Wages + Rent + Interest + Profit + Indirect Taxes + Depreciation</td></tr>
+</table>
+<div class="key"><strong>Exam pointers:</strong> In the base year, Nominal GDP = Real GDP, and the GDP Deflator = 100. Real GDP isolates output changes; the deflator isolates price changes. GDP excludes intermediate goods, used goods, transfers, home production, and illegal activity.</div>
+</section>
+
+<footer>
+  Macroeconomics Study Guide &middot; Lectures 1&ndash;2 &middot; Good luck on your exam!
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var btn=document.getElementById('themeBtn');
+  var saved=null;
+  try{ saved=localStorage.getItem('theme'); }catch(e){}
+  var theme=(saved==='dark'||saved==='light')?saved:'light';
+  apply(theme);
+  btn.addEventListener('click',function(){
+    theme=(root.getAttribute('data-theme')==='light')?'dark':'light';
+    apply(theme);
+    try{ localStorage.setItem('theme',theme); }catch(e){}
+  });
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    btn.innerHTML=(t==='light')?'&#9790; Dark':'&#9728; Light';
+  }
+})();
+</script>
+</body>
+</html>
