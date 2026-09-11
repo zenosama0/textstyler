@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macroeconomics Study Guide</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F8F8F6;
+  --surface: #FFFFFF;
+  --text: #111111;
+  --muted: #6B6B6B;
+  --border: #DEDEDC;
+  --accent: #1D5CA6;
+  --accent-bg: #EEF4FB;
+  --key-bg: #FFFBF0;
+  --key-border: #D4A017;
+  --formula-bg: #EEF4FB;
+  --formula-border: #1D5CA6;
+  --note-border: #CBCBC8;
+}
+
+[data-theme="dark"] {
+  --bg: #0F0F10;
+  --surface: #1A1A1C;
+  --text: #ECECEC;
+  --muted: #888888;
+  --border: #2D2D30;
+  --accent: #7AB3E0;
+  --accent-bg: #101E30;
+  --key-bg: #1D1A0E;
+  --key-border: #8A6914;
+  --formula-bg: #101E30;
+  --formula-border: #4A85C0;
+  --note-border: #3A3A3E;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.site-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Layout */
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 6rem;
+}
+
+/* TOC */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.toc-heading {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.toc-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.1rem 2.5rem;
+}
+
+.toc-group {
+  margin-bottom: 0.75rem;
+}
+
+.toc-group-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.toc a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  display: block;
+  padding: 0.1rem 0;
+  line-height: 1.5;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+/* Lecture header */
+.lecture-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.lecture-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.lecture-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 2.75rem;
+  scroll-margin-top: 64px;
+}
+
+.section > h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--text);
+}
+
+p {
+  margin-bottom: 0.75rem;
+  max-width: 68ch;
+}
+
+/* Key definition block */
+.key-def {
+  background: var(--key-bg);
+  border-left: 3px solid var(--key-border);
+  padding: 0.875rem 1.125rem;
+  margin: 1rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.key-def strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.key-def p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+  max-width: none;
+}
+
+/* Formula block */
+.formula {
+  background: var(--formula-bg);
+  border-left: 3px solid var(--formula-border);
+  padding: 0.875rem 1.125rem;
+  margin: 1rem 0;
+  font-family: 'Menlo', 'Consolas', 'Courier New', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  border-radius: 0 4px 4px 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Example box */
+.example {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+}
+
+.example-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin-bottom: 0.875rem;
+}
+
+.example h3 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.example p {
+  font-size: 0.9rem;
+}
+
+.example ul {
+  font-size: 0.9rem;
+}
+
+/* Note */
+.note {
+  font-size: 0.875rem;
+  color: var(--muted);
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-left: 2px solid var(--note-border);
+  margin: 0.875rem 0;
+  max-width: 68ch;
+}
+
+/* Tables */
+.table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  min-width: 320px;
+}
+
+th {
+  background: var(--surface);
+  text-align: left;
+  padding: 0.6rem 0.875rem;
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.5rem 0.875rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.375rem;
+  margin-bottom: 0.75rem;
+}
+
+li {
+  margin-bottom: 0.3rem;
+  font-size: 0.9375rem;
+  max-width: 68ch;
+}
+
+/* Inline term accent */
+.term {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* Two-column definition grid */
+.def-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.def-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.875rem 1rem;
+}
+
+.def-card > strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+
+.def-card > p {
+  font-size: 0.8375rem;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+  max-width: none;
+  line-height: 1.6;
+}
+
+.def-card > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Channel flow */
+.channel {
+  margin: 0.75rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.channel-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.channel-flow {
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* Lecture separator */
+.lecture-sep {
+  margin: 4rem 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 540px) {
+  .toc-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .def-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lecture-title {
+    font-size: 1.125rem;
+  }
+
+  .main {
+    padding: 1.75rem 1rem 5rem;
+  }
+
+  .site-header {
+    padding: 0 1rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="site-title">Macroeconomics - Lectures 1 & 2</span>
+  <button class="theme-toggle" id="themeToggle">Dark mode</button>
+</header>
+
+<main class="main">
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-heading">Contents</div>
+    <div class="toc-cols">
+      <div>
+        <div class="toc-group">
+          <div class="toc-group-label">Lecture 1 - Introduction</div>
+          <a href="#economics">What is Economics?</a>
+          <a href="#branches">Branches of Economics</a>
+          <a href="#variables">Macroeconomic Variables</a>
+          <a href="#relationships">Variable Relationships</a>
+          <a href="#objectives">Macroeconomic Objectives</a>
+          <a href="#stock-flow">Stock vs Flow Variables</a>
+          <a href="#short-long">Short Run vs Long Run</a>
+        </div>
+      </div>
+      <div>
+        <div class="toc-group">
+          <div class="toc-group-label">Lecture 2 - Measuring GDP</div>
+          <a href="#gdp-def">What is GDP?</a>
+          <a href="#gdp-components">Components of GDP</a>
+          <a href="#gdp-exclusions">What GDP Excludes</a>
+          <a href="#nominal-real">Nominal vs Real GDP</a>
+          <a href="#nominal-calc">Calculating Nominal GDP</a>
+          <a href="#real-calc">Calculating Real GDP</a>
+          <a href="#deflator">GDP Deflator</a>
+          <a href="#inflation-calc">Inflation Rate</a>
+          <a href="#expenditure">Expenditure Approach</a>
+          <a href="#income">Income Approach</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ===================== LECTURE 1 ===================== -->
+  <div class="lecture-header">
+    <span class="lecture-badge">Lecture 1</span>
+    <span class="lecture-title">The Economy as a Whole</span>
+  </div>
+
+
+  <!-- Economics -->
+  <section class="section" id="economics">
+    <h2>What is Economics?</h2>
+
+    <div class="key-def">
+      <strong>Economics</strong>
+      <p>The study of how society uses scarce resources to produce goods and services and distribute them among people.</p>
+    </div>
+
+    <p><span class="term">Scarcity</span> - resources are limited but wants are unlimited. This is the central problem all economies must solve.</p>
+
+    <h3>A Brief History</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Year</th><th>Economist</th><th>Contribution</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1776</td>
+            <td><strong>Adam Smith</strong></td>
+            <td>The Wealth of Nations - free markets, competition, and self-interest can drive prosperity with limited government intervention.</td>
+          </tr>
+          <tr>
+            <td>1936</td>
+            <td><strong>J. M. Keynes</strong></td>
+            <td>The General Theory - after the Great Depression, argued that government spending and policy are needed to manage downturns.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- Branches -->
+  <section class="section" id="branches">
+    <h2>Branches of Economics</h2>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <strong>Microeconomics</strong>
+        <p>How firms and individuals make decisions, and how decision-makers interact. Prices are determined by supply and demand; incentives shape behavior.</p>
+        <p><em>Example: A rise in coffee bean prices changes how much shops buy and how much customers pay per cup.</em></p>
+      </div>
+      <div class="def-card">
+        <strong>Macroeconomics</strong>
+        <p>Examines the economy as a whole - aggregate outcomes such as inflation, unemployment, and growth. Studies how governments and central banks influence national income and business cycles.</p>
+        <p><em>Example: Increased government spending during a recession can boost overall activity and reduce unemployment.</em></p>
+      </div>
+    </div>
+
+    <h3>Micro vs Macro - Comparison Table</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Basis</th><th>Microeconomics</th><th>Macroeconomics</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Scope</td><td>Individual consumers, firms, specific markets</td><td>The economy as a whole</td></tr>
+          <tr><td>Main Focus</td><td>Price determination, consumer behavior, firm decisions</td><td>National income, inflation, unemployment, growth</td></tr>
+          <tr><td>Key Variables</td><td>Demand, supply, elasticity, costs, profits</td><td>GDP, inflation rate, unemployment rate, interest rates</td></tr>
+          <tr><td>Level of Analysis</td><td>Individual or industry</td><td>Aggregate or national</td></tr>
+          <tr><td>Policy Relevance</td><td>Pricing, taxation, market regulation</td><td>Fiscal and monetary policy</td></tr>
+          <tr><td>Example</td><td>Price of a single product like rice</td><td>Inflation rate or GDP growth of a country</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">Macro outcomes result from millions of micro-level decisions. In turn, macro policies (taxation, interest rates) shape micro-level behavior - the two are closely interconnected.</p>
+  </section>
+
+
+  <!-- Variables -->
+  <section class="section" id="variables">
+    <h2>Macroeconomic Variables</h2>
+    <p>The key indicators economists track:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Variable</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>GDP</strong></td><td>Total value of goods and services produced</td></tr>
+          <tr><td><strong>National Income</strong></td><td>Total income earned by factors of production</td></tr>
+          <tr><td><strong>Inflation Rate</strong></td><td>Rate at which the general price level rises</td></tr>
+          <tr><td><strong>Unemployment Rate</strong></td><td>Percentage of the labor force without jobs</td></tr>
+          <tr><td><strong>Interest Rate</strong></td><td>Cost of borrowing / return on saving</td></tr>
+          <tr><td><strong>Money Supply</strong></td><td>Total money circulating in the economy</td></tr>
+          <tr><td><strong>Fiscal Deficit</strong></td><td>Gap between government expenditure and revenue</td></tr>
+          <tr><td><strong>Public Debt</strong></td><td>Total government borrowings</td></tr>
+          <tr><td><strong>Exchange Rate</strong></td><td>Value of domestic vs foreign currency</td></tr>
+          <tr><td><strong>Balance of Payments</strong></td><td>Record of international transactions</td></tr>
+          <tr><td><strong>Growth Rate</strong></td><td>Annual increase in real GDP</td></tr>
+          <tr><td><strong>Aggregate Demand</strong></td><td>Total spending by households and firms</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">Grouped: Output &amp; Growth (GDP, GNP, NNP, National Income) | Prices (Inflation) | Labor (Unemployment) | Money &amp; Spending (Consumption, Investment, Money Supply, Interest Rate)</p>
+  </section>
+
+
+  <!-- Relationships -->
+  <section class="section" id="relationships">
+    <h2>Relationship Among Macroeconomic Variables</h2>
+    <p>Macroeconomic variables are closely interrelated - a change in one often ripples through many others.</p>
+
+    <div class="channel">
+      <div class="channel-label">Growth Channel</div>
+      <div class="channel-flow">Consumption + Investment rises &rarr; Aggregate Demand rises &rarr; GDP rises &rarr; Employment rises</div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-label">Inflation Channel</div>
+      <div class="channel-flow">Money Supply / Aggregate Demand rises &rarr; Inflation rises &rarr; Central Bank raises Interest Rates &rarr; Borrowing and Growth fall &rarr; Inflation eases</div>
+    </div>
+
+    <div class="channel">
+      <div class="channel-label">Unemployment - Okun's Law</div>
+      <div class="channel-flow">Output rises &rarr; Unemployment falls</div>
+    </div>
+
+    <p class="note">Fiscal and monetary policy also shape exchange rates, capital flows, and the balance of payments - the system operates together, not in isolation.</p>
+  </section>
+
+
+  <!-- Objectives -->
+  <section class="section" id="objectives">
+    <h2>Macroeconomic Objectives</h2>
+    <p>The key goals that governments and policymakers pursue:</p>
+    <ul>
+      <li>Economic growth - increase in Real GDP</li>
+      <li>Full employment / reducing unemployment</li>
+      <li>Reducing inflation / stable price level</li>
+      <li>Reducing inequality of income</li>
+      <li>Foreign exchange management</li>
+      <li>Debt management</li>
+      <li>Sustainable development</li>
+    </ul>
+
+    <h3>Why Study Macroeconomics?</h3>
+    <ul>
+      <li><strong>Understanding National Income</strong> - measures how rich or poor a country is using indicators like GDP, GNP, and NNP.</li>
+      <li><strong>Solving Unemployment</strong> - explains why unemployment exists and how government policy can reduce it.</li>
+      <li><strong>Controlling Inflation</strong> - a continuous rise in general prices; macroeconomics suggests monetary and fiscal policy responses.</li>
+    </ul>
+  </section>
+
+
+  <!-- Stock vs Flow -->
+  <section class="section" id="stock-flow">
+    <h2>Stock vs Flow Variables</h2>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <strong>Stock Variable</strong>
+        <p>Measured at a particular point in time - no time period is involved. Like the water level in a bathtub at a given moment.</p>
+        <p><strong>Examples:</strong> Wealth on 31 March, Population on 1 January, Money supply today.</p>
+        <p><em>A stock is a snapshot - like a photo taken at a single instant.</em></p>
+      </div>
+      <div class="def-card">
+        <strong>Flow Variable</strong>
+        <p>Measured over a period of time - a time period is always involved (e.g. per year or per month). Like water flowing into the bathtub.</p>
+        <p><strong>Examples:</strong> National income per year, Salary per month, GDP per year.</p>
+        <p><em>A flow is like a video - recorded over a duration.</em></p>
+      </div>
+    </div>
+
+    <p class="note"><strong>Key distinction:</strong> Income is a flow; wealth is a stock.</p>
+  </section>
+
+
+  <!-- Short vs Long Run -->
+  <section class="section" id="short-long">
+    <h2>Short Run vs Long Run</h2>
+
+    <h3>In Microeconomics</h3>
+    <div class="def-grid">
+      <div class="def-card">
+        <strong>Short Run (Micro)</strong>
+        <p>A period in which at least one factor of production (FOP) is fixed. The firm cannot change it immediately.</p>
+        <p><em>Shoe factory example: Machines are the fixed FOP; labour is the variable FOP.</em></p>
+        <p>Capital (machines) = fixed FOP &nbsp;|&nbsp; Labour = variable FOP</p>
+      </div>
+      <div class="def-card">
+        <strong>Long Run (Micro)</strong>
+        <p>A period in which all factors of production are variable. The firm can change factory size, buy machines, enter or exit the market.</p>
+        <p><em>The shoe factory can: build a new plant, buy new technology, expand production.</em></p>
+        <p>In the long run, there are no fixed factors of production.</p>
+      </div>
+    </div>
+
+    <h3>In Macroeconomics</h3>
+    <div class="def-grid">
+      <div class="def-card">
+        <strong>Short Run (Macro)</strong>
+        <p>A period in which prices are <strong>sticky</strong> - they do not adjust quickly due to contracts, wages, or regulations.</p>
+        <p><em>Example: Workers sign a 1-year salary contract. If the economy slows, wages cannot immediately decrease.</em></p>
+        <p><strong>Key features:</strong> Output fluctuates, unemployment changes, demand affects production, business cycles occur.</p>
+      </div>
+      <div class="def-card">
+        <strong>Long Run (Macro)</strong>
+        <p>Prices are fully flexible. Wages and prices adjust, and the economy returns to its natural level of output.</p>
+        <p>Output depends on real factors - technology, capital, labour, institutions - rather than the money supply.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <hr class="lecture-sep">
+
+
+  <!-- ===================== LECTURE 2 ===================== -->
+  <div class="lecture-header">
+    <span class="lecture-badge">Lecture 2</span>
+    <span class="lecture-title">Measuring GDP</span>
+  </div>
+
+
+  <!-- GDP Definition -->
+  <section class="section" id="gdp-def">
+    <h2>What is GDP?</h2>
+
+    <div class="key-def">
+      <strong>Gross Domestic Product (GDP)</strong>
+      <p>The market value of all final goods and services produced within a country in a given period of time.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Word / Phrase</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Market Value</strong></td>
+            <td>Market prices reflect what people are willing to pay. If an apple costs twice as much as an orange, it contributes twice as much to GDP.</td>
+          </tr>
+          <tr>
+            <td><strong>of All</strong></td>
+            <td>All items produced and sold legally in markets. GDP excludes illegal goods (e.g. illicit drugs) and items produced and consumed at home that never enter the marketplace.</td>
+          </tr>
+          <tr>
+            <td><strong>Final</strong></td>
+            <td>Only final goods count - intermediate goods are already included in the final good's price. Exception: a firm's inventory held for later sale counts as final.</td>
+          </tr>
+          <tr>
+            <td><strong>Goods &amp; Services</strong></td>
+            <td>Includes tangible goods (food, clothing, cars) and intangible services (haircuts, housecleaning, doctor visits).</td>
+          </tr>
+          <tr>
+            <td><strong>Produced</strong></td>
+            <td>Only currently produced goods and services count - transactions of items produced in the past are excluded.</td>
+          </tr>
+          <tr>
+            <td><strong>Within a Country</strong></td>
+            <td>Measures the value of production within the geographic confines of a country.</td>
+          </tr>
+          <tr>
+            <td><strong>In a Given Period</strong></td>
+            <td>Measures the value of production within a specific interval of time (usually a year or a quarter).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Why "Domestic" and Why "Gross"?</h3>
+    <div class="def-grid">
+      <div class="def-card">
+        <strong>Domestic</strong>
+        <p>Production within a country's borders. Contrasts with "national product" - the value of goods and services produced anywhere in the world by the residents of a nation.</p>
+      </div>
+      <div class="def-card">
+        <strong>Gross</strong>
+        <p>Before subtracting the depreciation of capital. The opposite term, "net," means after subtracting the depreciation of capital.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Components -->
+  <section class="section" id="gdp-components">
+    <h2>Components of GDP</h2>
+    <p>GDP (denoted Y) is divided into four components:</p>
+
+    <div class="formula">Y = C + I + G + NX</div>
+
+    <p>This is an identity - it must be true because of how the variables are defined.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Symbol</th><th>Component</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>C</strong></td>
+            <td>Consumption</td>
+            <td>Spending by households on goods and services, except purchases of new housing.</td>
+          </tr>
+          <tr>
+            <td><strong>I</strong></td>
+            <td>Investment</td>
+            <td>Purchase of capital goods used in the future to produce more goods and services. Includes new housing construction.</td>
+          </tr>
+          <tr>
+            <td><strong>G</strong></td>
+            <td>Government Purchases</td>
+            <td>Spending on goods and services by local, state, and federal governments. Excludes transfer payments (e.g. social security, welfare).</td>
+          </tr>
+          <tr>
+            <td><strong>NX</strong></td>
+            <td>Net Exports</td>
+            <td>Exports minus imports. Spending on domestically produced goods by foreigners, minus spending on foreign goods by domestic residents.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- Exclusions -->
+  <section class="section" id="gdp-exclusions">
+    <h2>What Does GDP Exclude?</h2>
+    <ul>
+      <li><strong>Intermediate goods</strong> - already counted in the final good's price.</li>
+      <li><strong>Used goods</strong> - counted when first produced; resale does not count again.</li>
+      <li><strong>Financial asset purchases</strong> - stocks and bonds are not current production.</li>
+      <li><strong>Transfer payments</strong> - government payments with no current production (e.g. pensions, benefits).</li>
+      <li><strong>Home-produced goods</strong> - no market transaction occurs.</li>
+      <li><strong>Illegal / unreported activities</strong> - not measured.</li>
+    </ul>
+    <p>Also excluded: leisure time, happiness, environmental quality, and income distribution.</p>
+  </section>
+
+
+  <!-- Nominal vs Real -->
+  <section class="section" id="nominal-real">
+    <h2>Nominal vs Real GDP</h2>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <strong>Nominal GDP</strong>
+        <p>Production valued at <em>current prices</em>. Does not account for inflation. Rises when either prices or quantities increase.</p>
+      </div>
+      <div class="def-card">
+        <strong>Real GDP</strong>
+        <p>Production valued at <em>constant base-year prices</em>. Adjusts for inflation. Changes only when actual quantities (output) change - a better measure of economic growth.</p>
+      </div>
+    </div>
+
+    <p class="note">Nominal GDP does not distinguish whether an increase is due to higher production, higher prices, or both. This is why economists use Real GDP to measure changes in actual output over time.</p>
+  </section>
+
+
+  <!-- Nominal Calculation -->
+  <section class="section" id="nominal-calc">
+    <h2>Calculating Nominal GDP</h2>
+
+    <div class="formula">Nominal GDP = &Sigma;(Current Year Price &times; Current Year Quantity)
+= (P&#8321;&times;Q&#8321;) + (P&#8322;&times;Q&#8322;) + ... + (P&#8345;&times;Q&#8345;)</div>
+
+    <div class="example">
+      <div class="example-label">Worked Example</div>
+
+      <p>An economy produces only Rice and Mobile Phones:</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Good</th><th>Year 1 Price</th><th>Year 1 Qty</th><th>Year 2 Price</th><th>Year 2 Qty</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Rice</td><td>Tk. 50</td><td>1,000 kg</td><td>Tk. 60</td><td>1,100 kg</td></tr>
+            <tr><td>Mobile Phones</td><td>Tk. 20,000</td><td>100 units</td><td>Tk. 22,000</td><td>120 units</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Step 1 - Nominal GDP for Year 1</h3>
+      <div class="formula">= (50 &times; 1,000) + (20,000 &times; 100)
+= 50,000 + 2,000,000
+= Tk. 2,050,000</div>
+
+      <h3>Step 2 - Nominal GDP for Year 2</h3>
+      <div class="formula">= (60 &times; 1,100) + (22,000 &times; 120)
+= 66,000 + 2,640,000
+= Tk. 2,706,000</div>
+
+      <p><strong>Interpretation:</strong> Nominal GDP rose from Tk. 2,050,000 to Tk. 2,706,000 because both prices and quantities increased. Nominal GDP cannot tell us how much of this rise came from more production vs higher prices.</p>
+    </div>
+  </section>
+
+
+  <!-- Real GDP Calculation -->
+  <section class="section" id="real-calc">
+    <h2>Calculating Real GDP</h2>
+    <p>To isolate real growth, we use base-year prices for every year. This "freezes" prices so we can observe changes in production volume only.</p>
+
+    <div class="formula">Real GDP = &Sigma;(Base Year Price &times; Current Year Quantity)</div>
+
+    <div class="example">
+      <div class="example-label">Worked Example - Year 1 as base year</div>
+
+      <h3>Real GDP for Year 1 (base year)</h3>
+      <div class="formula">= (50 &times; 1,000) + (20,000 &times; 100)
+= Tk. 2,050,000
+(equals Nominal GDP in the base year - always)</div>
+
+      <h3>Real GDP for Year 2 (Year 1 prices &times; Year 2 quantities)</h3>
+      <div class="formula">= (50 &times; 1,100) + (20,000 &times; 120)
+= 55,000 + 2,400,000
+= Tk. 2,455,000</div>
+
+      <p><strong>Interpretation:</strong></p>
+      <ul>
+        <li>In the base year, Nominal GDP = Real GDP (always true).</li>
+        <li>In Year 2, Nominal GDP (Tk. 2,706,000) &gt; Real GDP (Tk. 2,455,000) because prices rose.</li>
+        <li>Real GDP only captures changes in output; Nominal GDP captures both price and quantity changes.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- GDP Deflator -->
+  <section class="section" id="deflator">
+    <h2>GDP Deflator</h2>
+
+    <div class="key-def">
+      <strong>GDP Deflator</strong>
+      <p>A price index measuring the change in prices of all final goods and services produced within a country. Used to gauge overall inflation. It is the ratio of Nominal GDP to Real GDP, multiplied by 100.</p>
+    </div>
+
+    <div class="formula">GDP Deflator = (Nominal GDP / Real GDP) &times; 100</div>
+
+    <div class="example">
+      <div class="example-label">Worked Example</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Year</th><th>Nominal GDP (Tk.)</th><th>Real GDP (Tk.)</th><th>GDP Deflator</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Year 1 (base)</td><td>2,050,000</td><td>2,050,000</td><td>100</td></tr>
+            <tr><td>Year 2</td><td>2,706,000</td><td>2,455,000</td><td>110.22</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>GDP Deflator for Year 2</h3>
+      <div class="formula">= (2,706,000 / 2,455,000) &times; 100
+= 1.1022 &times; 100
+= 110.22</div>
+
+      <p><strong>Interpretation:</strong></p>
+      <ul>
+        <li>Year 1 is the base year, so the GDP Deflator = 100.</li>
+        <li>The deflator of 110.22 means the overall price level is 10.22% higher than in the base year.</li>
+        <li>Unlike the CPI (which tracks a fixed basket of consumer goods), the GDP Deflator covers all domestically produced final goods and services.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- Inflation Rate -->
+  <section class="section" id="inflation-calc">
+    <h2>Calculating the Inflation Rate</h2>
+    <p>Use the GDP Deflator to find the inflation rate between two years:</p>
+
+    <div class="formula">Inflation Rate = [(Deflator&#x2093; - Deflator&#x2093;&#x208B;&#x2081;) / Deflator&#x2093;&#x208B;&#x2081;] &times; 100</div>
+
+    <div class="example">
+      <div class="example-label">Worked Example</div>
+      <div class="formula">= [(110.22 - 100) / 100] &times; 100
+= (10.22 / 100) &times; 100
+= 10.22%</div>
+      <p>The overall price level of domestically produced final goods and services increased by <strong>10.22%</strong> from Year 1 to Year 2, as measured by the GDP Deflator.</p>
+    </div>
+  </section>
+
+
+  <!-- Expenditure Approach -->
+  <section class="section" id="expenditure">
+    <h2>Expenditure Approach</h2>
+    <p>Measures GDP as the sum of all spending in the economy:</p>
+
+    <div class="formula">GDP = C + I + G + (X - M)</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>C</td><td>Consumption expenditure by households</td></tr>
+          <tr><td>I</td><td>Investment expenditure by firms</td></tr>
+          <tr><td>G</td><td>Government expenditure on goods and services</td></tr>
+          <tr><td>X</td><td>Exports</td></tr>
+          <tr><td>M</td><td>Imports</td></tr>
+          <tr><td>X - M</td><td>Net exports</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example">
+      <div class="example-label">Worked Example</div>
+      <p>Given: C = 1,500,000 &nbsp;|&nbsp; I = 600,000 &nbsp;|&nbsp; G = 400,000 &nbsp;|&nbsp; X = 350,000 &nbsp;|&nbsp; M = 150,000</p>
+
+      <h3>Step 1 - Net Exports</h3>
+      <div class="formula">X - M = 350,000 - 150,000 = 200,000</div>
+
+      <h3>Step 2 - Apply GDP Formula</h3>
+      <div class="formula">GDP = 1,500,000 + 600,000 + 400,000 + 200,000
+GDP = Tk. 2,700,000</div>
+
+      <p>Households spent Tk. 1.5 million; firms invested Tk. 0.6 million; government spent Tk. 0.4 million; exports exceeded imports by Tk. 0.2 million. Total GDP = Tk. 2.7 million.</p>
+    </div>
+  </section>
+
+
+  <!-- Income Approach -->
+  <section class="section" id="income">
+    <h2>Income Approach</h2>
+
+    <div class="key-def">
+      <strong>GDP = Total Income Earned by Factors of Production</strong>
+      <p>When firms produce goods and services, all revenue is paid out as income to the factors of production.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Income Type</th><th>Paid To</th></tr></thead>
+        <tbody>
+          <tr><td>Wages</td><td>Workers</td></tr>
+          <tr><td>Rent</td><td>Landowners</td></tr>
+          <tr><td>Interest</td><td>Capital owners</td></tr>
+          <tr><td>Profit</td><td>Entrepreneurs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula">GDP = Wages + Rent + Interest + Profit</div>
+
+    <p>In real-world GDP calculation, indirect taxes and depreciation are also added:</p>
+
+    <div class="formula">GDP = Factor Income + Indirect Taxes + Depreciation</div>
+
+    <ul>
+      <li><strong>Indirect Taxes</strong> - VAT, sales tax, etc.</li>
+      <li><strong>Depreciation</strong> - consumption (wear and tear) of fixed capital.</li>
+    </ul>
+
+    <div class="example">
+      <div class="example-label">Worked Example</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Component</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Wages</td><td>500</td></tr>
+            <tr><td>Rent</td><td>100</td></tr>
+            <tr><td>Interest</td><td>80</td></tr>
+            <tr><td>Profit</td><td>120</td></tr>
+            <tr><td>Indirect Taxes</td><td>50</td></tr>
+            <tr><td>Depreciation</td><td>30</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula">GDP = 500 + 100 + 80 + 120 + 50 + 30
+GDP = 880</div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const toggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+      toggle.textContent = 'Light mode';
+    } else {
+      root.removeAttribute('data-theme');
+      toggle.textContent = 'Dark mode';
+    }
+  }
+
+  // Load saved theme on page load
+  const saved = localStorage.getItem('macroTheme');
+  if (saved) {
+    applyTheme(saved);
+  }
+
+  toggle.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('macroTheme', next);
+  });
+</script>
+</body>
+</html>
