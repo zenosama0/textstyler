@@ -44,8 +44,8 @@
     --yellow:#FFD34D;
     --highlight-bg:rgba(255,211,77,.38);
     --highlight-fg:inherit;
-    --accent:#2F9C95;
-    --accent-fill:#2F9C95;
+    --accent:#FFD343;
+    --accent-fill:#FFD343;
     --accent-2:#E8556E;
     --accent-3:#3E5C76;
     --accent-grad:#E8556E;
@@ -58,10 +58,10 @@
     --code-fg:#B14D5F;
     --zebra:#FAFAF6;
     --input-bg:#FBFBF8;
-    --accent-soft:rgba(47,156,149,.10);
-    --accent-line:rgba(47,156,149,.24);
-    --accent-wash:rgba(47,156,149,.055);
-    --accent-button:#2F9C95;
+    --accent-soft:rgba(255,211,67,.10);
+    --accent-line:rgba(255,211,67,.18);
+    --accent-wash:rgba(255,211,67,.055);
+    --accent-button:#FFD343;
     --accent-button-fg:#FFFFFF;
   }
   [data-theme="dark"]{
@@ -72,8 +72,8 @@
     --yellow:#FFD34D;
     --highlight-bg:rgba(255,211,77,.16);
     --highlight-fg:#F1EFE6;
-    --accent:#3DBDB3;
-    --accent-fill:#3DBDB3;
+    --accent:#FFD343;
+    --accent-fill:#FFD343;
     --accent-2:#FF7A90;
     --accent-3:#5C7C9C;
     --accent-grad:#FF7A90;
@@ -86,10 +86,10 @@
     --code-fg:#FF8FA3;
     --zebra:#262820;
     --input-bg:#1E201B;
-    --accent-soft:rgba(61,189,179,.10);
-    --accent-line:rgba(61,189,179,.20);
-    --accent-wash:rgba(61,189,179,.045);
-    --accent-button:#3DBDB3;
+    --accent-soft:rgba(255,211,67,.10);
+    --accent-line:rgba(255,211,67,.13);
+    --accent-wash:rgba(255,211,67,.045);
+    --accent-button:#FFD343;
     --accent-button-fg:#132321;
   }
   *{box-sizing:border-box;}
@@ -97,7 +97,7 @@
   button:focus-visible, input:focus-visible, a:focus-visible{
     outline:2px solid var(--accent); outline-offset:2px;
   }
-  html,body{margin:0;padding:0;}
+  html,body{margin:0;padding:0;width:100%;max-width:100%;overflow-x:hidden;}
   body{
     background:
       repeating-linear-gradient(
@@ -367,10 +367,17 @@
     .iconbtn{ width:42px; height:42px; }
     .theme-wrap{ position:static; }
     .popover{
-      position:fixed; left:10px; right:10px; top:auto; bottom:10px;
-      width:auto; min-width:0; max-height:60vh; overflow:auto;
-      box-shadow:0 8px 30px rgba(0,0,0,.28);
+      position:fixed; left:8px; right:8px; top:auto; bottom:8px;
+      width:auto; max-width:calc(100vw - 16px); min-width:0;
+      max-height:min(60vh, 360px); overflow-x:hidden; overflow-y:auto;
+      padding:12px; box-shadow:0 8px 30px rgba(0,0,0,.28);
+      transform:none;
     }
+    .popover.show{ transform:none; }
+    .popover *{ max-width:100%; }
+    .popover .swatch-row{ min-width:0; overflow:hidden; }
+    .popover .custom-row{ min-width:0; width:100%; }
+    .popover .custom-row input{ width:100%; min-width:0; max-width:100%; }
     .editor-panel{ padding:12px; margin-bottom:14px; }
     #mdInput{ min-height:42vh; font-size:.82rem; }
     .editor-actions{ flex-wrap:wrap; gap:8px; }
@@ -400,13 +407,13 @@
        accent overrides so these resets can actually take effect.) */
     :root, [data-theme="dark"]{
       --paper:#fff; --rule:#E1E4DA; --ink:#212A38; --muted:#6B7280;
-      --yellow:#FFD34D; --highlight-bg:rgba(255,211,77,.38); --highlight-fg:inherit; --accent:#2F9C95; --card:#fff;
-      --accent-fill:#2F9C95; --accent-2:#E8556E; --accent-3:#3E5C76; --accent-grad:#E8556E;
+      --yellow:#FFD343; --highlight-bg:rgba(255,211,67,.38); --highlight-fg:inherit; --accent:#FFD343; --card:#fff;
+      --accent-fill:#FFD343; --accent-2:#E6A800; --accent-3:#8A6A00; --accent-grad:#D88B00;
       --stamp:#212A38; --stamp-fg:#FFD34D;
       --note-bg:#FFF9E5; --note-fg:#5c4a1f;
       --code-bg:#EFF1EA; --code-fg:#B14D5F;
       --zebra:#FAFAF6; --input-bg:#FBFBF8;
-      --accent-soft:rgba(47,156,149,.09); --accent-line:rgba(47,156,149,.18); --accent-wash:rgba(47,156,149,.035); --accent-button:#2F9C95; --accent-button-fg:#fff;
+      --accent-soft:rgba(255,211,67,.09); --accent-line:rgba(255,211,67,.18); --accent-wash:rgba(255,211,67,.035); --accent-button:#FFD343; --accent-button-fg:#212A38;
     }
     body{ background:#fff; }
     .topbar, .editor-panel{ display:none !important; }
@@ -734,9 +741,16 @@ Conditional sentences express a condition and its result, using **if-clauses**.
   });
 
   // ---------- Accent color system (persisted) ----------
-  const PRESET_ACCENTS = ['#2F9C95', '#4A3AFF', '#E14C86', '#2E9E5B', '#E2A63A', '#3E5C76'];
+  const DEFAULT_ACCENT = '#FFD343';
+  const PRESET_ACCENTS = [DEFAULT_ACCENT, '#4A3AFF', '#E14C86', '#2E9E5B', '#E2A63A', '#3E5C76'];
   let customAccentHex = null;
-  try{ customAccentHex = localStorage.getItem('mdStyler:accent') || null; }catch(e){}
+  try{
+    customAccentHex = localStorage.getItem('mdStyler:accent') || null;
+    // The previous version used teal as its built-in default. Treat that
+    // old built-in value as the new default so returning visitors get the
+    // intended yellow theme without having to reset it manually.
+    if(customAccentHex === '#2F9C95' || customAccentHex === '#3DBDB3') customAccentHex = null;
+  }catch(e){}
 
   function hexToRgb(hex){
     hex = hex.replace('#','');
@@ -868,13 +882,14 @@ Conditional sentences express a condition and its result, using **if-clauses**.
     const t = tintRanges(isDark);
     const rootAccent = isDark ? harmonize(accentHex, 0, {minS:50,maxS:80,minL:52,maxL:68}) : harmonize(accentHex, 0, {minS:50,maxS:80,minL:38,maxL:52});
     root.setProperty('--accent-soft', rgbaFromHex(rootAccent, isDark ? .13 : .09));
-    root.setProperty('--accent-line', rgbaFromHex(rootAccent, isDark ? .22 : .18));
+    root.setProperty('--accent-line', rgbaFromHex(rootAccent, isDark ? .105 : .16));
     root.setProperty('--accent-wash', rgbaFromHex(rootAccent, isDark ? .055 : .035));
-    const button = harmonize(accentHex, 0, RANGE_FILL, MIN_CONTRAST_WHITE);
+    const isDefaultYellow = accentHex.toUpperCase() === DEFAULT_ACCENT;
+    const button = isDefaultYellow ? DEFAULT_ACCENT : harmonize(accentHex, 0, RANGE_FILL, MIN_CONTRAST_WHITE);
     root.setProperty('--accent-button', button);
-    root.setProperty('--accent-button-fg', buttonForeground(button));
+    root.setProperty('--accent-button-fg', isDefaultYellow ? '#212A38' : buttonForeground(button));
     root.setProperty('--stamp', button);
-    root.setProperty('--stamp-fg', buttonForeground(button));
+    root.setProperty('--stamp-fg', isDefaultYellow ? '#212A38' : buttonForeground(button));
     root.setProperty('--rule', rgbaFromHex(rootAccent, isDark ? .13 : .16));
 
     root.setProperty('--accent-fill', harmonize(accentHex, 0, RANGE_FILL, MIN_CONTRAST_WHITE));
@@ -889,7 +904,7 @@ Conditional sentences express a condition and its result, using **if-clauses**.
   function effectiveAccent(){
     if(customAccentHex) return customAccentHex;
     const cs = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    return cs || '#2F9C95';
+    return cs || '#FFD343';
   }
   function refreshAccentVar(){
     if(customAccentHex){
