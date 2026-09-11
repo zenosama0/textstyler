@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macroeconomics Exam Study Guide | Lectures 1 & 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f4f6f8',
+                            100: '#e5e9f0',
+                            200: '#cbd5e1',
+                            600: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            accent: '#2563eb'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        /* Custom scrollbar for minimalist feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100 min-h-screen flex flex-col antialiased">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-gray-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="bg-slate-800 dark:bg-slate-200 text-white dark:text-slate-900 text-xs font-bold px-2 py-1 rounded">ECON</span>
+                <h1 class="text-base sm:text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">Macroeconomics Guide</h1>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <nav class="hidden md:flex space-x-4 text-xs font-medium text-slate-600 dark:text-slate-400">
+                    <a href="#lecture-1" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Lec 1: Foundations</a>
+                    <a href="#lecture-2" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Lec 2: GDP & Income</a>
+                    <a href="#practice" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Self-Test</a>
+                </nav>
+                
+                <!-- Dark / Light Toggle Button -->
+                <button id="theme-toggle" type="button" aria-label="Toggle theme" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg text-sm border border-gray-200 dark:border-slate-700 transition-colors">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-12">
+        
+        <!-- Hero Summary Header -->
+        <section class="border-b border-gray-200 dark:border-slate-800 pb-6">
+            <span class="text-xs uppercase font-semibold text-blue-600 dark:text-blue-400 tracking-wider">Exam Revision Kit</span>
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">Macroeconomics: Lectures 1 & 2</h1>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Core concepts, aggregate variables, GDP calculation metrics, stock vs. flow analysis, and income/expenditure accounting methods based on Southeast University lectures by Hasan Al Banna.
+            </p>
+            <div class="mt-4 flex flex-wrap gap-2 text-xs">
+                <a href="#lecture-1" class="bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 font-medium transition-colors">Lec 1 Overview &rarr;</a>
+                <a href="#lecture-2" class="bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 font-medium transition-colors">Lec 2 GDP Accounting &rarr;</a>
+                <a href="#practice" class="bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 px-3 py-1.5 rounded-md font-medium transition-colors">Quick Self-Test &rarr;</a>
+            </div>
+        </section>
+
+        <!-- ================= LECTURE 1 ================= -->
+        <section id="lecture-1" class="space-y-8">
+            <div class="border-l-4 border-blue-600 pl-4 py-1">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Lecture 1: The Economy as a Whole</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Growth, Prices, Employment, and Aggregate Foundations</p>
+            </div>
+
+            <!-- 1. What is Economics & History -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">1. Definition & Historical Context</h3>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-lg bg-white dark:bg-slate-800/60 border border-gray-200 dark:border-slate-800">
+                        <h4 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-1">Scarcity Core Principle</h4>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            <strong>Economics</strong> studies how society uses <em>scarce resources</em> to produce valuable goods/services and distribute them among people. 
+                            <br><span class="text-blue-600 dark:text-blue-400 font-medium">Scarcity = Limited Resources vs. Unlimited Wants.</span>
+                        </p>
+                    </div>
+                    
+                    <div class="p-4 rounded-lg bg-white dark:bg-slate-800/60 border border-gray-200 dark:border-slate-800 space-y-2">
+                        <h4 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-1">Key Historical Pillars</h4>
+                        <div class="text-xs space-y-1">
+                            <p><strong>1776 – Adam Smith</strong> (<em>Wealth of Nations</em>): Promoted free markets, self-interest, competition, and minimal government intervention.</p>
+                            <p><strong>1936 – J. M. Keynes</strong> (<em>General Theory</em>): Following the Great Depression, argued government spending & policy interventions are essential to manage economic downturns.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Micro vs Macro -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">2. Microeconomics vs. Macroeconomics</h3>
+                <div class="table-container rounded-lg border border-gray-200 dark:border-slate-800">
+                    <table class="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+                        <thead class="bg-gray-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-semibold">
+                            <tr>
+                                <th class="p-3 border-b border-gray-200 dark:border-slate-700">Basis</th>
+                                <th class="p-3 border-b border-gray-200 dark:border-slate-700">Microeconomics</th>
+                                <th class="p-3 border-b border-gray-200 dark:border-slate-700">Macroeconomics</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-slate-800 bg-white dark:bg-slate-800/30">
+                            <tr>
+                                <td class="p-3 font-medium">Scope</td>
+                                <td class="p-3">Individual consumers, firms, specific markets</td>
+                                <td class="p-3">The economy as a whole</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">Main Focus</td>
+                                <td class="p-3">Price determination, consumer choices, firm costs</td>
+                                <td class="p-3">National income, inflation, unemployment, growth</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">Key Variables</td>
+                                <td class="p-3">Demand, supply, elasticity, profit margins</td>
+                                <td class="p-3">GDP, Inflation rate, Interest rates, Money supply</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">Policy Focus</td>
+                                <td class="p-3">Individual market regulation, single tax rates</td>
+                                <td class="p-3">Fiscal policy (spending/taxes), Monetary policy</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-medium">Example</td>
+                                <td class="p-3">A rise in coffee bean prices changes coffee shop sales</td>
+                                <td class="p-3">Government expenditure during recession boosts national employment</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3 rounded-md bg-blue-50/50 dark:bg-slate-800/40 border border-blue-100 dark:border-slate-700/50 text-xs text-slate-600 dark:text-slate-400">
+                    <strong>Micro-Macro Linkage:</strong> Macro outcomes result from millions of micro-level decisions by households and firms. In turn, macro policies (interest rates, taxes) shape individual micro behavior.
+                </div>
+            </div>
+
+            <!-- 3. Key Variables & Interrelations -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">3. Macroeconomic Variables & Interrelation Channels</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                    <div class="p-3 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-semibold block text-slate-900 dark:text-slate-100">GDP & Growth</span> Total output produced & year-over-year % growth.
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-semibold block text-slate-900 dark:text-slate-100">Inflation Rate</span> Rate at which the general price level rises.
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-semibold block text-slate-900 dark:text-slate-100">Unemployment Rate</span> % of willing & able labor force without jobs.
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-semibold block text-slate-900 dark:text-slate-100">Interest Rates</span> Cost of borrowing / return on saving.
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-semibold block text-slate-900 dark:text-slate-100">Fiscal Deficit & Debt</span> Govt expenditure gap & cumulative borrowing.
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-semibold block text-slate-900 dark:text-slate-100">Balance of Payments</span> Complete record of international trade & capital flows.
+                    </div>
+                </div>
+
+                <!-- Channels -->
+                <div class="space-y-2 text-xs">
+                    <h4 class="font-semibold text-slate-800 dark:text-slate-300">Core Relationship Channels:</h4>
+                    <div class="grid sm:grid-cols-3 gap-3">
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-md">
+                            <span class="font-bold text-slate-900 dark:text-white block mb-1">Growth Channel</span>
+                            Consumption + Investment ↑ &rarr; Aggregate Demand ↑ &rarr; Output (GDP) ↑ &rarr; Employment ↑
+                        </div>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-md">
+                            <span class="font-bold text-slate-900 dark:text-white block mb-1">Inflation Channel</span>
+                            Money Supply ↑ &rarr; Demand ↑ &rarr; Inflation ↑ &rarr; Central Bank raises Interest Rates &rarr; Spending cools
+                        </div>
+                        <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-md">
+                            <span class="font-bold text-slate-900 dark:text-white block mb-1">Okun's Law (Trade-off)</span>
+                            Inverse relationship: Aggregate Output (GDP) ↑ &rarr; Unemployment Rate ↓
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Stock vs Flow Variables -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">4. Stock vs. Flow Variables</h3>
+                <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-lg space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-slate-900 dark:text-white">Stock Variable</span>
+                            <span class="bg-gray-200 dark:bg-slate-700 px-2 py-0.5 rounded text-[10px]">Point in Time</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300">Measured at a specific instant; contains no time dimension.</p>
+                        <div class="bg-gray-50 dark:bg-slate-900 p-2 rounded border border-gray-100 dark:border-slate-800">
+                            <strong>Analogy:</strong> Water level in a bathtub at 10:00 AM (Photo snapshot).
+                        </div>
+                        <p><strong>Examples:</strong> Wealth on March 31, Population on Jan 1, Money Supply today, National Debt.</p>
+                    </div>
+
+                    <div class="p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-lg space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm text-slate-900 dark:text-white">Flow Variable</span>
+                            <span class="bg-gray-200 dark:bg-slate-700 px-2 py-0.5 rounded text-[10px]">Over a Duration</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300">Measured over a specified time period (e.g. per month or year).</p>
+                        <div class="bg-gray-50 dark:bg-slate-900 p-2 rounded border border-gray-100 dark:border-slate-800">
+                            <strong>Analogy:</strong> Rate of water flowing from the faucet into the tub (Video over time).
+                        </div>
+                        <p><strong>Examples:</strong> Annual GDP, Monthly Salary, Quarterly National Income, Fiscal Deficit per year.</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 italic text-center">N.B. Income is a FLOW variable; Wealth is a STOCK variable.</p>
+            </div>
+
+            <!-- 5. Short Run vs Long Run -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">5. Short Run vs. Long Run Perspectives</h3>
+                <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-lg space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white border-b border-gray-100 dark:border-slate-700 pb-1">Microeconomics Context</h4>
+                        <p><strong>Short Run:</strong> At least one Factor of Production (FOP) is fixed (e.g., factory size/machines fixed, labor variable).</p>
+                        <p><strong>Long Run:</strong> All FOPs are fully variable. Firms can alter plant sizes or exit/enter market.</p>
+                    </div>
+                    <div class="p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-lg space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white border-b border-gray-100 dark:border-slate-700 pb-1">Macroeconomics Context</h4>
+                        <p><strong>Short Run (Sticky Prices):</strong> Prices and wages adjust slowly due to contracts. Aggregate demand dictates production fluctuations & business cycles.</p>
+                        <p><strong>Long Run (Flexible Prices):</strong> Prices/wages are fully flexible. Output depends on real supply factors (Capital, Labor, Technology, Institutions).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-200 dark:border-slate-800">
+
+        <!-- ================= LECTURE 2 ================= -->
+        <section id="lecture-2" class="space-y-8">
+            <div class="border-l-4 border-emerald-600 pl-4 py-1">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Lecture 2: Measuring GDP & National Income</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Nominal/Real GDP, GDP Deflator, Inflation, Expenditure & Income Approaches</p>
+            </div>
+
+            <!-- 1. Definition & Exclusions -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">1. Definition of GDP & Core Principles</h3>
+                <div class="p-4 bg-white dark:bg-slate-800/60 border border-gray-200 dark:border-slate-800 rounded-lg space-y-3">
+                    <p class="text-sm font-medium text-slate-900 dark:text-slate-100">
+                        "GDP is the market value of all final goods and services produced within a country in a given period of time."
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-300">
+                        <p>• <strong>Market Value:</strong> Evaluated using market prices reflecting consumer willingness to pay.</p>
+                        <p>• <strong>Final Goods:</strong> Only final products included; avoids double counting intermediate components.</p>
+                        <p>• <strong>Domestic:</strong> Production within geographic borders (regardless of owner nationality).</p>
+                        <p>• <strong>Gross vs Net:</strong> Gross is BEFORE subtracting capital depreciation. Net = Gross - Depreciation.</p>
+                    </div>
+                </div>
+
+                <!-- GDP Exclusions Callout -->
+                <div class="p-4 bg-amber-50/60 dark:bg-slate-800/80 border border-amber-200 dark:border-slate-700 rounded-lg space-y-2">
+                    <h4 class="text-xs font-bold text-amber-800 dark:text-amber-400 uppercase tracking-wider">Crucial Exam Note: What GDP Excludes!</h4>
+                    <ul class="grid sm:grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-700 dark:text-slate-300 list-disc list-inside">
+                        <li>Intermediate goods (already in final price)</li>
+                        <li>Sale of used/second-hand goods</li>
+                        <li>Financial transactions (stocks, bonds)</li>
+                        <li>Government Transfer Payments (pensions, welfare)</li>
+                        <li>Home-produced non-market goods</li>
+                        <li>Illegal & unreported informal activities</li>
+                        <li>Leisure time, environmental quality, income equity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. Components of GDP -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">2. Components of GDP (Expenditure Identity)</h3>
+                
+                <!-- Formula Box -->
+                <div class="p-4 bg-slate-900 text-white rounded-lg text-center shadow-sm">
+                    <span class="text-xs text-slate-400 block mb-1 uppercase font-semibold">Expenditure Identity Formula</span>
+                    <span class="text-xl sm:text-2xl font-mono font-bold tracking-wider text-blue-300">Y = C + I + G + NX</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+                    <div class="p-3 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-bold text-slate-900 dark:text-white block">Consumption (C)</span>
+                        Household spending on goods/services. <em>Excludes new home purchases.</em>
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-bold text-slate-900 dark:text-white block">Investment (I)</span>
+                        Business capital equipment, inventory build, and <em>new residential housing purchases</em>.
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-bold text-slate-900 dark:text-white block">Govt Purchases (G)</span>
+                        Spending on goods/services by federal/local govt. <em>Excludes transfer payments.</em>
+                    </div>
+                    <div class="p-3 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-md">
+                        <span class="font-bold text-slate-900 dark:text-white block">Net Exports (NX)</span>
+                        Exports (X) minus Imports (M). Domestic spending on foreign goods subtracts out.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Nominal vs Real GDP & Worked Math Example -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">3. Nominal vs. Real GDP & Deflator Worked Problem</h3>
+                
+                <div class="p-4 bg-slate-100 dark:bg-slate-800/80 border border-gray-200 dark:border-slate-700 rounded-lg space-y-2 text-xs">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <span class="font-semibold block text-slate-900 dark:text-white">Nominal GDP Formula</span>
+                            <code class="text-blue-600 dark:text-blue-400 font-mono block mt-1">Nominal GDP = ∑ (Current Price × Current Qty)</code>
+                            <p class="text-slate-500 mt-1">Reflects changes in BOTH prices and quantities.</p>
+                        </div>
+                        <div>
+                            <span class="font-semibold block text-slate-900 dark:text-white">Real GDP Formula</span>
+                            <code class="text-blue-600 dark:text-blue-400 font-mono block mt-1">Real GDP = ∑ (Base Year Price × Current Qty)</code>
+                            <p class="text-slate-500 mt-1">Reflects changes ONLY in actual output quantities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lecture Problem Table -->
+                <div class="space-y-2">
+                    <h4 class="text-xs font-semibold text-slate-700 dark:text-slate-300">Exam Lecture Sample Data:</h4>
+                    <div class="table-container rounded-lg border border-gray-200 dark:border-slate-800">
+                        <table class="w-full text-left text-xs text-slate-700 dark:text-slate-300">
+                            <thead class="bg-gray-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-semibold">
+                                <tr>
+                                    <th class="p-2 border-b border-gray-200 dark:border-slate-700">Good</th>
+                                    <th class="p-2 border-b border-gray-200 dark:border-slate-700">Year 1 Price (Base)</th>
+                                    <th class="p-2 border-b border-gray-200 dark:border-slate-700">Year 1 Quantity</th>
+                                    <th class="p-2 border-b border-gray-200 dark:border-slate-700">Year 2 Price</th>
+                                    <th class="p-2 border-b border-gray-200 dark:border-slate-700">Year 2 Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-slate-800 bg-white dark:bg-slate-800/30">
+                                <tr>
+                                    <td class="p-2 font-medium">Rice</td>
+                                    <td class="p-2">Tk. 50</td>
+                                    <td class="p-2">1,000 kg</td>
+                                    <td class="p-2">Tk. 60</td>
+                                    <td class="p-2">1,100 kg</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-medium">Mobile Phones</td>
+                                    <td class="p-2">Tk. 20,000</td>
+                                    <td class="p-2">100 units</td>
+                                    <td class="p-2">Tk. 22,000</td>
+                                    <td class="p-2">120 units</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Step by step output calculation box -->
+                <div class="p-4 bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-800 rounded-lg text-xs space-y-3">
+                    <h4 class="font-bold text-slate-900 dark:text-white">Step-by-Step Calculation Breakdown:</h4>
+                    
+                    <div class="space-y-1">
+                        <p class="font-semibold text-blue-600 dark:text-blue-400">Step 1: Nominal GDP Calculation</p>
+                        <p>• Year 1 (Nominal): (50 × 1,000) + (20,000 × 100) = 50,000 + 2,000,000 = <strong class="text-slate-900 dark:text-white">Tk. 2,050,000</strong></p>
+                        <p>• Year 2 (Nominal): (60 × 1,100) + (22,000 × 120) = 66,000 + 2,640,000 = <strong class="text-slate-900 dark:text-white">Tk. 2,706,000</strong></p>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="font-semibold text-blue-600 dark:text-blue-400">Step 2: Real GDP Calculation (Base Year = Year 1)</p>
+                        <p>• Year 1 (Real): Equals Nominal GDP in base year = <strong class="text-slate-900 dark:text-white">Tk. 2,050,000</strong></p>
+                        <p>• Year 2 (Real): (50 × 1,100) + (20,000 × 120) = 55,000 + 2,400,000 = <strong class="text-slate-900 dark:text-white">Tk. 2,455,000</strong></p>
+                    </div>
+
+                    <div class="p-3 bg-gray-50 dark:bg-slate-900 rounded border border-gray-200 dark:border-slate-800 space-y-2">
+                        <p class="font-semibold text-slate-900 dark:text-white">Step 3: GDP Deflator & Inflation Rate</p>
+                        <p><code>GDP Deflator = (Nominal GDP / Real GDP) × 100</code></p>
+                        <p>• Deflator Year 1 = (2,050,000 / 2,050,000) × 100 = <strong>100</strong></p>
+                        <p>• Deflator Year 2 = (2,706,000 / 2,455,000) × 100 = <strong>110.22</strong></p>
+                        <p class="mt-2"><code>Inflation Rate = [(Deflator_Y2 - Deflator_Y1) / Deflator_Y1] × 100</code></p>
+                        <p>• Inflation Rate Year 2 = [(110.22 - 100) / 100] × 100 = <strong class="text-emerald-600 dark:text-emerald-400">10.22%</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. National Income Accounting (Expenditure vs Income Approach) -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-200">4. National Income Accounting Methods</h3>
+                
+                <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                    <!-- Expenditure Approach -->
+                    <div class="p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-lg space-y-3">
+                        <div class="flex items-center justify-between border-b border-gray-100 dark:border-slate-700 pb-2">
+                            <span class="font-bold text-slate-900 dark:text-white">Expenditure Approach</span>
+                            <span class="font-mono text-blue-600 dark:text-blue-400 font-semibold">GDP = C + I + G + (X - M)</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300">Sums aggregate spending by households, businesses, government, and net foreign buyers.</p>
+                        
+                        <div class="bg-gray-50 dark:bg-slate-900 p-2.5 rounded border border-gray-200 dark:border-slate-800 space-y-1">
+                            <span class="font-semibold block text-slate-900 dark:text-white">Worked Example:</span>
+                            <p>Given: C = 1,500,000; I = 600,000; G = 400,000; X = 350,000; M = 150,000</p>
+                            <p>1. Net Exports (NX) = 350,000 - 150,000 = 200,000</p>
+                            <p>2. GDP = 1,500,000 + 600,000 + 400,000 + 200,000</p>
+                            <p class="font-bold text-emerald-600 dark:text-emerald-400">GDP = Tk. 2,700,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Income Approach -->
+                    <div class="p-4 bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-800 rounded-lg space-y-3">
+                        <div class="flex items-center justify-between border-b border-gray-100 dark:border-slate-700 pb-2">
+                            <span class="font-bold text-slate-900 dark:text-white">Income Approach</span>
+                            <span class="font-mono text-blue-600 dark:text-blue-400 font-semibold">Factor Income + Taxes + Depr</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300">Sums total income earned by factors of production (Labor, Land, Capital, Entrepreneurship).</p>
+                        
+                        <div class="bg-gray-50 dark:bg-slate-900 p-2.5 rounded border border-gray-200 dark:border-slate-800 space-y-1">
+                            <span class="font-semibold block text-slate-900 dark:text-white">Worked Example:</span>
+                            <p>Given: Wages = 500, Rent = 100, Interest = 80, Profit = 120, Indirect Tax = 50, Depreciation = 30</p>
+                            <p>GDP = 500 + 100 + 80 + 120 + 50 + 30</p>
+                            <p class="font-bold text-emerald-600 dark:text-emerald-400">GDP = 880</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-200 dark:border-slate-800">
+
+        <!-- ================= SELF-TEST / QUICK REVIEW ================= -->
+        <section id="practice" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Interactive Exam Self-Test</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Tap to reveal answers and test your knowledge before tomorrow's exam.</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <!-- Question 1 -->
+                <div class="border border-gray-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-800/40 overflow-hidden">
+                    <button onclick="toggleAnswer('ans-1')" class="w-full text-left p-3 font-medium text-slate-900 dark:text-slate-100 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-slate-800/60 transition-colors">
+                        <span>Q1: Is "Money Supply" a stock or flow variable? What about "Monthly Salary"?</span>
+                        <span class="text-slate-400 text-sm font-bold">+</span>
+                    </button>
+                    <div id="ans-1" class="hidden p-3 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900/60 text-slate-600 dark:text-slate-300">
+                        <strong>Answer:</strong> Money Supply is a <strong>STOCK</strong> variable (measured at a specific point in time). Monthly Salary is a <strong>FLOW</strong> variable (measured per unit time).
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="border border-gray-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-800/40 overflow-hidden">
+                    <button onclick="toggleAnswer('ans-2')" class="w-full text-left p-3 font-medium text-slate-900 dark:text-slate-100 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-slate-800/60 transition-colors">
+                        <span>Q2: Why are transfer payments (e.g. social security) excluded from GDP?</span>
+                        <span class="text-slate-400 text-sm font-bold">+</span>
+                    </button>
+                    <div id="ans-2" class="hidden p-3 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900/60 text-slate-600 dark:text-slate-300">
+                        <strong>Answer:</strong> Transfer payments are redistribution of existing income and do NOT reflect production of new goods or services in the current period.
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="border border-gray-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-800/40 overflow-hidden">
+                    <button onclick="toggleAnswer('ans-3')" class="w-full text-left p-3 font-medium text-slate-900 dark:text-slate-100 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-slate-800/60 transition-colors">
+                        <span>Q3: In the Macroeconomic short run, what happens to prices?</span>
+                        <span class="text-slate-400 text-sm font-bold">+</span>
+                    </button>
+                    <div id="ans-3" class="hidden p-3 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900/60 text-slate-600 dark:text-slate-300">
+                        <strong>Answer:</strong> Prices are <strong>sticky</strong> (they adjust slowly due to contracts, wages, or menu costs), causing output to fluctuate based on aggregate demand.
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="border border-gray-200 dark:border-slate-800 rounded-lg bg-white dark:bg-slate-800/40 overflow-hidden">
+                    <button onclick="toggleAnswer('ans-4')" class="w-full text-left p-3 font-medium text-slate-900 dark:text-slate-100 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-slate-800/60 transition-colors">
+                        <span>Q4: If Nominal GDP is Tk. 2,706,000 and Real GDP is Tk. 2,455,000, what is the GDP Deflator?</span>
+                        <span class="text-slate-400 text-sm font-bold">+</span>
+                    </button>
+                    <div id="ans-4" class="hidden p-3 border-t border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900/60 text-slate-600 dark:text-slate-300">
+                        <strong>Answer:</strong> GDP Deflator = (2,706,000 / 2,455,000) × 100 = <strong>110.22</strong>. This indicates prices grew by 10.22% compared to the base year.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+        <div class="max-w-4xl mx-auto px-4">
+            <p>Macroeconomics Minimal Study Guide • Ready for GitHub Pages hosting</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Persistence Logic (Light mode default, saved in localStorage)
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Check stored theme or default to light
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+        });
+
+        // Toggle Quiz Answers
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+            } else {
+                el.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
