@@ -356,28 +356,32 @@
   }
 
   @media (max-width:700px){
-    .app{ width:100%; max-width:none; padding:12px 10px 48px; }
-    .topbar{ align-items:flex-start; padding:10px 0 14px; gap:10px; }
-    .brand{ min-width:0; flex:1 1 100%; }
+    .app{ width:100%; max-width:none; padding:10px 10px 48px; overflow-x:clip; }
+    .topbar{ align-items:center; padding:8px 0 12px; gap:8px; }
+    .brand{ min-width:0; flex:1 1 auto; }
     .brand h1{ font-size:1.22rem; }
     .brand p{ font-size:.76rem; }
+    /* Homepage mark stays compact and unchanged. */
     .brand-mark{ width:36px; height:36px; font-size:18px; }
-    .actions{ width:100%; display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:7px; }
-    .actions .btn{ min-height:42px; padding:8px 10px; font-size:.79rem; }
-    .iconbtn{ width:42px; height:42px; }
-    .theme-wrap{ position:static; }
+    .actions{ width:auto; flex:0 0 auto; display:flex; align-items:center; gap:5px; margin-left:auto; }
+    .actions .btn{ min-height:0; height:34px; padding:6px 9px; font-size:.76rem; border-radius:7px; white-space:nowrap; }
+    .iconbtn{ width:34px; height:34px; border-radius:7px; }
+    .iconbtn svg{ width:15px; height:15px; }
+
+    /* Palette stays attached to its button instead of becoming a bottom sheet. */
+    .theme-wrap{ position:relative; }
     .popover{
-      position:fixed; left:8px; right:8px; top:auto; bottom:8px;
-      width:auto; max-width:calc(100vw - 16px); min-width:0;
+      position:absolute; left:auto; right:0; top:calc(100% + 7px); bottom:auto;
+      width:min(236px, calc(100vw - 20px)); max-width:calc(100vw - 20px); min-width:0;
       max-height:min(60vh, 360px); overflow-x:hidden; overflow-y:auto;
-      padding:12px; box-shadow:0 8px 30px rgba(0,0,0,.28);
-      transform:none;
+      padding:12px; box-shadow:4px 4px 0 var(--accent-line); transform-origin:top right;
     }
-    .popover.show{ transform:none; }
+    .popover.show{ transform-origin:top right; }
     .popover *{ max-width:100%; }
     .popover .swatch-row{ min-width:0; overflow:hidden; }
     .popover .custom-row{ min-width:0; width:100%; }
     .popover .custom-row input{ width:100%; min-width:0; max-width:100%; }
+
     .editor-panel{ padding:12px; margin-bottom:14px; }
     #mdInput{ min-height:42vh; font-size:.82rem; }
     .editor-actions{ flex-wrap:wrap; gap:8px; }
@@ -394,8 +398,10 @@
     body{ overflow-x:hidden; }
   }
   @media (max-width:380px){
-    .actions{ grid-template-columns:1fr 42px 42px; }
-    .actions .btn-accent{ font-size:.74rem; }
+    .brand p{ display:none; }
+    .actions{ gap:4px; }
+    .actions .btn{ padding:5px 7px; font-size:.71rem; }
+    .iconbtn{ width:32px; height:32px; }
     .prose{ padding-left:12px; padding-right:12px; }
   }
 
