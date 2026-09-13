@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychology - Complete Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #f4f3fb;
+    --sidebar-bg: #16123a;
+    --sidebar-text: #c8c4f0;
+    --sidebar-active: #a78bfa;
+    --sidebar-hover: #2d2764;
+    --text: #1e1b3a;
+    --text-light: #5c5880;
+    --heading: #16123a;
+    --accent: #6d28d9;
+    --accent-light: #ede9fe;
+    --border: #ddd9f5;
+    --white: #ffffff;
+    --card: #ffffff;
+    --shadow: 0 2px 8px rgba(109,40,217,0.08);
+
+    --t1: #6d28d9; --t1-bg: #f5f0ff;
+    --t2: #0e7490; --t2-bg: #ecfeff;
+    --t3: #059669; --t3-bg: #ecfdf5;
+    --t4: #b45309; --t4-bg: #fffbeb;
+    --t5: #be185d; --t5-bg: #fdf2f8;
+    --t6: #1d4ed8; --t6-bg: #eff6ff;
+    --t7: #7c2d12; --t7-bg: #fff7ed;
+    --t8: #065f46; --t8-bg: #ecfdf5;
+    --t9: #4c1d95; --t9-bg: #f5f3ff;
+    --t10: #9f1239; --t10-bg: #fff1f2;
+    --t11: #134e4a; --t11-bg: #f0fdf4;
+    --t12: #1e3a5f; --t12-bg: #eff6ff;
+    --tpy: #6b21a8; --tpy-bg: #faf5ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: var(--sidebar-bg);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    padding-bottom: 40px;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: #3730a3; border-radius: 4px; }
+
+  .sidebar-logo {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .sidebar-logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .sidebar-logo p {
+    font-size: 0.72rem;
+    color: #8b87c0;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    padding: 14px 20px 6px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #6b6890;
+    font-weight: 600;
+  }
+
+  .sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: background 0.15s, color 0.15s;
+    border-left: 3px solid transparent;
+    line-height: 1.4;
+  }
+  .sidebar nav a:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+    border-left-color: var(--sidebar-active);
+  }
+  .sidebar nav a.active {
+    background: rgba(167,139,250,0.12);
+    color: var(--sidebar-active);
+    border-left-color: var(--sidebar-active);
+  }
+  .sidebar nav a .num {
+    background: rgba(255,255,255,0.08);
+    color: #8b87c0;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  .sidebar nav a.prev-year-link {
+    background: rgba(107,33,168,0.2);
+    color: #c4b5fd;
+    border-left-color: #7c3aed;
+    margin: 6px 12px;
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+  .sidebar nav a.prev-year-link:hover {
+    background: rgba(107,33,168,0.35);
+  }
+
+  /* MAIN */
+  .main {
+    margin-left: 280px;
+    flex: 1;
+    padding: 0;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #16123a 0%, #2d1b69 50%, #1e3a5f 100%);
+    padding: 60px 60px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(109,40,217,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 40%;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(14,116,144,0.1);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(167,139,250,0.2);
+    border: 1px solid rgba(167,139,250,0.3);
+    color: #c4b5fd;
+    font-size: 0.72rem;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero p {
+    color: #a5b4fc;
+    font-size: 1rem;
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.08);
+    color: #c4b5fd;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* CONTENT */
+  .content-area {
+    padding: 0 60px 80px;
+  }
+
+  /* TOPIC SECTIONS */
+  .topic-section {
+    margin-top: 60px;
+    scroll-margin-top: 20px;
+  }
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+  }
+  .topic-num {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+  }
+  .topic-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--heading);
+    line-height: 1.25;
+  }
+
+  /* SUBSECTIONS */
+  .subsection {
+    margin-bottom: 32px;
+  }
+  .subsection h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--heading);
+    margin-bottom: 14px;
+    padding-left: 14px;
+    border-left: 4px solid;
+    line-height: 1.3;
+  }
+  .subsection h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    opacity: 0.85;
+  }
+  p { margin-bottom: 12px; }
+
+  /* CARDS / BOXES */
+  .def-box {
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    border-left: 5px solid;
+    background: var(--accent-light);
+  }
+  .def-box .def-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+  .def-box p { margin: 0; font-size: 0.95rem; }
+  .def-box strong { font-weight: 600; }
+
+  .key-term {
+    display: inline-block;
+    background: #ede9fe;
+    color: #4c1d95;
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  .highlight-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .highlight-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--heading);
+    margin-bottom: 12px;
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: 1;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+  .mini-card h5 {
+    font-weight: 700;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+    color: var(--heading);
+  }
+  .mini-card p { font-size: 0.83rem; color: var(--text-light); margin: 0; }
+
+  /* LISTS */
+  ul, ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+  li { margin-bottom: 6px; font-size: 0.93rem; }
+  li strong { font-weight: 600; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    background: var(--card);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  th {
+    background: var(--heading);
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f9f8ff; }
+
+  /* FREUD DIAGRAM */
+  .freud-iceberg {
+    background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 40%, #1e40af 40%, #1e3a8a 70%, #1e1b4b 70%);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    position: relative;
+    min-height: 240px;
+    overflow: hidden;
+  }
+  .freud-level {
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
+  }
+  .freud-conscious { background: rgba(255,255,255,0.95); }
+  .freud-preconscious { background: rgba(255,255,255,0.75); margin-top: 40px; }
+  .freud-unconscious { background: rgba(255,255,255,0.1); color: #fff; margin-top: 10px; }
+  .freud-level h5 { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+  .freud-level p { margin: 0; font-size: 0.82rem; opacity: 0.85; }
+
+  /* MASLOW */
+  .maslow {
+    margin-bottom: 20px;
+  }
+  .maslow-level {
+    padding: 12px 24px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+  }
+  .maslow-level h5 { font-weight: 700; margin-bottom: 2px; }
+  .maslow-level p { margin: 0; font-size: 0.8rem; opacity: 0.8; }
+
+  /* PREVIOUS YEAR SECTION */
+  .prev-year-section {
+    margin-top: 70px;
+    scroll-margin-top: 20px;
+  }
+  .prev-year-header {
+    background: linear-gradient(135deg, #4c1d95, #6d28d9);
+    border-radius: 16px;
+    padding: 32px 40px;
+    margin-bottom: 36px;
+    color: #fff;
+  }
+  .prev-year-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .prev-year-header p {
+    color: #c4b5fd;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .pq-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .pq-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pq-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--heading);
+    line-height: 1.4;
+    flex: 1;
+  }
+  .pq-marks {
+    background: #ede9fe;
+    color: #5b21b6;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-left: 14px;
+  }
+  .pq-body {
+    padding: 24px;
+  }
+  .pq-body p { font-size: 0.9rem; }
+  .pq-body ul, .pq-body ol { font-size: 0.9rem; }
+  .answer-intro {
+    background: #f5f3ff;
+    border-left: 4px solid #7c3aed;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+    font-style: italic;
+    color: #4c1d95;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 16px 0 24px;
+  }
+
+  /* BRAIN DIAGRAM */
+  .brain-lobes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .brain-lobe-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    border: 1px solid;
+  }
+  .brain-lobe-card h5 { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+  .brain-lobe-card p { margin: 0; font-size: 0.82rem; }
+
+  /* PAVLOV */
+  .pavlov-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .pavlov-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .pavlov-arrow { color: #6d28d9; font-size: 1.2rem; font-weight: 700; }
+  .pavlov-us { background: #ecfdf5; border-color: #059669; color: #065f46; }
+  .pavlov-ur { background: #eff6ff; border-color: #1d4ed8; color: #1e3a8a; }
+  .pavlov-cs { background: #fef3c7; border-color: #d97706; color: #92400e; }
+  .pavlov-cr { background: #fdf2f8; border-color: #be185d; color: #831843; }
+  .pavlov-ns { background: #f1f5f9; border-color: #94a3b8; color: #475569; }
+
+  /* QUOTE */
+  .quote-block {
+    border-left: 4px solid var(--accent);
+    padding: 12px 20px;
+    margin-bottom: 16px;
+    font-style: italic;
+    color: var(--text-light);
+    background: var(--accent-light);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.9rem;
+  }
+  .quote-block cite { display: block; margin-top: 6px; font-style: normal; font-weight: 600; font-size: 0.82rem; color: var(--accent); }
+
+  /* EVALUATION BOX */
+  .eval-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .eval-box {
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .eval-strengths { background: #ecfdf5; border: 1px solid #059669; }
+  .eval-weaknesses { background: #fff1f2; border: 1px solid #e11d48; }
+  .eval-box h5 { font-weight: 700; font-size: 0.85rem; margin-bottom: 10px; }
+  .eval-strengths h5 { color: #065f46; }
+  .eval-weaknesses h5 { color: #881337; }
+  .eval-box ul { padding-left: 16px; margin: 0; }
+  .eval-box li { font-size: 0.82rem; margin-bottom: 4px; }
+
+  /* SECTION COLOR OVERRIDES */
+  .t1 { --tc: var(--t1); --tcbg: var(--t1-bg); }
+  .t2 { --tc: var(--t2); --tcbg: var(--t2-bg); }
+  .t3 { --tc: var(--t3); --tcbg: var(--t3-bg); }
+  .t4 { --tc: var(--t4); --tcbg: var(--t4-bg); }
+  .t5 { --tc: var(--t5); --tcbg: var(--t5-bg); }
+  .t6 { --tc: var(--t6); --tcbg: var(--t6-bg); }
+  .t7 { --tc: var(--t7); --tcbg: var(--t7-bg); }
+  .t8 { --tc: var(--t8); --tcbg: var(--t8-bg); }
+  .t9 { --tc: var(--t9); --tcbg: var(--t9-bg); }
+  .t10 { --tc: var(--t10); --tcbg: var(--t10-bg); }
+  .t11 { --tc: var(--t11); --tcbg: var(--t11-bg); }
+  .t12 { --tc: var(--t12); --tcbg: var(--t12-bg); }
+
+  .topic-section .topic-num { background: var(--tc, var(--accent)); }
+  .topic-section .subsection h3 { border-left-color: var(--tc, var(--accent)); }
+  .topic-section .def-box { border-left-color: var(--tc, var(--accent)); background: var(--tcbg, var(--accent-light)); }
+
+  @media print {
+    .sidebar { display: none; }
+    .main { margin-left: 0; }
+    .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .content-area { padding: 20px; }
+    .topic-section { break-inside: avoid; }
+  }
+
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .main { margin-left: 0; }
+    .hero { padding: 30px 24px; }
+    .content-area { padding: 0 24px 60px; }
+    .grid-2, .grid-3, .brain-lobes, .eval-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h1>Psychology Study Guide</h1>
+    <p>Exam Preparation</p>
+  </div>
+  <div class="sidebar-section">Core Topics</div>
+  <nav>
+    <a href="#t1"><span class="num">1</span>Neuron &amp; Nervous System</a>
+    <a href="#t2"><span class="num">2</span>Brain Structure &amp; Function</a>
+    <a href="#t3"><span class="num">3</span>What is Psychology?</a>
+    <a href="#t4"><span class="num">4</span>Mind &amp; Freud's Theories</a>
+    <a href="#t5"><span class="num">5</span>Learning &amp; Conditioning</a>
+    <a href="#t6"><span class="num">6</span>Motivation &amp; Maslow</a>
+    <a href="#t7"><span class="num">7</span>Memory &amp; Forgetting</a>
+    <a href="#t8"><span class="num">8</span>Personality</a>
+    <a href="#t9"><span class="num">9</span>Intelligence</a>
+    <a href="#t10"><span class="num">10</span>Emotions</a>
+    <a href="#t11"><span class="num">11</span>Sensation &amp; Senses</a>
+    <div class="sidebar-section" style="margin-top:10px">Exam</div>
+    <a href="#prev-year" class="prev-year-link">Previous Year Q&amp;A</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Complete Exam Preparation</div>
+    <h1>Psychology<br>Study Guide</h1>
+    <p>All topics, definitions, theories, and previous year answers - organized for your exam.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">Neuroscience</span>
+      <span class="hero-tag">Freud</span>
+      <span class="hero-tag">Pavlov</span>
+      <span class="hero-tag">Maslow</span>
+      <span class="hero-tag">Memory</span>
+      <span class="hero-tag">Personality</span>
+      <span class="hero-tag">Intelligence</span>
+      <span class="hero-tag">Emotions</span>
+    </div>
+  </div>
+
+  <div class="content-area">
+
+  <!-- ========== TOPIC 1 ========== -->
+  <section class="topic-section t1" id="t1">
+    <div class="topic-header">
+      <div class="topic-num">1</div>
+      <h2 class="topic-title">Neuron, Nervous System &amp; Brain</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is a Neuron?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p>A <strong>neuron</strong> (nerve cell) is the basic structural and functional unit of the nervous system. It is a highly specialized cell that receives, processes, and transmits electrical and chemical signals throughout the body and brain.</p>
+      </div>
+      <p>The human nervous system contains approximately <strong>86 billion neurons</strong>. They communicate with each other through tiny gaps called <span class="key-term">synapses</span> using chemical messengers called <span class="key-term">neurotransmitters</span>.</p>
+
+      <h4>Structure of a Neuron</h4>
+      <div class="grid-2">
+        <div class="mini-card">
+          <h5>Cell Body (Soma)</h5>
+          <p>Contains the nucleus, cytoplasm, and organelles. The metabolic center of the neuron. Integrates incoming signals.</p>
+        </div>
+        <div class="mini-card">
+          <h5>Dendrites</h5>
+          <p>Branch-like extensions that receive signals from other neurons and carry them toward the cell body. The more dendrites, the more connections possible.</p>
+        </div>
+        <div class="mini-card">
+          <h5>Axon</h5>
+          <p>A long, thin fiber that carries electrical impulses (action potentials) away from the cell body toward other neurons, muscles, or glands.</p>
+        </div>
+        <div class="mini-card">
+          <h5>Myelin Sheath</h5>
+          <p>A fatty white coating around the axon that insulates it and greatly speeds up signal transmission. Damaged myelin causes diseases like MS.</p>
+        </div>
+        <div class="mini-card">
+          <h5>Nodes of Ranvier</h5>
+          <p>Gaps in the myelin sheath where the electrical signal "jumps" to regenerate and maintain its strength (saltatory conduction).</p>
+        </div>
+        <div class="mini-card">
+          <h5>Axon Terminals &amp; Synapse</h5>
+          <p>The end points of the axon that release neurotransmitters into the synaptic cleft (gap between neurons) to communicate with the next neuron.</p>
+        </div>
+      </div>
+
+      <h4>Types of Neurons</h4>
+      <ul>
+        <li><strong>Sensory (Afferent) Neurons:</strong> Carry signals from sense organs and receptors toward the CNS.</li>
+        <li><strong>Motor (Efferent) Neurons:</strong> Carry commands from the CNS to muscles and glands, producing action.</li>
+        <li><strong>Interneurons (Association Neurons):</strong> Located entirely within the CNS; connect sensory and motor neurons, forming complex circuits.</li>
+      </ul>
+
+      <h4>How Neurons Communicate</h4>
+      <p>When a neuron is stimulated beyond its threshold, it fires an <span class="key-term">action potential</span> - an electrical charge that travels down the axon. At the synapse, neurotransmitters (such as dopamine, serotonin, acetylcholine) are released and bind to receptors on the next neuron, either exciting or inhibiting it. This is the "all-or-nothing" principle.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="subsection">
+      <h3>The Nervous System</h3>
+      <p>The nervous system is the body's master communication network, responsible for receiving information, interpreting it, and directing appropriate responses.</p>
+      <div class="highlight-box">
+        <h4>Divisions of the Nervous System</h4>
+        <ul>
+          <li><strong>Central Nervous System (CNS):</strong> Brain + Spinal Cord - the processing center</li>
+          <li><strong>Peripheral Nervous System (PNS):</strong> All other nerves connecting CNS to body
+            <ul>
+              <li><em>Somatic NS:</em> Voluntary control (skeletal muscles, external senses)</li>
+              <li><em>Autonomic NS:</em> Involuntary control (internal organs)
+                <ul>
+                  <li><em>Sympathetic:</em> "Fight or Flight" - activates body for stress</li>
+                  <li><em>Parasympathetic:</em> "Rest and Digest" - calms body, conserves energy</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>The Central Nervous System (CNS)</h3>
+      <p>The CNS consists of the <span class="key-term">brain</span> and the <span class="key-term">spinal cord</span>. It is the integration center that processes all incoming information and coordinates all body activities.</p>
+
+      <h4>Spinal Cord</h4>
+      <ul>
+        <li>Extends from the brainstem down through the vertebral column</li>
+        <li>Transmits sensory information up to the brain</li>
+        <li>Sends motor commands from brain down to muscles</li>
+        <li>Mediates spinal reflex arcs (rapid automatic responses without brain involvement)</li>
+        <li>Contains gray matter (H-shaped core, cell bodies) and white matter (myelinated axons)</li>
+        <li>31 pairs of spinal nerves branch from it</li>
+      </ul>
+
+      <h4>Functions of the CNS</h4>
+      <ul>
+        <li>Integration and coordination of all bodily functions</li>
+        <li>Processing all sensory information</li>
+        <li>Generating motor commands</li>
+        <li>Higher cognitive functions (via cerebral cortex)</li>
+        <li>Maintaining homeostasis</li>
+        <li>Emotional regulation and behavior</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Nervous System and Mental Health</h3>
+      <p>The nervous system is directly and profoundly linked to mental health. Disruptions in neural circuitry and neurochemistry underlie most mental disorders.</p>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Neurotransmitter</th><th>Function</th><th>Imbalance linked to</th></tr>
+          <tr><td>Serotonin</td><td>Mood, sleep, appetite regulation</td><td>Depression, anxiety, OCD</td></tr>
+          <tr><td>Dopamine</td><td>Reward, motivation, movement</td><td>Schizophrenia, Parkinson's, addiction</td></tr>
+          <tr><td>Norepinephrine</td><td>Arousal, alertness, stress response</td><td>Depression, anxiety, PTSD</td></tr>
+          <tr><td>GABA</td><td>Primary inhibitory neurotransmitter</td><td>Anxiety disorders, epilepsy</td></tr>
+          <tr><td>Glutamate</td><td>Primary excitatory neurotransmitter</td><td>Schizophrenia, depression</td></tr>
+        </table>
+      </div>
+      <ul>
+        <li>The <strong>HPA axis</strong> (Hypothalamus-Pituitary-Adrenal) links chronic stress to mental health through cortisol release</li>
+        <li><strong>Neuroplasticity</strong> - the brain's ability to reorganize and form new connections - is the basis for recovery through therapy</li>
+        <li>Trauma can physically alter brain structure (shrinking hippocampus, hyperactive amygdala)</li>
+        <li>Mental illnesses are often "brain diseases" with measurable structural and chemical changes</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 2 ========== -->
+  <section class="topic-section t2" id="t2">
+    <div class="topic-header">
+      <div class="topic-num">2</div>
+      <h2 class="topic-title">Brain: Structure, Function, Behaviour &amp; Mental Health</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>Structure of the Brain</h3>
+      <p>The human brain weighs approximately <strong>1.4 kg</strong> and contains about 86 billion neurons with trillions of synaptic connections. It is divided into three main regions:</p>
+
+      <h4>1. Forebrain (Prosencephalon) - Most Developed Region</h4>
+      <div class="brain-lobes">
+        <div class="brain-lobe-card" style="background:#e0f2fe;border-color:#0284c7">
+          <h5>Frontal Lobe</h5>
+          <p>Planning, decision-making, impulse control, personality, voluntary movement (motor cortex). Contains Broca's area (speech production). Seat of executive function.</p>
+        </div>
+        <div class="brain-lobe-card" style="background:#f0fdf4;border-color:#059669">
+          <h5>Parietal Lobe</h5>
+          <p>Sensory processing (somatosensory cortex), spatial awareness, body awareness, integrating information from different senses.</p>
+        </div>
+        <div class="brain-lobe-card" style="background:#fef3c7;border-color:#d97706">
+          <h5>Temporal Lobe</h5>
+          <p>Hearing, language comprehension, memory formation, face recognition. Contains Wernicke's area (language understanding).</p>
+        </div>
+        <div class="brain-lobe-card" style="background:#fdf2f8;border-color:#be185d">
+          <h5>Occipital Lobe</h5>
+          <p>Visual processing, pattern recognition, object and color identification. Primary visual cortex is here.</p>
+        </div>
+      </div>
+      <ul>
+        <li><strong>Thalamus:</strong> Relay station for all sensory information (except smell) to cerebral cortex; involved in attention and alertness</li>
+        <li><strong>Hypothalamus:</strong> Regulates hunger, thirst, body temperature, sexual behavior, sleep-wake cycles; links nervous system to endocrine system via pituitary gland</li>
+        <li><strong>Corpus Callosum:</strong> Bundle of nerve fibers connecting the left and right cerebral hemispheres</li>
+      </ul>
+
+      <h4>2. Midbrain (Mesencephalon)</h4>
+      <ul>
+        <li>Controls eye movements and pupil reflexes</li>
+        <li>Contains substantia nigra (dopamine production - degeneration causes Parkinson's disease)</li>
+        <li>Involved in auditory and visual reflexes</li>
+      </ul>
+
+      <h4>3. Hindbrain (Rhombencephalon)</h4>
+      <ul>
+        <li><strong>Cerebellum:</strong> Balance, fine motor coordination, timing, motor learning ("the little brain")</li>
+        <li><strong>Pons:</strong> Sleep, facial movement and sensation, hearing, taste; connects cerebellum to brainstem</li>
+        <li><strong>Medulla Oblongata:</strong> Controls vital life functions - heart rate, breathing, blood pressure, swallowing, vomiting</li>
+      </ul>
+
+      <h4>The Limbic System (Emotional Brain)</h4>
+      <ul>
+        <li><strong>Amygdala:</strong> Fear processing, emotional memories, aggression, threat detection</li>
+        <li><strong>Hippocampus:</strong> Memory consolidation, converting short-term to long-term memory, spatial navigation</li>
+        <li><strong>Cingulate Gyrus:</strong> Emotion processing, learning, memory</li>
+        <li><strong>Hypothalamus:</strong> Pleasure and pain regulation</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Brain Function and Behaviour</h3>
+      <p>The relationship between brain function and behavior is studied through the principle of <span class="key-term">localization of function</span> - the idea that specific brain areas control specific behaviors and mental processes.</p>
+      <div class="highlight-box">
+        <h4>Key Brain-Behavior Relationships</h4>
+        <ul>
+          <li><strong>Broca's Area (Left Frontal Lobe):</strong> Speech production. Damage causes Broca's aphasia - difficulty producing speech, though comprehension is intact.</li>
+          <li><strong>Wernicke's Area (Left Temporal Lobe):</strong> Language comprehension. Damage causes Wernicke's aphasia - fluent but meaningless speech.</li>
+          <li><strong>Motor Cortex (Frontal Lobe):</strong> Controls voluntary muscle movements. Left hemisphere controls right side of body and vice versa.</li>
+          <li><strong>Prefrontal Cortex:</strong> Personality, judgment, planning. The case of Phineas Gage (1848) - iron rod through frontal lobe - dramatically changed his personality.</li>
+          <li><strong>Amygdala:</strong> Damage leads to fearlessness; overactivation leads to anxiety disorders.</li>
+          <li><strong>Hippocampus:</strong> Damage prevents formation of new memories (as in patient H.M.).</li>
+        </ul>
+      </div>
+      <p><strong>Hemispheric Lateralization:</strong> The left hemisphere tends to handle language, logic, and analytical thinking; the right hemisphere handles creativity, spatial reasoning, and holistic processing. Split-brain studies by Sperry and Gazzaniga confirmed this division.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Brain Function and Mental Health</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Mental Disorder</th><th>Brain Area/System Affected</th><th>Changes Observed</th></tr>
+          <tr><td>Depression</td><td>Prefrontal cortex, limbic system</td><td>Reduced PFC activity, low serotonin and norepinephrine</td></tr>
+          <tr><td>Schizophrenia</td><td>Dopamine pathways, prefrontal cortex</td><td>Enlarged ventricles, dopamine dysregulation</td></tr>
+          <tr><td>Anxiety Disorders</td><td>Amygdala, hippocampus</td><td>Overactive amygdala, reduced hippocampal volume</td></tr>
+          <tr><td>PTSD</td><td>Amygdala, hippocampus, PFC</td><td>Shrunken hippocampus, hyperactive amygdala</td></tr>
+          <tr><td>OCD</td><td>Caudate nucleus, orbitofrontal cortex</td><td>Hyperactivity in orbital-frontal-caudate circuit</td></tr>
+          <tr><td>Alzheimer's</td><td>Hippocampus, cortex (widespread)</td><td>Amyloid plaques, neurofibrillary tangles, widespread neuron loss</td></tr>
+          <tr><td>ADHD</td><td>Prefrontal cortex, striatum</td><td>Reduced dopamine, underdeveloped PFC</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 3 ========== -->
+  <section class="topic-section t3" id="t3">
+    <div class="topic-header">
+      <div class="topic-num">3</div>
+      <h2 class="topic-title">What is Psychology?</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>Definition of Psychology</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Psychology</strong> is the scientific study of <strong>behavior</strong> and <strong>mental processes</strong>. The word derives from the Greek words <em>psyche</em> (mind/soul) and <em>logos</em> (study/science).</p>
+      </div>
+      <p>Wilhelm Wundt established the first experimental psychology laboratory in Leipzig, Germany in 1879, earning him the title "Father of Psychology." Psychology studies both observable behavior (actions, speech) and unobservable mental processes (thoughts, feelings, dreams, perceptions).</p>
+
+      <h4>Major Branches of Psychology</h4>
+      <div class="grid-2">
+        <div class="mini-card"><h5>Clinical Psychology</h5><p>Diagnosis, treatment, and prevention of mental disorders</p></div>
+        <div class="mini-card"><h5>Developmental Psychology</h5><p>Changes in behavior and mental processes across the lifespan</p></div>
+        <div class="mini-card"><h5>Social Psychology</h5><p>How people think about, influence, and relate to others</p></div>
+        <div class="mini-card"><h5>Educational Psychology</h5><p>How people learn; improving teaching methods</p></div>
+        <div class="mini-card"><h5>Industrial/Organizational Psychology</h5><p>Behavior in workplace settings; productivity and satisfaction</p></div>
+        <div class="mini-card"><h5>Neuropsychology</h5><p>Brain-behavior relationships; effects of brain damage</p></div>
+        <div class="mini-card"><h5>Forensic Psychology</h5><p>Psychology applied to legal and criminal justice systems</p></div>
+        <div class="mini-card"><h5>Health Psychology</h5><p>Psychological factors influencing physical health and illness</p></div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Methods of Psychology (Behavioral Methods)</h3>
+
+      <div class="highlight-box">
+        <h4>1. Observation Method</h4>
+        <p><strong>Naturalistic Observation:</strong> Watching and recording behavior in the natural environment without interference. Provides realistic data. <strong>Participant Observation:</strong> Researcher joins the group being studied. <strong>Advantages:</strong> High ecological validity, real behavior. <strong>Disadvantages:</strong> Cannot control variables, observer effect (Hawthorne effect).</p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>2. Experimental Method</h4>
+        <p>The most rigorous scientific method. The researcher manipulates an <span class="key-term">independent variable (IV)</span> and measures the effect on a <span class="key-term">dependent variable (DV)</span> while controlling all other variables. Uses control groups and experimental groups. <strong>Advantages:</strong> Establishes cause-and-effect, replicable, precise control. <strong>Disadvantages:</strong> Artificial settings (low ecological validity), ethical constraints, demand characteristics.</p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>3. Case Study Method</h4>
+        <p>In-depth investigation of a single individual, group, or event. Examples: Freud's patients, patient H.M. (memory), Phineas Gage (personality). <strong>Advantages:</strong> Rich detail, useful for rare cases. <strong>Disadvantages:</strong> Cannot generalize findings, researcher bias, time-consuming.</p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>4. Survey/Questionnaire Method</h4>
+        <p>Collecting self-report data from large samples via questionnaires or interviews. <strong>Advantages:</strong> Large samples, economical, anonymous. <strong>Disadvantages:</strong> Social desirability bias, dishonesty, memory distortions.</p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>5. Correlational Method</h4>
+        <p>Examining the statistical relationship between two or more variables. A positive correlation means both increase together; a negative correlation means as one increases the other decreases. <strong>Key limit:</strong> Correlation does not prove causation.</p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>6. Clinical/Psychoanalytic Method</h4>
+        <p>Studying behavior through therapeutic interactions. Freud used free association, dream analysis, and hypnosis. Provides insight into unconscious processes. <strong>Disadvantages:</strong> Highly subjective, cannot replicate.</p>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Why Does Psychology Study Animal Behavior?</h3>
+      <ul>
+        <li><strong>Ethical reasons:</strong> Invasive procedures (surgery, extreme deprivation) cannot be performed on humans but are permitted on animals under strict regulations</li>
+        <li><strong>Simpler systems:</strong> Animal nervous systems are simpler, making it easier to study basic learning principles</li>
+        <li><strong>Controlled conditions:</strong> Animals' entire environments can be controlled (genetics, diet, experience)</li>
+        <li><strong>Shorter lifespans:</strong> Study of full lifespan possible in shorter time (rats live 2-3 years)</li>
+        <li><strong>Evolutionary continuity:</strong> Darwin's theory suggests basic behavioral principles apply across species</li>
+        <li><strong>Historical precedent:</strong> Pavlov's dogs, Skinner's rats and pigeons established foundational learning theories</li>
+        <li><strong>Comparative psychology:</strong> Comparing behavior across species reveals the evolutionary basis of behavior</li>
+        <li><strong>Drug testing:</strong> New drugs can be tested on animals before human trials</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Why is Psychology Called a Biopsychosocial Science?</h3>
+      <div class="def-box">
+        <div class="def-label">The Biopsychosocial Model</div>
+        <p>Proposed by George Engel (1977), this model states that behavior and mental health are best understood by examining <strong>biological</strong>, <strong>psychological</strong>, AND <strong>social</strong> factors together - not in isolation.</p>
+      </div>
+      <div class="grid-3">
+        <div class="mini-card" style="border-top:4px solid var(--t5);padding-top:12px">
+          <h5>Biological (Bio)</h5>
+          <p>Genetics, brain chemistry, neurotransmitters, hormones, nervous system, evolution, heredity</p>
+        </div>
+        <div class="mini-card" style="border-top:4px solid var(--t6);padding-top:12px">
+          <h5>Psychological (Psycho)</h5>
+          <p>Thoughts, emotions, perceptions, personality, learning, memory, motivation, beliefs</p>
+        </div>
+        <div class="mini-card" style="border-top:4px solid var(--t3);padding-top:12px">
+          <h5>Social (Social)</h5>
+          <p>Family, culture, relationships, socioeconomic status, peer influence, media, society</p>
+        </div>
+      </div>
+      <p><strong>Example - Depression:</strong> Has a biological component (low serotonin, genetic predisposition), a psychological component (negative thinking patterns, low self-esteem), and a social component (isolation, lack of support, poverty). All three must be addressed for effective treatment.</p>
+      <p>Psychology is therefore both a <strong>natural science</strong> (biology, neuroscience) and a <strong>social science</strong> (sociology, anthropology), bridging the two. This is why it is called a <span class="key-term">biopsychosocial science</span>.</p>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 4 ========== -->
+  <section class="topic-section t4" id="t4">
+    <div class="topic-header">
+      <div class="topic-num">4</div>
+      <h2 class="topic-title">The Mind &amp; Freud's Theories</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is the Mind?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p>The <strong>mind</strong> refers to the totality of psychological processes - including thinking, feeling, perceiving, remembering, imagining, and willing. It is not the same as the brain: the brain is a physical organ; the mind is its functional output.</p>
+      </div>
+      <p>The mind encompasses both conscious (what we are aware of) and unconscious (what lies outside awareness) processes. Sigmund Freud (1856-1939) developed the most influential theory of mind structure.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Freud's Structure of the Mind (Topographic/Iceberg Model)</h3>
+      <p>Freud compared the mind to an iceberg: only a small portion is visible (conscious), while the vast majority lies hidden beneath the surface (unconscious).</p>
+
+      <div class="freud-iceberg">
+        <div class="freud-conscious">
+          <h5>CONSCIOUS MIND (Tip of Iceberg)</h5>
+          <p>Current thoughts, perceptions, feelings we are directly aware of. Very small portion of total mind.</p>
+        </div>
+        <div class="freud-preconscious">
+          <h5>PRECONSCIOUS MIND (Just Below Surface)</h5>
+          <p>Memories, knowledge, and feelings not currently in awareness but easily brought to consciousness. E.g., your home address, yesterday's events.</p>
+        </div>
+        <div class="freud-unconscious">
+          <h5>UNCONSCIOUS MIND (Deep Below - Largest Part)</h5>
+          <p>Repressed memories, forbidden desires, traumatic experiences, primal instincts. Cannot be directly accessed. Influences behavior without our knowledge. Revealed through dreams, Freudian slips, free association.</p>
+        </div>
+      </div>
+
+      <ul>
+        <li><strong>Eros (Life Instinct):</strong> Drive toward pleasure, love, sexuality, and self-preservation (libido is its energy)</li>
+        <li><strong>Thanatos (Death Instinct):</strong> Drive toward aggression, destruction, and ultimately death</li>
+        <li><strong>Freudian Slips (Parapraxes):</strong> Unintentional errors in speech or action that reveal unconscious thoughts</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Freud's Structure of Personality (Structural Model)</h3>
+
+      <div class="grid-3">
+        <div class="mini-card" style="border:2px solid #dc2626;background:#fff5f5">
+          <h5 style="color:#dc2626">THE ID</h5>
+          <p><strong>Present from birth.</strong> Entirely unconscious. Contains basic drives (sex and aggression). Operates on the <em>Pleasure Principle</em> - demands immediate gratification of needs. Irrational, impulsive. "I WANT IT NOW."</p>
+        </div>
+        <div class="mini-card" style="border:2px solid #059669;background:#f0fdf4">
+          <h5 style="color:#059669">THE EGO</h5>
+          <p><strong>Develops around age 2.</strong> Mostly conscious/preconscious. Operates on the <em>Reality Principle</em> - balances id's demands with the constraints of reality. Rational, logical mediator. "I want it, but I'll find the right time and place."</p>
+        </div>
+        <div class="mini-card" style="border:2px solid #1d4ed8;background:#eff6ff">
+          <h5 style="color:#1d4ed8">THE SUPEREGO</h5>
+          <p><strong>Develops ages 4-5.</strong> Internalized moral standards from parents and society. Contains <em>Conscience</em> (what's wrong - causes guilt) and <em>Ego Ideal</em> (what's right - causes pride). Operates on the <em>Morality Principle</em>. Perfectionist. "That is wrong!"</p>
+        </div>
+      </div>
+
+      <h4>Defense Mechanisms (Ego's Ways to Reduce Anxiety)</h4>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Defense Mechanism</th><th>Description</th><th>Example</th></tr>
+          <tr><td>Repression</td><td>Pushing threatening material into the unconscious</td><td>Forgetting a traumatic childhood event</td></tr>
+          <tr><td>Denial</td><td>Refusing to acknowledge a painful reality</td><td>"I don't have a drinking problem."</td></tr>
+          <tr><td>Projection</td><td>Attributing one's own unacceptable feelings to others</td><td>An angry person accuses others of being angry</td></tr>
+          <tr><td>Rationalization</td><td>Making up logical justifications for irrational behavior</td><td>"I failed because the exam was unfair."</td></tr>
+          <tr><td>Displacement</td><td>Redirecting feelings from original target to safer one</td><td>Kicking a chair after being scolded by boss</td></tr>
+          <tr><td>Sublimation</td><td>Channeling unacceptable drives into acceptable activities</td><td>Channeling aggression into competitive sports</td></tr>
+          <tr><td>Regression</td><td>Returning to earlier, more childlike behavior under stress</td><td>An adult throwing a tantrum</td></tr>
+        </table>
+      </div>
+
+      <h4>Freud's Psychosexual Stages</h4>
+      <ul>
+        <li><strong>Oral (0-1 yr):</strong> Pleasure through mouth; fixation causes dependency or sarcasm</li>
+        <li><strong>Anal (1-3 yr):</strong> Pleasure through bowel control; fixation causes orderliness/messiness</li>
+        <li><strong>Phallic (3-6 yr):</strong> Focus on genitals; Oedipus complex (boys) / Electra complex (girls)</li>
+        <li><strong>Latency (6-12 yr):</strong> Sexual feelings dormant; focus on social and intellectual skills</li>
+        <li><strong>Genital (Puberty onward):</strong> Mature sexuality and adult relationships</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 5 ========== -->
+  <section class="topic-section t5" id="t5">
+    <div class="topic-header">
+      <div class="topic-num">5</div>
+      <h2 class="topic-title">Learning &amp; Classical Conditioning</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Learning?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Learning</strong> is a relatively permanent change in behavior or behavioral potential that results from experience or practice - and is not due to maturation, fatigue, drugs, or injury.</p>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Characteristics of Learning</h3>
+      <ul>
+        <li>Produces a <strong>relatively permanent</strong> change (not temporary)</li>
+        <li>Results from <strong>experience or practice</strong>, not biological maturation</li>
+        <li>Leads to a change in <strong>behavior or behavioral potential</strong> (Latent learning - may not be immediately visible)</li>
+        <li>Involves <strong>adaptation</strong> to the environment</li>
+        <li>Can be <strong>adaptive</strong> (helpful) or <strong>maladaptive</strong> (phobias, bad habits)</li>
+        <li>Occurs through <strong>association, consequences, or observation</strong></li>
+        <li>Results may be <strong>behavioral, cognitive, or emotional</strong></li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Elements of Learning (Clark Hull's Drive-Reduction Theory)</h3>
+      <div class="grid-2">
+        <div class="mini-card" style="border-top:3px solid #be185d">
+          <h5>1. Drive</h5>
+          <p>An internal motivating force arising from a biological need (hunger, thirst, pain). Drives energize and direct behavior.</p>
+        </div>
+        <div class="mini-card" style="border-top:3px solid #be185d">
+          <h5>2. Cue (Stimulus)</h5>
+          <p>An environmental signal that indicates what response is appropriate. Tells the organism when and how to respond.</p>
+        </div>
+        <div class="mini-card" style="border-top:3px solid #be185d">
+          <h5>3. Response</h5>
+          <p>The actual behavior produced in response to the cue. Must be performed for learning to occur.</p>
+        </div>
+        <div class="mini-card" style="border-top:3px solid #be185d">
+          <h5>4. Reinforcement (Reward)</h5>
+          <p>A consequence that reduces the drive and increases the likelihood of the response being repeated (strengthens the S-R connection).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Pavlov's Classical Conditioning Theory</h3>
+      <div class="quote-block">
+        Ivan Pavlov (1849-1936) was a Russian physiologist who won the Nobel Prize (1904) for his work on digestion. His greatest discovery - classical conditioning - came accidentally while studying salivation in dogs.
+        <cite>- Ivan Pavlov</cite>
+      </div>
+
+      <h4>Key Terms</h4>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Term</th><th>Abbreviation</th><th>Definition</th><th>Pavlov's Example</th></tr>
+          <tr><td>Unconditioned Stimulus</td><td>US / UCS</td><td>Naturally and automatically triggers a response</td><td>Food</td></tr>
+          <tr><td>Unconditioned Response</td><td>UR / UCR</td><td>Unlearned, natural reaction to the US</td><td>Salivation to food</td></tr>
+          <tr><td>Neutral Stimulus</td><td>NS</td><td>Does not naturally produce the response (before conditioning)</td><td>Bell (before training)</td></tr>
+          <tr><td>Conditioned Stimulus</td><td>CS</td><td>Previously neutral stimulus that now produces the response</td><td>Bell (after training)</td></tr>
+          <tr><td>Conditioned Response</td><td>CR</td><td>Learned response to the conditioned stimulus</td><td>Salivation to bell</td></tr>
+        </table>
+      </div>
+
+      <h4>Pavlov's Three Phases</h4>
+      <p><strong>Phase 1 - Before Conditioning:</strong></p>
+      <div class="pavlov-flow">
+        <div class="pavlov-box pavlov-us">Food (US)</div>
+        <span class="pavlov-arrow">→</span>
+        <div class="pavlov-box pavlov-ur">Salivation (UR)</div>
+        <span style="margin-left:20px;color:#94a3b8">and</span>
+        <div class="pavlov-box pavlov-ns" style="margin-left:20px">Bell (NS)</div>
+        <span class="pavlov-arrow">→</span>
+        <div class="pavlov-box" style="background:#f1f5f9;border-color:#94a3b8;color:#475569">No Response</div>
+      </div>
+      <p><strong>Phase 2 - During Conditioning (repeated pairings):</strong></p>
+      <div class="pavlov-flow">
+        <div class="pavlov-box pavlov-ns">Bell (NS)</div>
+        <span style="color:#64748b;font-weight:700">+</span>
+        <div class="pavlov-box pavlov-us">Food (US)</div>
+        <span class="pavlov-arrow">→</span>
+        <div class="pavlov-box pavlov-ur">Salivation (UR)</div>
+      </div>
+      <p><strong>Phase 3 - After Conditioning:</strong></p>
+      <div class="pavlov-flow">
+        <div class="pavlov-box pavlov-cs">Bell (CS)</div>
+        <span class="pavlov-arrow">→</span>
+        <div class="pavlov-box pavlov-cr">Salivation (CR)</div>
+        <span style="color:#059669;font-size:0.85rem;margin-left:10px">Learning has occurred!</span>
+      </div>
+
+      <h4>Key Principles of Classical Conditioning</h4>
+      <ul>
+        <li><strong>Acquisition:</strong> The learning phase; CS-CR association strengthens with repeated CS-US pairings. The CS must reliably predict the US.</li>
+        <li><strong>Extinction:</strong> When the CS is repeatedly presented without the US, the CR gradually weakens and disappears.</li>
+        <li><strong>Spontaneous Recovery:</strong> After extinction, the CR can reappear after a rest period (but is weaker than the original).</li>
+        <li><strong>Stimulus Generalization:</strong> Similar stimuli to the CS also produce the CR (dog salivates to similar-sounding bells). Breadth of learning.</li>
+        <li><strong>Stimulus Discrimination:</strong> The ability to tell the difference between the CS and similar stimuli - responding only to the exact CS.</li>
+        <li><strong>Higher-Order Conditioning:</strong> A well-established CS is used to condition a new neutral stimulus.</li>
+      </ul>
+
+      <h4>Applications of Classical Conditioning</h4>
+      <ul>
+        <li>Phobia development (Watson's Little Albert - conditioned fear of white rat)</li>
+        <li>Drug cravings triggered by environmental cues</li>
+        <li>Taste aversions (one-trial learning)</li>
+        <li>Advertising (products paired with pleasant images/music)</li>
+        <li>Systematic desensitization therapy for phobias</li>
+      </ul>
+
+      <h4>Critical Evaluation</h4>
+      <div class="eval-grid">
+        <div class="eval-box eval-strengths">
+          <h5>Strengths</h5>
+          <ul>
+            <li>Highly scientific (controlled lab conditions)</li>
+            <li>Established learning as a scientific field</li>
+            <li>Practical therapeutic applications</li>
+            <li>Explains acquisition of fears and phobias</li>
+            <li>Replicable across many species</li>
+            <li>Foundation for behavior therapy</li>
+          </ul>
+        </div>
+        <div class="eval-box eval-weaknesses">
+          <h5>Weaknesses</h5>
+          <ul>
+            <li>Too mechanistic - ignores mental processes</li>
+            <li>Animal research may not apply fully to humans</li>
+            <li>Cannot explain complex human learning</li>
+            <li>Cannot explain insight or latent learning</li>
+            <li>Ethical concerns (Little Albert experiment)</li>
+            <li>Only addresses passive, involuntary learning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 6 ========== -->
+  <section class="topic-section t6" id="t6">
+    <div class="topic-header">
+      <div class="topic-num">6</div>
+      <h2 class="topic-title">Motivation</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Motivation?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Motivation</strong> is the internal state or condition that activates, directs, and sustains behavior toward a goal. It is the "why" behind all human and animal behavior. The word comes from the Latin <em>movere</em> meaning "to move."</p>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>The Motivational Cycle</h3>
+      <p>Motivation operates in a cycle that begins with an unmet need and ends with need satisfaction, restoring the organism to a state of balance (homeostasis):</p>
+      <div class="highlight-box">
+        <h4>The Cycle</h4>
+        <div class="pavlov-flow" style="flex-wrap:wrap">
+          <div class="pavlov-box pavlov-us">Need/Deficiency</div>
+          <span class="pavlov-arrow">→</span>
+          <div class="pavlov-box pavlov-ns">Drive (Tension)</div>
+          <span class="pavlov-arrow">→</span>
+          <div class="pavlov-box pavlov-cs">Goal-Directed Behavior</div>
+          <span class="pavlov-arrow">→</span>
+          <div class="pavlov-box pavlov-ur">Goal Achievement</div>
+          <span class="pavlov-arrow">→</span>
+          <div class="pavlov-box pavlov-cr">Need Reduction / Homeostasis</div>
+        </div>
+        <p style="margin-top:12px;font-size:0.85rem;color:var(--text-light)">Example: Lack of food (need) → hunger sensation (drive) → searching for food (behavior) → eating (goal) → satiation (need reduced). The cycle then begins again with a new need.</p>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Classifications of Motivation</h3>
+      <div class="grid-2">
+        <div class="mini-card" style="border-left:4px solid #dc2626">
+          <h5>Biological/Primary Motives</h5>
+          <p>Innate, universal, based on physiological needs. Not learned. Examples: Hunger, thirst, sex, sleep, pain avoidance, temperature regulation, oxygen. Essential for survival.</p>
+        </div>
+        <div class="mini-card" style="border-left:4px solid #7c3aed">
+          <h5>Social/Secondary Motives</h5>
+          <p>Learned through experience and social interaction. Vary across cultures. Examples: Achievement, affiliation, power, approval, status, curiosity, self-esteem.</p>
+        </div>
+        <div class="mini-card" style="border-left:4px solid #059669">
+          <h5>Intrinsic Motivation</h5>
+          <p>Driven by internal rewards - satisfaction, curiosity, interest, love of the activity itself. Doing something for its own sake. More sustainable and leads to higher quality performance.</p>
+        </div>
+        <div class="mini-card" style="border-left:4px solid #0e7490">
+          <h5>Extrinsic Motivation</h5>
+          <p>Driven by external rewards - money, grades, praise, prizes, or fear of punishment. Overjustification effect: external rewards can actually reduce intrinsic motivation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Maslow's Hierarchy of Needs (1943)</h3>
+      <p>Abraham Maslow proposed that human needs are arranged in a hierarchy from most basic (bottom) to most advanced (top). Lower needs must generally be satisfied before higher needs become motivating.</p>
+
+      <div class="maslow">
+        <div class="maslow-level" style="background:#6d28d9;color:#fff;margin:0 auto;width:30%;text-align:center">
+          <h5>5. SELF-ACTUALIZATION</h5>
+          <p>Fulfilling one's full potential, creativity, meaning, peak experiences</p>
+        </div>
+        <div class="maslow-level" style="background:#1d4ed8;color:#fff;margin:0 auto;width:50%;text-align:center">
+          <h5>4. ESTEEM NEEDS</h5>
+          <p>Achievement, recognition, competence, self-respect, status</p>
+        </div>
+        <div class="maslow-level" style="background:#0e7490;color:#fff;margin:0 auto;width:65%;text-align:center">
+          <h5>3. LOVE &amp; BELONGING NEEDS</h5>
+          <p>Friendship, intimacy, family, sense of connection and belonging</p>
+        </div>
+        <div class="maslow-level" style="background:#059669;color:#fff;margin:0 auto;width:80%;text-align:center">
+          <h5>2. SAFETY NEEDS</h5>
+          <p>Security, stability, order, freedom from fear and anxiety</p>
+        </div>
+        <div class="maslow-level" style="background:#b45309;color:#fff;margin:0 auto;width:100%;text-align:center">
+          <h5>1. PHYSIOLOGICAL NEEDS (Base)</h5>
+          <p>Food, water, shelter, warmth, sleep, oxygen - basics for survival</p>
+        </div>
+      </div>
+      <ul style="margin-top:16px">
+        <li><strong>Deficiency Needs (D-Needs):</strong> Lower four levels - motivation comes from a lack that must be filled</li>
+        <li><strong>Growth Needs (B-Needs/Being Needs):</strong> Self-actualization - motivation comes from desire to grow and expand</li>
+        <li>Maslow estimated only about <strong>1% of people reach self-actualization</strong> - he cited Abraham Lincoln and Albert Einstein as examples</li>
+      </ul>
+
+      <div class="eval-grid">
+        <div class="eval-box eval-strengths">
+          <h5>Strengths of Maslow's Theory</h5>
+          <ul>
+            <li>Humanistic, positive view of human nature</li>
+            <li>Comprehensive and intuitive</li>
+            <li>Widely applied in education, management, therapy</li>
+            <li>Recognizes diverse human needs</li>
+          </ul>
+        </div>
+        <div class="eval-box eval-weaknesses">
+          <h5>Weaknesses</h5>
+          <ul>
+            <li>Hierarchy is not always followed (artists in poverty create great art)</li>
+            <li>Difficult to test empirically</li>
+            <li>Cultural bias - hierarchy reflects Western individualistic values</li>
+            <li>Self-actualization is vaguely defined</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Biological vs. Social Motives - Key Differences</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Feature</th><th>Biological Motives</th><th>Social Motives</th></tr>
+          <tr><td>Origin</td><td>Innate/inherited, present at birth</td><td>Learned through experience and socialization</td></tr>
+          <tr><td>Universality</td><td>Universal across all humans and many animals</td><td>Varies across cultures and individuals</td></tr>
+          <tr><td>Basis</td><td>Physiological need (tissue deficit)</td><td>Psychological/social need</td></tr>
+          <tr><td>Examples</td><td>Hunger, thirst, sex, sleep, pain avoidance</td><td>Achievement, affiliation, power, approval</td></tr>
+          <tr><td>Urgency</td><td>Urgent - failure to satisfy threatens survival</td><td>Less urgent - failure causes psychological discomfort</td></tr>
+          <tr><td>Goal</td><td>Restore bodily homeostasis/balance</td><td>Social success, recognition, self-fulfillment</td></tr>
+          <tr><td>Maslow's Hierarchy</td><td>Levels 1-2 (Physiological and Safety)</td><td>Levels 3-5 (Belonging, Esteem, Self-actualization)</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 7 ========== -->
+  <section class="topic-section t7" id="t7">
+    <div class="topic-header">
+      <div class="topic-num">7</div>
+      <h2 class="topic-title">Memory &amp; Forgetting</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Memory?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Memory</strong> is the mental capacity or process by which information is <strong>encoded</strong> (processed), <strong>stored</strong> (retained), and <strong>retrieved</strong> (recalled) when needed. It is the persistence of learning over time.</p>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Elements/Processes of Memory</h3>
+      <div class="grid-3">
+        <div class="mini-card" style="border-top:3px solid #7c2d12">
+          <h5>1. Encoding</h5>
+          <p>Converting information into a neural code that can be stored. Types: Acoustic (sound), Visual (image), Semantic (meaning). Deeper processing = better retention.</p>
+        </div>
+        <div class="mini-card" style="border-top:3px solid #7c2d12">
+          <h5>2. Storage</h5>
+          <p>Retaining encoded information over time across three memory stores: sensory, short-term, and long-term memory. Physical change in the brain (engram).</p>
+        </div>
+        <div class="mini-card" style="border-top:3px solid #7c2d12">
+          <h5>3. Retrieval</h5>
+          <p>Accessing and bringing stored information back to consciousness. Types: Recall (without cues), Recognition (with cues), Relearning (learning again faster).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Three Types of Memory (Atkinson-Shiffrin Model, 1968)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Memory Type</th><th>Duration</th><th>Capacity</th><th>Encoding</th><th>Key Feature</th></tr>
+          <tr><td><strong>Sensory Memory</strong></td><td>&lt;1 second (iconic); ~3-4 sec (echoic)</td><td>Very large</td><td>Exact copy of stimulus</td><td>Brief snapshot of sensory world; unprocessed</td></tr>
+          <tr><td><strong>Short-Term Memory (STM)</strong></td><td>15-30 seconds without rehearsal</td><td>7±2 chunks (Miller's Magic Number)</td><td>Mainly acoustic</td><td>Working memory; active manipulation of info</td></tr>
+          <tr><td><strong>Long-Term Memory (LTM)</strong></td><td>Potentially permanent</td><td>Virtually unlimited</td><td>Mainly semantic (meaning)</td><td>Consolidated memories; includes skills and facts</td></tr>
+        </table>
+      </div>
+
+      <h4>Types of Long-Term Memory</h4>
+      <ul>
+        <li><strong>Explicit/Declarative Memory</strong> (conscious, can be stated):
+          <ul>
+            <li><em>Episodic Memory:</em> Personal experiences and events ("what I did last birthday")</li>
+            <li><em>Semantic Memory:</em> General world knowledge, facts, concepts ("Paris is in France")</li>
+          </ul>
+        </li>
+        <li><strong>Implicit/Non-declarative Memory</strong> (unconscious, shown through behavior):
+          <ul>
+            <li><em>Procedural Memory:</em> Skills and habits (riding a bicycle, typing)</li>
+            <li><em>Priming:</em> Prior exposure to a stimulus influences later response</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>STM vs. LTM - Key Differences</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Feature</th><th>Short-Term Memory (STM)</th><th>Long-Term Memory (LTM)</th></tr>
+          <tr><td>Duration</td><td>15-30 seconds without rehearsal</td><td>Days to potentially a lifetime</td></tr>
+          <tr><td>Capacity</td><td>7 ± 2 chunks (limited)</td><td>Virtually unlimited</td></tr>
+          <tr><td>Encoding</td><td>Primarily acoustic (sound-based)</td><td>Primarily semantic (meaning-based)</td></tr>
+          <tr><td>Forgetting</td><td>Decay over time, displacement</td><td>Interference, retrieval failure</td></tr>
+          <tr><td>Retrieval</td><td>Immediate and effortless</td><td>Requires search, cue-dependent</td></tr>
+          <tr><td>Disruption</td><td>Distraction easily disrupts</td><td>Head injury/disease can disrupt</td></tr>
+          <tr><td>Transfer</td><td>Via rehearsal → LTM</td><td>Consolidated during sleep</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Forgetting</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Forgetting</strong> is the inability to retrieve previously stored information from memory. Hermann Ebbinghaus (1885) first studied forgetting scientifically and discovered the <em>Forgetting Curve</em> - most forgetting happens rapidly soon after learning, then levels off.</p>
+      </div>
+
+      <h4>Causes of Forgetting</h4>
+      <ul>
+        <li><strong>1. Decay Theory:</strong> The memory trace (engram) physically fades over time if not used or rehearsed. "Use it or lose it." Most relevant to STM.</li>
+        <li><strong>2. Interference Theory</strong> (most supported):
+          <ul>
+            <li><em>Proactive Interference (PI):</em> Old memories interfere with learning/remembering new ones (learning Spanish makes it harder to learn Italian)</li>
+            <li><em>Retroactive Interference (RI):</em> New memories interfere with retrieving older ones (new phone number makes you forget old one)</li>
+          </ul>
+        </li>
+        <li><strong>3. Retrieval Failure / Cue-Dependent Forgetting:</strong> Information is stored but cannot be accessed without the right cue. Tip-of-the-tongue phenomenon. Context-dependent (tested in different room) and state-dependent (different emotional/physical state).</li>
+        <li><strong>4. Motivated Forgetting (Repression - Freud):</strong> The unconscious actively pushes threatening, painful, or anxiety-provoking memories out of awareness. Defense mechanism.</li>
+        <li><strong>5. Encoding Failure:</strong> Information was never properly encoded in the first place, so there is nothing to retrieve. (E.g., not paying attention while studying).</li>
+        <li><strong>6. Consolidation Failure:</strong> Memory was not properly consolidated (solidified) due to head trauma or brain damage shortly after encoding. Anterograde amnesia.</li>
+        <li><strong>7. Displacement:</strong> In STM, new incoming information pushes out old information when capacity (7±2) is exceeded.</li>
+        <li><strong>8. Organic Causes:</strong> Brain injury, Alzheimer's disease, stroke, Korsakoff's syndrome (alcohol-induced hippocampal damage).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 8 ========== -->
+  <section class="topic-section t8" id="t8">
+    <div class="topic-header">
+      <div class="topic-num">8</div>
+      <h2 class="topic-title">Personality</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Personality?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Personality</strong> is the unique and relatively stable pattern of thoughts, feelings, and behaviors that distinguishes one person from another and remains consistent across different situations and over time.</p>
+      </div>
+      <div class="quote-block">
+        "Personality is the dynamic organization within the individual of those psychophysical systems that determine characteristic behavior and thought."
+        <cite>- Gordon Allport</cite>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Characteristics of Personality</h3>
+      <ul>
+        <li><strong>Uniqueness:</strong> Each person has a distinct combination of traits not exactly duplicated by anyone else</li>
+        <li><strong>Consistency and Stability:</strong> Personality remains relatively constant across time and different situations</li>
+        <li><strong>Integration:</strong> All aspects of personality work together as a unified, organized whole</li>
+        <li><strong>Adaptability:</strong> While stable, personality can adjust to changing environments while maintaining core traits</li>
+        <li><strong>Both Nature and Nurture:</strong> Shaped by both genetic/biological factors and environmental/social experiences</li>
+        <li><strong>Dynamic:</strong> Not completely static; continues to develop and mature throughout life</li>
+        <li><strong>Expressed through behavior:</strong> Observable through actions, speech, and interactions</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Elements of Personality</h3>
+      <ul>
+        <li><strong>Traits:</strong> Stable, enduring tendencies to behave consistently in certain ways (e.g., introversion, conscientiousness)</li>
+        <li><strong>Character:</strong> Moral and ethical dimensions of personality; reflects values and principles</li>
+        <li><strong>Temperament:</strong> Biological and innate aspects of emotional responding (present from birth)</li>
+        <li><strong>Self-Concept:</strong> How we perceive and evaluate ourselves</li>
+        <li><strong>Social Roles:</strong> Behavior patterns adopted in specific social contexts</li>
+        <li><strong>Intelligence:</strong> Cognitive aspects that influence how personality is expressed</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Personality Assessment Tests</h3>
+
+      <div class="highlight-box">
+        <h4>Rorschach Inkblot Test (1921 - Hermann Rorschach)</h4>
+        <ul>
+          <li><strong>Type:</strong> Projective test (ambiguous stimuli elicit unconscious material)</li>
+          <li><strong>Materials:</strong> 10 symmetrical inkblot cards - 5 black/gray, 2 black/red, 3 multicolored</li>
+          <li><strong>Procedure:</strong> Cards shown one at a time; person says what they see. Then asks where, what feature determined response, etc.</li>
+          <li><strong>Scoring:</strong> Location (which part of card), Determinant (shape, color, shading, movement), Content (human, animal, object, anatomy), Popularity</li>
+          <li><strong>Theory:</strong> Ambiguous stimuli act as a "psychological mirror" - people project unconscious thoughts, wishes, and conflicts onto them</li>
+          <li><strong>Advantages:</strong> Reveals unconscious material; difficult to fake; rich qualitative data</li>
+          <li><strong>Disadvantages:</strong> Low reliability between scorers; low predictive validity; subjective interpretation; cultural bias</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>Thematic Apperception Test (TAT, 1935 - Henry Murray &amp; Christiana Morgan)</h4>
+        <ul>
+          <li><strong>Type:</strong> Projective test</li>
+          <li><strong>Materials:</strong> 20 cards with ambiguous pictures of people in various situations</li>
+          <li><strong>Procedure:</strong> Person told to create a story about each picture: Who are the people? What is happening? What led to this? What will happen next? What are they thinking/feeling?</li>
+          <li><strong>Analysis:</strong> Themes in stories reveal dominant needs, motives, conflicts, and personality characteristics. Based on Murray's theory of psychogenic needs.</li>
+          <li><strong>Key Needs Assessed:</strong> Need for achievement (n-Ach), need for affiliation, need for power</li>
+          <li><strong>Advantages:</strong> Reveals personality themes and motivations; projective; rich narrative data</li>
+          <li><strong>Disadvantages:</strong> Highly subjective; low reliability; time-consuming; results influenced by current mood</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Cattell's Trait Theory of Personality</h3>
+      <p>Raymond Cattell (1905-1998) used <span class="key-term">factor analysis</span> - a statistical technique - to systematically identify the underlying structure of personality traits.</p>
+
+      <h4>Two Levels of Traits</h4>
+      <ul>
+        <li><strong>Surface Traits:</strong> Clusters of observable, correlated behaviors (e.g., sociable, outgoing, talkative - all cluster together)</li>
+        <li><strong>Source Traits:</strong> Deeper, underlying dimensions that explain surface traits; the "building blocks" of personality (16 identified)</li>
+      </ul>
+
+      <h4>Cattell's 16 Personality Factors (16PF)</h4>
+      <p>Using factor analysis on massive amounts of personality data, Cattell identified <strong>16 primary source traits</strong>. Each is a bipolar dimension:</p>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Low Score Description</th><th>Factor</th><th>High Score Description</th></tr>
+          <tr><td>Reserved, impersonal</td><td>Warmth (A)</td><td>Warm, caring, attentive</td></tr>
+          <tr><td>Concrete thinking</td><td>Reasoning (B)</td><td>Abstract thinking</td></tr>
+          <tr><td>Reactive, emotionally unstable</td><td>Emotional Stability (C)</td><td>Emotionally stable, calm</td></tr>
+          <tr><td>Deferential, submissive</td><td>Dominance (E)</td><td>Dominant, assertive</td></tr>
+          <tr><td>Serious, restrained</td><td>Liveliness (F)</td><td>Lively, enthusiastic</td></tr>
+          <tr><td>Expedient, rules-questioning</td><td>Rule-Consciousness (G)</td><td>Rule-conscious, dutiful</td></tr>
+          <tr><td>Shy, timid</td><td>Social Boldness (H)</td><td>Socially bold, adventurous</td></tr>
+          <tr><td>Objective, unsentimental</td><td>Sensitivity (I)</td><td>Sensitive, aesthetic</td></tr>
+          <tr><td>Trusting, unsuspecting</td><td>Vigilance (L)</td><td>Vigilant, suspicious</td></tr>
+          <tr><td>Practical, grounded</td><td>Abstractedness (M)</td><td>Imaginative, absent-minded</td></tr>
+        </table>
+      </div>
+      <p>These 16 factors can further be reduced to <strong>5 global factors</strong> similar to the Big Five (OCEAN): Extraversion, Anxiety/Neuroticism, Tough-Mindedness, Independence, Self-Control/Conscientiousness.</p>
+
+      <div class="eval-grid">
+        <div class="eval-box eval-strengths">
+          <h5>Strengths</h5>
+          <ul>
+            <li>Scientific, empirical, data-driven approach</li>
+            <li>Quantitative measurement is objective</li>
+            <li>16PF still widely used in clinical/occupational settings</li>
+            <li>Comprehensive coverage of personality</li>
+          </ul>
+        </div>
+        <div class="eval-box eval-weaknesses">
+          <h5>Weaknesses</h5>
+          <ul>
+            <li>Factor analysis results depend on initial data</li>
+            <li>Other researchers identified different numbers of factors</li>
+            <li>Does not explain HOW personality develops</li>
+            <li>Self-report questionnaires subject to social desirability bias</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 9 ========== -->
+  <section class="topic-section t9" id="t9">
+    <div class="topic-header">
+      <div class="topic-num">9</div>
+      <h2 class="topic-title">Intelligence</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Intelligence?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Intelligence</strong> is the ability to learn from experience, solve problems, adapt to new situations, understand abstract concepts, and reason effectively. It is a general mental capability.</p>
+      </div>
+      <div class="quote-block">
+        "Intelligence is the global capacity of a person to act purposefully, to think rationally, and to deal effectively with their environment."
+        <cite>- David Wechsler</cite>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Elements/Theories of Intelligence</h3>
+      <ul>
+        <li><strong>Spearman's Two-Factor Theory:</strong> Intelligence consists of a <em>general factor (g)</em> that underlies all cognitive tasks, plus <em>specific factors (s)</em> for particular abilities. The g factor explains why people who are good at one mental task tend to be good at others.</li>
+        <li><strong>Thurstone's Primary Mental Abilities (7):</strong> Verbal comprehension, word fluency, numerical ability, spatial visualization, associative memory, perceptual speed, and reasoning. No single g factor.</li>
+        <li><strong>Gardner's Multiple Intelligences (8):</strong> Linguistic, Logical-Mathematical, Spatial, Musical, Bodily-Kinesthetic, Interpersonal, Intrapersonal, Naturalist. Broadens the definition beyond traditional IQ.</li>
+        <li><strong>Sternberg's Triarchic Theory:</strong> Analytical (academic problem-solving), Creative (dealing with novelty), Practical (adapting to environment/"street smarts")</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Heredity and Environment in Intelligence Development</h3>
+      <div class="grid-2">
+        <div class="highlight-box">
+          <h4>Role of Heredity (Nature)</h4>
+          <ul>
+            <li>Twin studies: Identical twins (MZ) raised apart show IQ correlations of 0.75-0.80</li>
+            <li>Adopted children's IQ correlates more strongly with biological parents than adoptive parents</li>
+            <li>Heritability estimates for intelligence: ~50-80% in adults</li>
+            <li>Intelligence clearly runs in biological families</li>
+            <li>Genes provide a "reaction range" - upper and lower limits of potential intelligence</li>
+          </ul>
+        </div>
+        <div class="highlight-box">
+          <h4>Role of Environment (Nurture)</h4>
+          <ul>
+            <li>Flynn Effect: Average IQ has risen ~3 points per decade globally (due to better nutrition, education, healthcare)</li>
+            <li>Early enrichment programs (Head Start) significantly boost IQ in disadvantaged children</li>
+            <li>Malnutrition in early childhood permanently lowers IQ</li>
+            <li>High-quality education, stimulation, and parenting enhance intelligence</li>
+            <li>SES (socioeconomic status) is strongly correlated with IQ scores</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Conclusion:</strong> Intelligence is neither purely genetic nor purely environmental. Genes set a range of potential, and the environment determines where within that range a person lands. The two constantly interact.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>The Binet-Simon Scale</h3>
+      <p>Developed in <strong>1905</strong> by Alfred Binet and Theodore Simon in France, commissioned by the French government to identify children who needed special educational assistance.</p>
+
+      <h4>Key Concepts</h4>
+      <ul>
+        <li><strong>Mental Age (MA):</strong> The level of intellectual development a child has reached, relative to the average for their age group. A 10-year-old performing as well as an average 12-year-old has an MA of 12.</li>
+        <li><strong>Chronological Age (CA):</strong> The child's actual, biological age.</li>
+        <li><strong>Intelligence Quotient (IQ)</strong> - added by Lewis Terman at Stanford (1916): <strong>IQ = (MA / CA) × 100</strong>. A child with MA=10 and CA=10 has IQ=100 (average).</li>
+      </ul>
+
+      <h4>History of Revisions</h4>
+      <ul>
+        <li>1905: First scale with 30 items ordered by difficulty</li>
+        <li>1908: Revised; introduced the concept of mental age</li>
+        <li>1911: Extended to include adults</li>
+        <li>1916: Stanford-Binet (Terman's revision); introduced IQ formula</li>
+        <li>Modern versions: Stanford-Binet 5th Edition; uses deviation IQ</li>
+      </ul>
+
+      <h4>IQ Classification</h4>
+      <div class="table-wrap">
+        <table>
+          <tr><th>IQ Range</th><th>Classification</th></tr>
+          <tr><td>Above 140</td><td>Genius / Near Genius</td></tr>
+          <tr><td>120-139</td><td>Very Superior</td></tr>
+          <tr><td>110-119</td><td>Superior</td></tr>
+          <tr><td>90-109</td><td>Average / Normal</td></tr>
+          <tr><td>80-89</td><td>Low Average</td></tr>
+          <tr><td>70-79</td><td>Borderline Deficient</td></tr>
+          <tr><td>Below 70</td><td>Intellectual Disability</td></tr>
+        </table>
+      </div>
+
+      <h4>Limitations of Intelligence Tests</h4>
+      <ul>
+        <li>Cultural bias - tests designed for specific cultural contexts disadvantage minority groups</li>
+        <li>Language bias - non-native speakers are disadvantaged regardless of intelligence</li>
+        <li>Narrow definition - only measure certain types of intelligence (academic); miss creativity, emotional intelligence, practical intelligence</li>
+        <li>Test anxiety can significantly lower performance</li>
+        <li>Measure performance at one point in time, not actual potential</li>
+        <li>Stereotype threat: awareness of negative group stereotypes reduces performance</li>
+        <li>Tests may be culturally loaded toward certain socioeconomic groups</li>
+        <li>Self-fulfilling prophecy: low IQ labels can limit teachers' expectations and children's self-belief</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 10 ========== -->
+  <section class="topic-section t10" id="t10">
+    <div class="topic-header">
+      <div class="topic-num">10</div>
+      <h2 class="topic-title">Emotions</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Emotion?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p>An <strong>emotion</strong> is a complex psychological state involving three interacting components: a <strong>subjective feeling</strong> (conscious experience), <strong>physiological arousal</strong> (bodily changes), and <strong>expressive behavior</strong> (outward expression). Emotions are typically brief, intense responses to specific stimuli.</p>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <h3>Elements of Emotion</h3>
+      <ul>
+        <li><strong>Subjective Experience (Feeling):</strong> The conscious, private experience of the emotion (the feeling of joy, fear, sadness)</li>
+        <li><strong>Physiological Arousal:</strong> Bodily changes triggered by the autonomic nervous system (increased heart rate, sweating, adrenaline release)</li>
+        <li><strong>Expressive Behavior:</strong> Outward manifestation of emotion (facial expressions, posture, tone of voice, gestures)</li>
+        <li><strong>Cognitive Appraisal:</strong> The interpretation/evaluation of the situation that generates or shapes the emotion (same event can cause different emotions in different people)</li>
+        <li><strong>Action Tendency:</strong> The urge to approach (positive emotions) or avoid/attack (negative emotions)</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Classification of Emotions</h3>
+
+      <h4>1. Basic/Primary Emotions (Paul Ekman, 1972)</h4>
+      <p>Ekman identified 6 (later 7) basic emotions that are <strong>universal</strong> - expressed and recognized the same way in all cultures:</p>
+      <div class="grid-3">
+        <div class="mini-card" style="border-top:3px solid #f59e0b"><h5>Happiness</h5><p>Positive arousal; approach behavior; facial: Duchenne smile</p></div>
+        <div class="mini-card" style="border-top:3px solid #3b82f6"><h5>Sadness</h5><p>Loss or failure; withdrawal; facial: downturned mouth, tears</p></div>
+        <div class="mini-card" style="border-top:3px solid #ef4444"><h5>Fear</h5><p>Threat detection; "flight" response; amygdala activation</p></div>
+        <div class="mini-card" style="border-top:3px solid #dc2626"><h5>Anger</h5><p>Injustice or obstacle; "fight" response; energizes confrontation</p></div>
+        <div class="mini-card" style="border-top:3px solid #84cc16"><h5>Disgust</h5><p>Contamination avoidance; "reject" response; wrinkled nose</p></div>
+        <div class="mini-card" style="border-top:3px solid #a855f7"><h5>Surprise</h5><p>Unexpected event; orienting response; raised eyebrows</p></div>
+      </div>
+
+      <h4>2. Secondary/Complex Emotions</h4>
+      <p>Learned, culturally influenced emotions that develop from combinations and elaborations of basic emotions:</p>
+      <ul>
+        <li><strong>Social emotions:</strong> Guilt, shame, embarrassment, pride, contempt</li>
+        <li><strong>Self-conscious emotions:</strong> Jealousy, envy, regret</li>
+        <li>These require self-awareness and social comparison; develop later in childhood</li>
+      </ul>
+
+      <h4>3. Positive vs. Negative Emotions</h4>
+      <p>Positive emotions (joy, love, hope, gratitude, contentment) broaden thinking and build resources (Fredrickson's Broaden-and-Build Theory). Negative emotions (fear, anger, sadness) narrow focus and prepare specific action (fight/flight).</p>
+
+      <h4>4. Plutchik's Wheel of Emotions (1980)</h4>
+      <p>Eight primary emotions (joy, trust, fear, surprise, sadness, anticipation, anger, disgust) arranged in a circle, with combinations creating secondary emotions (e.g., joy + trust = love; anger + disgust = contempt).</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Differences Between Emotion and Feeling</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Aspect</th><th>Emotion</th><th>Feeling</th></tr>
+          <tr><td>Nature</td><td>Objective, measurable physiological process</td><td>Subjective, private mental experience</td></tr>
+          <tr><td>Visibility</td><td>Observable through expression and body changes</td><td>Only known to the individual</td></tr>
+          <tr><td>Duration</td><td>Typically brief and intense</td><td>Can last longer, more enduring</td></tr>
+          <tr><td>Origin</td><td>Triggered by specific external stimuli</td><td>A mental representation of an emotion</td></tr>
+          <tr><td>Physiological</td><td>Always accompanied by bodily arousal</td><td>May not have physiological changes</td></tr>
+          <tr><td>Awareness</td><td>Can occur without conscious awareness</td><td>Always conscious by definition</td></tr>
+        </table>
+      </div>
+      <p>Antonio Damasio: Emotions are <em>actions</em> of the body; feelings are the <em>mental experience</em> of those actions. "Feelings are the mental representation of physiological changes that occur in the body during emotions."</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Physiological/Bodily Changes Associated with Emotion</h3>
+      <p>The <strong>sympathetic nervous system</strong> produces the "fight-or-flight" response during intense emotions:</p>
+      <div class="grid-2">
+        <ul>
+          <li>Increased heart rate and blood pressure</li>
+          <li>Rapid, deeper breathing (increased oxygen)</li>
+          <li>Pupil dilation (improved vision)</li>
+          <li>Sweating (especially palms - galvanic skin response)</li>
+          <li>Dry mouth (reduced salivation)</li>
+        </ul>
+        <ul>
+          <li>Release of adrenaline (epinephrine) and cortisol from adrenal glands</li>
+          <li>Increased blood glucose (energy mobilization)</li>
+          <li>Muscle tension (preparation for action)</li>
+          <li>Piloerection ("goosebumps")</li>
+          <li>Slowed digestion (blood redirected to muscles and brain)</li>
+        </ul>
+      </div>
+      <p>These changes are measured by the <strong>polygraph (lie detector)</strong>, which records heart rate, blood pressure, respiration, and galvanic skin response.</p>
+
+      <h4>Major Theories of Emotion</h4>
+      <ul>
+        <li><strong>James-Lange Theory (1884):</strong> Physical arousal precedes and causes emotion. "I am afraid because I run" - bodily changes are perceived as emotions.</li>
+        <li><strong>Cannon-Bard Theory (1927):</strong> Physiological arousal and emotional experience occur simultaneously and independently; both triggered by the thalamus.</li>
+        <li><strong>Schachter-Singer Two-Factor Theory (1962):</strong> Emotion = Physiological arousal + Cognitive label. We use context to explain why we are aroused, and that label becomes the emotion.</li>
+        <li><strong>Cognitive Appraisal Theory (Lazarus, 1991):</strong> How we appraise (evaluate) a situation determines what emotion we feel. Thoughts cause emotions.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== TOPIC 11 ========== -->
+  <section class="topic-section t11" id="t11">
+    <div class="topic-header">
+      <div class="topic-num">11</div>
+      <h2 class="topic-title">Sensation &amp; Sensory Organs</h2>
+    </div>
+
+    <div class="subsection">
+      <h3>What is Sensation?</h3>
+      <div class="def-box">
+        <div class="def-label">Definition</div>
+        <p><strong>Sensation</strong> is the process by which our sensory receptors and nervous system receive and represent stimulus energies from our environment. It is the raw data gathered by our senses - the first stage of perception.</p>
+      </div>
+      <p><strong>Perception</strong> is the process of organizing and interpreting sensory information - making meaningful sense of sensations. Sensation is passive detection; perception is active interpretation.</p>
+      <ul>
+        <li><strong>Absolute Threshold:</strong> The minimum stimulation needed to detect a stimulus 50% of the time</li>
+        <li><strong>Just Noticeable Difference (JND):</strong> The minimum difference between two stimuli detectable 50% of the time (Weber's Law)</li>
+        <li><strong>Sensory Adaptation:</strong> Diminished sensitivity to a constant, unchanging stimulus over time (you stop noticing a smell after being in a room for a while)</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3>Sensations from Various Sensory Organs</h3>
+
+      <div class="highlight-box">
+        <h4>1. Vision (Sight)</h4>
+        <ul>
+          <li><strong>Organ:</strong> Eyes</li>
+          <li><strong>Stimulus:</strong> Electromagnetic waves (visible light, 400-700 nanometers)</li>
+          <li><strong>Receptors:</strong> Retina contains <em>Rods</em> (for dim light, peripheral vision, black-and-white) and <em>Cones</em> (for color, detail, bright light - concentrated in fovea)</li>
+          <li><strong>Pathway:</strong> Light → Cornea → Pupil → Lens → Retina → Optic Nerve → Thalamus → Occipital (Visual) Cortex</li>
+          <li>Wavelength of light determines color; amplitude determines brightness</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>2. Hearing (Audition)</h4>
+        <ul>
+          <li><strong>Organ:</strong> Ears</li>
+          <li><strong>Stimulus:</strong> Sound waves (air pressure changes, 20-20,000 Hz)</li>
+          <li><strong>Receptors:</strong> Hair cells in the cochlea (inner ear)</li>
+          <li><strong>Pathway:</strong> Sound waves → Outer ear (pinna) → Ear canal → Eardrum → Middle ear (3 ossicles: malleus, incus, stapes) → Cochlea → Auditory nerve → Temporal lobe</li>
+          <li>Frequency determines pitch; amplitude determines loudness; complexity determines timbre</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>3. Taste (Gustation)</h4>
+        <ul>
+          <li><strong>Organ:</strong> Tongue (and soft palate, throat)</li>
+          <li><strong>Receptors:</strong> Taste buds located in papillae on tongue surface (~10,000 taste buds)</li>
+          <li><strong>Stimulus:</strong> Chemical molecules dissolved in saliva</li>
+          <li><strong>Five Basic Tastes:</strong> Sweet, Salty, Sour, Bitter, Umami (savory)</li>
+          <li>Taste and smell work together to create the perception of flavor (80% of flavor comes from smell)</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>4. Smell (Olfaction)</h4>
+        <ul>
+          <li><strong>Organ:</strong> Nose (olfactory epithelium in nasal cavity)</li>
+          <li><strong>Receptors:</strong> ~6 million olfactory receptor neurons; can detect over 1 trillion different odors</li>
+          <li><strong>Stimulus:</strong> Airborne chemical molecules that bind to olfactory receptors</li>
+          <li><strong>Unique feature:</strong> Bypasses the thalamus - the only sense with a direct pathway to the limbic system (amygdala, hippocampus). This explains why smells powerfully trigger memories and emotions.</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>5. Touch / Skin Senses (Cutaneous Sensation)</h4>
+        <ul>
+          <li><strong>Organ:</strong> Skin (largest sensory organ)</li>
+          <li><strong>Receptors:</strong> Various types for different stimuli:
+            <ul>
+              <li>Mechanoreceptors: detect pressure and vibration</li>
+              <li>Thermoreceptors: detect temperature (warmth and cold)</li>
+              <li>Nociceptors: detect pain (important protective warning signal)</li>
+            </ul>
+          </li>
+          <li><strong>Gate-Control Theory of Pain (Melzack and Wall, 1965):</strong> The spinal cord contains a "gate" that can block or allow pain signals to pass to the brain. Explained by activities that "close the gate" (rubbing the area, acupuncture, distraction).</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>6. Body Senses (Proprioception and Vestibular)</h4>
+        <ul>
+          <li><strong>Proprioception/Kinesthesia:</strong> Sense of body position and movement. Receptors in muscles, tendons, and joints. Allows us to touch our nose with eyes closed.</li>
+          <li><strong>Vestibular Sense:</strong> Sense of balance, head position, and movement. Receptors: Semicircular canals and vestibular sacs in the inner ear. Disruption causes dizziness and motion sickness.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PREVIOUS YEAR QUESTIONS ========== -->
+  <section class="prev-year-section" id="prev-year">
+    <div class="prev-year-header">
+      <h2>Previous Year Questions - Model Answers</h2>
+      <p>Exam-ready answers written to maximize marks. Short answers target the core definition + 3-4 key points. Long answers include definition, explanation, examples, and evaluation.</p>
+    </div>
+
+    <!-- PY Q1 - 4 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q1. Why is Psychology called a Biosocial Science?</h3>
+        <span class="pq-marks">4 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Focus on: definition, the two components (bio + social), why both are necessary, brief example.</div>
+        <p>Psychology is called a <strong>biosocial science</strong> because it studies human behavior by considering both <strong>biological</strong> and <strong>social</strong> factors together, rather than in isolation. It bridges the natural sciences (biology, physiology) and the social sciences (sociology, anthropology).</p>
+        <p>The <strong>biological component</strong> includes heredity, genes, brain chemistry, the nervous system, hormones, and physiological processes. These biological factors form the physical foundation of behavior. For example, low serotonin levels in the brain are associated with depression.</p>
+        <p>The <strong>social component</strong> includes family upbringing, culture, peer relationships, socioeconomic conditions, and societal norms. These environmental and social factors profoundly shape how we think, feel, and behave. For example, a person raised in a supportive family is more likely to develop healthy coping strategies.</p>
+        <p>Neither factor alone can fully explain behavior. A complete psychological explanation requires both. For instance, aggression has biological roots (testosterone, amygdala activity) AND social causes (violent media, poor upbringing). Therefore, psychology rightfully earns its title as a biosocial science.</p>
+      </div>
+    </div>
+
+    <!-- PY Q2 - 4 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q2. What is a Nerve Cell?</h3>
+        <span class="pq-marks">4 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Focus on: clear definition, structure (at least 4-5 parts), types, function.</div>
+        <p>A <strong>nerve cell</strong>, or <strong>neuron</strong>, is the basic structural and functional unit of the nervous system. It is a highly specialized cell that receives, processes, and transmits electrochemical signals throughout the body and brain. The human nervous system contains approximately <strong>86 billion neurons</strong>.</p>
+        <p><strong>Structure of a Neuron:</strong> (i) <strong>Cell body (Soma)</strong> - contains the nucleus and is the metabolic center; (ii) <strong>Dendrites</strong> - branch-like extensions that receive incoming signals from other neurons; (iii) <strong>Axon</strong> - a long fiber that carries electrical impulses away from the cell body; (iv) <strong>Myelin Sheath</strong> - a fatty insulating layer around the axon that speeds signal transmission; (v) <strong>Axon Terminals</strong> - release neurotransmitters across the synapse to communicate with the next neuron.</p>
+        <p><strong>Types of Neurons:</strong> Sensory neurons carry signals from the environment to the CNS; Motor neurons carry commands from the CNS to muscles; Interneurons connect neurons within the CNS.</p>
+        <p>Communication between neurons occurs at the <strong>synapse</strong> through chemical messengers called <strong>neurotransmitters</strong> (e.g., serotonin, dopamine, acetylcholine). This electrochemical signaling underlies all thought, feeling, and action.</p>
+      </div>
+    </div>
+
+    <!-- PY Q3 - 4 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q3. What are the Differences Between Emotion and Feeling?</h3>
+        <span class="pq-marks">4 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Focus on: define both terms clearly, then compare with at least 5-6 differences.</div>
+        <p><strong>Emotion</strong> is a complex psychological and physiological state triggered by a specific stimulus, involving measurable bodily changes and observable expressive behaviors. <strong>Feeling</strong>, on the other hand, is the subjective, conscious mental experience of an emotion - what the emotion feels like from the inside.</p>
+        <p>Neuroscientist Antonio Damasio distinguished the two: emotions are <em>actions of the body</em>; feelings are the <em>mental representation</em> of those actions.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aspect</th><th>Emotion</th><th>Feeling</th></tr>
+            <tr><td>Nature</td><td>Objective, biologically based process</td><td>Subjective, private mental experience</td></tr>
+            <tr><td>Observability</td><td>Can be observed (expressions, behavior)</td><td>Only accessible to the person experiencing it</td></tr>
+            <tr><td>Physiology</td><td>Always involves bodily arousal (heart rate, hormones)</td><td>May not involve measurable physical change</td></tr>
+            <tr><td>Duration</td><td>Brief and intense; situation-specific</td><td>Can be longer-lasting and more diffuse</td></tr>
+            <tr><td>Awareness</td><td>Can occur below conscious awareness</td><td>Always consciously experienced</td></tr>
+            <tr><td>Origin</td><td>Triggered by external or internal stimuli</td><td>A mental representation of the emotion</td></tr>
+          </table>
+        </div>
+        <p>In summary, an emotion is the full biological and behavioral response; a feeling is the subjective "inner" awareness of that emotion. All feelings arise from emotions, but emotions do not always produce conscious feelings.</p>
+      </div>
+    </div>
+
+    <!-- PY Q4 - 4 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q4. What are the Causes of Forgetting?</h3>
+        <span class="pq-marks">4 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Focus on: brief definition of forgetting, then list and briefly explain at least 5-6 causes.</div>
+        <p><strong>Forgetting</strong> is the inability to retrieve previously encoded and stored information from memory. Hermann Ebbinghaus discovered the <em>Forgetting Curve</em> (1885), showing that forgetting is rapid at first and then slows. The main causes of forgetting are:</p>
+        <ol>
+          <li><strong>Decay Theory:</strong> The memory trace (engram) gradually fades over time if the information is not actively reviewed or used. Most applicable to short-term memory.</li>
+          <li><strong>Interference Theory</strong> (most empirically supported): <em>Proactive interference</em> - old memories block new ones; <em>Retroactive interference</em> - new memories disrupt recall of older ones.</li>
+          <li><strong>Retrieval Failure (Cue-dependent forgetting):</strong> Information is stored but cannot be found without the right cue. Context-dependent and state-dependent forgetting are examples (tip-of-the-tongue phenomenon).</li>
+          <li><strong>Motivated Forgetting (Repression):</strong> Freud's concept that the unconscious mind actively suppresses painful, threatening, or anxiety-provoking memories.</li>
+          <li><strong>Encoding Failure:</strong> Information was never properly encoded in the first place due to lack of attention, so nothing meaningful was stored to be recalled.</li>
+          <li><strong>Organic Causes:</strong> Brain damage, disease (Alzheimer's), alcoholism (Korsakoff's syndrome), or head trauma can physically destroy memory stores.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- PY Q5 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q5. What is meant by Psychology? Briefly discuss different branches of Psychology.</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Write a proper introduction, full definition, historical background, then cover at least 8-10 branches with explanation. Conclude with significance.</div>
+        <p><strong>Introduction:</strong> Psychology is one of the most broad and diverse academic disciplines in existence. As a science, it seeks to understand the forces that drive human thought, feeling, and action through systematic observation and experimentation.</p>
+        <p><strong>Definition:</strong> Psychology is the <em>scientific study of behavior and mental processes</em>. "Behavior" refers to all observable actions - speaking, eating, gesturing. "Mental processes" refers to internal, subjective experiences - thinking, perceiving, remembering, dreaming, and feeling. The word psychology comes from the Greek <em>psyche</em> (soul/mind) and <em>logos</em> (study).</p>
+        <p><strong>Historical Background:</strong> Wilhelm Wundt established the first psychology laboratory in Leipzig, Germany in 1879, marking the birth of psychology as a formal scientific discipline. Early schools of thought included structuralism (Wundt, Titchener), functionalism (William James), and later behaviorism, psychoanalysis, humanism, and cognitive psychology.</p>
+        <p><strong>Branches of Psychology:</strong></p>
+        <ol>
+          <li><strong>Clinical Psychology:</strong> The largest branch; focuses on diagnosing and treating psychological disorders such as depression, anxiety, schizophrenia, and personality disorders. Clinical psychologists use psychotherapy, assessment, and research.</li>
+          <li><strong>Counseling Psychology:</strong> Helps individuals with everyday life challenges - career decisions, relationship problems, personal adjustment, and mild mental health issues. Less pathology-focused than clinical psychology.</li>
+          <li><strong>Developmental Psychology:</strong> Studies how human beings change and grow throughout the lifespan - from prenatal development through old age. Covers cognitive, social, emotional, and physical development (Piaget, Erikson, Vygotsky).</li>
+          <li><strong>Social Psychology:</strong> Examines how people's thoughts, feelings, and behaviors are influenced by others. Topics include attitude change, conformity, obedience, aggression, helping behavior, and group dynamics.</li>
+          <li><strong>Educational Psychology:</strong> Applies psychological principles to education; studies how people learn and how teaching can be made more effective. Topics include motivation, learning styles, classroom management, and assessment.</li>
+          <li><strong>Industrial/Organizational (I/O) Psychology:</strong> Applies psychology to the workplace. Concerned with employee selection, training, motivation, leadership, organizational culture, and work-life balance.</li>
+          <li><strong>Neuropsychology and Biological Psychology:</strong> Studies the biological bases of behavior - brain structures, neurotransmitters, genetics, and the effects of brain damage on behavior and cognition.</li>
+          <li><strong>Forensic Psychology:</strong> Application of psychology to the legal and criminal justice system - assessing competency, criminal profiling, eyewitness memory, jury decision-making, and rehabilitation.</li>
+          <li><strong>Health Psychology:</strong> Studies the role of psychological factors in physical health and illness. Focuses on how stress, personality, and behavior affect health outcomes and how people respond to illness.</li>
+          <li><strong>Experimental Psychology:</strong> Uses laboratory methods to study basic psychological processes such as perception, learning, memory, language, thinking, and emotion.</li>
+        </ol>
+        <p><strong>Conclusion:</strong> Psychology's branches reflect the extraordinary complexity of human behavior. By spanning both the biological and social, the normal and abnormal, the individual and the group, psychology has established itself as one of the most comprehensive and indispensable sciences of our time.</p>
+      </div>
+    </div>
+
+    <!-- PY Q6 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q6. What are the different methods of Psychology? Discuss the advantages and disadvantages of the experimental method.</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Introduce the methods briefly, then focus deeply on the experimental method with its procedure, advantages, and disadvantages.</div>
+        <p><strong>Introduction:</strong> Psychology as a science relies on systematic, objective methods to gather information about behavior and mental processes. Different research situations call for different methods, each with unique strengths and limitations.</p>
+        <p><strong>Methods of Psychology:</strong> (1) Observation Method, (2) Experimental Method, (3) Case Study Method, (4) Survey/Questionnaire Method, (5) Correlational Method, (6) Clinical/Psychoanalytic Method, (7) Introspection Method, (8) Statistical Method.</p>
+        <p><strong>The Experimental Method in Detail:</strong> The experimental method is the most scientifically rigorous method in psychology. It allows researchers to establish <em>cause-and-effect relationships</em> between variables by systematically manipulating one factor while controlling all others.</p>
+        <p><strong>Key Components:</strong></p>
+        <ul>
+          <li><strong>Hypothesis:</strong> A testable prediction about the relationship between variables</li>
+          <li><strong>Independent Variable (IV):</strong> The variable deliberately manipulated by the researcher (the "cause")</li>
+          <li><strong>Dependent Variable (DV):</strong> The variable measured to assess the effect (the "outcome")</li>
+          <li><strong>Extraneous/Confounding Variables:</strong> Other variables that are controlled to prevent them from affecting the results</li>
+          <li><strong>Experimental Group:</strong> Receives the IV treatment</li>
+          <li><strong>Control Group:</strong> Does not receive the IV; provides a baseline for comparison</li>
+          <li><strong>Random Assignment:</strong> Participants randomly assigned to groups to reduce bias</li>
+        </ul>
+        <p><strong>Example:</strong> To test whether caffeine improves memory, researchers randomly assign participants to a caffeine group or a placebo group (IV = caffeine/placebo), then measure their memory test scores (DV), while controlling other variables like time of day, sleep, and prior caffeine intake.</p>
+        <p><strong>Advantages of the Experimental Method:</strong></p>
+        <ol>
+          <li>The only method that can establish true <strong>cause-and-effect</strong> relationships between variables</li>
+          <li>High degree of <strong>control</strong> over extraneous variables reduces alternative explanations</li>
+          <li>Results are <strong>replicable</strong> - other researchers can repeat the experiment to verify findings</li>
+          <li><strong>Objective measurement</strong> of dependent variables reduces researcher bias</li>
+          <li>Allows use of <strong>statistical analysis</strong> to determine significance of results</li>
+          <li>Results can potentially be <strong>generalized</strong> to larger populations when proper sampling is used</li>
+        </ol>
+        <p><strong>Disadvantages of the Experimental Method:</strong></p>
+        <ol>
+          <li><strong>Low ecological validity</strong> - artificial laboratory conditions may not reflect real-world behavior; behavior in a lab may differ from behavior in natural settings</li>
+          <li><strong>Ethical constraints</strong> - many important questions cannot be studied experimentally because it would be unethical to expose participants to harm, extreme stress, or deprivation</li>
+          <li><strong>Demand characteristics</strong> - participants may try to guess the purpose of the experiment and change their behavior accordingly</li>
+          <li><strong>Experimenter bias</strong> - the researcher's expectations may unconsciously influence participants or data interpretation (addressed by double-blind procedures)</li>
+          <li><strong>Limited sample</strong> - experiments often use small, unrepresentative samples (often university students), limiting generalizability</li>
+          <li>Cannot study some variables that cannot be ethically manipulated (e.g., effects of poverty or childhood abuse on development)</li>
+        </ol>
+        <p><strong>Conclusion:</strong> Despite its limitations, the experimental method remains the gold standard of psychological research because of its unique ability to establish causal relationships. Researchers combine it with other methods to build a comprehensive understanding of behavior.</p>
+      </div>
+    </div>
+
+    <!-- PY Q7 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q7. Explain the theory of structure of mind and the theory of structure of personality according to Freud.</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Write a full introduction to Freud and psychoanalysis, then explain both the topographic model (mind) and the structural model (personality) in detail with examples and evaluation.</div>
+        <p><strong>Introduction:</strong> Sigmund Freud (1856-1939), an Austrian neurologist, founded <em>psychoanalysis</em> - one of the most influential theories in psychology. His theories of the mind and personality revolutionized psychology's understanding of human behavior, suggesting that most of what drives us lies <em>outside conscious awareness</em>.</p>
+
+        <p><strong>Part 1 - Freud's Structure of the Mind (Topographic/Iceberg Model)</strong></p>
+        <p>Freud proposed that the mind is divided into three levels of awareness, famously compared to an iceberg:</p>
+        <p><strong>1. The Conscious Mind</strong> represents the tip of the iceberg - the small portion of mental activity we are directly and currently aware of. This includes our present thoughts, perceptions, feelings, and memories we are actively thinking about. It is the only level accessible to ordinary introspection.</p>
+        <p><strong>2. The Preconscious Mind</strong> (also called the subconscious) is the layer just below the surface. It contains memories, knowledge, and feelings that are not currently in awareness but can be brought to conscious attention relatively easily - for example, your mother's birthday, or what you had for breakfast. This acts as a "storage room" of accessible but dormant information.</p>
+        <p><strong>3. The Unconscious Mind</strong> is the vast bulk of the iceberg beneath the water's surface. Freud considered this the most significant and powerful part of the mind. It contains repressed memories, forbidden desires, childhood traumas, instinctual drives, and unresolved conflicts. The unconscious cannot be directly accessed or introspected; it makes itself known through dreams, slips of the tongue (Freudian slips), jokes, and symptoms of neurosis. Freud believed the unconscious contains two fundamental drives: <em>Eros</em> (the life/pleasure drive, whose energy is called libido) and <em>Thanatos</em> (the death/aggression drive).</p>
+
+        <p><strong>Part 2 - Freud's Structure of Personality (Structural Model: Id, Ego, Superego)</strong></p>
+        <p>Later, Freud proposed a second model of the mind focusing on personality structure. He described three mental systems that are frequently in conflict:</p>
+        <p><strong>1. The Id:</strong> Present from birth. Entirely unconscious. The id is the most primitive part of personality, containing all the basic biological instincts and drives. It operates entirely on the <em>Pleasure Principle</em> - it seeks immediate gratification of needs and desires without regard for reality or morality. The id is irrational, impulsive, and self-centered. It produces fantasies and wishes but cannot distinguish between reality and imagination. An infant crying from hunger is pure id in action.</p>
+        <p><strong>2. The Ego:</strong> Develops from the id in the second year of life as the child begins to interact with reality. The ego operates on the <em>Reality Principle</em> - it finds realistic and socially acceptable ways to satisfy the id's demands while navigating the constraints of the external world. The ego is mostly conscious and preconscious; it is rational, logical, and executive. The ego mediates the constant conflict between the id's primitive demands and the superego's moral prohibitions. It uses <em>defense mechanisms</em> (such as repression, denial, projection, rationalization) to manage anxiety arising from this conflict.</p>
+        <p><strong>3. The Superego:</strong> Develops between ages 3-6, primarily through resolution of the Oedipus complex and internalization of parental standards. The superego represents the internalized voice of society's moral code. It has two components: the <em>conscience</em> (what is morally wrong; causes guilt when violated) and the <em>ego ideal</em> (what is morally right; causes pride when achieved). The superego operates on the <em>Morality Principle</em>. It is perfectionist and punishing, constantly striving for ideal behavior.</p>
+
+        <p><strong>Dynamics of Conflict:</strong> Psychological health, according to Freud, depends on the ego successfully mediating between the id ("I want pleasure now"), the superego ("that is wrong"), and external reality. When the ego fails, anxiety results, and defense mechanisms are activated.</p>
+
+        <p><strong>Critical Evaluation:</strong></p>
+        <div class="eval-grid">
+          <div class="eval-box eval-strengths">
+            <h5>Contributions</h5>
+            <ul>
+              <li>Pioneered the study of the unconscious</li>
+              <li>Highlighted the importance of early childhood</li>
+              <li>Foundation for modern psychotherapy</li>
+              <li>Concepts like defense mechanisms still used today</li>
+            </ul>
+          </div>
+          <div class="eval-box eval-weaknesses">
+            <h5>Criticisms</h5>
+            <ul>
+              <li>Not scientifically testable/falsifiable (Popper)</li>
+              <li>Based on small, unrepresentative samples</li>
+              <li>Overemphasis on sexuality</li>
+              <li>Culturally biased (patriarchal, Western)</li>
+            </ul>
+          </div>
+        </div>
+        <p><strong>Conclusion:</strong> Despite strong criticisms, Freud's models of mind and personality remain among the most influential ideas in the history of psychology, fundamentally changing how we think about human motivation and behavior.</p>
+      </div>
+    </div>
+
+    <!-- PY Q8 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q8. Explain and evaluate the nature and function of the nervous system.</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Provide a clear definition, explain the full structure (CNS and PNS divisions), describe all major functions, and evaluate with mental health links and importance.</div>
+        <p><strong>Introduction:</strong> The nervous system is the most complex and sophisticated system in the human body. It serves as the body's primary communication and control network, enabling us to perceive the world, make decisions, and act upon our environment. It is the biological foundation of all behavior, thought, and emotion.</p>
+        <p><strong>Definition:</strong> The nervous system is a vast network of specialized cells (neurons) that transmit electrical and chemical signals throughout the body, coordinating sensory input, information processing, and motor output.</p>
+        <p><strong>Nature and Structure of the Nervous System:</strong> The nervous system is divided into two major divisions:</p>
+        <p><strong>A. Central Nervous System (CNS):</strong> Consists of the <em>brain</em> and <em>spinal cord</em>. The brain is the master control center, processing all information and generating all conscious experience. The spinal cord serves as the main communication highway between the brain and the rest of the body, and also controls basic reflex responses.</p>
+        <p>The brain itself is organized into the forebrain (cerebrum with four lobes, thalamus, hypothalamus, and limbic system), the midbrain, and the hindbrain (cerebellum, pons, medulla oblongata). Each area has specialized functions.</p>
+        <p><strong>B. Peripheral Nervous System (PNS):</strong> All nerves outside the CNS. It is further divided into: (i) the <em>Somatic NS</em>, which controls voluntary skeletal muscle movements and transmits sensory information; and (ii) the <em>Autonomic NS</em>, which controls involuntary internal functions. The autonomic NS has two branches: the <em>sympathetic</em> (activates the "fight-or-flight" response during stress) and <em>parasympathetic</em> (maintains "rest-and-digest" function and returns the body to calm).</p>
+        <p><strong>Functions of the Nervous System:</strong></p>
+        <ol>
+          <li><strong>Sensory Function:</strong> Receives and processes information from the external environment and internal body states through sensory neurons and receptors.</li>
+          <li><strong>Motor Function:</strong> Sends commands from the CNS to muscles and glands via motor neurons, producing movement and secretion.</li>
+          <li><strong>Integration and Processing:</strong> The CNS integrates sensory input, applies memory and reasoning, and formulates appropriate responses - the basis of all thinking and decision-making.</li>
+          <li><strong>Reflex Actions:</strong> The spinal cord mediates rapid reflexes (e.g., withdrawing a hand from hot surface) without involving the brain, protecting the body from harm.</li>
+          <li><strong>Homeostasis:</strong> The hypothalamus and autonomic NS regulate internal body conditions such as temperature, heart rate, blood pressure, hunger, and thirst, maintaining homeostasis.</li>
+          <li><strong>Emotional Regulation:</strong> The limbic system (amygdala, hippocampus, hypothalamus) regulates emotional responses, fear, motivation, and the formation of emotional memories.</li>
+          <li><strong>Higher Cognitive Functions:</strong> The cerebral cortex enables language, reasoning, planning, creativity, problem-solving, and consciousness - uniquely human capabilities.</li>
+          <li><strong>Memory and Learning:</strong> The hippocampus is crucial for converting short-term memories into long-term storage, while neuroplasticity allows the brain to reorganize in response to experience.</li>
+        </ol>
+        <p><strong>Evaluation - Nervous System and Mental Health:</strong> The nervous system's importance extends directly to mental health. Disruptions in neurotransmitter systems (serotonin in depression, dopamine in schizophrenia, GABA in anxiety) are associated with most mental disorders. Modern psychiatry uses medications that target neurotransmitter systems. Brain imaging studies have revealed structural and functional abnormalities in conditions like PTSD, OCD, and Alzheimer's disease. The discovery of neuroplasticity has given hope that psychological therapy can literally change brain structure.</p>
+        <p><strong>Conclusion:</strong> The nervous system is the biological cornerstone of psychology. Understanding its nature and functions is essential not only for understanding normal behavior but also for explaining, diagnosing, and treating psychological disorders. It represents the intersection of biology and psychology that defines modern behavioral neuroscience.</p>
+      </div>
+    </div>
+
+    <!-- PY Q9 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q9. What is Personality? How does it influence human behavior? Explain the difference between intrinsic and extrinsic motivation.</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Define personality fully, explain how it influences behavior with examples, then clearly contrast intrinsic and extrinsic motivation. This is a two-part question so balance your time.</div>
+        <p><strong>Part 1: What is Personality and How it Influences Behavior</strong></p>
+        <p><strong>Definition:</strong> Personality is the unique and relatively stable pattern of thoughts, feelings, and behaviors that characterizes an individual and distinguishes them from others. It remains consistent across different situations and over time. Gordon Allport defined it as "the dynamic organization within the individual of those psychophysical systems that determine characteristic behavior and thought."</p>
+        <p><strong>Characteristics:</strong> Personality is unique to each individual; stable over time; integrated (all parts work together); shaped by both nature (genes, temperament) and nurture (family, culture, experiences); and observable through consistent behavioral patterns.</p>
+        <p><strong>How Personality Influences Human Behavior:</strong></p>
+        <ol>
+          <li><strong>Social Interactions:</strong> An extroverted person (high on extraversion) naturally seeks social situations, makes friends easily, and communicates assertively. An introverted person prefers solitary activities and smaller groups. The same social setting produces entirely different behavior based on personality.</li>
+          <li><strong>Academic and Career Performance:</strong> Conscientiousness (one of the Big Five traits) is the best personality predictor of academic and professional success. People high in conscientiousness are organized, disciplined, and goal-directed - behaviors that lead to achievement.</li>
+          <li><strong>Response to Stress:</strong> Neuroticism (emotional instability) predicts a person's vulnerability to stress. Highly neurotic individuals react more intensely to stressors and struggle more to regulate their emotions.</li>
+          <li><strong>Moral and Ethical Behavior:</strong> People with an internalized, strong superego (Freud) or high agreeableness (Big Five) are more cooperative, empathetic, and ethical in their behavior.</li>
+          <li><strong>Health Behaviors:</strong> The "Type A" personality (competitive, impatient, hostile) is associated with higher risk of heart disease. The "Type C" personality (suppressed emotions) is linked to cancer progression.</li>
+          <li><strong>Decision Making:</strong> Openness to Experience drives exploratory behavior, risk-taking, and creativity. People low on this trait prefer routine and tradition.</li>
+        </ol>
+
+        <p><strong>Part 2: Intrinsic vs. Extrinsic Motivation</strong></p>
+        <p>Motivation can be broadly classified as either intrinsic or extrinsic based on its source:</p>
+        <p><strong>Intrinsic Motivation</strong> refers to engaging in an activity for its <em>own sake</em> - because it is inherently interesting, enjoyable, satisfying, or personally meaningful. The reward is internal: curiosity satisfied, skill developed, pride in achievement. Examples: a student studying a subject out of genuine curiosity; an artist painting because it brings them joy; a musician practicing because they love music.</p>
+        <p><strong>Extrinsic Motivation</strong> refers to engaging in an activity to earn an <em>external reward</em> or avoid an external punishment. The motivation comes from outside the individual. Examples: studying to pass an exam; working only for salary; exercising to lose weight for appearance rather than health.</p>
+        <div class="table-wrap">
+          <table>
+            <tr><th>Aspect</th><th>Intrinsic Motivation</th><th>Extrinsic Motivation</th></tr>
+            <tr><td>Source</td><td>Internal (within the person)</td><td>External (outside the person)</td></tr>
+            <tr><td>Drive</td><td>Curiosity, interest, personal satisfaction</td><td>Rewards, grades, money, praise, fear</td></tr>
+            <tr><td>Sustainability</td><td>Long-lasting and self-sustaining</td><td>Disappears when reward is removed</td></tr>
+            <tr><td>Quality of work</td><td>Higher quality, deeper engagement, creativity</td><td>"Good enough" to earn the reward; minimal effort</td></tr>
+            <tr><td>Well-being impact</td><td>Promotes autonomy and psychological well-being</td><td>Can create pressure, anxiety, and dependence</td></tr>
+            <tr><td>Overjustification Effect</td><td>Not affected</td><td>External rewards can reduce existing intrinsic motivation</td></tr>
+          </table>
+        </div>
+        <p><strong>Overjustification Effect (Deci and Ryan):</strong> A key research finding is that introducing external rewards for an already intrinsically rewarding activity can <em>undermine</em> the intrinsic motivation. For example, if children who enjoy drawing are paid for their drawings, they begin to draw less when the payment stops.</p>
+        <p><strong>Self-Determination Theory (Deci and Ryan, 1985)</strong> proposes that intrinsic motivation is fostered when three basic psychological needs are met: <em>Autonomy</em> (feeling in control), <em>Competence</em> (feeling effective), and <em>Relatedness</em> (feeling connected to others).</p>
+        <p><strong>Conclusion:</strong> Personality shapes virtually every aspect of human behavior, while the type of motivation driving behavior determines the quality, persistence, and outcomes of that behavior. Both are central to understanding and predicting what people do and why.</p>
+      </div>
+    </div>
+
+    <!-- PY Q10 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q10. What is Learning? How does observational learning help in acquiring skills? What role does reinforcement play in the learning process?</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Define learning, explain observational learning (Bandura - very important), then explain reinforcement (both classical and operant contexts). Use examples throughout.</div>
+        <p><strong>Definition of Learning:</strong> Learning is a relatively permanent change in behavior or behavioral potential that results from experience or practice, and is not due to maturation, fatigue, drugs, or temporary states. It is one of the most fundamental processes in psychology, underlying virtually all human behavior.</p>
+        <p><strong>Characteristics of Learning:</strong> It produces relatively permanent (not fleeting) changes; results from direct experience or observation; may not be immediately expressed (latent learning); involves both behavioral and cognitive changes; can be adaptive or maladaptive.</p>
+
+        <p><strong>Observational Learning (Social Learning Theory - Albert Bandura)</strong></p>
+        <p>Albert Bandura (1977) proposed Social Learning Theory, arguing that humans learn not only through direct experience (classical and operant conditioning) but also by <strong>observing and imitating others</strong> (models). This is called <em>observational learning</em> or <em>vicarious learning</em>.</p>
+        <p><strong>The Four Processes of Observational Learning (ARRM):</strong></p>
+        <ol>
+          <li><strong>Attention:</strong> The learner must first notice and attend to the model's behavior. We are more likely to attend to models who are attractive, prestigious, similar to us, or skilled. Without attention, no learning occurs.</li>
+          <li><strong>Retention:</strong> The observed behavior must be encoded and retained in memory - stored as a mental representation (cognitive schema or mental image) for later use.</li>
+          <li><strong>Reproduction (Motor Reproduction):</strong> The learner must have the physical capability and skill to actually perform the observed behavior. A 5-year-old cannot reproduce an Olympic gymnast's routine regardless of how carefully they watched.</li>
+          <li><strong>Motivation:</strong> The learner must be motivated to perform the behavior. <em>Vicarious reinforcement</em> - seeing the model being rewarded - increases motivation to imitate. Vicarious punishment decreases it.</li>
+        </ol>
+        <p><strong>Bandura's Bobo Doll Experiment (1961):</strong> Children who watched an adult model aggressively beat a "Bobo doll" were significantly more aggressive toward the doll themselves compared to children who saw a non-aggressive model or no model. This demonstrated that aggressive behavior could be learned through observation alone, without direct reinforcement - a landmark finding.</p>
+        <p><strong>How Observational Learning Helps Acquire Skills:</strong></p>
+        <ul>
+          <li>Children learn language, social behavior, gender roles, and cultural norms primarily by observing parents, siblings, peers, and media</li>
+          <li>Medical students learn surgical techniques by watching experienced surgeons before attempting procedures themselves</li>
+          <li>Athletes improve technique by watching elite performers, then modeling their movements</li>
+          <li>It accelerates skill acquisition - learners can observe mistakes and successes without having to make all mistakes themselves</li>
+          <li>Self-efficacy (Bandura) - belief in one's own ability - is built partly through watching similar others succeed ("if they can do it, so can I")</li>
+        </ul>
+
+        <p><strong>The Role of Reinforcement in Learning</strong></p>
+        <p>Reinforcement is a central concept in <em>Operant Conditioning</em>, developed by B.F. Skinner (1938), which describes how the consequences of behavior shape future behavior.</p>
+        <p><strong>Positive Reinforcement:</strong> Adding a pleasant stimulus following a behavior increases the likelihood of that behavior being repeated. Example: Praising a student for correct answers increases their participation.</p>
+        <p><strong>Negative Reinforcement:</strong> Removing an unpleasant stimulus following a behavior increases the likelihood of that behavior. Example: A student studies hard to remove the anxiety of failing an exam - studying is negatively reinforced by anxiety reduction.</p>
+        <p><strong>Punishment:</strong> Weakens behavior by either adding something unpleasant (positive punishment) or removing something pleasant (negative punishment). Less effective than reinforcement as it does not teach what the correct behavior is.</p>
+        <p><strong>Schedules of Reinforcement:</strong> Skinner found that the pattern of reinforcement delivery dramatically affects behavior. Continuous reinforcement (every response) leads to rapid learning but rapid extinction. Partial/intermittent reinforcement (only some responses) leads to greater resistance to extinction. The <em>variable ratio schedule</em> (unpredictable number of responses required) produces the highest and most persistent response rates - explains gambling behavior.</p>
+        <p><strong>Role in Skill Learning:</strong> In skill acquisition, immediate and frequent reinforcement in early learning stages (shaping) is most effective. As skills develop, reinforcement can be made less frequent to maintain the behavior long-term. Token economies in schools and behavioral therapy in clinical settings use systematic reinforcement to teach and maintain new behaviors.</p>
+        <p><strong>Conclusion:</strong> Learning is a multifaceted process. Classical conditioning explains how associations are formed; operant conditioning explains how consequences shape voluntary behavior; observational learning explains how we acquire complex skills and social behaviors by watching others. Together, these three mechanisms explain the extraordinary range and flexibility of human learning.</p>
+      </div>
+    </div>
+
+    <!-- PY Q11 - 12.5 marks -->
+    <div class="pq-card">
+      <div class="pq-header">
+        <h3>Q11. What is the definition of Intelligence? Explain the limitations of tests used to measure intelligence.</h3>
+        <span class="pq-marks">12.5 Marks</span>
+      </div>
+      <div class="pq-body">
+        <div class="answer-intro">Give multiple definitions, discuss what intelligence is (theories), then give a thorough, well-organized discussion of limitations of IQ tests with examples. This is a definition + critical analysis question - show your critical thinking.</div>
+        <p><strong>Defining Intelligence:</strong> Intelligence has been one of the most debated concepts in psychology because it is complex, multidimensional, and difficult to define precisely. Several definitions have been proposed:</p>
+        <ul>
+          <li>David Wechsler: "The global capacity to act purposefully, to think rationally, and to deal effectively with one's environment."</li>
+          <li>Alfred Binet: The ability to judge well, understand well, and reason well.</li>
+          <li>Howard Gardner: Multiple distinct intelligences - not a single ability but a profile of eight different capacities.</li>
+          <li>Robert Sternberg: "Successful intelligence" - the ability to adapt to, shape, and select environments to achieve one's goals.</li>
+        </ul>
+        <p>A broadly accepted definition is: <strong>Intelligence is the general mental ability to learn, reason, solve problems, understand abstract concepts, and adapt effectively to new situations.</strong> Spearman called this general ability the <em>g factor</em>, which he believed underlies all cognitive performance.</p>
+        <p><strong>Major Theories of Intelligence:</strong> Spearman's Two-Factor Theory (g and s factors); Thurstone's 7 Primary Mental Abilities; Gardner's 8 Multiple Intelligences; Sternberg's Triarchic Theory (analytical, creative, practical). The diversity of these theories shows there is no single agreed definition of intelligence.</p>
+
+        <p><strong>Limitations of Intelligence Tests</strong></p>
+        <p>Intelligence tests - from the original Binet-Simon scale to modern Wechsler scales and Stanford-Binet - have been enormously influential but are also subject to significant limitations and criticisms:</p>
+        <ol>
+          <li><strong>Cultural Bias:</strong> Most intelligence tests were designed by Western, educated researchers for Western, middle-class populations. Questions often assume cultural knowledge that members of other cultures do not share. This means minority groups and people from non-Western backgrounds consistently score lower, not because they are less intelligent, but because the test does not measure their type of intelligence or cultural knowledge. This is one of the most serious and well-documented criticisms of IQ tests.</li>
+          <li><strong>Language Bias:</strong> Most tests are administered in the dominant language (English). Non-native speakers, immigrants, or people with language disabilities are at a profound disadvantage that has nothing to do with their actual intelligence. Even translation does not fully solve this problem.</li>
+          <li><strong>Narrow Definition of Intelligence:</strong> Traditional IQ tests primarily measure analytical, academic, and verbal-linguistic abilities. They completely ignore Gardner's other intelligences (musical, bodily-kinesthetic, interpersonal, naturalist), emotional intelligence (Goleman), and practical intelligence ("street smarts"). A person can be a brilliant musician, exceptional athlete, or gifted social leader and score poorly on an IQ test.</li>
+          <li><strong>Test Anxiety:</strong> Many people, particularly those taking high-stakes tests, experience significant anxiety that impairs their performance. A person's score may reflect their anxiety level more than their actual intelligence. This particularly affects people unfamiliar with standardized testing formats.</li>
+          <li><strong>Stereotype Threat (Claude Steele, 1995):</strong> When individuals are aware of a negative stereotype about their group's intellectual ability, that awareness itself impairs their performance on intellectual tasks. For example, reminding women of the stereotype that women are worse at mathematics has been shown to significantly lower their math test scores - even when no actual difference exists.</li>
+          <li><strong>Snapshot vs. Potential:</strong> Intelligence tests measure cognitive performance at a single point in time, in a single context. They do not measure intellectual potential, learning rate, or how a person performs in different environments or under different conditions. The same person might score very differently on different days or in different settings.</li>
+          <li><strong>Self-Fulfilling Prophecy and Labeling:</strong> Intelligence test scores influence teachers' expectations and treatment of students. Research shows that teachers unconsciously give more attention, encouragement, and challenging material to students labeled as "bright." Children labeled as having low intelligence may receive fewer opportunities, lower expectations, and may internalize these labels, limiting their own aspirations and effort - a self-fulfilling prophecy.</li>
+          <li><strong>Socioeconomic and Environmental Bias:</strong> IQ scores are strongly correlated with socioeconomic status. Children from wealthy families typically score higher not because of superior genetics but because they have access to better nutrition, healthcare, stimulating environments, quality schools, and test preparation. Tests may be measuring environmental advantage as much as innate intelligence.</li>
+          <li><strong>Ignoring Multiple Intelligences:</strong> As Gardner argued, forcing all intelligence into a single number (IQ) is like evaluating a meal using only its caloric content - it misses most of what matters. Different individuals have different intellectual strengths that a single score cannot capture.</li>
+          <li><strong>Reliability and Consistency Issues:</strong> IQ scores can vary by 10-15 points across different testing sessions for the same individual. This variation raises questions about how reliable and stable the measure actually is.</li>
+        </ol>
+        <p><strong>Conclusion:</strong> Intelligence tests have played a valuable role in identifying learning needs and predicting certain aspects of academic performance. However, they are deeply limited as comprehensive measures of human cognitive ability. A just and effective assessment of intelligence must go beyond a single numerical score to consider the full range of human cognitive capabilities across different cultural and social contexts. Tests should be used as one tool among many, not as a definitive measure of a person's worth or potential.</p>
+      </div>
+    </div>
+
+  </section>
+  </div><!-- end content-area -->
+</main>
+
+<script>
+  // Sidebar active link on scroll
+  const sections = document.querySelectorAll('.topic-section, .prev-year-section');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.sidebar nav a[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '-10% 0px -80% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
