@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Psychology Exam Master Study Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        },
+                        accent: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .prose strong {
+            color: currentColor;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-full {
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+        }
+        /* Highlight term animation */
+        .highlight-mark {
+            background-color: rgba(250, 204, 21, 0.25);
+            border-bottom: 2px solid #eab308;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        .dark .highlight-mark {
+            background-color: rgba(234, 179, 8, 0.2);
+            color: #fef08a;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+
+    <!-- Top Fixed Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <!-- Brand & Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-brand-500/30">
+                    Ψ
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-none tracking-tight">Psychology Exam Vault</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">University Level • Comprehensive Study Master</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md hidden md:block">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search terms, theories, questions, 4-mark / 12.5-mark..." 
+                        class="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm border-0 focus:ring-2 focus:ring-brand-500 outline-none transition">
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Toggle Theme">
+                    <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+                    <i class="fa-solid fa-moon block dark:hidden text-slate-600"></i>
+                </button>
+                
+                <!-- Print Button -->
+                <button onclick="window.print()" class="px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-print"></i>
+                    <span class="hidden sm:inline">Print / PDF</span>
+                </button>
+
+                <!-- Quick Exam Mode Toggle -->
+                <button onclick="switchTab('vaultTab')" class="px-3.5 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition shadow-md shadow-brand-600/20 flex items-center space-x-2">
+                    <i class="fa-solid fa-award"></i>
+                    <span>Exam Vault</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
+
+        <!-- Navigation Sidebar (Desktop) -->
+        <aside class="w-full lg:w-64 flex-shrink-0 no-print">
+            <div class="sticky top-20 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm space-y-4">
+                
+                <!-- View Navigation Tabs -->
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2">Navigation View</div>
+                <nav class="space-y-1">
+                    <button id="btn-topicsTab" onclick="switchTab('topicsTab')" class="nav-tab-btn active w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/30">
+                        <i class="fa-solid fa-book-open w-5 text-center"></i>
+                        <span>Complete Syllabus</span>
+                    </button>
+                    <button id="btn-vaultTab" onclick="switchTab('vaultTab')" class="nav-tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i class="fa-solid fa-file-signature w-5 text-center"></i>
+                        <span>Model Exam Answers</span>
+                    </button>
+                    <button id="btn-flashTab" onclick="switchTab('flashTab')" class="nav-tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i class="fa-solid fa-clone w-5 text-center"></i>
+                        <span>Flashcards & Quiz</span>
+                    </button>
+                    <button id="btn-diagramsTab" onclick="switchTab('diagramsTab')" class="nav-tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i class="fa-solid fa-diagram-project w-5 text-center"></i>
+                        <span>Visual Diagrams</span>
+                    </button>
+                </nav>
+
+                <hr class="border-slate-200 dark:border-slate-800">
+
+                <!-- Topic Jump Links (Visible when Syllabus active) -->
+                <div id="syllabusJumpMenu">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">Topic Jump</div>
+                    <div class="space-y-1 text-xs font-medium max-h-[50vh] overflow-y-auto pr-1">
+                        <a href="#topic1" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">1. Intro & Methods</a>
+                        <a href="#topic2" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">2. Biological Bases & CNS</a>
+                        <a href="#topic3" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">3. Sensation & Organs</a>
+                        <a href="#topic4" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">4. Mind & Freud Theory</a>
+                        <a href="#topic5" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">5. Learning Theories</a>
+                        <a href="#topic6" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">6. Motivation & Maslow</a>
+                        <a href="#topic7" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">7. Memory & Forgetting</a>
+                        <a href="#topic8" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">8. Personality & Tests</a>
+                        <a href="#topic9" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">9. Intelligence & Binet</a>
+                        <a href="#topic10" class="block px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 truncate">10. Emotion & Physiology</a>
+                    </div>
+                </div>
+
+                <!-- Exam Strategy Tip Widget -->
+                <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-800 dark:text-amber-300 space-y-1">
+                    <div class="font-bold flex items-center space-x-1">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        <span>Examiner Tip</span>
+                    </div>
+                    <p class="leading-relaxed">For 12.5-mark questions, always structure your answer with: Definition, Core Mechanisms, Diagram, Empirical Evidence, and Critical Evaluation.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 min-w-0">
+
+            <!-- Mobile Search Bar -->
+            <div class="mb-4 md:hidden no-print">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" onkeyup="handleSearch()" placeholder="Search terms or questions..." 
+                        class="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-slate-900 rounded-xl text-sm border border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+            </div>
+
+            <!-- TAB 1: COMPLETE SYLLABUS MODULES -->
+            <div id="topicsTab" class="tab-content space-y-8">
+                
+                <!-- Welcome Banner -->
+                <div class="bg-gradient-to-r from-brand-600 via-brand-700 to-indigo-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black pointer-events-none">Ψ</div>
+                    <div class="max-w-2xl space-y-3 relative z-10">
+                        <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold tracking-wider uppercase">Exam Study Companion</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">University Psychology Final Exam Prep</h2>
+                        <p class="text-brand-100 text-sm leading-relaxed">
+                            Complete academic answers covering all fundamental principles, theories, biological bases, personality models, learning mechanisms, and past exam questions with high-score mark distributions.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-3">
+                            <button onclick="switchTab('vaultTab')" class="px-4 py-2 bg-white text-brand-700 hover:bg-brand-50 rounded-xl text-xs font-bold transition shadow">
+                                Jump to Exam Model Answers
+                            </button>
+                            <button onclick="switchTab('flashTab')" class="px-4 py-2 bg-brand-800/60 hover:bg-brand-800 rounded-xl text-xs font-bold transition border border-white/20">
+                                Practice Flashcards & Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TOPIC 1: INTRODUCTION TO PSYCHOLOGY & RESEARCH METHODS -->
+                <section id="topic1" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 01</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Introduction to Psychology & Research Methods</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Foundations</span>
+                    </div>
+
+                    <!-- Question 1.1 -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question text-sm"></i>
+                            1. What is Psychology? Definition, Etymology, and Modern Scope
+                        </h3>
+                        <div class="prose dark:prose-invert text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2">
+                            <p>
+                                <strong>Etymology:</strong> The word <em>Psychology</em> originates from two Greek roots: <span class="highlight-mark">Psyche</span> (meaning soul, mind, or spirit) and <span class="highlight-mark">Logos</span> (meaning study, discourse, or scientific investigation). Historically, it was defined as the "study of the mind or soul."
+                            </p>
+                            <p>
+                                <strong>Formal Definition:</strong> Modern Psychology is defined as the <strong>scientific study of behavior and mental processes</strong> in both humans and animals.
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Behavior:</strong> Any observable, measurable outward action or response exhibited by an organism (e.g., speech, facial expressions, movement, physiological reaction).</li>
+                                <li><strong>Mental Processes:</strong> Internal, covert cognitive activities and subjective experiences that cannot be directly observed but can be inferred through scientific measurement (e.g., thinking, memory, emotion, perception, problem-solving).</li>
+                            </ul>
+                            <p>
+                                <strong>Modern Scope:</strong> Psychology spans a continuum from biological neuroscience (molecular brain chemistry) to macroscopic socio-cultural interactions (group dynamics, cultural norms).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Question 1.2 -->
+                    <div class="space-y-3 bg-slate-50 dark:bg-slate-800/40 p-4 sm:p-5 rounded-xl border border-slate-200 dark:border-slate-800">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-slate-100">
+                                2. Why is Psychology called a Biopsychosocial / Biosocial Science?
+                            </h3>
+                            <span class="px-2.5 py-0.5 bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 rounded text-xs font-bold">[4 Marks Target]</span>
+                        </div>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Psychology is classified as a <strong>Biopsychosocial (or Biosocial) science</strong> because human behavior cannot be understood in isolation through a single perspective. It sits at the intersection of biological natural sciences and social sciences, combining three interconnected domains:
+                        </p>
+                        <ol class="list-decimal pl-5 text-sm space-y-1 text-slate-700 dark:text-slate-300">
+                            <li><strong>Biological Factors:</strong> Genetics, neurotransmitter systems, brain anatomy, hormonal activity, and evolutionary mechanisms.</li>
+                            <li><strong>Psychological Factors:</strong> Cognition, emotional regulation, personality traits, perceptual filters, and learned behavioral responses.</li>
+                            <li><strong>Social/Socio-cultural Factors:</strong> Environmental influences, family structure, cultural values, peer dynamics, and socio-economic context.</li>
+                        </ol>
+                        <p class="text-xs text-brand-600 dark:text-brand-400 font-semibold italic">
+                            Examiner Summary: It bridges the physical mechanics of the central nervous system with the social realities of human society.
+                        </p>
+                    </div>
+
+                    <!-- Question 1.3 -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400 flex items-center gap-2">
+                            <i class="fa-solid fa-paw text-sm"></i>
+                            3. Why Does Psychology Study Animal Behavior?
+                        </h3>
+                        <div class="text-sm text-slate-700 dark:text-slate-300 space-y-2 leading-relaxed">
+                            <p>Comparative psychology studies non-human animals for several critical scientific reasons:</p>
+                            <div class="grid sm:grid-cols-2 gap-3 pt-2">
+                                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                    <div class="font-bold text-slate-900 dark:text-slate-100 mb-1">1. Evolutionary Continuity</div>
+                                    <p class="text-xs">Based on Darwinian evolutionary theory, biological and behavioral mechanisms in animals share homology with human systems (e.g., basic nervous system structures, fear conditioning).</p>
+                                </div>
+                                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                    <div class="font-bold text-slate-900 dark:text-slate-100 mb-1">2. Experimental Control</div>
+                                    <p class="text-xs">Researchers can control genetic background, developmental history, diet, and environment far more rigorously than in human cohorts.</p>
+                                </div>
+                                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                    <div class="font-bold text-slate-900 dark:text-slate-100 mb-1">3. Physiological Simplicity</div>
+                                    <p class="text-xs">Simpler nervous systems (e.g., Aplysia sea slugs used by Eric Kandel) allow scientists to isolate basic neural pathways for memory and learning.</p>
+                                </div>
+                                <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                    <div class="font-bold text-slate-900 dark:text-slate-100 mb-1">4. Ethical Feasibility</div>
+                                    <p class="text-xs">Allows invasive neurological experiments (e.g., deep brain stimulation, gene knockout, brain lesioning) that are ethically prohibited in human subjects.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 1.4 -->
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            4. Branches of Psychology
+                        </h3>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
+                                <span class="font-bold text-sm block text-brand-600 dark:text-brand-400 mb-1">Clinical Psychology</span>
+                                Diagnosis, treatment, and prevention of severe psychological disorders and mental illnesses.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
+                                <span class="font-bold text-sm block text-brand-600 dark:text-brand-400 mb-1">Cognitive Psychology</span>
+                                Investigation of internal mental processes: memory, language, perception, decision-making, and reasoning.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
+                                <span class="font-bold text-sm block text-brand-600 dark:text-brand-400 mb-1">Developmental Psychology</span>
+                                Study of physical, cognitive, and social behavioral changes across the lifespan from conception to death.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
+                                <span class="font-bold text-sm block text-brand-600 dark:text-brand-400 mb-1">Social Psychology</span>
+                                How individual thoughts, feelings, and behaviors are influenced by actual or imagined presence of others.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
+                                <span class="font-bold text-sm block text-brand-600 dark:text-brand-400 mb-1">Biological / Neuro-Psychology</span>
+                                Neural, anatomical, chemical, and genetic substrates underlying mind and behavior.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
+                                <span class="font-bold text-sm block text-brand-600 dark:text-brand-400 mb-1">Industrial-Organizational</span>
+                                Application of psychological principles to workplace dynamics, productivity, leadership, and human resources.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 1.5 - Experimental Method 12.5 marks focus -->
+                    <div class="space-y-4 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">
+                                5. Behavioral Research Methods & The Experimental Method
+                            </h3>
+                            <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-bold">[12.5 Marks Core Question]</span>
+                        </div>
+                        <div class="prose dark:prose-invert text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-3">
+                            <p>
+                                Behavioral research methods in psychology include: <strong>Observational Method</strong> (naturalistic/controlled), <strong>Survey Method</strong>, <strong>Case Study Method</strong>, <strong>Correlational Studies</strong>, and the <strong>Experimental Method</strong>.
+                            </p>
+                            <h4 class="font-bold text-base text-slate-900 dark:text-slate-100">The Experimental Method: In-Depth Breakdown</h4>
+                            <p>
+                                The <strong>Experimental Method</strong> is the gold standard of scientific psychology because it is the <em>only research method capable of establishing definitive cause-and-effect relationships</em> between variables.
+                            </p>
+                            
+                            <!-- Key Components Grid -->
+                            <div class="grid sm:grid-cols-2 gap-3 my-2 font-sans">
+                                <div class="bg-brand-50 dark:bg-brand-900/20 p-3 rounded-xl border border-brand-200 dark:border-brand-800">
+                                    <span class="font-bold text-brand-700 dark:text-brand-300 block">Independent Variable (IV)</span>
+                                    The variable manipulated or controlled directly by the experimenter (the hypothesized cause).
+                                </div>
+                                <div class="bg-brand-50 dark:bg-brand-900/20 p-3 rounded-xl border border-brand-200 dark:border-brand-800">
+                                    <span class="font-bold text-brand-700 dark:text-brand-300 block">Dependent Variable (DV)</span>
+                                    The variable measured to observe the effect of the IV (the hypothesized outcome).
+                                </div>
+                                <div class="bg-brand-50 dark:bg-brand-900/20 p-3 rounded-xl border border-brand-200 dark:border-brand-800">
+                                    <span class="font-bold text-brand-700 dark:text-brand-300 block">Experimental vs. Control Group</span>
+                                    Experimental group receives the treatment/IV; Control group receives baseline condition or placebo.
+                                </div>
+                                <div class="bg-brand-50 dark:bg-brand-900/20 p-3 rounded-xl border border-brand-200 dark:border-brand-800">
+                                    <span class="font-bold text-brand-700 dark:text-brand-300 block">Random Assignment</span>
+                                    Assigning participants by chance to ensure equal probability across conditions, eliminating confounding variables.
+                                </div>
+                            </div>
+
+                            <!-- Evaluation Table -->
+                            <h5 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-4">Critical Evaluation: Advantages vs. Disadvantages</h5>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs text-left border-collapse border border-slate-200 dark:border-slate-800">
+                                    <thead class="bg-slate-100 dark:bg-slate-800 font-bold">
+                                        <tr>
+                                            <th class="p-2.5 border border-slate-200 dark:border-slate-800 text-emerald-600 dark:text-emerald-400">Advantages</th>
+                                            <th class="p-2.5 border border-slate-200 dark:border-slate-800 text-rose-600 dark:text-rose-400">Disadvantages & Limitations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                                        <tr>
+                                            <td class="p-2.5 border border-slate-200 dark:border-slate-800"><strong>Causality:</strong> Can uniquely demonstrate cause-and-effect relationships.</td>
+                                            <td class="p-2.5 border border-slate-200 dark:border-slate-800"><strong>Artificiality / Low Ecological Validity:</strong> Controlled laboratory environments may not reflect real-world human behavior.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2.5 border border-slate-200 dark:border-slate-800"><strong>High Control:</strong> Extraneous variables can be isolated or eliminated.</td>
+                                            <td class="p-2.5 border border-slate-200 dark:border-slate-800"><strong>Experimenter Bias & Demand Characteristics:</strong> Participants may alter responses due to perceived expectations.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2.5 border border-slate-200 dark:border-slate-800"><strong>Replicability:</strong> Standardized operational procedures allow other scientists to replicate tests.</td>
+                                            <td class="p-2.5 border border-slate-200 dark:border-slate-800"><strong>Ethical Constraints:</strong> Certain variables (e.g., trauma, severe deprivation) cannot be ethically manipulated.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 2: BIOLOGICAL BASES OF BEHAVIOR: NEURON & CENTRAL NERVOUS SYSTEM -->
+                <section id="topic2" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 02</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Biological Bases: Neuron & Central Nervous System</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Neuroscience</span>
+                    </div>
+
+                    <!-- Question 2.1 Neuron Structure & Functions -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                                1. The Nerve Cell (Neuron): Structure, Action Potential & Synapse
+                            </h3>
+                            <span class="px-2.5 py-0.5 bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 rounded text-xs font-bold">[4-Mark & 12.5-Mark Relevant]</span>
+                        </div>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            A <strong>Neuron</strong> (nerve cell) is the fundamental structural and functional unit of the nervous system (~86 billion in the human brain), specialized for receiving, processing, and transmitting electrical and chemical impulses.
+                        </p>
+
+                        <!-- SVG Neuron Diagram Embedded Inline -->
+                        <div class="my-4 bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col items-center">
+                            <div class="text-xs text-slate-400 mb-2 font-mono uppercase tracking-widest">Interactive Diagram: Structural Anatomy of a Neuron</div>
+                            <svg viewBox="0 0 800 300" class="w-full max-w-2xl h-auto">
+                                <!-- Dendrites -->
+                                <path d="M 120 150 L 50 80 M 120 150 L 40 130 M 120 150 L 50 200 M 120 150 L 70 240 M 120 150 L 80 50" stroke="#818cf8" stroke-width="4" stroke-linecap="round"/>
+                                <!-- Soma -->
+                                <circle cx="140" cy="150" r="35" fill="#4f46e5" stroke="#a5b4fc" stroke-width="3"/>
+                                <circle cx="140" cy="150" r="14" fill="#312e81"/>
+                                <text x="140" y="154" fill="#ffffff" font-size="10" text-anchor="middle" font-weight="bold">Nucleus</text>
+                                <!-- Axon Hillock & Axon -->
+                                <path d="M 175 150 L 620 150" stroke="#38bdf8" stroke-width="8"/>
+                                <!-- Myelin Sheath Segments -->
+                                <rect x="210" y="132" width="60" height="36" rx="8" fill="#10b981" opacity="0.8"/>
+                                <rect x="290" y="132" width="60" height="36" rx="8" fill="#10b981" opacity="0.8"/>
+                                <rect x="370" y="132" width="60" height="36" rx="8" fill="#10b981" opacity="0.8"/>
+                                <rect x="450" y="132" width="60" height="36" rx="8" fill="#10b981" opacity="0.8"/>
+                                <rect x="530" y="132" width="60" height="36" rx="8" fill="#10b981" opacity="0.8"/>
+                                <!-- Nodes of Ranvier -->
+                                <circle cx="280" cy="150" r="4" fill="#f59e0b"/>
+                                <circle cx="360" cy="150" r="4" fill="#f59e0b"/>
+                                <circle cx="440" cy="150" r="4" fill="#f59e0b"/>
+                                <circle cx="520" cy="150" r="4" fill="#f59e0b"/>
+                                <!-- Axon Terminals -->
+                                <path d="M 620 150 L 690 100 M 620 150 L 710 140 M 620 150 L 700 190 M 620 150 L 680 220" stroke="#f43f5e" stroke-width="4" stroke-linecap="round"/>
+                                <circle cx="690" cy="100" r="6" fill="#f43f5e"/>
+                                <circle cx="710" cy="140" r="6" fill="#f43f5e"/>
+                                <circle cx="700" cy="190" r="6" fill="#f43f5e"/>
+                                <circle cx="680" cy="220" r="6" fill="#f43f5e"/>
+                                <!-- Labels -->
+                                <text x="50" y="40" fill="#a5b4fc" font-size="12" font-weight="bold">Dendrites</text>
+                                <text x="140" y="205" fill="#a5b4fc" font-size="12" font-weight="bold">Soma (Cell Body)</text>
+                                <text x="370" y="118" fill="#6ee7b7" font-size="12" font-weight="bold">Myelin Sheath</text>
+                                <text x="440" y="185" fill="#fcd34d" font-size="11" font-weight="bold">Node of Ranvier</text>
+                                <text x="700" y="80" fill="#fda4af" font-size="12" font-weight="bold">Axon Terminals</text>
+                            </svg>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Soma (Cell Body):</strong>
+                                Contains nucleus and organelles; maintains metabolic functions and integrates incoming synaptic signals.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Dendrites:</strong>
+                                Branch-like extensions that receive electrochemical signals from neighboring presynaptic neurons.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Axon:</strong>
+                                Long single fiber that conducts electrical action potentials away from the soma toward target cells.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Myelin Sheath & Nodes:</strong>
+                                Fatty glial layer (Schwann cells / Oligodendrocytes) insulating axon; Nodes of Ranvier allow rapid <em>saltatory conduction</em>.
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-indigo-50 dark:bg-indigo-950/40 rounded-xl border border-indigo-200 dark:border-indigo-800 text-xs text-indigo-900 dark:text-indigo-200 space-y-1">
+                            <div class="font-bold text-sm">Action Potential & Neurotransmission:</div>
+                            <p><strong>Resting Potential (-70mV):</strong> Maintained by Na+/K+ pump. <strong>Threshold (-55mV):</strong> All-or-None response triggered. <strong>Depolarization:</strong> Na+ ion influx. <strong>Repolarization:</strong> K+ efflux. Synaptic transmission occurs across the <strong>Synaptic Cleft</strong> via neurotransmitter vesicles.</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 2.2 Brain Anatomy & Function -->
+                    <div class="space-y-4 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            2. Structure of Brain & Brain Function
+                        </h3>
+                        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+                                <span class="font-bold text-sm block text-slate-900 dark:text-slate-100 mb-1">Hindbrain</span>
+                                <ul class="space-y-1 list-disc pl-4">
+                                    <li><strong>Medulla Oblongata:</strong> Autonomic vital functions (breathing, heart rate, blood pressure).</li>
+                                    <li><strong>Pons:</strong> Sleep, REM cycles, facial expressions, bridge to cerebellum.</li>
+                                    <li><strong>Cerebellum:</strong> Motor coordination, balance, procedural motor memory.</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+                                <span class="font-bold text-sm block text-slate-900 dark:text-slate-100 mb-1">Midbrain</span>
+                                <ul class="space-y-1 list-disc pl-4">
+                                    <li><strong>Reticular Formation (RAS):</strong> Controls arousal, alertness, sleep-wake transitions.</li>
+                                    <li><strong>Substantia Nigra:</strong> Dopamine production, voluntary motor control initiation.</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-xl">
+                                <span class="font-bold text-sm block text-slate-900 dark:text-slate-100 mb-1">Forebrain</span>
+                                <ul class="space-y-1 list-disc pl-4">
+                                    <li><strong>Thalamus:</strong> Sensory relay station (relays all senses except smell).</li>
+                                    <li><strong>Hypothalamus:</strong> Homeostasis, 4 Fs (Fighting, Fleeing, Feeding, Mating), endocrine control.</li>
+                                    <li><strong>Limbic System:</strong> Hippocampus (memory consolidation) & Amygdala (emotion/fear).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 4 Cerebral Lobes Table -->
+                        <div class="space-y-2">
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-slate-100">The 4 Lobes of the Cerebral Cortex:</h4>
+                            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                                <div class="p-3 bg-brand-50/50 dark:bg-slate-800 rounded-xl border border-brand-200 dark:border-slate-700">
+                                    <strong class="text-brand-600 dark:text-brand-400 block text-sm">Frontal Lobe</strong>
+                                    Executive functions, decision-making, planning, primary motor cortex, and <strong>Broca's Area</strong> (speech production).
+                                </div>
+                                <div class="p-3 bg-brand-50/50 dark:bg-slate-800 rounded-xl border border-brand-200 dark:border-slate-700">
+                                    <strong class="text-brand-600 dark:text-brand-400 block text-sm">Parietal Lobe</strong>
+                                    Primary somatosensory cortex (touch, pressure, temperature, pain), spatial awareness and body orientation.
+                                </div>
+                                <div class="p-3 bg-brand-50/50 dark:bg-slate-800 rounded-xl border border-brand-200 dark:border-slate-700">
+                                    <strong class="text-brand-600 dark:text-brand-400 block text-sm">Temporal Lobe</strong>
+                                    Auditory processing, memory processing, facial recognition, and <strong>Wernicke's Area</strong> (language comprehension).
+                                </div>
+                                <div class="p-3 bg-brand-50/50 dark:bg-slate-800 rounded-xl border border-brand-200 dark:border-slate-700">
+                                    <strong class="text-brand-600 dark:text-brand-400 block text-sm">Occipital Lobe</strong>
+                                    Primary visual cortex, visual processing (color, motion, shape, spatial awareness).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 2.3 Nervous System & Mental Health -->
+                    <div class="space-y-3 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            3. Brain Function, Neurotransmitters & Mental Health
+                        </h3>
+                        <div class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                            <p>Mental health disorders reflect underlying chemical, structural, and neuro-circuitry imbalances:</p>
+                            <ul class="list-disc pl-5 space-y-1 text-xs">
+                                <li><strong>Dopamine:</strong> Excess in mesolimbic pathway linked to positive symptoms of <em>Schizophrenia</em> (hallucinations/delusions); deficit in basal ganglia leads to <em>Parkinson's Disease</em>.</li>
+                                <li><strong>Serotonin (5-HT):</strong> Deficiency strongly associated with <em>Major Depressive Disorder</em> and anxiety disorders (SSRIs block reuptake to elevate synaptic levels).</li>
+                                <li><strong>GABA (Gamma-Aminobutyric Acid):</strong> Major inhibitory neurotransmitter. Deficits cause hyper-excitability, panic, and clinical <em>Anxiety Disorders</em>.</li>
+                                <li><strong>Neuroplasticity:</strong> The brain's dynamic capacity to reorganize synaptic connections in response to learning, environment, or injury. Impaired neuroplasticity in the hippocampus is linked to chronic stress and depression.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 3: SENSATION & SENSORY ORGANS -->
+                <section id="topic3" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 03</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Sensation & Sensory Systems</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Perception</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. What is Sensation? Core Concepts & Thresholds
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Sensation</strong> is the process by which sensory receptors detect physical energy (stimuli) from the environment and encode it into neural signals. The process of converting physical stimulus energy into electro-chemical nerve impulses is termed <strong>Transduction</strong>.
+                        </p>
+
+                        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-slate-900 dark:text-slate-100 block mb-1">Absolute Threshold</strong>
+                                The minimum intensity of a stimulus required for a person to detect it 50% of the time (e.g., a candle flame seen 30 miles away on a clear night).
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-slate-900 dark:text-slate-100 block mb-1">Difference Threshold (JND) & Weber's Law</strong>
+                                Just Noticeable Difference (JND) is the minimal change required to detect a difference between two stimuli. <strong>Weber's Law</strong> states that JND is a constant proportion ($\Delta I / I = k$) of the original stimulus.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-slate-900 dark:text-slate-100 block mb-1">Sensory Adaptation</strong>
+                                Diminished sensitivity to a prolonged, unchanging stimulus (e.g., no longer noticing the feeling of clothes against skin or a constant background odor).
+                            </div>
+                        </div>
+
+                        <h4 class="font-bold text-sm text-slate-900 dark:text-slate-100 mt-4">Overview of Human Sensory Modalities:</h4>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/60 rounded-lg">
+                                <strong>Vision (Visual):</strong> Receptors = Rods (scotopic/low-light vision) & Cones (photopic/color vision in Fovea). Pathway = Retina &rarr; Optic Nerve &rarr; Thalamus (LGN) &rarr; Occipital Cortex.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/60 rounded-lg">
+                                <strong>Audition (Hearing):</strong> Receptors = Hair cells on the basilar membrane inside the Cochlea. Pathway = Auditory nerve &rarr; Thalamus (MGN) &rarr; Temporal Cortex.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/60 rounded-lg">
+                                <strong>Gustation (Taste):</strong> Receptors = Taste buds inside papillae (Sweet, Salty, Sour, Bitter, Umami).
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/60 rounded-lg">
+                                <strong>Olfaction (Smell):</strong> Receptors = Olfactory epithelium in nasal cavity. <em>Unique: Signals bypass the Thalamus directly to Olfactory Bulb and Limbic System.</em>
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/60 rounded-lg">
+                                <strong>Somatosensation (Touch):</strong> Mechanoreceptors (pressure), Thermoreceptors (temperature), Nociceptors (pain).
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800/60 rounded-lg">
+                                <strong>Kinesthetic & Vestibular:</strong> Kinesthesis (proprioceptors in joints/muscles for body position); Vestibular (semicircular canals in inner ear for equilibrium/balance).
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 4: MIND, CONSCIOUSNESS & FREUD'S PSYCHOANALYTIC THEORY -->
+                <section id="topic4" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 04</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Mind, Consciousness & Freud's Psychoanalysis</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 rounded-full text-xs font-bold">[12.5-Mark High Weight]</span>
+                    </div>
+
+                    <!-- Question 4.1 -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. What is the Mind? Mind vs. Brain Distinction
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            The <strong>Brain</strong> is a tangible, physical biological organ composed of neurons, neuroglia, blood vessels, and neurotransmitter chemicals. The <strong>Mind</strong> refers to the non-tangible functional aggregate of conscious, subjective experiences, thoughts, feelings, memories, perceptions, and self-awareness. In philosophy of mind: "The mind is what the brain does."
+                        </p>
+
+                        <!-- Freud's Topographical & Structural Models -->
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400 mt-6">
+                            2. Freud's Psychoanalytic Theory: Topographical & Structural Models
+                        </h3>
+
+                        <!-- SVG Iceberg Diagram Inline -->
+                        <div class="my-4 bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col items-center">
+                            <div class="text-xs text-slate-400 mb-2 font-mono uppercase tracking-widest">Visual Model: Freud's Iceberg Metaphor of Mind & Personality</div>
+                            <svg viewBox="0 0 700 320" class="w-full max-w-xl h-auto">
+                                <!-- Water Line -->
+                                <rect x="0" y="90" width="700" height="230" fill="#0284c7" opacity="0.4"/>
+                                <path d="M 0 90 Q 175 80, 350 90 T 700 90" stroke="#38bdf8" stroke-width="3" fill="none"/>
+                                <text x="680" y="80" fill="#38bdf8" font-size="11" text-anchor="end" font-weight="bold">Waterline (Awareness Threshold)</text>
+                                
+                                <!-- Iceberg Body -->
+                                <polygon points="350,20 480,90 580,290 120,290 220,90" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" opacity="0.9"/>
+                                
+                                <!-- Topographical Regions -->
+                                <text x="350" y="60" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">CONSCIOUS MIND</text>
+                                <text x="350" y="130" fill="#0369a1" font-size="14" font-weight="bold" text-anchor="middle">PRECONSCIOUS / SUBCONSCIOUS</text>
+                                <text x="350" y="220" fill="#1e3a8a" font-size="16" font-weight="bold" text-anchor="middle">UNCONSCIOUS MIND</text>
+
+                                <!-- Structural Elements Overlaid -->
+                                <circle cx="430" cy="55" r="22" fill="#4f46e5" opacity="0.8"/>
+                                <text x="430" y="60" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">EGO</text>
+
+                                <circle cx="270" cy="115" r="22" fill="#10b981" opacity="0.8"/>
+                                <text x="270" y="119" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">SUPEREGO</text>
+
+                                <circle cx="350" cy="255" r="30" fill="#f43f5e" opacity="0.85"/>
+                                <text x="350" y="260" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">ID</text>
+                            </svg>
+                        </div>
+
+                        <!-- Topographical Model -->
+                        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">1. Conscious Mind</strong>
+                                Everything an individual is actively aware of at the present moment (perceptions, current thoughts, immediate feelings).
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">2. Preconscious Mind</strong>
+                                Information not currently in active awareness, but easily recalled into consciousness with effort (e.g., home address, phone numbers).
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">3. Unconscious Mind</strong>
+                                The vast reservoir of primitive drives, repressed traumatic memories, forbidden sexual/aggressive urges (Eros/Thanatos).
+                            </div>
+                        </div>
+
+                        <!-- Structural Personality Model -->
+                        <div class="space-y-3 pt-3">
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-slate-100">Structural Tripartite Model of Personality:</h4>
+                            <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                                <div class="p-3 bg-rose-50 dark:bg-rose-950/30 rounded-xl border border-rose-200 dark:border-rose-900/50">
+                                    <span class="font-bold text-sm block text-rose-700 dark:text-rose-300 mb-1">ID (Pleasure Principle)</span>
+                                    Innate, present at birth. Completely unconscious. Operates on <strong>Pleasure Principle</strong> seeking immediate gratification of instinctual impulses (Eros/Libido & Thanatos). Uses <em>Primary Process Thinking</em>.
+                                </div>
+                                <div class="p-3 bg-indigo-50 dark:bg-indigo-950/30 rounded-xl border border-indigo-200 dark:border-indigo-900/50">
+                                    <span class="font-bold text-sm block text-indigo-700 dark:text-indigo-300 mb-1">EGO (Reality Principle)</span>
+                                    Develops in early childhood. Operates on <strong>Reality Principle</strong>. Pragmatic mediator between Id demands, Superego constraints, and external reality. Uses <em>Secondary Process Thinking</em>.
+                                </div>
+                                <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl border border-emerald-200 dark:border-emerald-900/50">
+                                    <span class="font-bold text-sm block text-emerald-700 dark:text-emerald-300 mb-1">SUPEREGO (Morality Principle)</span>
+                                    Develops around age 5 (resolution of Oedipus complex). Internalized moral compass and societal standards. Consists of <strong>Conscience</strong> (guilt) and <strong>Ego Ideal</strong> (pride).
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Intrapsychic Conflict & Defense Mechanisms -->
+                        <div class="p-4 bg-slate-100 dark:bg-slate-800/80 rounded-xl text-xs space-y-2">
+                            <div class="font-bold text-slate-900 dark:text-slate-100 text-sm">Intrapsychic Conflict & Ego Defense Mechanisms:</div>
+                            <p>Conflict between Id desires and Superego moral prohibitions generates <em>Neurotic Anxiety</em>. To protect the conscious mind, the Ego deploys unconscious <strong>Defense Mechanisms</strong>:</p>
+                            <div class="grid sm:grid-cols-2 gap-2 text-slate-700 dark:text-slate-300 pt-1">
+                                <div><strong>Repression:</strong> Pushing unacceptable thoughts into unconscious.</div>
+                                <div><strong>Projection:</strong> Attributing one's unwanted motives onto others.</div>
+                                <div><strong>Sublimation:</strong> Channeling unacceptable drives into socially valued achievements.</div>
+                                <div><strong>Reaction Formation:</strong> Expressing the exact opposite of actual feelings.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 5: LEARNING THEORIES -->
+                <section id="topic5" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 05</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Learning Theories & Behavioral Conditioning</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Behaviorism</span>
+                    </div>
+
+                    <!-- Question 5.1 Learning Definition & Pavlov -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. What is Learning? Pavlov's Classical Conditioning Theory
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Definition:</strong> Learning is a relatively permanent change in behavior, knowledge, or behavioral potential that occurs as a result of experience or practice.
+                        </p>
+
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs space-y-3">
+                            <span class="font-bold text-sm block text-brand-600 dark:text-brand-400">Ivan Pavlov's Classical Conditioning Paradigm (S-R Association):</span>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div>
+                                    <strong>1. Before Conditioning:</strong><br>
+                                    Unconditioned Stimulus (UCS: Food) &rarr; Unconditioned Response (UCR: Salivation)<br>
+                                    Neutral Stimulus (NS: Bell) &rarr; No Salivation
+                                </div>
+                                <div>
+                                    <strong>2. During Conditioning (Acquisition):</strong><br>
+                                    NS (Bell) repeatedly paired with UCS (Food) &rarr; UCR (Salivation)
+                                </div>
+                                <div>
+                                    <strong>3. After Conditioning:</strong><br>
+                                    Conditioned Stimulus (CS: Bell) &rarr; Conditioned Response (CR: Salivation)
+                                </div>
+                                <div>
+                                    <strong>Core Principles:</strong><br>
+                                    • <em>Extinction:</em> CS presented without UCS repeatedly leads to fading of CR.<br>
+                                    • <em>Spontaneous Recovery:</em> Re-emergence of CR after rest period.<br>
+                                    • <em>Generalization & Discrimination:</em> Responding to similar stimuli vs. distinguishing between them.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 5.2 Observational Learning & Reinforcement -->
+                    <div class="space-y-4 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                                2. Bandura's Observational Learning & The Role of Reinforcement
+                            </h3>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded text-xs font-bold">[12.5 Marks Target]</span>
+                        </div>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Albert Bandura's <strong>Social Learning Theory</strong> posits that individuals learn complex behaviors through observing, retaining, and imitating the actions of role models (as demonstrated in the classic <em>Bobo Doll Experiment</em>).
+                        </p>
+
+                        <!-- Bandura's 4 Processes -->
+                        <div class="grid sm:grid-cols-4 gap-2 text-xs">
+                            <div class="p-2.5 bg-brand-50 dark:bg-slate-800 rounded-lg border border-brand-200 dark:border-slate-700">
+                                <span class="font-bold text-brand-600 dark:text-brand-400 block">1. Attention</span>
+                                Observer must actively attend to model's behavior and features.
+                            </div>
+                            <div class="p-2.5 bg-brand-50 dark:bg-slate-800 rounded-lg border border-brand-200 dark:border-slate-700">
+                                <span class="font-bold text-brand-600 dark:text-brand-400 block">2. Retention</span>
+                                Encoding observed behavior in memory (cognitive symbolic representation).
+                            </div>
+                            <div class="p-2.5 bg-brand-50 dark:bg-slate-800 rounded-lg border border-brand-200 dark:border-slate-700">
+                                <span class="font-bold text-brand-600 dark:text-brand-400 block">3. Motor Reproduction</span>
+                                Physical/cognitive execution capability to replicate the observed behavior.
+                            </div>
+                            <div class="p-2.5 bg-brand-50 dark:bg-slate-800 rounded-lg border border-brand-200 dark:border-slate-700">
+                                <span class="font-bold text-brand-600 dark:text-brand-400 block">4. Motivation</span>
+                                Incentive to perform (Direct, Vicarious, or Self-reinforcement).
+                            </div>
+                        </div>
+
+                        <!-- Reinforcement vs Punishment -->
+                        <div class="p-4 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs space-y-2">
+                            <div class="font-bold text-slate-900 dark:text-slate-100 text-sm">Role of Reinforcement in Learning (Operant Conditioning):</div>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div>
+                                    <strong>Positive Reinforcement:</strong> Presenting a rewarding stimulus to <em>increase</em> behavior frequency (e.g., praise, rewards).<br>
+                                    <strong>Negative Reinforcement:</strong> Removing an unpleasant stimulus to <em>increase</em> behavior frequency (e.g., taking aspirin removes headache).
+                                </div>
+                                <div>
+                                    <strong>Punishment:</strong> Introducing adverse consequence to <em>decrease</em> behavior frequency.<br>
+                                    <strong>Schedules:</strong> Fixed/Variable Ratio (VR produces highest resistance to extinction) and Fixed/Variable Interval.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 6: MOTIVATION & MASLOW'S THEORY -->
+                <section id="topic6" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 06</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Motivation & Maslow's Need Hierarchy</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Drive & Goals</span>
+                    </div>
+
+                    <!-- Question 6.1 Definition & Motivational Cycle -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. What is Motivation? The Motivational Cycle
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Motivation</strong> is an internal state or process that energizes, directs, and sustains goal-oriented behavior.
+                        </p>
+
+                        <!-- SVG Motivational Cycle Flowchart -->
+                        <div class="my-3 bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col items-center">
+                            <div class="text-xs text-slate-400 mb-2 font-mono uppercase tracking-widest">Visual Diagram: The Cyclic Process of Motivation</div>
+                            <svg viewBox="0 0 600 200" class="w-full max-w-lg h-auto">
+                                <rect x="20" y="80" width="80" height="40" rx="8" fill="#6366f1"/>
+                                <text x="60" y="104" fill="#fff" font-size="11" text-anchor="middle" font-weight="bold">1. NEED</text>
+
+                                <path d="M 105 100 L 125 100" stroke="#a5b4fc" stroke-width="3" marker-end="url(#arrow)"/>
+
+                                <rect x="130" y="80" width="80" height="40" rx="8" fill="#0284c7"/>
+                                <text x="170" y="104" fill="#fff" font-size="11" text-anchor="middle" font-weight="bold">2. DRIVE</text>
+
+                                <rect x="240" y="80" width="90" height="40" rx="8" fill="#059669"/>
+                                <text x="285" y="104" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">3. AROUSAL</text>
+
+                                <rect x="350" y="80" width="110" height="40" rx="8" fill="#d97706"/>
+                                <text x="405" y="104" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">4. GOAL ACTION</text>
+
+                                <rect x="480" y="80" width="100" height="40" rx="8" fill="#dc2626"/>
+                                <text x="530" y="104" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">5. REDUCTION</text>
+
+                                <!-- Cycle Back Arrow -->
+                                <path d="M 530 125 C 530 170, 60 170, 60 125" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Question 6.2 Intrinsic vs Extrinsic & Maslow -->
+                    <div class="space-y-4 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                                2. Intrinsic vs. Extrinsic Motivation & Maslow's Theory
+                            </h3>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded text-xs font-bold">[12.5 Marks Target]</span>
+                        </div>
+
+                        <!-- Comparison Table -->
+                        <div class="overflow-x-auto text-xs">
+                            <table class="w-full text-left border-collapse border border-slate-200 dark:border-slate-800">
+                                <thead class="bg-slate-100 dark:bg-slate-800 font-bold">
+                                    <tr>
+                                        <th class="p-2 border">Dimension</th>
+                                        <th class="p-2 border text-brand-600 dark:text-brand-400">Intrinsic Motivation</th>
+                                        <th class="p-2 border text-indigo-600 dark:text-indigo-400">Extrinsic Motivation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Source</td>
+                                        <td class="p-2 border">Internal satisfaction, inherent enjoyment, curiosity, sense of mastery.</td>
+                                        <td class="p-2 border">External rewards, praise, grades, money, avoidance of punishment.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Sustainability</td>
+                                        <td class="p-2 border">Self-sustaining and long-lasting over time.</td>
+                                        <td class="p-2 border">Requires continuous external reinforcement; prone to extinction.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Effect</td>
+                                        <td class="p-2 border">Enhances deep creativity, conceptual understanding, and internal autonomy.</td>
+                                        <td class="p-2 border">Drives compliance and performance speed; overjustification effect can reduce intrinsic interest.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Maslow's Pyramid SVG -->
+                        <div class="my-3 bg-slate-900 p-4 rounded-2xl border border-slate-800 flex flex-col items-center">
+                            <div class="text-xs text-slate-400 mb-2 font-mono uppercase tracking-widest">SVG Pyramid: Maslow's Hierarchy of Needs</div>
+                            <svg viewBox="0 0 500 250" class="w-full max-w-md h-auto">
+                                <polygon points="250,20 450,230 50,230" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                                <!-- Tier 5: Self Actualization -->
+                                <polygon points="250,20 290,65 210,65" fill="#8b5cf6"/>
+                                <text x="250" y="52" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Self-Actualization</text>
+
+                                <!-- Tier 4: Esteem -->
+                                <polygon points="210,65 290,65 330,110 170,110" fill="#3b82f6"/>
+                                <text x="250" y="92" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Esteem Needs</text>
+
+                                <!-- Tier 3: Love/Belonging -->
+                                <polygon points="170,110 330,110 370,155 130,155" fill="#10b981"/>
+                                <text x="250" y="137" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Love & Belonging</text>
+
+                                <!-- Tier 2: Safety -->
+                                <polygon points="130,155 370,155 410,195 90,195" fill="#f59e0b"/>
+                                <text x="250" y="178" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Safety & Security</text>
+
+                                <!-- Tier 1: Physiological -->
+                                <polygon points="90,195 410,195 450,230 50,230" fill="#ef4444"/>
+                                <text x="250" y="217" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Physiological (Food, Water, Sleep)</text>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 7: MEMORY & FORGETTING -->
+                <section id="topic7" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 07</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Memory Architecture & Causes of Forgetting</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Cognitive Science</span>
+                    </div>
+
+                    <!-- Question 7.1 Memory Stages & Atkinson-Shiffrin -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. Definition, Stages & Atkinson-Shiffrin Model (STM vs. LTM)
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Memory</strong> is the cognitive mechanism through which an organism encodes, stores, consolidates, and retrieves information over time. The 3 core stages are: <strong>Encoding</strong> (converting sensory input into neural code), <strong>Storage</strong> (maintaining information over time), and <strong>Retrieval</strong> (accessing stored information).
+                        </p>
+
+                        <!-- Comparison Table STM vs LTM -->
+                        <div class="overflow-x-auto text-xs">
+                            <table class="w-full text-left border-collapse border border-slate-200 dark:border-slate-800">
+                                <thead class="bg-slate-100 dark:bg-slate-800 font-bold">
+                                    <tr>
+                                        <th class="p-2 border">Feature</th>
+                                        <th class="p-2 border text-brand-600 dark:text-brand-400">Short-Term Memory (STM / Working Memory)</th>
+                                        <th class="p-2 border text-emerald-600 dark:text-emerald-400">Long-Term Memory (LTM)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Capacity</td>
+                                        <td class="p-2 border">Limited: $7 \pm 2$ chunks of information (Miller's Law).</td>
+                                        <td class="p-2 border">Virtually unlimited capacity.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Duration</td>
+                                        <td class="p-2 border">15 to 30 seconds without maintenance rehearsal.</td>
+                                        <td class="p-2 border">Minutes to a lifetime.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Primary Code</td>
+                                        <td class="p-2 border">Acoustic / Auditory & Phonological buffer.</td>
+                                        <td class="p-2 border">Semantic (meaning-based) and network associations.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 border font-bold">Neuroanatomy</td>
+                                        <td class="p-2 border">Prefrontal Cortex & Working Memory circuits.</td>
+                                        <td class="p-2 border">Hippocampus (consolidation) & Neocortex.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Question 7.2 Causes of Forgetting -->
+                    <div class="space-y-4 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                                2. What is Forgetting? Comprehensive Causes of Forgetting
+                            </h3>
+                            <span class="px-2.5 py-0.5 bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 rounded text-xs font-bold">[4-Mark & 12.5-Mark Core]</span>
+                        </div>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Forgetting</strong> is the inability to retrieve or recall previously stored information from memory.
+                        </p>
+
+                        <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">1. Trace Decay Theory (Disuse)</strong>
+                                Memory traces (engrams) in the brain physical structure naturally fade over time if not periodically reactivated or rehearsed.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">2. Interference Theory</strong>
+                                • <em>Proactive Interference:</em> Old information interferes with recalling new information.<br>
+                                • <em>Retroactive Interference:</em> Newly learned material interferes with recalling older information.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">3. Encoding Failure</strong>
+                                Information never successfully entered long-term memory due to lack of attention or shallow processing.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">4. Retrieval Cue Failure</strong>
+                                Information exists in LTM but cannot be accessed due to missing environmental or emotional retrieval cues (e.g., Tip-of-the-Tongue state).
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">5. Motivated Forgetting (Repression)</strong>
+                                Psychoanalytic defense mechanism: active pushing of painful or anxiety-provoking traumatic memories into the unconscious.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">6. Organic / Neurological Causes</strong>
+                                Brain damage, traumatic brain injury (TBI), Alzheimer's neurodegeneration, or amnesia (Anterograde vs. Retrograde).
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 8: PERSONALITY ASSESSMENT & THEORIES -->
+                <section id="topic8" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 08</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Personality Assessment & Trait Theories</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-bold">Assessment</span>
+                    </div>
+
+                    <!-- Question 8.1 Personality Definition & Assessment -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. Personality Definition, Characteristics & Projective Tests (Rorschach & TAT)
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Personality:</strong> According to Gordon Allport, personality is "the dynamic organization within the individual of those psychophysical systems that determine his unique adjustments to his environment."
+                        </p>
+
+                        <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Rorschach Inkblot Test</strong>
+                                • Developed by Hermann Rorschach (1921). Consists of 10 standardized inkblots (5 black/white, 2 black/red, 3 multicolored).<br>
+                                • Subject states what they see. Administered in 2 phases: <em>Free Association</em> & <em>Inquiry</em>.<br>
+                                • Scored across dimensions: <strong>Location</strong> (whole blot vs detail), <strong>Determinants</strong> (form, color, shading, movement), and <strong>Content</strong>.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Thematic Apperception Test (TAT)</strong>
+                                • Developed by Henry Murray & Christina Morgan (1935). Consists of 31 ambiguous picture cards depicting human scenes.<br>
+                                • Subject tells a story detailing what led up to the scene, what is happening now, what characters feel, and outcome.<br>
+                                • Reveals latent motives: <strong>Need for Achievement (nAch)</strong>, Power, and Affiliation.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 8.2 Cattell's Trait Theory -->
+                    <div class="space-y-3 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            2. Raymond Cattell's 16 Trait Theory of Personality
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Raymond Cattell used <strong>Factor Analysis</strong> (statistical technique) to reduce Allport's list of trait words into <strong>16 primary source traits</strong> (measured by the 16PF Questionnaire).
+                        </p>
+                        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                <strong>Surface Traits:</strong> Observable behavioral tendencies (e.g., altruism, quietness) resulting from combinations of source traits.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                <strong>Source Traits:</strong> Underlying basic structural building blocks of personality (e.g., Warmth, Emotional Stability, Dominance).
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                <strong>Tri-partite Data Collection:</strong><br>
+                                • <em>L-Data:</em> Life record data.<br>
+                                • <em>Q-Data:</em> Questionnaire self-reports.<br>
+                                • <em>T-Data:</em> Objective experimental testing data.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TOPIC 9: INTELLIGENCE -->
+                <section id="topic9" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 09</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Intelligence & Cognitive Assessment</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-bold">[12.5-Mark Core]</span>
+                    </div>
+
+                    <!-- Question 9.1 Definition & Heredity vs Environment -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. What is Intelligence? Heredity vs. Environment & Binet-Simon Scale
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Intelligence:</strong> According to Wechsler, intelligence is the global capacity of an individual to act purposefully, think rationally, and deal effectively with their environment.
+                        </p>
+
+                        <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Heredity vs. Environment Dynamics</strong>
+                                • <em>Genetics (Heritability ~ 50-80%):</em> Identical twins reared apart show higher IQ correlation ($r \approx 0.72$) than fraternal twins reared together ($r \approx 0.60$).<br>
+                                • <em>Reaction Range Model:</em> Genetics sets the lower and upper limits of potential intelligence; environmental quality determines where actual IQ falls within that range.
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-1">
+                                <strong class="text-brand-600 dark:text-brand-400 block text-sm">Binet-Simon Scale & IQ Formula</strong>
+                                • First practical intelligence test developed in 1905 by Alfred Binet & Theodore Simon to identify children needing special education.<br>
+                                • Introduced concept of <strong>Mental Age (MA)</strong>.<br>
+                                • Lewis Terman (Stanford-Binet) popularized Stern's IQ formula:<br>
+                                <span class="block text-center font-bold text-sm my-1 bg-slate-200 dark:bg-slate-700 p-1 rounded">IQ = (Mental Age / Chronological Age) × 100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 9.2 Limitations of Intelligence Tests (12.5 marks focus) -->
+                    <div class="space-y-3 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                                2. Critical Limitations of Intelligence Tests
+                            </h3>
+                            <span class="px-2.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded text-xs font-bold">[12.5 Marks Target]</span>
+                        </div>
+                        <ul class="list-disc pl-5 text-sm space-y-2 text-slate-700 dark:text-slate-300">
+                            <li><strong>1. Cultural & Linguistic Bias:</strong> Tests historically favor Western, middle-class urban populations and penalize minority or non-standard linguistic backgrounds.</li>
+                            <li><strong>2. Narrow Conceptual Scope:</strong> Focuses heavily on academic, analytical, and linguistic abilities, neglecting Emotional Intelligence (EQ), Practical Intelligence (Sternberg), and Creative/Musical/Spatial talents (Gardner).</li>
+                            <li><strong>3. Labeling Effects & Self-Fulfilling Prophecy:</strong> Rigid IQ scoring can result in damaging social tracking, low expectations, and reduced self-esteem.</li>
+                            <li><strong>4. Non-Intellective Influences:</strong> Scores can be distorted by test anxiety, physical fatigue, socio-economic motivation, or dynamic test environments.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- TOPIC 10: EMOTION & PHYSIOLOGICAL CHANGES -->
+                <section id="topic10" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-4 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Module 10</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Emotion & Physiological Responses</h2>
+                        </div>
+                        <span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 rounded-full text-xs font-bold">[4-Mark Focus]</span>
+                    </div>
+
+                    <!-- Question 10.1 Elements, Emotion vs Feeling -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            1. What is Emotion? 3 Elements & Difference Between Emotion and Feeling
+                        </h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <strong>Emotion:</strong> A complex psychological reaction involving 3 distinct elements: (1) <strong>Cognitive appraisal</strong> of a stimulus, (2) <strong>Physiological arousal</strong>, and (3) <strong>Expressive/behavioral response</strong>.
+                        </p>
+
+                        <!-- Emotion vs Feeling Comparison -->
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <span class="font-bold text-sm block mb-2 text-slate-900 dark:text-slate-100">Distinction: Emotion vs. Feeling (4 Marks)</span>
+                            <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                                <div class="p-2.5 bg-white dark:bg-slate-900 rounded-lg">
+                                    <strong class="text-brand-600 dark:text-brand-400 block mb-1">Emotion</strong>
+                                    • Objective, neuro-biological, bodily reaction to external or internal stimulus.<br>
+                                    • Instantaneous, un-conscious, short-lived, measurable via autonomic physiological markers (GSR, heart rate).
+                                </div>
+                                <div class="p-2.5 bg-white dark:bg-slate-900 rounded-lg">
+                                    <strong class="text-indigo-600 dark:text-indigo-400 block mb-1">Feeling</strong>
+                                    • Subjective, mental interpretation and conscious cognitive awareness of the underlying emotion.<br>
+                                    • Long-lasting, shaped by personal history, beliefs, and cultural context.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 10.2 Physiological Changes -->
+                    <div class="space-y-3 border-t border-slate-200 dark:border-slate-800 pt-5">
+                        <h3 class="text-lg font-bold text-brand-600 dark:text-brand-400">
+                            2. Physiological & Bodily Changes Associated with Emotion
+                        </h3>
+                        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                <strong>Autonomic Nervous System:</strong> Sympathetic nervous system activation ("Fight-or-Flight"): increased heart rate, dilated pupils, inhibited digestion.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                <strong>Galvanic Skin Response (GSR):</strong> Increased sweat gland activity leading to heightened skin electrical conductance.
+                            </div>
+                            <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                                <strong>Hormonal Secretions:</strong> Adrenal glands release Adrenaline (Epinephrine) and Cortisol into bloodstream.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- TAB 2: MODEL EXAM ANSWERS VAULT -->
+            <div id="vaultTab" class="tab-content hidden space-y-6">
+                
+                <!-- Vault Header & Filter -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold tracking-tight">Model Exam Answers Vault</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Past paper questions organized explicitly by 4-Mark and 12.5-Mark target scoring structures.</p>
+                    </div>
+                    <div class="flex items-center space-x-2 no-print">
+                        <button onclick="filterVault('all')" class="vault-filter-btn active px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-600 text-white">All Questions</button>
+                        <button onclick="filterVault('4mark')" class="vault-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">4 Marks</button>
+                        <button onclick="filterVault('12mark')" class="vault-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">12.5 Marks</button>
+                    </div>
+                </div>
+
+                <!-- 4 MARK QUESTIONS SECTION -->
+                <div class="vault-item mark-4 space-y-4">
+                    <div class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-widest px-1">Short Answer Collection [4 Marks Each]</div>
+
+                    <!-- 4-Mark Q1 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-amber-200 dark:border-amber-900/40 p-5 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Q: Why is psychology called a biosocial science? (4 marks)</h3>
+                            <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 rounded text-xs font-extrabold">4 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-2 leading-relaxed">
+                            <p><strong>Model Answer:</strong> Psychology is termed a biosocial (or biopsychosocial) science because it systematically integrates the <strong>biological natural sciences</strong> and the <strong>social sciences</strong> to explain human behavior and mental processes.</p>
+                            <p>Specifically, it studies:</p>
+                            <ol class="list-decimal pl-5 space-y-1">
+                                <li><strong>Biological Foundations:</strong> Neural mechanisms, neurotransmitter pathways, genetic inheritance, and brain structures.</li>
+                                <li><strong>Social Dynamics:</strong> Environmental influences, cultural norms, interpersonal relationships, and socio-economic contexts.</li>
+                            </ol>
+                            <p class="italic text-brand-600 dark:text-brand-400 font-semibold">Examiner Tip: Mentioning that behavior sits at the nexus of biological hardware and social environment secures full 4 marks.</p>
+                        </div>
+                    </div>
+
+                    <!-- 4-Mark Q2 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-amber-200 dark:border-amber-900/40 p-5 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Q: What is a nerve-cell / neuron? (4 marks)</h3>
+                            <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 rounded text-xs font-extrabold">4 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-2 leading-relaxed">
+                            <p><strong>Model Answer:</strong> A nerve cell or <strong>neuron</strong> is the fundamental specialized biological unit of the nervous system responsible for receiving, integrating, and transmitting electrochemical impulses throughout the body.</p>
+                            <p><strong>Core Anatomical Structures:</strong></p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Soma (Cell Body):</strong> Contains the nucleus and maintains cell metabolism.</li>
+                                <li><strong>Dendrites:</strong> Receives chemical input from adjacent neurons.</li>
+                                <li><strong>Axon:</strong> Single long fiber transmitting action potential electrical impulses away from soma.</li>
+                                <li><strong>Synaptic Terminals:</strong> Releases chemical neurotransmitters across the synaptic cleft.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 4-Mark Q3 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-amber-200 dark:border-amber-900/40 p-5 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Q: What are the differences between emotion and feeling? (4 marks)</h3>
+                            <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 rounded text-xs font-extrabold">4 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-2 leading-relaxed">
+                            <p><strong>Model Answer:</strong> While used interchangeably in casual language, psychology distinguishes them clearly:</p>
+                            <div class="grid grid-cols-2 gap-2 my-1">
+                                <div class="bg-slate-100 dark:bg-slate-800 p-2 rounded">
+                                    <strong>Emotion:</strong> Unconscious, bodily physiological reaction (ANS arousal, hormonal surge, heart rate spike). Instantaneous and short-lived.
+                                </div>
+                                <div class="bg-slate-100 dark:bg-slate-800 p-2 rounded">
+                                    <strong>Feeling:</strong> Conscious subjective experience and cognitive interpretation of that emotional state. Long-lasting and mentally processed.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4-Mark Q4 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-amber-200 dark:border-amber-900/40 p-5 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900 dark:text-slate-100">Q: What are the causes of forgetting? (4 marks)</h3>
+                            <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300 rounded text-xs font-extrabold">4 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-1 leading-relaxed">
+                            <p><strong>Model Answer:</strong> Forgetting is the inability to retrieve stored LTM information. The 4 major causes are:</p>
+                            <ol class="list-decimal pl-5 space-y-0.5">
+                                <li><strong>Trace Decay:</strong> Disuse fading of neural memory traces over time.</li>
+                                <li><strong>Interference:</strong> Proactive (old blocks new) or Retroactive (new blocks old).</li>
+                                <li><strong>Retrieval Failure:</strong> Lack of proper environmental/cognitive retrieval cues.</li>
+                                <li><strong>Motivated Forgetting:</strong> Freud's repression of anxiety-inducing memories.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12.5 MARK QUESTIONS SECTION -->
+                <div class="vault-item mark-12 space-y-4 pt-4">
+                    <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest px-1">Long Essay Collection [12.5 Marks Each]</div>
+
+                    <!-- 12.5-Mark Q1 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 p-6 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                            <h3 class="font-bold text-base text-slate-900 dark:text-slate-100">Q: What is meant by psychology? Briefly discuss different branches of Psychology. (12.5 marks)</h3>
+                            <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 rounded text-xs font-extrabold">12.5 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-3 leading-relaxed">
+                            <p><strong>1. Introduction & Formal Definition (2.5 marks):</strong> Psychology is defined as the scientific study of behavior and mental processes. Etymologically derived from <em>Psyche</em> (mind) and <em>Logos</em> (study). It systematically investigates overt actions and covert cognitive processes using empirical research methodologies.</p>
+                            <p><strong>2. Detailed Exploration of Branches (8 marks):</strong></p>
+                            <ul class="list-disc pl-5 space-y-1.5">
+                                <li><strong>Clinical Psychology:</strong> Focuses on assessment, diagnosis, treatment, and prevention of mental illness and psychological pathology.</li>
+                                <li><strong>Cognitive Psychology:</strong> Examines internal mental mechanics: memory storage, language acquisition, problem-solving, and perception.</li>
+                                <li><strong>Developmental Psychology:</strong> Investigates cognitive, physical, and emotional growth across the entire human lifespan.</li>
+                                <li><strong>Biological / Neuro-Psychology:</strong> Explores brain anatomy, neurotransmitters, and neural pathways driving behavior.</li>
+                                <li><strong>Social Psychology:</strong> Analyzes how individual behavior is affected by group dynamics, social norms, and authority.</li>
+                                <li><strong>Industrial-Organizational Psychology:</strong> Applies psychological theories to workplace efficiency, leadership, and organization.</li>
+                            </ul>
+                            <p><strong>3. Synthesis & Conclusion (2 marks):</strong> These branches interlock to provide a holistic biosocial framework for human behavior.</p>
+                        </div>
+                    </div>
+
+                    <!-- 12.5-Mark Q2 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 p-6 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                            <h3 class="font-bold text-base text-slate-900 dark:text-slate-100">Q: What are the different methods of psychology? Discuss the advantages and disadvantages of experimental method. (12.5 marks)</h3>
+                            <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 rounded text-xs font-extrabold">12.5 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-3 leading-relaxed">
+                            <p><strong>1. Overview of Psychological Research Methods (3 marks):</strong> Includes Observational Studies, Case Studies, Surveys, Correlational Research, and the Experimental Method.</p>
+                            <p><strong>2. Anatomy of the Experimental Method (4.5 marks):</strong> The experimental method manipulates an <strong>Independent Variable (IV)</strong> under strict controlled conditions to observe changes in a <strong>Dependent Variable (DV)</strong>. Relies on operational definitions, experimental vs. control groups, and <strong>random assignment</strong> to eliminate confounding variables.</p>
+                            <p><strong>3. Critical Evaluation: Advantages & Disadvantages (5 marks):</strong></p>
+                            <div class="grid grid-cols-2 gap-3 my-2">
+                                <div class="bg-emerald-50 dark:bg-emerald-950/30 p-3 rounded-xl border border-emerald-200 dark:border-emerald-900/50">
+                                    <strong class="text-emerald-700 dark:text-emerald-300 block mb-1">Advantages</strong>
+                                    • Establishes true cause-and-effect relationships.<br>
+                                    • High internal validity through variable control.<br>
+                                    • High replicability due to standardized protocols.
+                                </div>
+                                <div class="bg-rose-50 dark:bg-rose-950/30 p-3 rounded-xl border border-rose-200 dark:border-rose-900/50">
+                                    <strong class="text-rose-700 dark:text-rose-300 block mb-1">Disadvantages</strong>
+                                    • Low ecological validity (artificial lab setting).<br>
+                                    • Experimenter bias & demand characteristics.<br>
+                                    • Ethical constraints prevent manipulating severe trauma/stress.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12.5-Mark Q3 -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 p-6 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                            <h3 class="font-bold text-base text-slate-900 dark:text-slate-100">Q: Explain the theory of structure of mind and structure of personality according to Freud. (12.5 marks)</h3>
+                            <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 rounded text-xs font-extrabold">12.5 MARKS</span>
+                        </div>
+                        <div class="text-xs text-slate-700 dark:text-slate-300 space-y-3 leading-relaxed">
+                            <p><strong>1. Topographical Model of Mind (5 marks):</strong> Sigmund Freud conceptualized the mind using an iceberg metaphor divided into three levels of awareness: Conscious (active awareness), Preconscious (easily accessible memory), and Unconscious (repressed trauma, primal drives).</p>
+                            <p><strong>2. Structural Tripartite Theory of Personality (5 marks):</strong></p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Id:</strong> Fully unconscious, present at birth, operates on <em>Pleasure Principle</em> seeking immediate gratification via primary process thinking.</li>
+                                <li><strong>Ego:</strong> Realistic mediator, operates on <em>Reality Principle</em> using secondary process logical thinking to satisfy Id safely.</li>
+                                <li><strong>Superego:</strong> Moral compass, develops at ~5 years, contains Conscience (guilt) and Ego Ideal. Operates on <em>Morality Principle</em>.</li>
+                            </ul>
+                            <p><strong>3. Intrapsychic Conflict & Anxiety (2.5 marks):</strong> Ego deploys Defense Mechanisms (repression, projection, sublimation) to manage anxiety caused by Id-Superego conflict.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 3: FLASHCARDS & INTERACTIVE QUIZ -->
+            <div id="flashTab" class="tab-content hidden space-y-8">
+                
+                <!-- FLASHCARD MODULE -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider">Active Recall Tool</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Interactive Flashcards</h2>
+                        </div>
+                        <span id="cardCounter" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-xs font-bold text-slate-600 dark:text-slate-400">Card 1 / 8</span>
+                    </div>
+
+                    <!-- Flashcard 3D Container -->
+                    <div class="perspective-1000 w-full h-64 sm:h-72 cursor-pointer" onclick="flipCard()">
+                        <div id="flashcardInner" class="transform-style-3d transition-transform duration-500 w-full h-full relative rounded-2xl shadow-lg">
+                            
+                            <!-- Card Front -->
+                            <div class="backface-hidden absolute inset-0 bg-gradient-to-br from-brand-600 to-indigo-700 text-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between">
+                                <div class="flex justify-between items-center text-xs opacity-80">
+                                    <span class="font-mono uppercase tracking-widest">Question Concept</span>
+                                    <span>Click / Tap to Flip <i class="fa-solid fa-rotate"></i></span>
+                                </div>
+                                <div id="cardQuestion" class="text-lg sm:text-xl font-bold text-center px-4">
+                                    What is the primary function of Broca's Area vs. Wernicke's Area in the brain?
+                                </div>
+                                <div class="text-center text-xs opacity-60">Tap to reveal examiner answer</div>
+                            </div>
+
+                            <!-- Card Back -->
+                            <div class="backface-hidden rotate-y-180 absolute inset-0 bg-slate-900 border-2 border-brand-500 text-white p-6 sm:p-8 rounded-2xl flex flex-col justify-between overflow-y-auto">
+                                <div class="flex justify-between items-center text-xs text-brand-400 font-mono uppercase tracking-widest">
+                                    <span>High-Score Answer</span>
+                                    <i class="fa-solid fa-check-circle"></i>
+                                </div>
+                                <div id="cardAnswer" class="text-sm sm:text-base leading-relaxed text-slate-200 px-2">
+                                    • <strong>Broca's Area</strong> (Frontal Lobe): Responsible for motor speech <em>production</em> and articulation.<br><br>
+                                    • <strong>Wernicke's Area</strong> (Temporal Lobe): Responsible for language <em>comprehension</em> and semantic processing.
+                                </div>
+                                <div class="text-center text-xs text-slate-500">Tap to flip back to question</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="flex items-center justify-between pt-2">
+                        <button onclick="prevCard()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Previous
+                        </button>
+                        <button onclick="shuffleCards()" class="px-3 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 text-xs font-bold transition">
+                            <i class="fa-solid fa-shuffle mr-1"></i> Shuffle Deck
+                        </button>
+                        <button onclick="nextCard()" class="px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold hover:bg-brand-700 transition">
+                            Next <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SELF-QUIZ MODULE -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Exam Simulation</span>
+                            <h2 class="text-2xl font-bold tracking-tight">Practice Exam Quiz</h2>
+                        </div>
+                        <div id="quizScoreBadge" class="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 rounded-full text-xs font-bold">Score: 0 / 5</div>
+                    </div>
+
+                    <div id="quizContainer" class="space-y-6">
+                        <!-- Questions will render via JavaScript -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 4: VISUAL DIAGRAM LIBRARY -->
+            <div id="diagramsTab" class="tab-content hidden space-y-6">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h2 class="text-2xl font-bold tracking-tight mb-1">High-Yield Visual Diagrams</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Master these essential structural models to draw in your exam answer scripts.</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 text-white space-y-3">
+                        <div class="text-sm font-bold text-brand-400">1. Atkinson-Shiffrin Multi-Store Memory Model</div>
+                        <svg viewBox="0 0 500 160" class="w-full h-auto">
+                            <rect x="10" y="50" width="100" height="60" rx="8" fill="#3b82f6"/>
+                            <text x="60" y="80" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Sensory Memory</text>
+                            <text x="60" y="95" fill="#dbeafe" font-size="8" text-anchor="middle">Iconic / Echoic</text>
+
+                            <path d="M 115 80 L 175 80" stroke="#a5b4fc" stroke-width="3"/>
+
+                            <rect x="180" y="50" width="120" height="60" rx="8" fill="#10b981"/>
+                            <text x="240" y="80" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Short-Term Memory</text>
+                            <text x="240" y="95" fill="#d1fae5" font-size="8" text-anchor="middle">Working (7±2 chunks)</text>
+
+                            <path d="M 305 80 L 365 80" stroke="#a5b4fc" stroke-width="3"/>
+
+                            <rect x="370" y="50" width="120" height="60" rx="8" fill="#6366f1"/>
+                            <text x="430" y="80" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Long-Term Memory</text>
+                            <text x="430" y="95" fill="#e0e7ff" font-size="8" text-anchor="middle">Unlimited / Permanent</text>
+                        </svg>
+                        <p class="text-xs text-slate-400">Illustrates sensory input passing through attention filter into STM, followed by rehearsal into LTM consolidation.</p>
+                    </div>
+
+                    <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 text-white space-y-3">
+                        <div class="text-sm font-bold text-brand-400">2. Central vs Peripheral Nervous System Division</div>
+                        <svg viewBox="0 0 500 160" class="w-full h-auto">
+                            <rect x="180" y="10" width="140" height="35" rx="6" fill="#4f46e5"/>
+                            <text x="250" y="32" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">NERVOUS SYSTEM</text>
+
+                            <path d="M 250 45 L 120 70 M 250 45 L 380 70" stroke="#64748b" stroke-width="2"/>
+
+                            <rect x="50" y="70" width="140" height="35" rx="6" fill="#0284c7"/>
+                            <text x="120" y="92" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Central (CNS)</text>
+
+                            <rect x="310" y="70" width="140" height="35" rx="6" fill="#059669"/>
+                            <text x="380" y="92" fill="#fff" font-size="10" text-anchor="middle" font-weight="bold">Peripheral (PNS)</text>
+
+                            <path d="M 120 105 L 70 125 M 120 105 L 170 125" stroke="#64748b" stroke-width="2"/>
+                            <path d="M 380 105 L 330 125 M 380 105 L 430 125" stroke="#64748b" stroke-width="2"/>
+
+                            <text x="70" y="140" fill="#94a3b8" font-size="8" text-anchor="middle">Brain</text>
+                            <text x="170" y="140" fill="#94a3b8" font-size="8" text-anchor="middle">Spinal Cord</text>
+                            <text x="330" y="140" fill="#94a3b8" font-size="8" text-anchor="middle">Somatic</text>
+                            <text x="430" y="140" fill="#94a3b8" font-size="8" text-anchor="middle">Autonomic</text>
+                        </svg>
+                        <p class="text-xs text-slate-400">Structural hierarchy showing brain and spinal cord branching into Somatic and Autonomic (Sympathetic/Parasympathetic) systems.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Application Logic JavaScript -->
+    <script>
+        // Dark/Light Theme Control
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-brand-600', 'dark:text-brand-400', 'bg-brand-50', 'dark:bg-brand-900/30');
+                btn.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'text-brand-600', 'dark:text-brand-400', 'bg-brand-50', 'dark:bg-brand-900/30');
+            }
+
+            // Hide/Show syllabus jump menu
+            const jumpMenu = document.getElementById('syllabusJumpMenu');
+            if (tabId === 'topicsTab') {
+                jumpMenu.classList.remove('hidden');
+            } else {
+                jumpMenu.classList.add('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Search Filter Logic
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!query) {
+                document.querySelectorAll('section, .vault-item').forEach(el => el.classList.remove('hidden'));
+                return;
+            }
+
+            // Search within sections in Topic view
+            document.querySelectorAll('#topicsTab section').forEach(section => {
+                const text = section.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Search within Vault items
+            document.querySelectorAll('.vault-item > div').forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Vault Filtering (All, 4-Mark, 12.5-Mark)
+        function filterVault(category) {
+            document.querySelectorAll('.vault-filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+            });
+            event.target.classList.add('active', 'bg-brand-600', 'text-white');
+
+            const items4 = document.querySelectorAll('.vault-item.mark-4');
+            const items12 = document.querySelectorAll('.vault-item.mark-12');
+
+            if (category === 'all') {
+                items4.forEach(e => e.classList.remove('hidden'));
+                items12.forEach(e => e.classList.remove('hidden'));
+            } else if (category === '4mark') {
+                items4.forEach(e => e.classList.remove('hidden'));
+                items12.forEach(e => e.classList.add('hidden'));
+            } else if (category === '12mark') {
+                items4.forEach(e => e.classList.add('hidden'));
+                items12.forEach(e => e.classList.remove('hidden'));
+            }
+        }
+
+        // Flashcard Data Deck
+        const flashcards = [
+            {
+                q: "What is the primary distinction between Broca's Area and Wernicke's Area?",
+                a: "• Broca's Area (Frontal Lobe): Speech production and motor articulation.<br>• Wernicke's Area (Temporal Lobe): Language comprehension and semantic processing."
+            },
+            {
+                q: "What operate under Freud's Pleasure Principle vs. Reality Principle?",
+                a: "• Pleasure Principle: Operates the Id (seeking immediate instinctual impulse satisfaction).<br>• Reality Principle: Operates the Ego (pragmatic mediator adapting to external constraints)."
+            },
+            {
+                q: "What is Weber's Law regarding sensation?",
+                a: "Weber's Law states that the Just Noticeable Difference (JND) is a constant proportion (ΔI / I = k) of the initial stimulus intensity rather than a fixed physical value."
+            },
+            {
+                q: "What are Pavlov's 4 core conditioning variables?",
+                a: "1. UCS (Unconditioned Stimulus)<br>2. UCR (Unconditioned Response)<br>3. CS (Conditioned Stimulus)<br>4. CR (Conditioned Response)"
+            },
+            {
+                q: "What are the 4 processes of Bandura's Observational Learning?",
+                a: "1. Attention<br>2. Retention (Memory Encoding)<br>3. Motor Reproduction<br>4. Motivation / Reinforcement"
+            },
+            {
+                q: "What is Miller's Law for Short-Term Memory capacity?",
+                a: "Short-Term Memory (STM) holds approximately 7 ± 2 items or chunks of information for about 15-30 seconds without active rehearsal."
+            },
+            {
+                q: "What is the key difference between Proactive and Retroactive Interference?",
+                a: "• Proactive: Older learned information blocks recall of new information.<br>• Retroactive: Newly learned information blocks recall of older information."
+            },
+            {
+                q: "What is the formula for Stern's Intelligence Quotient (IQ)?",
+                a: "IQ = (Mental Age / Chronological Age) × 100"
+            }
+        ];
+
+        let currentCardIndex = 0;
+        let isFlipped = false;
+
+        function flipCard() {
+            const inner = document.getElementById('flashcardInner');
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function updateCardDisplay() {
+            if (isFlipped) {
+                flipCard();
+                setTimeout(renderCardText, 250);
+            } else {
+                renderCardText();
+            }
+        }
+
+        function renderCardText() {
+            const card = flashcards[currentCardIndex];
+            document.getElementById('cardQuestion').innerHTML = card.q;
+            document.getElementById('cardAnswer').innerHTML = card.a;
+            document.getElementById('cardCounter').innerText = `Card ${currentCardIndex + 1} / ${flashcards.length}`;
+        }
+
+        function nextCard() {
+            currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+            updateCardDisplay();
+        }
+
+        function prevCard() {
+            currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+            updateCardDisplay();
+        }
+
+        function shuffleCards() {
+            flashcards.sort(() => Math.random() - 0.5);
+            currentCardIndex = 0;
+            updateCardDisplay();
+        }
+
+        // Interactive Quiz Data
+        const quizQuestions = [
+            {
+                question: "Which brain structure acts as the primary sensory relay station for all senses EXCEPT smell?",
+                options: ["Hypothalamus", "Thalamus", "Hippocampus", "Amygdala"],
+                answer: 1,
+                explanation: "The Thalamus relays sensory signals to the cerebral cortex for all modalities except Olfaction (smell)."
+            },
+            {
+                question: "According to Freud, which component of personality operates on the Morality Principle?",
+                options: ["Id", "Ego", "Superego", "Libido"],
+                answer: 2,
+                explanation: "The Superego represents internalized moral standards, consisting of the Conscience and Ego Ideal."
+            },
+            {
+                question: "In Pavlov's classical experiment, what was the bell AFTER conditioning had occurred?",
+                options: ["Unconditioned Stimulus (UCS)", "Conditioned Stimulus (CS)", "Unconditioned Response (UCR)", "Neutral Stimulus (NS)"],
+                answer: 1,
+                explanation: "Once paired repeatedly with food, the previously neutral bell becomes a Conditioned Stimulus (CS)."
+            },
+            {
+                question: "Which reinforcement schedule produces the highest resistance to extinction?",
+                options: ["Fixed Ratio", "Variable Ratio", "Fixed Interval", "Variable Interval"],
+                answer: 1,
+                explanation: "Variable Ratio schedules (like slot machines) produce steady high response rates and extreme resistance to extinction."
+            },
+            {
+                question: "An inability to form NEW memories after a traumatic brain injury is known as:",
+                options: ["Retrograde Amnesia", "Anterograde Amnesia", "Proactive Interference", "Repression"],
+                answer: 1,
+                explanation: "Anterograde Amnesia prevents the consolidation of new long-term memories following neurological trauma."
+            }
+        ];
+
+        let userAnswers = {};
+
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = quizQuestions.map((q, qIndex) => `
+                <div class="p-5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-brand-600 text-white text-xs flex items-center justify-center font-bold">${qIndex + 1}</span>
+                        ${q.question}
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIndex) => `
+                            <button onclick="selectAnswer(${qIndex}, ${oIndex})" id="opt-${qIndex}-${oIndex}" 
+                                class="quiz-opt-${qIndex} w-full text-left p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-brand-500 transition font-medium">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="quiz-exp-${qIndex}" class="hidden p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-xs text-indigo-900 dark:text-indigo-200">
+                        <strong>Explanation:</strong> ${q.explanation}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectAnswer(qIndex, oIndex) {
+            userAnswers[qIndex] = oIndex;
+            const q = quizQuestions[qIndex];
+            
+            // Highlight buttons
+            document.querySelectorAll(`.quiz-opt-${qIndex}`).forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.answer) {
+                    btn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600');
+                } else if (idx === oIndex && oIndex !== q.answer) {
+                    btn.classList.add('bg-rose-500', 'text-white', 'border-rose-600');
+                }
+            });
+
+            // Show explanation
+            document.getElementById(`quiz-exp-${qIndex}`).classList.remove('hidden');
+
+            // Calculate Score
+            let correctCount = 0;
+            Object.keys(userAnswers).forEach(key => {
+                if (userAnswers[key] === quizQuestions[key].answer) correctCount++;
+            });
+
+            document.getElementById('quizScoreBadge').innerText = `Score: ${correctCount} / ${quizQuestions.length}`;
+        }
+
+        // Window Init
+        window.onload = function() {
+            renderQuiz();
+            renderCardText();
+        }
+    </script>
+</body>
+</html>
