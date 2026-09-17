@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Skills - Complete Exam Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sb-bg: #0C1829;
+  --sb-text: #7B8FA6;
+  --sb-accent: #C5E048;
+  --pg-bg: #ECEEF4;
+  --ct-bg: #FFFFFF;
+  --tx-main: #1A1E2C;
+  --tx-sub: #50596A;
+  --border: #DFE3EC;
+
+  --c1: #2563EB;
+  --c2: #7C3AED;
+  --c3: #059669;
+  --c4: #D97706;
+  --c5: #DC2626;
+  --c6: #0891B2;
+  --c7: #DB2777;
+  --c8: #4F46E5;
+  --c9: #0D9488;
+  --c10: #EA580C;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --pg-bg: #0D1220; --ct-bg: #161E30;
+    --tx-main: #DDE3F0; --tx-sub: #8395AD; --border: #222D42;
+  }
+}
+:root[data-theme="dark"] {
+  --pg-bg: #0D1220; --ct-bg: #161E30;
+  --tx-main: #DDE3F0; --tx-sub: #8395AD; --border: #222D42;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--pg-bg);color:var(--tx-main);min-height:100vh;display:flex;}
+
+/* SIDEBAR */
+aside{width:252px;min-width:252px;background:var(--sb-bg);height:100vh;position:fixed;top:0;left:0;overflow-y:auto;padding-bottom:3rem;}
+.sb-head{padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sb-head h1{font-family:'Libre Baskerville',serif;font-size:0.95rem;color:#fff;line-height:1.5;}
+.sb-head small{font-size:0.68rem;color:var(--sb-text);display:block;margin-top:0.25rem;}
+.sb-group{margin-top:1rem;}
+.sb-label{padding:0.5rem 1.25rem 0.2rem;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;color:rgba(123,143,166,0.5);text-transform:uppercase;}
+.sb-link{display:flex;align-items:center;gap:0.6rem;padding:0.42rem 1.25rem;font-size:0.79rem;color:var(--sb-text);text-decoration:none;transition:color 0.15s;}
+.sb-link:hover{color:#fff;}
+.sb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.legend{padding:0 1.25rem;margin-top:0.75rem;}
+.leg-row{display:flex;align-items:center;gap:0.5rem;font-size:0.7rem;color:var(--sb-text);margin-bottom:0.3rem;}
+.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+/* MAIN */
+main{margin-left:252px;flex:1;padding:1.75rem 1.75rem 5rem;}
+
+/* SECTION CARD */
+.section{background:var(--ct-bg);border:1px solid var(--border);border-radius:6px;margin-bottom:1.75rem;overflow:hidden;scroll-margin-top:1rem;}
+.sec-head{padding:1.15rem 1.75rem;border-left:5px solid;display:flex;align-items:center;gap:0.75rem;}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:0.1rem 0.45rem;border-radius:3px;background:rgba(128,128,128,0.15);color:var(--tx-sub);}
+.sec-title{font-family:'Libre Baskerville',serif;font-size:1.2rem;color:var(--tx-main);}
+
+.sec-body{padding:1.5rem 1.75rem;}
+.topic{margin-bottom:1.6rem;padding-bottom:1.6rem;border-bottom:1px solid var(--border);}
+.topic:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+
+h3{font-family:'Libre Baskerville',serif;font-size:0.95rem;font-weight:700;color:var(--tx-main);margin-bottom:0.7rem;}
+h4{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--tx-sub);margin:1rem 0 0.45rem;}
+p{font-size:0.875rem;line-height:1.8;color:var(--tx-sub);max-width:70ch;}
+ul,ol{font-size:0.875rem;line-height:1.75;color:var(--tx-sub);padding-left:1.4rem;max-width:68ch;}
+li{margin-bottom:0.25rem;}
+strong{color:var(--tx-main);font-weight:600;}
+em{font-style:italic;}
+code{font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:var(--pg-bg);padding:0.1rem 0.35rem;border-radius:3px;}
+
+/* BOXES */
+.box{border-radius:4px;padding:1rem 1.25rem;margin:0.9rem 0;font-size:0.875rem;line-height:1.75;}
+.box p,.box ul,.box ol{font-size:0.875rem;max-width:100%;}
+.bl{font-size:0.6rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;opacity:0.65;margin-bottom:0.4rem;}
+.memo{background:#FFFBEB;border-left:3px solid #D97706;}.memo .bl{color:#92400E;}
+.ex{background:#F0FDF4;border-left:3px solid #059669;}.ex .bl{color:#065F46;}
+.fmt{background:#F5F3FF;border-left:3px solid #7C3AED;font-family:'JetBrains Mono',monospace;font-size:0.8rem;}.fmt .bl{color:#5B21B6;font-family:'Source Sans 3',sans-serif;}
+.err{background:#FEF2F2;border-left:3px solid #DC2626;}.err .bl{color:#991B1B;}
+.qa{background:#EFF6FF;border-left:3px solid #2563EB;}.qa .bl{color:#1E40AF;}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .memo{background:rgba(217,119,6,0.09);}
+  :root:not([data-theme="light"]) .ex{background:rgba(5,150,105,0.09);}
+  :root:not([data-theme="light"]) .fmt{background:rgba(124,58,237,0.09);}
+  :root:not([data-theme="light"]) .err{background:rgba(220,38,38,0.09);}
+  :root:not([data-theme="light"]) .qa{background:rgba(37,99,235,0.09);}
+}
+:root[data-theme="dark"] .memo{background:rgba(217,119,6,0.09);}
+:root[data-theme="dark"] .ex{background:rgba(5,150,105,0.09);}
+:root[data-theme="dark"] .fmt{background:rgba(124,58,237,0.09);}
+:root[data-theme="dark"] .err{background:rgba(220,38,38,0.09);}
+:root[data-theme="dark"] .qa{background:rgba(37,99,235,0.09);}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:0.82rem;margin:0.9rem 0;}
+th{background:var(--pg-bg);padding:0.5rem 0.75rem;text-align:left;font-size:0.72rem;font-weight:700;color:var(--tx-sub);border-bottom:2px solid var(--border);}
+td{padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);color:var(--tx-sub);line-height:1.5;vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+td strong{color:var(--tx-main);}
+
+/* SQ3R */
+.sq3r{display:flex;gap:0.5rem;margin:1rem 0;}
+.sq-card{flex:1;border-radius:4px;padding:0.9rem 0.5rem;text-align:center;}
+.sq-letter{font-family:'Libre Baskerville',serif;font-size:1.6rem;font-weight:700;line-height:1;color:#fff;}
+.sq-word{font-size:0.66rem;font-weight:700;color:rgba(255,255,255,0.8);margin-top:0.2rem;}
+.sq-desc{font-size:0.66rem;color:rgba(255,255,255,0.72);margin-top:0.4rem;line-height:1.4;}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0.75rem 0;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin:0.75rem 0;}
+.card{background:var(--pg-bg);border-radius:4px;padding:0.85rem 1rem;font-size:0.82rem;}
+.card strong{display:block;font-size:0.8rem;margin-bottom:0.3rem;}
+.card p{font-size:0.8rem;max-width:100%;}
+
+/* ESSAY BLOCK */
+.eblock{border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:0.75rem 0;font-size:0.875rem;}
+.epart{padding:0.85rem 1.1rem;border-bottom:1px solid var(--border);}
+.epart:last-child{border-bottom:none;}
+.epart-label{font-size:0.66rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--tx-sub);margin-bottom:0.35rem;}
+.epart p{font-size:0.875rem;font-style:italic;color:var(--tx-sub);max-width:100%;}
+.epart p.plain{font-style:normal;}
+
+/* CV BLOCK */
+.cvblock{border:1.5px solid var(--border);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.77rem;line-height:1.85;padding:1.25rem 1.5rem;color:var(--tx-sub);background:var(--pg-bg);margin:0.9rem 0;}
+.cvblock .cvname{font-size:0.95rem;color:var(--tx-main);font-weight:500;}
+.cvsec{margin-top:0.85rem;border-top:1px solid var(--border);padding-top:0.5rem;}
+.cvsec-t{font-weight:700;color:var(--tx-main);text-transform:uppercase;font-size:0.7rem;letter-spacing:0.05em;}
+
+/* RESPONSIVE */
+@media(max-width:820px){aside{display:none;}main{margin-left:0;padding:1rem;}.g2,.g3{grid-template-columns:1fr;}.sq3r{flex-wrap:wrap;}.sq-card{flex:1 1 calc(50% - 0.25rem);}}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside>
+  <div class="sb-head">
+    <h1>English Skills<br>Study Guide</h1>
+    <small>Full Exam Reference</small>
+  </div>
+  <div class="sb-group">
+    <div class="sb-label">Written Part</div>
+    <a class="sb-link" href="#reading"><span class="sb-dot" style="background:var(--c1)"></span>1. Reading</a>
+    <a class="sb-link" href="#writing"><span class="sb-dot" style="background:var(--c2)"></span>2. Writing</a>
+    <a class="sb-link" href="#summary"><span class="sb-dot" style="background:var(--c3)"></span>3. Summary Writing</a>
+    <a class="sb-link" href="#essay"><span class="sb-dot" style="background:var(--c4)"></span>4. Essay</a>
+    <a class="sb-link" href="#paragraph"><span class="sb-dot" style="background:var(--c5)"></span>5. Paragraph</a>
+    <a class="sb-link" href="#listening"><span class="sb-dot" style="background:var(--c6)"></span>6. Listening</a>
+    <a class="sb-link" href="#speaking"><span class="sb-dot" style="background:var(--c7)"></span>7. Speaking</a>
+    <a class="sb-link" href="#grammar"><span class="sb-dot" style="background:var(--c8)"></span>8. Grammar</a>
+    <a class="sb-link" href="#application"><span class="sb-dot" style="background:var(--c9)"></span>9. Application &amp; CV</a>
+    <a class="sb-link" href="#freewriting"><span class="sb-dot" style="background:var(--c10)"></span>10. Free Writing</a>
+  </div>
+  <div class="sb-group" style="margin-top:1.5rem;border-top:1px solid rgba(255,255,255,0.07);padding-top:1rem;">
+    <div class="sb-label">Legend</div>
+    <div class="legend">
+      <div class="leg-row"><span class="leg-sq" style="background:#D97706"></span>Memorise</div>
+      <div class="leg-row"><span class="leg-sq" style="background:#7C3AED"></span>Format Template</div>
+      <div class="leg-row"><span class="leg-sq" style="background:#2563EB"></span>Practice Q&amp;A</div>
+      <div class="leg-row"><span class="leg-sq" style="background:#059669"></span>Sample Answer</div>
+      <div class="leg-row"><span class="leg-sq" style="background:#DC2626"></span>Error / Avoid</div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+
+<!-- ===== 1. READING ===== -->
+<div class="section" id="reading">
+  <div class="sec-head" style="border-left-color:var(--c1);">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Reading</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p><strong>Reading</strong> is an active cognitive process of constructing meaning from written text. It involves decoding written symbols, connecting to prior knowledge, and understanding the author's intended message.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Components of Reading</h3>
+      <ul>
+        <li><strong>Decoding</strong> - recognising and sounding out written words</li>
+        <li><strong>Fluency</strong> - reading smoothly, accurately, and at an appropriate pace</li>
+        <li><strong>Vocabulary</strong> - knowing the meaning of encountered words</li>
+        <li><strong>Comprehension</strong> - understanding the full meaning of the text</li>
+        <li><strong>Background Knowledge</strong> - connecting the text to what the reader already knows</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Strategies</h3>
+      <ul>
+        <li><strong>Previewing</strong> - looking at headings, titles, and images before reading</li>
+        <li><strong>Predicting</strong> - forming expectations about content before reading</li>
+        <li><strong>Skimming</strong> - reading quickly to grasp the main idea</li>
+        <li><strong>Scanning</strong> - moving quickly to find specific information</li>
+        <li><strong>Re-reading</strong> - returning to difficult passages for clarification</li>
+        <li><strong>Inferencing</strong> - drawing conclusions not directly stated in the text</li>
+        <li><strong>Summarising</strong> - restating main points in one's own words</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Reading Materials</h3>
+      <div class="g2">
+        <ul>
+          <li>Textbooks and academic journals</li>
+          <li>Newspapers and magazines</li>
+          <li>Novels and short stories</li>
+        </ul>
+        <ul>
+          <li>Online articles and blogs</li>
+          <li>Reports and manuals</li>
+          <li>Letters and emails</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Types of Reading</h3>
+      <table>
+        <tr><th>Type</th><th>Purpose</th><th>Method</th></tr>
+        <tr><td><strong>Intensive</strong></td><td>Deep, detailed understanding</td><td>Slow, careful, line-by-line</td></tr>
+        <tr><td><strong>Extensive</strong></td><td>General comprehension and pleasure</td><td>Fast, relaxed, large amounts</td></tr>
+        <tr><td><strong>Skimming</strong></td><td>Get the overall main idea quickly</td><td>Read titles, first/last sentences, headings</td></tr>
+        <tr><td><strong>Scanning</strong></td><td>Locate specific information</td><td>Move eyes rapidly to find target words</td></tr>
+        <tr><td><strong>Critical</strong></td><td>Evaluate, question, and analyse content</td><td>Active questioning and judgement</td></tr>
+        <tr><td><strong>Recreational</strong></td><td>Enjoyment and personal interest</td><td>Self-paced, relaxed reading for pleasure</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Techniques Used by Good Readers</h3>
+      <ul>
+        <li>Make predictions before and during reading</li>
+        <li>Connect the text to prior knowledge and personal experience</li>
+        <li>Ask questions: who, what, when, where, why, and how</li>
+        <li>Visualise scenes, events, and described concepts</li>
+        <li>Monitor their own comprehension as they read (self-check)</li>
+        <li>Look up unfamiliar words and note them</li>
+        <li>Adjust reading speed to match the difficulty of the text</li>
+        <li>Summarise sections after reading them</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>SQ3R Reading Strategy</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - 5 Steps in Order</div>
+        <div class="sq3r">
+          <div class="sq-card" style="background:#2563EB;">
+            <div class="sq-letter">S</div>
+            <div class="sq-word">SURVEY</div>
+            <div class="sq-desc">Skim titles, headings, intro &amp; conclusion for overview</div>
+          </div>
+          <div class="sq-card" style="background:#7C3AED;">
+            <div class="sq-letter">Q</div>
+            <div class="sq-word">QUESTION</div>
+            <div class="sq-desc">Turn each heading into a question to guide reading</div>
+          </div>
+          <div class="sq-card" style="background:#059669;">
+            <div class="sq-letter">R</div>
+            <div class="sq-word">READ</div>
+            <div class="sq-desc">Read actively to answer the questions you formed</div>
+          </div>
+          <div class="sq-card" style="background:#D97706;">
+            <div class="sq-letter">R</div>
+            <div class="sq-word">RECITE</div>
+            <div class="sq-desc">Close the text and recall answers aloud or in writing</div>
+          </div>
+          <div class="sq-card" style="background:#DC2626;">
+            <div class="sq-letter">R</div>
+            <div class="sq-word">REVIEW</div>
+            <div class="sq-desc">Return to text to check and reinforce understanding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Faulty Reading Habits and How to Overcome Them</h3>
+      <table>
+        <tr><th>Faulty Habit</th><th>Description</th><th>How to Overcome</th></tr>
+        <tr><td><strong>Regression</strong></td><td>Unnecessarily re-reading words already understood</td><td>Use a card to cover text already read; push forward deliberately</td></tr>
+        <tr><td><strong>Subvocalisation</strong></td><td>Reading aloud silently in the head - slows reading speed</td><td>Train yourself to suppress inner voice; read word groups instead of individual words</td></tr>
+        <tr><td><strong>Word-by-word reading</strong></td><td>Reading one word at a time rather than phrases</td><td>Practice reading in chunks; expand your visual span</td></tr>
+        <tr><td><strong>Finger pointing</strong></td><td>Tracking each word with a finger unnecessarily</td><td>Practice guiding the eyes without a physical aid</td></tr>
+        <tr><td><strong>Poor concentration</strong></td><td>Frequent daydreaming and loss of focus</td><td>Remove distractions; set timed reading sessions with a purpose</td></tr>
+        <tr><td><strong>Limited vocabulary</strong></td><td>Frequent stops due to unknown words</td><td>Build vocabulary daily; use context clues; keep a word journal</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Questions</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question 1 - Short Answer</div>
+        <p><strong>Q:</strong> Explain the SQ3R reading strategy and state the purpose of each step.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answer</div>
+          <p>SQ3R is a five-step reading strategy designed to improve comprehension and retention of written material. The first step, <strong>Survey</strong>, involves previewing titles, headings, and the introduction to get an overview. The second step, <strong>Question</strong>, requires the reader to convert headings into questions that guide focused reading. The third step, <strong>Read</strong>, means reading the text actively to answer those questions. The fourth step, <strong>Recite</strong>, involves recalling and stating the answers from memory after each section, without looking at the text. The final step, <strong>Review</strong>, requires going back over the material to verify and reinforce understanding.</p>
+        </div>
+      </div>
+      <div class="box qa" style="margin-top:0.75rem;">
+        <div class="bl">Exam Question 2 - Short Answer</div>
+        <p><strong>Q:</strong> Distinguish between skimming and scanning. Give one use for each.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answer</div>
+          <p><strong>Skimming</strong> is a technique used to read quickly and identify the main idea or general content of a text without reading every word. A reader might skim a newspaper article to decide whether it is worth reading in full. <strong>Scanning</strong>, by contrast, is used to locate specific information within a text, such as a date, name, or statistic, by moving the eyes rapidly over the page. For example, a reader might scan a phone directory to find a particular number. The key difference is that skimming seeks an overview, while scanning seeks a specific detail.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 2. WRITING ===== -->
+<div class="section" id="writing">
+  <div class="sec-head" style="border-left-color:var(--c2);">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Writing</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p><strong>Writing</strong> is the process of using written symbols - letters, words, and punctuation - to communicate thoughts, ideas, and information in a structured and coherent form for a specific audience and purpose.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Purposes of Writing</h3>
+      <ul>
+        <li><strong>To inform</strong> - present facts, data, and information clearly</li>
+        <li><strong>To persuade</strong> - convince the reader to accept a viewpoint or take action</li>
+        <li><strong>To entertain</strong> - engage the reader's emotions and imagination</li>
+        <li><strong>To describe</strong> - create a vivid picture of a person, place, or thing</li>
+        <li><strong>To explore</strong> - examine and develop ideas and questions</li>
+        <li><strong>To express</strong> - share personal thoughts, feelings, and experiences</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Components of Writing</h3>
+      <div class="g2">
+        <div class="card"><strong>Content</strong><p>The ideas, information, and message the writer communicates.</p></div>
+        <div class="card"><strong>Organisation</strong><p>The logical structure and arrangement of ideas from beginning to end.</p></div>
+        <div class="card"><strong>Style / Voice</strong><p>The writer's individual tone, word choice, and manner of expression.</p></div>
+        <div class="card"><strong>Mechanics</strong><p>Correct grammar, spelling, punctuation, and capitalisation.</p></div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Types of Writing</h3>
+      <table>
+        <tr><th>Type</th><th>Purpose</th><th>Example Form</th></tr>
+        <tr><td><strong>Narrative</strong></td><td>Tell a story with a sequence of events</td><td>Short story, autobiography, memoir</td></tr>
+        <tr><td><strong>Descriptive</strong></td><td>Describe vividly using sensory detail</td><td>Character sketch, travel writing</td></tr>
+        <tr><td><strong>Expository</strong></td><td>Explain or inform about a topic objectively</td><td>News article, how-to guide, report</td></tr>
+        <tr><td><strong>Persuasive/Argumentative</strong></td><td>Convince the reader to accept a position</td><td>Editorial, debate speech, essay</td></tr>
+        <tr><td><strong>Technical</strong></td><td>Convey specialised or professional information</td><td>Manual, lab report, business document</td></tr>
+        <tr><td><strong>Creative</strong></td><td>Express imagination and original ideas</td><td>Poetry, fiction, screenplay</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>The Writing Process</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - 5 Stages in Order</div>
+        <ol>
+          <li><strong>Pre-writing</strong> - brainstorm, research, outline, and plan before writing</li>
+          <li><strong>Drafting</strong> - write the first version; get ideas down without stopping to perfect them</li>
+          <li><strong>Revising</strong> - improve content, organisation, clarity, and development of ideas</li>
+          <li><strong>Editing</strong> - correct grammar, spelling, punctuation, and sentence structure</li>
+          <li><strong>Publishing/Presenting</strong> - share, submit, or present the final polished piece</li>
+        </ol>
+      </div>
+      <div class="box qa">
+        <div class="bl">Exam Question</div>
+        <p><strong>Q:</strong> Describe the five stages of the writing process.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answer</div>
+          <p>The writing process consists of five stages. The first is <strong>pre-writing</strong>, which involves generating ideas through brainstorming, conducting research, and creating an outline before writing begins. The second stage is <strong>drafting</strong>, where the writer produces a first version by translating ideas into sentences and paragraphs without pausing to correct mistakes. The third stage, <strong>revising</strong>, focuses on improving the substance, structure, and flow of the piece. The fourth stage is <strong>editing</strong>, during which the writer corrects grammatical, spelling, and mechanical errors. The final stage is <strong>publishing or presenting</strong>, which involves sharing or submitting the completed, polished piece to its intended audience.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 3. SUMMARY WRITING ===== -->
+<div class="section" id="summary">
+  <div class="sec-head" style="border-left-color:var(--c3);">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Summary Writing</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition &amp; Rules</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>summary</strong> is a concise, shortened version of a longer text that captures only the main ideas in the reader's own words. It is objective, written in the third person and present tense, and significantly shorter than the original.</p>
+      </div>
+      <h4>Rules for Summary Writing</h4>
+      <ul>
+        <li>Read the original text carefully at least twice before writing</li>
+        <li>Identify and keep only the <strong>main ideas</strong> - remove examples, repetition, and minor details</li>
+        <li>Write entirely in <strong>your own words</strong> - no copying of sentences</li>
+        <li>Maintain <strong>objectivity</strong> - no personal opinions or reactions</li>
+        <li>Write in the <strong>third person and present tense</strong></li>
+        <li>Aim for approximately <strong>one-third</strong> of the original length</li>
+        <li>Write as a <strong>single coherent paragraph</strong> unless stated otherwise</li>
+        <li>Do not add information that is not in the original text</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Format Template</h3>
+      <div class="box fmt">
+        <div class="bl">Academic Format - How to Begin &amp; Structure a Summary</div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.79rem;color:var(--tx-sub);max-width:100%;line-height:1.9;">
+          The [article/passage/text] [discusses/argues/examines/explains] that [main idea].<br>
+          [The author/text] further states that [supporting idea 1].<br>
+          Additionally, [supporting idea 2].<br>
+          In conclusion, [the text's final point or recommendation].
+        </p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Question</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question</div>
+        <p><strong>Q:</strong> Read the following passage and write a summary in no more than 80 words.</p>
+        <div style="background:var(--pg-bg);padding:0.85rem 1rem;border-radius:4px;margin:0.6rem 0;font-size:0.84rem;font-style:italic;line-height:1.75;color:var(--tx-sub);">
+          "Mobile phones have transformed modern communication. They allow instant contact across continents, provide access to the internet, and serve as cameras, calendars, and entertainment devices. However, excessive phone use raises concerns about mental health, attention span, and social isolation. Studies show that students who spend more than four hours daily on phones perform worse academically. Despite these risks, phones remain indispensable tools in education and work environments worldwide."
+        </div>
+        <div class="box ex" style="margin-top:0.6rem;">
+          <div class="bl">Sample Summary (52 words)</div>
+          <p>The passage discusses how mobile phones have greatly enhanced communication by providing internet access and multiple practical functions. However, it notes that excessive use is linked to mental health concerns and poorer academic performance in students. Despite these drawbacks, the text concludes that mobile phones continue to be essential tools in both education and professional life.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 4. ESSAY ===== -->
+<div class="section" id="essay">
+  <div class="sec-head" style="border-left-color:var(--c4);">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Essay</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p>An <strong>essay</strong> is a piece of extended non-fiction writing that presents an argument, analysis, or discussion on a specific topic, developed through structured paragraphs and supported by evidence and reasoning.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Types of Essay</h3>
+      <table>
+        <tr><th>Type</th><th>Purpose</th></tr>
+        <tr><td><strong>Argumentative / Persuasive</strong></td><td>Convince the reader to accept a specific position using logic and evidence</td></tr>
+        <tr><td><strong>Expository</strong></td><td>Explain, inform, or clarify a topic in an objective, neutral way</td></tr>
+        <tr><td><strong>Descriptive</strong></td><td>Create a vivid picture of a person, place, object, or experience through sensory language</td></tr>
+        <tr><td><strong>Narrative</strong></td><td>Tell a personal or fictional story with a clear sequence of events</td></tr>
+        <tr><td><strong>Analytical</strong></td><td>Break down and examine a text, event, or concept to explain how and why it works</td></tr>
+        <tr><td><strong>Compare and Contrast</strong></td><td>Examine the similarities and differences between two or more subjects</td></tr>
+        <tr><td><strong>Cause and Effect</strong></td><td>Explore the reasons something occurred and the consequences that followed</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Parts of an Essay</h3>
+      <div class="box fmt">
+        <div class="bl">Academic Format - Essay Structure (Follow This)</div>
+        <div class="eblock" style="margin:0.6rem 0 0; font-family:'Source Sans 3',sans-serif;">
+          <div class="epart" style="background:rgba(37,99,235,0.06);">
+            <div class="epart-label" style="color:#1E40AF;">Introduction</div>
+            <p>Hook sentence - Background information - Thesis Statement (last sentence of intro)</p>
+          </div>
+          <div class="epart">
+            <div class="epart-label">Body Paragraph 1</div>
+            <p>Topic Sentence - Evidence / Explanation - Analysis - Transition to next point</p>
+          </div>
+          <div class="epart">
+            <div class="epart-label">Body Paragraph 2</div>
+            <p>Topic Sentence - Evidence / Explanation - Analysis - Transition to next point</p>
+          </div>
+          <div class="epart">
+            <div class="epart-label">Body Paragraph 3 (optional - for counterargument)</div>
+            <p>Counterargument - Rebuttal with evidence</p>
+          </div>
+          <div class="epart" style="background:rgba(5,150,105,0.06);">
+            <div class="epart-label" style="color:#065F46;">Conclusion</div>
+            <p>Restate thesis differently - Summarise main points - Closing thought or call to action</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Thesis Statement</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>thesis statement</strong> is a single, clear sentence placed at the end of the introduction that states the essay's main argument or central claim. It tells the reader what position will be argued and why.</p>
+      </div>
+      <h4>Characteristics of a Strong Thesis</h4>
+      <ul>
+        <li>Makes a specific, arguable claim - not a fact</li>
+        <li>Appears at the end of the introduction paragraph</li>
+        <li>Is one to two sentences long</li>
+        <li>Signals the essay's direction and scope</li>
+        <li>Can be disagreed with - it takes a position</li>
+      </ul>
+      <div class="g2" style="margin-top:0.85rem;">
+        <div class="box err" style="margin:0;">
+          <div class="bl">Weak Thesis - Avoid</div>
+          <p>"Social media is used by many people around the world."<br><em>(This is just a fact - not arguable)</em></p>
+        </div>
+        <div class="box ex" style="margin:0;">
+          <div class="bl">Strong Thesis - Model</div>
+          <p>"Although social media connects people globally, its unrestricted use among students leads to reduced academic performance and heightened anxiety."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Essay Question</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question - Argumentative Essay</div>
+        <p><strong>Q:</strong> "Social media has more negative effects than positive effects on students." Write an argumentative essay discussing this statement.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Model Essay (Annotated - Study the Structure)</div>
+          <div class="eblock" style="margin:0.6rem 0 0; font-family:'Source Sans 3',sans-serif;">
+            <div class="epart" style="background:rgba(37,99,235,0.05);">
+              <div class="epart-label" style="color:#1E40AF;">Introduction</div>
+              <p class="plain">In the digital age, platforms such as Instagram, TikTok, and Facebook have become deeply embedded in student life. While these tools offer convenience and connectivity, their unrestricted use carries serious consequences. <em><strong>[Thesis:]</strong> Social media, when used without moderation, poses greater harm than benefit to students by undermining academic performance, damaging mental health, and eroding real-world social skills.</em></p>
+            </div>
+            <div class="epart">
+              <div class="epart-label">Body Paragraph 1 - Academic Performance</div>
+              <p class="plain"><em>[Topic sentence:]</em> One of the most significant negative effects of social media is its detrimental impact on students' academic performance. Constant notifications and the compulsion to check updates distract students during study time, fragmenting concentration. Research indicates that students who use social media for more than four hours daily score significantly lower on examinations than peers who limit their usage. This demonstrates that time invested in scrolling could otherwise be directed toward productive learning.</p>
+            </div>
+            <div class="epart">
+              <div class="epart-label">Body Paragraph 2 - Mental Health</div>
+              <p class="plain"><em>[Topic sentence:]</em> Furthermore, social media contributes to growing mental health challenges among students. The culture of comparison fostered by image-heavy platforms leads to low self-esteem, anxiety, and feelings of inadequacy. Students who measure their worth against the curated highlights of others' lives frequently report depression and social withdrawal. Clearly, this psychological toll represents a cost that far outweighs the convenience social media offers.</p>
+            </div>
+            <div class="epart">
+              <div class="epart-label">Body Paragraph 3 - Counterargument and Rebuttal</div>
+              <p class="plain"><em>[Counterargument:]</em> Proponents of social media argue that it facilitates collaborative learning, global communication, and access to educational resources. <em>[Rebuttal:]</em> However, these benefits can be achieved through structured, intentional use and are quickly negated when platforms are accessed recreationally without discipline or time limits.</p>
+            </div>
+            <div class="epart" style="background:rgba(5,150,105,0.05);">
+              <div class="epart-label" style="color:#065F46;">Conclusion</div>
+              <p class="plain">In conclusion, while social media holds some value as a communication and learning tool, its negative effects on academic achievement, mental well-being, and social development are far more substantial. Students, educators, and parents must collaborate to regulate social media use, ensuring it serves as a resource rather than a distraction. Only through mindful, disciplined engagement can students benefit from social media without suffering its consequences.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 5. PARAGRAPH ===== -->
+<div class="section" id="paragraph">
+  <div class="sec-head" style="border-left-color:var(--c5);">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Paragraph</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p>A <strong>paragraph</strong> is a group of related sentences that develop one central idea. It is the basic unit of extended writing and serves as the building block of essays, reports, and other texts.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Parts of a Paragraph</h3>
+      <div class="box fmt">
+        <div class="bl">Academic Format - Paragraph Structure (Follow This)</div>
+        <div class="eblock" style="margin:0.6rem 0 0; font-family:'Source Sans 3',sans-serif;">
+          <div class="epart" style="background:rgba(220,38,38,0.05);">
+            <div class="epart-label" style="color:#991B1B;">1. Topic Sentence</div>
+            <p>The <strong>first sentence</strong>. States the one main idea of the paragraph clearly and specifically. Never begins with "I" in formal academic writing. Should not be too broad or too narrow.</p>
+          </div>
+          <div class="epart">
+            <div class="epart-label">2. Supporting Sentences</div>
+            <p>The <strong>body</strong> of the paragraph. Provides facts, examples, explanations, definitions, or analysis that develops and proves the topic sentence. Usually 3-6 sentences. Use transition words to connect ideas.</p>
+          </div>
+          <div class="epart" style="background:rgba(5,150,105,0.05);">
+            <div class="epart-label" style="color:#065F46;">3. Concluding Sentence</div>
+            <p>The <strong>final sentence</strong>. Restates the main idea in different words OR provides a closing thought that reinforces the paragraph's point. Signals to the reader that the idea is complete.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>5-Step Process to Paragraph Development</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - All 5 Steps in Order</div>
+        <ol>
+          <li><strong>Choose a topic</strong> - select the broad subject you will write about</li>
+          <li><strong>Narrow the topic</strong> - focus on one specific aspect of that subject</li>
+          <li><strong>Write a topic sentence</strong> - compose one clear sentence stating the main idea</li>
+          <li><strong>Add supporting details</strong> - develop the idea with evidence, examples, and explanation</li>
+          <li><strong>Write a concluding sentence</strong> - wrap up the paragraph by restating the main idea differently</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Question</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question</div>
+        <p><strong>Q:</strong> Write a well-developed paragraph about the importance of reading.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Model Paragraph (Annotated)</div>
+          <div class="eblock" style="margin:0.6rem 0 0; font-family:'Source Sans 3',sans-serif;">
+            <div class="epart" style="background:rgba(220,38,38,0.05);">
+              <div class="epart-label" style="color:#991B1B;">Topic Sentence</div>
+              <p class="plain">Reading is one of the most valuable habits a person can develop for intellectual and personal growth.</p>
+            </div>
+            <div class="epart">
+              <div class="epart-label">Supporting Sentences</div>
+              <p class="plain">Through consistent reading, individuals expand their vocabulary and improve their ability to communicate clearly in both speech and writing. Regular exposure to diverse texts sharpens critical thinking by presenting a range of ideas, arguments, and perspectives for the reader to evaluate. Furthermore, research has shown that students who read daily perform better academically across all subjects, as reading strengthens concentration, memory, and comprehension. Beyond academic benefits, reading also serves as a form of mental exercise that reduces stress and promotes lifelong learning.</p>
+            </div>
+            <div class="epart" style="background:rgba(5,150,105,0.05);">
+              <div class="epart-label" style="color:#065F46;">Concluding Sentence</div>
+              <p class="plain">It is evident, therefore, that making reading a daily habit is among the most effective investments a person can make in their own development and future success.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 6. LISTENING ===== -->
+<div class="section" id="listening">
+  <div class="sec-head" style="border-left-color:var(--c6);">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Listening</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p><strong>Listening</strong> is an active cognitive process of receiving, interpreting, constructing meaning from, and responding to spoken messages. It requires conscious attention and deliberate mental engagement.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Listening vs. Hearing</h3>
+      <table>
+        <tr><th>Hearing</th><th>Listening</th></tr>
+        <tr><td>Passive and involuntary</td><td>Active and intentional</td></tr>
+        <tr><td>A physical process (sound waves enter the ear)</td><td>A cognitive process (the brain interprets meaning)</td></tr>
+        <tr><td>Happens automatically without effort</td><td>Requires effort, focus, and concentration</td></tr>
+        <tr><td>No interpretation or response required</td><td>Involves understanding and responding</td></tr>
+        <tr><td><em>Example:</em> hearing traffic noise outside</td><td><em>Example:</em> following a lecture and taking notes</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Tips for Effective Listening</h3>
+      <ul>
+        <li>Maintain eye contact with the speaker</li>
+        <li>Avoid interrupting while the speaker is still talking</li>
+        <li>Remove or minimise distractions (phone, noise, side conversations)</li>
+        <li>Take notes on key points to aid memory and focus</li>
+        <li>Ask clarifying questions when needed - after the speaker finishes</li>
+        <li>Use positive body language: nodding, leaning slightly forward</li>
+        <li>Avoid thinking about your response while the speaker is still talking</li>
+        <li>Keep an open mind and withhold judgement until the message is complete</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Barriers to Effective Listening</h3>
+      <div class="g2">
+        <div>
+          <h4>External Barriers</h4>
+          <ul>
+            <li>Physical noise and background sounds</li>
+            <li>Poor acoustics or audio quality</li>
+            <li>Uncomfortable or distracting environment</li>
+            <li>Visual distractions in the surroundings</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Internal Barriers</h4>
+          <ul>
+            <li>Prejudice or preconceived ideas about the speaker</li>
+            <li>Emotional state (anger, stress, sadness, excitement)</li>
+            <li>Daydreaming or a wandering mind</li>
+            <li>Language differences or unfamiliar accents</li>
+            <li>Lack of interest in the topic</li>
+            <li>Thinking ahead to your own response</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Benefits of Effective Listening</h3>
+      <ul>
+        <li>Leads to better understanding and retention of information</li>
+        <li>Builds stronger personal and professional relationships</li>
+        <li>Reduces misunderstandings and prevents conflict</li>
+        <li>Enhances learning and academic performance</li>
+        <li>Improves problem-solving and decision-making ability</li>
+        <li>Demonstrates respect, empathy, and consideration toward the speaker</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Question</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question</div>
+        <p><strong>Q:</strong> Distinguish between listening and hearing and identify three barriers to effective listening.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answer</div>
+          <p>Hearing is a passive, automatic physical process that occurs when sound waves enter the ear without any conscious effort or intention. Listening, by contrast, is an active cognitive process that involves paying deliberate attention, interpreting meaning, and formulating a response. While hearing is involuntary, listening demands focus, discipline, and engagement with the speaker's message.</p>
+          <p style="margin-top:0.6rem;">Three barriers to effective listening are: first, <strong>physical noise</strong>, which includes background sounds or poor acoustics that prevent the listener from clearly receiving the message; second, <strong>emotional state</strong>, whereby personal feelings such as stress or anger distort the listener's interpretation of what is being said; and third, <strong>prejudice or preconceived ideas</strong>, where the listener makes judgements about the speaker or topic before the message has been fully delivered, causing selective or biased listening.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 7. SPEAKING ===== -->
+<div class="section" id="speaking">
+  <div class="sec-head" style="border-left-color:var(--c7);">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Speaking</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p><strong>Speaking</strong> is the process of verbally conveying information, ideas, thoughts, or emotions to an audience using spoken language, supported by tone of voice, pace, and non-verbal cues such as body language and facial expression.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Ways to Improve English Speaking Skills</h3>
+      <ul>
+        <li>Practice speaking English daily - even alone, in a mirror, or recording yourself</li>
+        <li>Read aloud regularly to improve pronunciation and fluency</li>
+        <li>Expand vocabulary through reading and active use of a dictionary</li>
+        <li>Listen to fluent English speakers through podcasts, films, and interviews</li>
+        <li>Join speaking groups, debates, or participate actively in class discussions</li>
+        <li>Do not fear making mistakes - learn from them and keep going</li>
+        <li>Think in English rather than mentally translating from your native language</li>
+        <li>Pay attention to rhythm, intonation, and stress patterns in the language</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Public Speaking</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p><strong>Public speaking</strong> is the formal, structured act of delivering a prepared speech or presentation to a live audience with the purpose of informing, persuading, or entertaining.</p>
+      </div>
+
+      <h4>Public Speaking Techniques</h4>
+      <ul>
+        <li><strong>Eye contact</strong> - look at the audience to build connection, credibility, and confidence</li>
+        <li><strong>Vocal variety</strong> - vary pitch, pace, and volume to maintain audience interest</li>
+        <li><strong>Deliberate pausing</strong> - use pauses for emphasis and to allow ideas to settle</li>
+        <li><strong>Natural gestures</strong> - use hand and body movements to reinforce spoken points</li>
+        <li><strong>Storytelling</strong> - open with a relatable anecdote to capture and hold attention</li>
+        <li><strong>Repetition</strong> - restate key ideas to reinforce the central message</li>
+        <li><strong>Audience engagement</strong> - ask rhetorical questions; relate to your audience</li>
+      </ul>
+
+      <h4>Public Speaking Guidelines</h4>
+      <ul>
+        <li>Know your audience and tailor the content to their level and interests</li>
+        <li>Organise the speech clearly: introduction, body, and conclusion</li>
+        <li>Practice the full speech multiple times before delivery</li>
+        <li>Manage nervousness through deep breathing, preparation, and positive self-talk</li>
+        <li>Use visual aids (slides, charts, or props) where appropriate</li>
+        <li>Speak clearly, slowly, and at a volume everyone can hear</li>
+        <li>Stay within the allotted time limit</li>
+        <li>Avoid filler words: "um", "uh", "like", "you know"</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Question</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question</div>
+        <p><strong>Q:</strong> Define public speaking and describe five techniques that contribute to an effective public speech.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answer</div>
+          <p>Public speaking is the formal process of delivering a structured speech or presentation to a live audience, with the aim of informing, persuading, or entertaining. An effective public speaker employs several key techniques. First, <strong>maintaining eye contact</strong> with the audience builds trust and keeps listeners engaged. Second, <strong>vocal variety</strong> - the deliberate change in pitch, pace, and volume - prevents monotony and sustains audience attention throughout the speech. Third, <strong>strategic pausing</strong> allows important points to be emphasised and absorbed before the speaker continues. Fourth, <strong>natural gestures</strong> reinforce the spoken message through appropriate body language, making the delivery more dynamic and convincing. Fifth, <strong>storytelling</strong> makes abstract ideas relatable and memorable by anchoring them in human experience, thereby connecting the speaker to the audience on an emotional level.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 8. GRAMMAR ===== -->
+<div class="section" id="grammar">
+  <div class="sec-head" style="border-left-color:var(--c8);">
+    <span class="sec-num">08</span>
+    <span class="sec-title">Grammar</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Collocations</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>collocation</strong> is a pair or group of words that naturally and habitually appear together in English. Collocations sound correct to native speakers; using wrong word combinations makes writing unnatural.</p>
+      </div>
+      <table>
+        <tr><th>Correct Collocation</th><th>Type</th><th>Wrong Version</th></tr>
+        <tr><td><strong>make</strong> a decision</td><td>Verb + Noun</td><td>❌ do a decision</td></tr>
+        <tr><td><strong>do</strong> homework</td><td>Verb + Noun</td><td>❌ make homework</td></tr>
+        <tr><td><strong>take</strong> a break</td><td>Verb + Noun</td><td>❌ give a break</td></tr>
+        <tr><td><strong>pay</strong> attention</td><td>Verb + Noun</td><td>❌ give attention</td></tr>
+        <tr><td><strong>heavy</strong> rain</td><td>Adjective + Noun</td><td>❌ strong rain</td></tr>
+        <tr><td><strong>strong</strong> coffee</td><td>Adjective + Noun</td><td>❌ heavy coffee</td></tr>
+        <tr><td><strong>give</strong> a speech</td><td>Verb + Noun</td><td>❌ say a speech</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Comma Splices</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>comma splice</strong> is a grammatical error in which two independent clauses (each capable of standing alone as a sentence) are incorrectly joined by only a comma, without a coordinating conjunction.</p>
+      </div>
+      <div class="g2">
+        <div class="box err" style="margin:0;">
+          <div class="bl">Comma Splice - Error</div>
+          <p>"I was tired, I went to sleep."</p>
+          <p style="margin-top:0.4rem;">"She studied hard, she passed the exam."</p>
+        </div>
+        <div class="box ex" style="margin:0;">
+          <div class="bl">Three Ways to Fix</div>
+          <p>1. Add a conjunction: "I was tired, <strong>so</strong> I went to sleep."</p>
+          <p>2. Use a period: "I was tired. <strong>I</strong> went to sleep."</p>
+          <p>3. Use a semicolon: "I was tired<strong>;</strong> I went to sleep."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Run-On Sentences</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>run-on sentence</strong> occurs when two or more independent clauses are joined without any punctuation or conjunction - the clauses run directly into each other with no separation.</p>
+      </div>
+      <div class="g2">
+        <div class="box err" style="margin:0;">
+          <div class="bl">Run-On - Error</div>
+          <p>"She was late she missed the bus she had to call a taxi."</p>
+        </div>
+        <div class="box ex" style="margin:0;">
+          <div class="bl">Corrected</div>
+          <p>"She was late. She missed the bus and had to call a taxi."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Fragments</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>sentence fragment</strong> is an incomplete sentence that is missing a subject, a verb, or a complete thought. It cannot stand alone as a grammatically correct sentence.</p>
+      </div>
+      <table>
+        <tr><th>Fragment Type</th><th>Error Example</th><th>Corrected Sentence</th></tr>
+        <tr><td>Missing subject</td><td>"Ran quickly to the door."</td><td>"<strong>She</strong> ran quickly to the door."</td></tr>
+        <tr><td>Missing verb</td><td>"The tall man in the blue coat."</td><td>"The tall man in the blue coat <strong>smiled</strong>."</td></tr>
+        <tr><td>Incomplete thought</td><td>"Because he was nervous."</td><td>"He spoke quietly <strong>because he was nervous</strong>."</td></tr>
+        <tr><td>Dangling phrase</td><td>"Walking slowly down the street."</td><td>"<strong>She was</strong> walking slowly down the street."</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Conditionals</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - All Four Types</div>
+        <table>
+          <tr><th>Type</th><th>Structure</th><th>Use</th><th>Example</th></tr>
+          <tr>
+            <td><strong>Zero Conditional</strong></td>
+            <td><code>If + present simple, present simple</code></td>
+            <td>General truths, facts, scientific laws</td>
+            <td>"If you heat water to 100°C, it boils."</td>
+          </tr>
+          <tr>
+            <td><strong>First Conditional</strong></td>
+            <td><code>If + present simple, will + infinitive</code></td>
+            <td>Real or possible future situations</td>
+            <td>"If it rains, I will stay home."</td>
+          </tr>
+          <tr>
+            <td><strong>Second Conditional</strong></td>
+            <td><code>If + past simple, would + infinitive</code></td>
+            <td>Unreal or hypothetical present/future</td>
+            <td>"If I had a car, I would drive to work."</td>
+          </tr>
+          <tr>
+            <td><strong>Third Conditional</strong></td>
+            <td><code>If + past perfect, would have + past participle</code></td>
+            <td>Unreal or hypothetical past - could not be changed</td>
+            <td>"If she had studied, she would have passed."</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Questions</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question 1 - Error Correction</div>
+        <p><strong>Q:</strong> Identify the error type and correct each sentence.</p>
+        <ol style="margin-top:0.5rem;">
+          <li>"I love reading, it makes me a better student."</li>
+          <li>"Running as fast as she could without stopping."</li>
+          <li>"He was angry he left the room he did not say goodbye."</li>
+          <li>"She make a good decision to study early."</li>
+        </ol>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answers</div>
+          <ol>
+            <li><strong>Comma splice</strong> - "I love reading, <strong>and</strong> it makes me a better student." OR "I love reading. It makes me a better student."</li>
+            <li><strong>Fragment</strong> (missing subject and verb) - "<strong>She was</strong> running as fast as she could without stopping."</li>
+            <li><strong>Run-on sentence</strong> - "He was angry. He left the room and did not say goodbye."</li>
+            <li><strong>Wrong collocation</strong> - "She <strong>made</strong> a good decision to study early." (not "make" for past tense, and "make" is the correct verb, not "do")</li>
+          </ol>
+        </div>
+      </div>
+      <div class="box qa" style="margin-top:0.75rem;">
+        <div class="bl">Exam Question 2 - Conditionals</div>
+        <p><strong>Q:</strong> Identify the conditional type and complete the sentence correctly.</p>
+        <ol style="margin-top:0.5rem;">
+          <li>"If I ________ (win) the lottery, I would travel the world."</li>
+          <li>"If she had left earlier, she ________ (not/miss) the train."</li>
+          <li>"If you mix red and blue, you ________ (get) purple."</li>
+          <li>"If it ________ (not/rain) tomorrow, we will go to the beach."</li>
+        </ol>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Sample Answers</div>
+          <ol>
+            <li><strong>Second Conditional</strong> (hypothetical present) - "If I <strong>won</strong> the lottery, I would travel the world."</li>
+            <li><strong>Third Conditional</strong> (unreal past) - "If she had left earlier, she <strong>would not have missed</strong> the train."</li>
+            <li><strong>Zero Conditional</strong> (general truth) - "If you mix red and blue, you <strong>get</strong> purple."</li>
+            <li><strong>First Conditional</strong> (possible future) - "If it <strong>does not rain</strong> tomorrow, we will go to the beach."</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 9. APPLICATION & CV ===== -->
+<div class="section" id="application">
+  <div class="sec-head" style="border-left-color:var(--c9);">
+    <span class="sec-num">09</span>
+    <span class="sec-title">Application &amp; CV Writing</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>CV (Curriculum Vitae)</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>A <strong>CV (Curriculum Vitae)</strong> is a formal document that provides a structured summary of a person's education, work experience, skills, and achievements. It is submitted when applying for employment or academic programmes.</p>
+      </div>
+      <h4>CV Format Template</h4>
+      <div class="cvblock">
+        <div class="cvname">FULL NAME (in capitals or bold)</div>
+        <div>Email: yourname@email.com &nbsp;|&nbsp; Phone: +XX-XXXX-XXXX &nbsp;|&nbsp; Address: City, Country</div>
+        <div class="cvsec">
+          <div class="cvsec-t">Objective / Personal Statement</div>
+          <div>A 2-3 sentence summary of your career goals and what you bring to the role.</div>
+        </div>
+        <div class="cvsec">
+          <div class="cvsec-t">Education</div>
+          <div>[Year - Year] &nbsp; Degree / Certificate &nbsp;|&nbsp; Institution Name, City</div>
+          <div>[Year - Year] &nbsp; High School Certificate &nbsp;|&nbsp; School Name, City</div>
+        </div>
+        <div class="cvsec">
+          <div class="cvsec-t">Work Experience</div>
+          <div>[Year - Year] &nbsp; Job Title &nbsp;|&nbsp; Organisation Name, City</div>
+          <div>&nbsp;&nbsp;- Key responsibility or achievement</div>
+          <div>&nbsp;&nbsp;- Key responsibility or achievement</div>
+        </div>
+        <div class="cvsec">
+          <div class="cvsec-t">Skills</div>
+          <div>Communication, Leadership, Microsoft Office, [Language], Research, etc.</div>
+        </div>
+        <div class="cvsec">
+          <div class="cvsec-t">References</div>
+          <div>Available upon request. &nbsp;[OR: Name, Title, Institution, Phone, Email]</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Application Letter (Cover Letter)</h3>
+      <div class="box memo">
+        <div class="bl">Memorise - Definition</div>
+        <p>An <strong>application letter</strong> is a formal letter submitted alongside a CV to apply for a job, programme, or opportunity. It introduces the applicant, explains their suitability, and expresses their interest in the position.</p>
+      </div>
+      <h4>Key Rule: Salutation and Sign-Off Pairing</h4>
+      <div class="g2">
+        <div class="box memo" style="margin:0;">
+          <div class="bl">If name is known</div>
+          <p>"Dear Mr. Smith," - end with <strong>"Yours sincerely,"</strong></p>
+        </div>
+        <div class="box memo" style="margin:0;">
+          <div class="bl">If name is unknown</div>
+          <p>"Dear Sir/Madam," - end with <strong>"Yours faithfully,"</strong></p>
+        </div>
+      </div>
+
+      <div class="box fmt" style="margin-top:0.85rem;">
+        <div class="bl">Academic Format - Application Letter (Follow This Exactly)</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.77rem;line-height:2;color:var(--tx-sub);max-width:100%;">
+          [Your Full Name]<br>
+          [Your Address, Line 1]<br>
+          [City, Country]<br>
+          [Date: Day Month Year - e.g., 17 September 2026]<br>
+          <br>
+          [Recipient's Name / Title - e.g., The Human Resources Manager]<br>
+          [Organisation Name]<br>
+          [Organisation Address]<br>
+          <br>
+          <strong>Dear Mr./Ms. [Last Name],</strong>&nbsp;&nbsp;(OR: Dear Sir/Madam, if name is unknown)<br>
+          <br>
+          <strong>Re: Application for the Position of [Job Title]</strong><br>
+          <br>
+          <em>Paragraph 1 - Introduction:</em> State the position, where you saw the advertisement, and your intent.<br>
+          <br>
+          <em>Paragraph 2 - Qualifications &amp; Experience:</em> Highlight relevant education, skills, and experience that make you suitable.<br>
+          <br>
+          <em>Paragraph 3 - Why this role / organisation:</em> Express genuine interest and what you can contribute.<br>
+          <br>
+          <em>Paragraph 4 - Closing:</em> Thank them, mention enclosed CV, and invite them to contact you for interview.<br>
+          <br>
+          <strong>Yours sincerely,</strong>&nbsp;&nbsp;(OR: Yours faithfully, if you wrote Dear Sir/Madam)<br>
+          <br>
+          [Handwritten Signature]<br>
+          [Your Printed Full Name]<br>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Practice Question</h3>
+      <div class="box qa">
+        <div class="bl">Exam Question</div>
+        <p><strong>Q:</strong> Write an application letter applying for the position of Customer Service Representative at Global Solutions Ltd., as advertised in the Daily News on 15 September 2026.</p>
+        <div class="box ex" style="margin-top:0.75rem;">
+          <div class="bl">Model Application Letter</div>
+          <div class="cvblock" style="font-family:'Source Sans 3',sans-serif;font-size:0.83rem;line-height:1.9;">
+            <div>Rania Hassan</div>
+            <div>12 University Road</div>
+            <div>Dhaka, Bangladesh</div>
+            <div>17 September 2026</div>
+            <div style="margin-top:1rem;">The Human Resources Manager</div>
+            <div>Global Solutions Ltd.</div>
+            <div>Gulshan, Dhaka</div>
+            <div style="margin-top:1rem;"><strong>Dear Sir/Madam,</strong></div>
+            <div style="margin-top:0.5rem;"><strong>Re: Application for the Position of Customer Service Representative</strong></div>
+            <div style="margin-top:0.85rem;">I write to apply for the position of Customer Service Representative at Global Solutions Ltd., as advertised in the Daily News on 15 September 2026. I am confident that my academic background and practical experience make me a strong candidate for this role.</div>
+            <div style="margin-top:0.6rem;">I am currently completing a Bachelor of Arts in English at the University of Dhaka, where I have developed strong written and verbal communication skills, alongside the ability to work effectively under pressure. In my part-time role as a sales assistant at Summit Retail, I gained practical experience handling customer enquiries, resolving complaints professionally, and maintaining high standards of client satisfaction.</div>
+            <div style="margin-top:0.6rem;">I am particularly drawn to Global Solutions Ltd. for its reputation for excellence in client services and its commitment to professional development. I am eager to apply my skills within your team and contribute to the quality of service your organisation is known for.</div>
+            <div style="margin-top:0.6rem;">I have enclosed my curriculum vitae for your consideration and would welcome the opportunity to discuss my application at an interview. Please do not hesitate to contact me at the address above. Thank you sincerely for your time and consideration.</div>
+            <div style="margin-top:1rem;"><strong>Yours faithfully,</strong></div>
+            <div style="margin-top:0.75rem;">Rania Hassan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 10. FREE WRITING ===== -->
+<div class="section" id="freewriting">
+  <div class="sec-head" style="border-left-color:var(--c10);">
+    <span class="sec-num">10</span>
+    <span class="sec-title">Free Writing</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="topic">
+      <h3>Definition</h3>
+      <div class="box memo">
+        <div class="bl">Memorise</div>
+        <p><strong>Free writing</strong> is a pre-writing or creative writing technique in which the writer writes continuously for a set period without stopping to edit, correct, or judge the output. The goal is to generate ideas and overcome writer's block. In an exam context, "free writing" typically refers to producing an independently composed paragraph or essay on a given or self-chosen topic.</p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <h3>Free Writing - Paragraph Format</h3>
+      <p>When a free writing task calls for a <strong>paragraph</strong>, follow the standard three-part paragraph structure:</p>
+      <div class="box fmt" style="margin-top:0.75rem;">
+        <div class="bl">Format to Follow</div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.79rem;max-width:100%;color:var(--tx-sub);line-height:1.9;">
+          [Topic Sentence - state one clear main idea]<br>
+          [3 to 5 Supporting Sentences - evidence, examples, explanations]<br>
+          [Concluding Sentence - restate the idea differently]
+        </p>
+      </div>
+      <h4>Exam Tips for Paragraph Free Writing</h4>
+      <ul>
+        <li>Decide on your topic sentence before writing anything else</li>
+        <li>Stay on one idea only - do not drift or add unrelated points</li>
+        <li>Use transition words to connect sentences smoothly</li>
+        <li>Aim for 150-200 words unless the instructions specify otherwise</li>
+        <li>Proofread for grammar and spelling before submitting</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Free Writing - Essay Format</h3>
+      <p>When a free writing task calls for an <strong>essay</strong>, follow the five-part essay structure:</p>
+      <div class="box fmt" style="margin-top:0.75rem;">
+        <div class="bl">Format to Follow</div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:0.79rem;max-width:100%;color:var(--tx-sub);line-height:2;">
+          Introduction &nbsp;&nbsp;&nbsp; Hook + Background + Thesis Statement<br>
+          Body Paragraph 1 &nbsp; Topic Sentence + Evidence + Analysis<br>
+          Body Paragraph 2 &nbsp; Topic Sentence + Evidence + Analysis<br>
+          Body Paragraph 3 &nbsp; [Optional: Counterargument + Rebuttal]<br>
+          Conclusion &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Restated thesis + Summary + Closing thought
+        </p>
+      </div>
+      <h4>Exam Tips for Essay Free Writing</h4>
+      <ul>
+        <li>Spend 3-5 minutes planning and outlining your essay before writing</li>
+        <li>Write your thesis statement clearly - your position must be obvious</li>
+        <li>Every body paragraph must have its own distinct topic sentence</li>
+        <li>Aim for at least 400-500 words for a full-length essay</li>
+        <li>Use formal academic language - avoid contractions (don't, can't, it's)</li>
+        <li>Begin your conclusion with a formal phrase: <em>"In conclusion," / "To conclude," / "In summary,"</em></li>
+        <li>Leave 3-5 minutes at the end to proofread</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <h3>Transition Words Reference</h3>
+      <table>
+        <tr><th>Function</th><th>Transition Words to Use</th></tr>
+        <tr><td>Adding an idea</td><td>Furthermore, Moreover, In addition, Additionally, Also</td></tr>
+        <tr><td>Contrasting</td><td>However, On the other hand, Nevertheless, Despite this, In contrast, Yet</td></tr>
+        <tr><td>Giving an example</td><td>For example, For instance, To illustrate, Specifically, Namely</td></tr>
+        <tr><td>Showing cause or effect</td><td>Therefore, As a result, Consequently, Thus, Hence, For this reason</td></tr>
+        <tr><td>Concluding</td><td>In conclusion, To conclude, In summary, Ultimately, On the whole</td></tr>
+        <tr><td>Sequencing ideas</td><td>First, Second, Third, Then, Next, Finally, Subsequently</td></tr>
+        <tr><td>Emphasising</td><td>Indeed, Clearly, Evidently, Above all, Most importantly</td></tr>
+      </table>
+    </div>
+
+    <div class="topic">
+      <h3>Quick Reference: Academic Language Dos and Don'ts</h3>
+      <div class="g2">
+        <div class="box err" style="margin:0;">
+          <div class="bl">Avoid in Academic Writing</div>
+          <ul>
+            <li>Contractions: don't, can't, it's, I've</li>
+            <li>Very informal words: "stuff", "things", "a lot"</li>
+            <li>First person in argumentative essays: "I think", "I believe"</li>
+            <li>Starting sentences with: "And", "But", "So"</li>
+            <li>Vague statements without evidence</li>
+          </ul>
+        </div>
+        <div class="box ex" style="margin:0;">
+          <div class="bl">Use Instead</div>
+          <ul>
+            <li>Full forms: do not, cannot, it is, I have</li>
+            <li>Formal vocabulary: "material", "factors", "considerably"</li>
+            <li>Impersonal phrases: "It is argued that", "Evidence suggests"</li>
+            <li>Use proper connectives: "Furthermore", "However", "Therefore"</li>
+            <li>Statements supported by reasoning or evidence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+const sections = document.querySelectorAll('.section[id]');
+const links = document.querySelectorAll('.sb-link');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.style.color = '');
+      const a = document.querySelector(`.sb-link[href="#${e.target.id}"]`);
+      if (a) a.style.color = 'var(--sb-accent)';
+    }
+  });
+}, { threshold: 0.25 });
+sections.forEach(s => io.observe(s));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
