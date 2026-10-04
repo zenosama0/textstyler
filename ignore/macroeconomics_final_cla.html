@@ -1,0 +1,378 @@
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Macroeconomics Study Guide</title>
+<style>
+:root{--n:#17233f;--o:#b8691a;--bg:#f4f6fa;--c:#fff;--b:#d5dae6;--t:#1f2937;--m:#5b6475;--ok:#e8f3ec;--w:#f6e6cf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(60px + env(safe-area-inset-top,0px));-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--t);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow-wrap:anywhere}
+h1,h2,h3{font-family:Georgia,serif;color:var(--n);line-height:1.25;margin:0 0 .5em}
+h2{font-size:1.4rem;padding-top:.2em}h3{font-size:1.05rem;color:var(--o);margin-top:1.2em}
+#bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--n);color:#fff;display:flex;align-items:center;gap:12px;padding:0 14px;height:52px}
+#bar button{background:none;border:1px solid #ffffff55;color:#fff;border-radius:8px;height:36px;padding:0 12px;font:inherit;font-size:.9rem;cursor:pointer}
+#cur{font-family:Georgia,serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.95rem}
+#nav{position:fixed;z-index:15;top:calc(52px + env(safe-area-inset-top,0px));left:0;right:0;bottom:0;background:#fff;overflow-y:auto;padding:10px 16px 30px;display:none;-webkit-overflow-scrolling:touch}
+#nav.open{display:block}
+#nav b{display:block;margin:14px 0 4px;color:var(--n);font-family:Georgia,serif}
+#nav a{display:block;padding:7px 10px;border-radius:6px;color:var(--t);text-decoration:none;font-size:.95rem}
+#nav a.on{background:var(--w);font-weight:600}
+main{padding:16px 14px 60px;max-width:820px;margin:0 auto}
+.lec{margin-bottom:36px}
+.lh{background:var(--n);color:#fff;border-radius:10px;padding:16px;margin:0 0 14px}
+.lh h1{color:#fff;font-size:1.3rem;margin:0 0 4px}.lh p{margin:0;color:#c9d2e6;font-size:.9rem}
+section{background:var(--c);border:1px solid var(--b);border-radius:10px;padding:14px;margin-bottom:14px}
+p{margin:.5em 0}ul{margin:.4em 0;padding-left:1.2em}li{margin:.25em 0}
+.f{background:var(--w);border:1px solid #e3c79c;border-radius:8px;padding:9px 12px;margin:.6em 0;font-family:Georgia,serif;font-style:italic;text-align:center;font-weight:600}
+.d{border-left:4px solid var(--n);background:var(--bg);padding:8px 12px;border-radius:0 8px 8px 0;margin:.6em 0}
+.tip{border-left:4px solid var(--o);background:#fff8ee;padding:8px 12px;border-radius:0 8px 8px 0;margin:.6em 0;font-size:.95rem}
+.tip::before{content:"Memory tip: ";font-weight:700;color:var(--o)}
+.ex{border-left:4px solid #2e7d57;background:var(--ok);padding:8px 12px;border-radius:0 8px 8px 0;margin:.6em 0;font-size:.95rem}
+.g{display:grid;gap:10px;grid-template-columns:1fr}
+.g>div{background:var(--bg);border:1px solid var(--b);border-radius:8px;padding:9px 12px}
+.g b{color:var(--n)}
+.tw{overflow-x:auto;margin:.6em 0;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{border:1px solid var(--b);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--n);color:#fff}
+tr:nth-child(even) td{background:var(--bg)}
+svg{display:block;width:100%;height:auto;max-width:460px;margin:.6em auto;background:#fff;border:1px solid var(--b);border-radius:8px}
+svg text{font:11px system-ui,sans-serif;fill:#1f2937}
+.note{font-size:.85rem;color:var(--m)}
+@media(min-width:620px){.g.c2{grid-template-columns:1fr 1fr}.g.c3{grid-template-columns:repeat(3,1fr)}.g.c4{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1000px){body{padding-left:270px}#nav{display:block;top:calc(52px + env(safe-area-inset-top,0px));right:auto;width:270px;border-right:1px solid var(--b)}#menu{display:none}html{scroll-padding-top:68px}}
+</style></head><body>
+<div id="bar"><button id="menu" aria-expanded="false">Menu</button><div id="cur">What is Economics?</div></div>
+<nav id="nav" aria-label="Topics"><b>Lecture 1: Basics</b><a href="#l1a" data-id="l1a" class="on">What is Economics?</a><a href="#l1b" data-id="l1b">Micro vs Macro</a><a href="#l1c" data-id="l1c">Macro variables and links</a><a href="#l1d" data-id="l1d">Objectives and why study</a><a href="#l1e" data-id="l1e">Stock vs Flow</a><a href="#l1f" data-id="l1f">Short run vs Long run</a><b>Lecture 2: Measuring GDP</b><a href="#l2a" data-id="l2a">Definition of GDP</a><a href="#l2b" data-id="l2b">Components of GDP</a><a href="#l2c" data-id="l2c">Nominal GDP calculation</a><a href="#l2d" data-id="l2d">Expenditure approach</a><a href="#l2e" data-id="l2e">Income approach</a><b>Lecture 3: National Income</b><a href="#l3a" data-id="l3a">Value added method</a><a href="#l3b" data-id="l3b">3 methods and discrepancy</a><a href="#l3c" data-id="l3c">GNP, NNP, NI, PI, DPI</a><a href="#l3d" data-id="l3d">Worked calculation</a><b>Lecture 4: International Business</b><a href="#l4a" data-id="l4a">What is IB?</a><a href="#l4b" data-id="l4b">Quotas and TRQ</a><b>Lecture 5: CPI and Unemployment</b><a href="#l5a" data-id="l5a">CPI</a><a href="#l5b" data-id="l5b">Unemployment definitions</a><a href="#l5c" data-id="l5c">Types of unemployment</a><b>Lecture 6: Unemployment and Phillips</b><a href="#l6a" data-id="l6a">Cyclical unemployment</a><a href="#l6b" data-id="l6b">Costs of unemployment</a><a href="#l6c" data-id="l6c">Bangladesh data</a><a href="#l6d" data-id="l6d">Measurement challenges</a><a href="#l6e" data-id="l6e">Phillips curve</a></nav>
+<main>
+
+<div class="lec" data-t="Lecture 1: Basics">
+<div class="lh"><h1>Lecture 1: The Economy as a Whole</h1><p>Growth, prices and employment</p></div>
+
+<section id="l1a" data-t="What is Economics?">
+<h2>What is Economics?</h2>
+<div class="d"><b>Economics</b> is the study of how society uses scarce resources to produce goods and services and distribute them among people.</div>
+<p><b>Scarcity</b> means resources are limited but wants are unlimited.</p>
+<h3>A brief history</h3>
+<div class="g c2"><div><b>1776, Adam Smith</b><br>The Wealth of Nations: free markets, competition and self-interest can drive prosperity with limited government intervention.</div>
+<div><b>1936, J. M. Keynes</b><br>The General Theory: after the Great Depression, argued government spending and policy are needed to manage downturns.</div></div>
+<div class="tip">Smith = markets left alone (1776). Keynes = government steps in (1936).</div>
+</section>
+
+<section id="l1b" data-t="Micro vs Macro">
+<h2>Branches: Micro vs Macro</h2>
+<div class="g c2"><div><b>Microeconomics</b><br>How firms and individuals make decisions and how they interact: prices set by supply and demand, and how incentives affect behavior.<div class="ex">Coffee bean prices rise, so coffee shops buy less and customers pay more per cup.</div></div>
+<div><b>Macroeconomics</b><br>The economy as a whole: aggregate outcomes such as inflation, unemployment and growth, and how government and central banks influence national income and business cycles.<div class="ex">More government spending in a recession boosts activity and cuts unemployment nationwide.</div></div></div>
+<h3>Definition of Macroeconomics</h3>
+<p>The study of the economy as a whole, including growth in income, changes in prices and the rate of unemployment. Macroeconomists try both to <b>explain</b> economic events and to <b>devise policies</b> to improve performance.</p>
+<div class="g c2"><div><b>Simple example</b><br>One student's income becomes total income of the whole country. One shop's price becomes overall inflation.</div>
+<div><b>Micro and macro linkage</b><br>Macro outcomes come from millions of micro decisions by households and firms. Macro policies (taxation, interest rates) in turn shape micro behavior.</div></div>
+<h3>Differences and linkages</h3>
+<div class="tw"><table><tbody><tr><th>Basis</th><th>Micro</th><th>Macro</th></tr>
+<tr><td>Scope</td><td>Individual consumers, firms, specific markets</td><td>The economy as a whole</td></tr>
+<tr><td>Main focus</td><td>Price determination, consumer behavior, firm decisions</td><td>National income, inflation, unemployment, growth</td></tr>
+<tr><td>Key variables</td><td>Demand, supply, elasticity, costs, profits</td><td>GDP, inflation rate, unemployment rate, interest rates</td></tr>
+<tr><td>Level</td><td>Individual or industry</td><td>Aggregate or national</td></tr>
+<tr><td>Policy</td><td>Pricing, taxation, market regulation</td><td>Fiscal and monetary policy</td></tr>
+<tr><td>Example</td><td>Price of rice</td><td>Inflation or GDP growth of a country</td></tr></tbody></table></div>
+</section>
+
+<section id="l1c" data-t="Macro variables and links">
+<h2>Macroeconomic Variables</h2>
+<div class="g c2">
+<div><b>GDP</b>: total value of goods and services produced</div><div><b>National Income</b>: total income earned by factors of production</div>
+<div><b>Inflation Rate</b>: rate at which the general price level rises</div><div><b>Unemployment Rate</b>: % of labor force without jobs</div>
+<div><b>Interest Rate</b>: cost of borrowing / return on saving</div><div><b>Money Supply</b>: total money circulating</div>
+<div><b>Fiscal Deficit</b>: gap between government expenditure and revenue</div><div><b>Public Debt</b>: total government borrowings</div>
+<div><b>Exchange Rate</b>: value of domestic vs foreign currency</div><div><b>Balance of Payments</b>: record of international transactions</div>
+<div><b>Growth Rate</b>: annual increase in real GDP</div><div><b>Aggregate Demand</b>: total spending by households and firms</div></div>
+<h3>Recap by category</h3>
+<ul><li><b>Output and growth:</b> GDP, GNP, NNP, National Income</li><li><b>Prices:</b> Inflation</li><li><b>Labor market:</b> Unemployment</li><li><b>Money and spending:</b> Consumption, Investment, Money demand and supply, Interest rate</li></ul>
+<h3>How variables relate</h3>
+<div class="g">
+<div><b>Growth channel</b><br>Consumption + Investment ➜ Aggregate Demand ➜ GDP up ➜ Employment up</div>
+<div><b>Inflation channel</b><br>Money supply / AD up ➜ Inflation up ➜ Central bank raises interest rates ➜ Borrowing and growth fall, inflation eases</div>
+<div><b>Okun's Law</b><br>Output up ➜ Unemployment down</div></div>
+<p class="note">Fiscal and monetary policy also shape exchange rates, capital flows and the balance of payments. The system works together, not in isolation.</p>
+</section>
+
+<section id="l1d" data-t="Objectives and why study">
+<h2>Objectives and Why We Study It</h2>
+<h3>Macroeconomic objectives</h3>
+<ul><li>Economic growth (rise in real GDP)</li><li>Full employment / lower unemployment</li><li>Lower inflation / stable prices</li><li>Reduced income inequality</li><li>Foreign exchange management</li><li>Debt management</li><li>Sustainable development</li></ul>
+<div class="ex">Cut unemployment: public works programs. Control price rises: study inflation and adjust monetary policy. Long-term growth without harming the environment: sustainable development.</div>
+<h3>Why study macroeconomics?</h3>
+<div class="g c3"><div><b>Understanding national income</b><br>Shows how rich or poor a country is using GDP, GNP and NNP.</div><div><b>Solving unemployment</b><br>Explains why it exists and how policy can reduce it.</div><div><b>Controlling inflation</b><br>A continuous rise in general prices; monetary and fiscal policy respond.</div></div>
+</section>
+
+<section id="l1e" data-t="Stock vs Flow">
+<h2>Stock vs Flow Variables</h2>
+<div class="g c2"><div><b>Stock</b>: measured at a point in time (no time period). Like the water level in a bathtub at one moment.<ul><li>Wealth on 31 March</li><li>Population on 1 January</li><li>Money supply today</li></ul></div>
+<div><b>Flow</b>: measured over a period (per year, per month). Like water flowing into the bathtub.<ul><li>National income per year</li><li>Salary per month</li><li>GDP per year</li></ul></div></div>
+<div class="tip">A photo is a stock (one instant). A video is a flow (a duration). Income is a flow; wealth is a stock.</div>
+</section>
+
+<section id="l1f" data-t="Short run vs Long run">
+<h2>Short Run and Long Run</h2>
+<h3>In microeconomics</h3>
+<div class="g c2"><div><b>Short run</b>: at least one factor of production (FOP) is fixed and cannot be changed immediately. Shoe factory: capital (machines) is fixed, labor is variable.</div>
+<div><b>Long run</b>: all FOPs are variable. The shoe factory can build a new plant, buy new technology, expand production. Nothing is fixed.</div></div>
+<h3>In macroeconomics</h3>
+<div class="g c2"><div><b>Short run: prices are sticky</b><br>They do not adjust quickly because of contracts, wages or regulations. Example: workers on a 1-year contract, so wages cannot fall immediately in a slowdown.<br>Features: output fluctuates, unemployment changes, demand affects production, business cycles occur.</div>
+<div><b>Long run: prices fully flexible</b><br>Wages and prices adjust and the economy returns to its natural level of output. Output depends on real factors: technology, capital, labor, institutions (not money supply).</div></div>
+</section>
+</div>
+
+<div class="lec" data-t="Lecture 2: Measuring GDP">
+<div class="lh"><h1>Lecture 2: Measuring GDP</h1><p>Nominal, real, deflator and national income</p></div>
+
+<section id="l2a" data-t="Definition of GDP">
+<h2>The Measurement of GDP</h2>
+<div class="d"><b>GDP</b> is the market value of all final goods and services produced within a country in a given period of time.</div>
+<ul><li><b>Market value:</b> prices show what people will pay. An apple twice the price of an orange counts twice as much.</li>
+<li><b>Of all:</b> everything produced and sold legally in markets. Excludes illegal goods (illicit drugs) and items produced and consumed at home.</li></ul>
+<div class="tw"><table><tbody><tr><th>Word</th><th>Meaning</th></tr>
+<tr><td>Final</td><td>Only final goods; intermediate goods are already in the final price. Exception: a firm's inventory for later sale counts as final.</td></tr>
+<tr><td>Goods and services</td><td>Tangible goods (food, cars) and intangible services (haircuts, doctor visits).</td></tr>
+<tr><td>Produced</td><td>Only current production; resale of past-produced items is excluded.</td></tr>
+<tr><td>Within a country</td><td>Value of production inside the geographic borders.</td></tr>
+<tr><td>In a given period</td><td>A specific interval of time.</td></tr></tbody></table></div>
+<div class="g c2"><div><b>Why "Domestic"?</b><br>Production within a country. Contrast: national product is value produced anywhere by the residents of a nation.</div><div><b>Why "Gross"?</b><br>Before subtracting depreciation of capital. "Net" means after subtracting it.</div></div>
+</section>
+
+<section id="l2b" data-t="Components of GDP">
+<h2>Components of GDP</h2>
+<div class="f">Y = C + I + G + NX</div>
+<p>This is an <b>identity</b>: it must be true because of how the variables are defined.</p>
+<div class="g c3"><div><b>Consumption (C)</b><br>Household spending on goods and services, except purchases of new housing.</div><div><b>Investment (I)</b><br>Purchase of capital goods used in future to produce more goods and services.</div><div><b>Govt purchases (G)</b><br>Spending by local, state and federal governments, excluding transfer payments.</div></div>
+<p><b>NX</b> = net exports = exports (X) minus imports (M).</p>
+<div class="tip">Y = C I G NX: "Can I Get eXtra?"</div>
+</section>
+
+<section id="l2c" data-t="Nominal GDP calculation">
+<h2>Calculating Nominal GDP</h2>
+<p>Nominal GDP uses <b>current-year prices</b> times current-year quantities.</p>
+<div class="ex"><b>Year 1:</b> (50 x 1,000) + (20,000 x 100) = 50,000 + 2,000,000 = <b>Tk. 2,050,000</b><br><b>Year 2:</b> (60 x 1,100) + (22,000 x 120) = 66,000 + 2,640,000 = <b>Tk. 2,706,000</b></div>
+<p>Nominal GDP rose because <b>both prices and quantities</b> rose. It cannot tell which caused the rise, so economists use <b>Real GDP</b> (fixed base-year prices) to measure changes in actual output.</p>
+<p class="note">Extra (the slides on Real GDP and the deflator are not in your PDF): Real GDP = quantities x base-year prices. GDP Deflator = (Nominal GDP / Real GDP) x 100.</p>
+</section>
+
+<section id="l2d" data-t="Expenditure approach">
+<h2>The Expenditure Approach</h2>
+<div class="ex"><b>Given:</b> C = 1,500,000; I = 600,000; G = 400,000. NX = X - M = 350,000 - 150,000 = 200,000.<br>GDP = 1,500,000 + 600,000 + 400,000 + 200,000 = <b>Tk. 2,700,000</b></div>
+</section>
+
+<section id="l2e" data-t="Income approach">
+<h2>The Income Approach</h2>
+<div class="f">GDP = Total income earned by factors</div>
+<p>Firms pay: <b>Wages</b> (to workers), <b>Rent</b> (landowners), <b>Interest</b> (capital owners), <b>Profit</b> (entrepreneurs).</p>
+<div class="f">GDP = Wages + Rent + Interest + Profit</div>
+<p>In real-world calculation we also add <b>indirect taxes</b> (VAT, sales tax) and <b>depreciation</b>: GDP = Factor income + Indirect taxes + Depreciation.</p>
+<div class="ex"><b>Example:</b> Wages 500, Rent 100, Interest 80, Profit 120, Indirect tax 50, Depreciation 30.<br>GDP = 500 + 100 + 80 + 120 + 50 + 30 = <b>880</b></div>
+</section>
+</div>
+
+<div class="lec" data-t="Lecture 3: National Income">
+<div class="lh"><h1>Lecture 3: National Income Accounting</h1><p>Value added, GNP, NNP and the income chain</p></div>
+
+<section id="l3a" data-t="Value added method">
+<h2>Value Added Method</h2>
+<div class="d">Value added is the value of a firm's output minus the value of intermediate goods it used. It measures each firm's net contribution and <b>prevents double-counting</b>.</div>
+<div class="f">Value Added = Value of Output - Value of Input</div>
+<div class="tw"><table><tbody><tr><th>Farmer</th><th>Miller</th><th>Baker</th><th>Restauranter</th></tr><tr><td>Wheat</td><td>Flour</td><td>Cake</td><td>Plated cake</td></tr><tr><td>$100</td><td>$120</td><td>$180</td><td>$200</td></tr></tbody></table></div>
+<p>Value added: 100 + 20 + 60 + 20 = <b>$200</b>, equal to the final price.</p>
+</section>
+
+<section id="l3b" data-t="3 methods and discrepancy">
+<h2>3 Methods of Measuring GDP</h2>
+<div class="g c3"><div><b>Expenditure</b><br>GDP at market prices</div><div><b>Income</b><br>GDP at factor cost</div><div><b>Value added</b><br>Output value added</div></div>
+<p>All three should roughly match, but a <b>statistical discrepancy</b> may arise from measurement errors and incomplete data.</p>
+<div class="f">Statistical Discrepancy = GDP (Expenditure) - GDP (Income)</div>
+<div class="ex">Expenditure Tk. 5,200m, Income Tk. 5,150m: 5,200 - 5,150 = <b>Tk. 50 million</b>.</div>
+</section>
+
+<section id="l3c" data-t="GNP, NNP, NI, PI, DPI">
+<h2>Other Measures of Income</h2>
+<div class="g"><div><b>GNP</b>: total income earned by nationals (residents).<div class="f">GNP = GDP + Factor payments from abroad - Factor payments to abroad</div></div>
+<div><b>NNP</b>: GNP minus depreciation (about 10% of GNP). Depreciation is a cost of production, so removing it shows net result.<div class="f">NNP = GNP - Depreciation</div></div>
+<div><b>National Income</b>: how much everyone has earned.<div class="f">NI = NNP - Indirect business taxes (NIT)</div>Net indirect taxes (NIT) = Indirect taxes - Subsidies.</div>
+<div><b>Personal Income</b>: income households and noncorporate businesses receive.<div class="f">PI = NI - Corporate profits - Social security contributions + Government transfers</div>(Slide also lists net interest, dividends and personal interest income.)</div>
+<div><b>Disposable Personal Income</b>: amount available to spend after taxes.<div class="f">DPI = PI - Personal tax and nontax payments</div>Shorthand: Yd = Y - T. In intro macro, Disposable Income = PDI.</div></div>
+<div class="tip">Chain: GDP ➜ GNP ➜ NNP ➜ NI ➜ PI ➜ DPI. Each step adds or subtracts one thing.</div>
+</section>
+
+<section id="l3d" data-t="Worked calculation">
+<h2>Worked Example (Tk.)</h2>
+<div class="tw"><table><tbody><tr><th>Item</th><th>Amount</th></tr>
+<tr><td>Consumption C</td><td>1,500,000</td></tr><tr><td>Investment I</td><td>600,000</td></tr><tr><td>Government G</td><td>400,000</td></tr><tr><td>Net exports</td><td>200,000</td></tr><tr><td>Net factor income from abroad</td><td>50,000</td></tr><tr><td>Depreciation</td><td>200,000</td></tr><tr><td>Indirect business taxes</td><td>100,000</td></tr><tr><td>Subsidies</td><td>20,000</td></tr><tr><td>Corporate income tax</td><td>80,000</td></tr><tr><td>Undistributed corporate profits</td><td>60,000</td></tr><tr><td>Social security contributions</td><td>40,000</td></tr><tr><td>Government transfers</td><td>70,000</td></tr><tr><td>Personal taxes</td><td>180,000</td></tr></tbody></table></div>
+<ol><li>GDP = 1,500,000 + 600,000 + 400,000 + 200,000 = <b>2,700,000</b></li>
+<li>GNP = 2,700,000 + 50,000 = <b>2,750,000</b></li>
+<li>NNP = 2,750,000 - 200,000 = <b>2,550,000</b></li>
+<li>NIT = 100,000 - 20,000 = 80,000; NI = 2,550,000 - 80,000 = <b>2,470,000</b></li>
+<li>PI = 2,470,000 - 80,000 - 60,000 - 40,000 + 70,000 = <b>2,360,000</b></li>
+<li>PDI = 2,360,000 - 180,000 = <b>2,180,000</b> (= Disposable Income)</li></ol>
+<p class="note">Steps 1 to 4 are rebuilt by me from the data; they reproduce the 2,360,000 and 2,180,000 shown on your slides.</p>
+</section>
+</div>
+
+<div class="lec" data-t="Lecture 4: International Business">
+<div class="lh"><h1>Lecture 4: International Business</h1><p>Trade barriers: quotas and tariff rate quotas</p></div>
+
+<section id="l4a" data-t="What is IB?">
+<h2>International Business</h2>
+<div class="d">The performance of business activities <b>across national boundaries</b>. Every country takes part in some form of international trade, and both large (Coca-Cola, IBM) and small firms sell globally.</div>
+<div class="g c2"><div><b>Foreign companies investing in Bangladesh</b><br>Unilever Bangladesh Ltd, from the British-Dutch multinational Unilever. Products: Lux, Sunsilk, Surf Excel.</div>
+<div><b>Bangladeshi companies abroad</b><br>BEXIMCO Group exports pharmaceuticals, textiles and ceramics to Europe, the USA and Asia.</div></div>
+</section>
+
+<section id="l4b" data-t="Quotas and TRQ">
+<h2>Import Quotas and Tariff Rate Quotas</h2>
+<div class="g c2"><div><b>Import quota</b><br>Direct quantity restriction, often run through license-based control.</div><div><b>Tariff rate quota (TRQ)</b><br>A dual tariff system with variable tariff rates: low inside the quota, high above it.</div></div>
+<p>A TRQ is a hybrid of a quota and a tariff. Common in agriculture, where the goal is to limit imports.</p>
+<div class="ex"><b>South Korea rice:</b> 10% ad valorem tariff on the first 1 million tons, then 80% out-of-quota. If it imports 2 million tons: 1 million at 10% and 1 million at 80%.</div>
+<svg viewBox="0 0 340 250" role="img" aria-label="Tariff rate quota chart">
+<line x1="50" y1="20" x2="50" y2="200" stroke="#333"></line><line x1="50" y1="200" x2="320" y2="200" stroke="#333"></line>
+<rect x="50" y="180" width="120" height="20" fill="#f08a3c"></rect><rect x="170" y="40" width="120" height="160" fill="#0a7fb5"></rect>
+<line x1="170" y1="20" x2="170" y2="200" stroke="#333"></line>
+<text x="175" y="16">Quota limit</text><text x="180" y="34" fill="#fff">Out of quota</text><text x="72" y="174">In quota</text>
+<text x="8" y="44">80%</text><text x="8" y="184">10%</text><text x="6" y="14">Tariff %</text>
+<text x="46" y="216">0</text><text x="150" y="216">1 million</text><text x="262" y="216">2 million</text><text x="170" y="240" text-anchor="middle">Tons of rice imported</text></svg>
+<h3>VER (Voluntary Export Restraints) and quota rent</h3>
+<p class="note">Your slide only has this title; the explanation below is my expansion.</p>
+<p>A <b>VER</b> is a quota the exporting country agrees to impose on itself, usually under pressure from the importer. Limiting supply raises the domestic price above the world price. That price gap times the quantity is the <b>quota rent</b>: extra profit captured by whoever holds the right to sell or import (license holders, or exporters under a VER), instead of by the government as tariff revenue.</p>
+<div class="tip">Tariff = government gets the money. Quota or VER = license holders or exporters get it (quota rent).</div>
+</section>
+</div>
+
+<div class="lec" data-t="Lecture 5: CPI and Unemployment">
+<div class="lh"><h1>Lecture 5: Inflation and Unemployment</h1><p>CPI, inflation rate, labor market measures and unemployment types</p></div>
+
+<section id="l5a" data-t="CPI">
+<h2>Consumer Price Index (CPI)</h2>
+<div class="d">CPI measures the average change in prices of a <b>fixed basket</b> of goods and services over time. It is the most common measure of price level and is widely used to measure inflation. It turns many prices into one index and is used for wage adjustments, pensions and policy.</div>
+<h3>Steps</h3>
+<ol><li>Select a <b>base year</b> (CPI in base year is always 100).</li><li>Select a <b>basket</b> of commonly consumed goods (rice, fish, transport, rent).</li><li>Find the basket cost in each year (step 3 is not on your slides).</li><li>Apply the formula.</li></ol>
+<div class="f">CPI = [ Sum(P1 x Q0) / Sum(P0 x Q0) ] x 100</div>
+<p class="note">P0 = base-year price, P1 = current-year price, Q0 = base-year quantity.</p>
+<div class="tw"><table><tbody><tr><th>Good</th><th>Qty (base)</th><th>Price (base)</th><th>Price (current)</th></tr><tr><td>Rice</td><td>10 kg</td><td>50</td><td>60</td></tr><tr><td>Fish</td><td>5 kg</td><td>200</td><td>250</td></tr></tbody></table></div>
+<div class="ex">Base basket: (10 x 50) + (5 x 200) = 1,500. Current basket: (10 x 60) + (5 x 250) = 1,850.<br>CPI = (1,850 / 1,500) x 100 = <b>123.33</b>. Prices rose 23.33% vs base year.</div>
+<h3>CPI to inflation rate</h3>
+<div class="f">Inflation = [(CPI1 - CPI0) / CPI0] x 100</div>
+<p>CPI0 = base year, CPI1 = current year. Check: (123.33 - 100) / 100 x 100 = <b>23.33%</b>.</p>
+</section>
+
+<section id="l5b" data-t="Unemployment definitions">
+<h2>Unemployment: Definitions</h2>
+<div class="d">Officially: working-age individuals (typically 15-16+) who are <b>without work, actively seeking employment and available to start</b>. Occurs when someone able and willing to work at the prevailing wage cannot find a job. Some people are unemployed at any moment in all free-market economies.</div>
+<div class="g">
+<div><b>Employed:</b> paid employees, self-employed, and unpaid family business workers. Also those temporarily absent from a job (vacation, illness, bad weather).</div>
+<div><b>Unemployed:</b> not employed, available for work, and tried to find work in the previous four weeks. Includes those waiting to be recalled after a layoff.</div>
+<div><b>Not in the labor force:</b> neither of the above, e.g. full-time student, homemaker, retiree.</div>
+<div><b>Discouraged worker:</b> wants a job but gave up looking, so counted as not in the labor force.</div></div>
+<h3>Formulas</h3>
+<div class="f">Labor Force = Employed + Unemployed</div>
+<div class="f">Unemployment Rate = (Unemployed / Labor Force) x 100</div>
+<div class="f">LFPR = (Labor Force / Working-age Population) x 100</div>
+<p><b>LFPR</b> (Labour Force Participation Rate) is the percentage of the working-age population (usually 15+ or 16+) that is in the labor force.</p>
+<div class="ex"><b>Given:</b> adult population 203.1m, employed 129.6m, unemployed 6.7m.<br>Labor force = 129.6 + 6.7 = <b>136.3m</b><br>Unemployment rate = 6.7 / 136.3 x 100 = <b>4.9%</b><br>LFPR = 136.3 / 203.1 x 100 = <b>67.1%</b></div>
+</section>
+
+<section id="l5c" data-t="Types of unemployment">
+<h2>Three Types of Unemployment</h2>
+<div class="g">
+<div><b>Frictional:</b> time taken to match workers and jobs. Workers have different preferences and abilities, job information is imperfect, and geographic mobility is not instant.</div>
+<div><b>Structural:</b> skills do not match available jobs due to structural change. Causes: technological advancement, automation, decline or shutdown of industries, globalization, regional imbalance. Long-term, more serious than frictional, needs retraining. Example: automation replaces garment workers who lack technical skills.</div>
+<div><b>Cyclical:</b> recession or downturn in the business cycle, caused by low aggregate demand (AD). Involuntary; rises in recession, falls in expansion. Causes: recession, falling demand, business losses, layoffs. Example: post-COVID global recession.</div></div>
+<div class="tw"><table><tbody><tr><th></th><th>Frictional</th><th>Structural</th><th>Cyclical</th></tr>
+<tr><td>Cause</td><td>Time to search and match</td><td>Skill mismatch</td><td>Recession, low AD</td></tr>
+<tr><td>Duration</td><td>Short-term</td><td>Long-term</td><td>As long as downturn</td></tr>
+<tr><td>Nature</td><td>Largely voluntary search</td><td>Skill mismatch</td><td>Involuntary</td></tr>
+<tr><td>Remedy</td><td>Better job information</td><td>Retraining, education</td><td>Demand-side policy</td></tr></tbody></table></div>
+<div class="tip">F = Finding (search time), S = Skills, C = Crash (recession).</div>
+</section>
+</div>
+
+<div class="lec" data-t="Lecture 6: Unemployment and Phillips">
+<div class="lh"><h1>Lecture 6: Cyclical Unemployment and the Phillips Curve</h1><p>Measurement, costs, Bangladesh data and the inflation trade-off</p></div>
+
+<section id="l6a" data-t="Cyclical unemployment">
+<h2>Cyclical Unemployment</h2>
+<p><b>Recession:</b> demand falls, production is cut, workers lose jobs. <b>Expansion:</b> demand rises, firms hire, cyclical unemployment falls.</p>
+<div class="f">Cyclical Unemployment = Actual Rate - Natural Rate</div>
+<p><b>Natural rate</b> = unemployment when the economy runs normally (frictional + structural).</p>
+<h3>Can it be negative?</h3>
+<p><b>Yes</b>, when Actual &lt; Natural: the economy is above potential output (overheating), usually in a strong boom where firms hire nearly everyone, even those who would normally stay unemployed, and may hire less qualified workers.</p>
+<div class="ex">Natural 5%, actual 3%: 3% - 5% = <b>-2%</b>. Economy is overheating, which usually shows up as rising wage and price pressure.</div>
+</section>
+
+<section id="l6b" data-t="Costs of unemployment">
+<h2>Why Unemployment is a Problem</h2>
+<div class="g c2">
+<div><b>1. Loss of income</b><br>No wages, so less spending on food, housing, education, healthcare; living standards fall.</div>
+<div><b>2. Poverty and inequality</b><br>Long-term unemployment pushes households into poverty; inequality rises as the employed keep earning.</div>
+<div><b>3. Waste of human resources</b><br>Willing workers sit idle, so productive capacity declines.</div>
+<div><b>4. Lower GDP</b><br>Output falls below potential, giving slower growth and lower national income.</div>
+<div><b>5. Social and psychological effects</b><br>Depression, anxiety, stress, loss of self-confidence, crime, drug abuse, domestic violence, instability.</div>
+<div><b>6. Government burden and skill loss</b><br>More spending on benefits and welfare, less tax revenue. Skills decay (human capital depreciation).</div></div>
+<div class="tip">Costs to people (1, 2, 5), to the economy (3, 4), to government (6).</div>
+</section>
+
+<section id="l6c" data-t="Bangladesh data">
+<h2>Unemployment in Bangladesh</h2>
+<p class="note">Source on slides: BBS Quarterly Labour Force Survey.</p>
+<div class="g c3"><div><b>3.66%</b><br>Unemployment rate, 2024</div><div><b>4.63%</b><br>2025, latest estimate, one of the highest in recent years</div><div><b>2.7 mn</b><br>Total unemployed (about 27.4 lakh)</div></div>
+<p>Unemployment has been gradually rising since 2023 due to economic challenges.</p>
+<div class="g c3"><div><b>12.17 crore</b><br>Working-age population</div><div><b>58 to 59 mn</b><br>Labour force participation (as on slide)</div><div><b>69 mn</b><br>Employed people (as on slide)</div></div>
+<p>A significant portion remains outside the labour force, especially women.</p>
+<div class="g c3"><div><b>9.65%</b><br>Youth unemployment (15 to 24)</div><div><b>1.94 mn</b><br>Unemployed youth (15 to 29)</div><div><b>79%</b><br>of the unemployed are youths</div></div>
+<p>Many are educated graduates: a mismatch between education and labour market demand.</p>
+<div class="g c2"><div><b>84%</b><br>of employed workers are in informal jobs</div><div><b>16%</b><br>have formal employment</div></div>
+<p>Informal jobs mean low wages, no job security and no social protection, so even employed people may face underemployment or vulnerable employment.</p>
+</section>
+
+<section id="l6d" data-t="Measurement challenges">
+<h2>Challenges in Measuring Unemployment</h2>
+<p>The headline rate can understate the problem:</p>
+<div class="g">
+<div><b>Large informal sector:</b> many workers have no formal contracts or recorded employment.</div>
+<div><b>Underemployment:</b> working fewer hours than wanted, or in jobs below skill level.</div>
+<div><b>Discouraged workers:</b> stopped looking, so excluded from statistics, which understates unemployment.</div>
+<div><b>Hidden (disguised) unemployment:</b> more workers than needed, mostly in agriculture. Example: a family farm where fewer people could produce the same output; marginal productivity is near zero.</div>
+<div><b>Seasonal employment:</b> jobs exist only at certain times of year, so one snapshot is misleading.</div></div>
+</section>
+
+<section id="l6e" data-t="Phillips curve">
+<h2>The Phillips Curve</h2>
+<div class="d">Shows the <b>inverse short-run relationship</b> between inflation and unemployment. Low unemployment: inflation tends to rise. High unemployment: inflation tends to fall. Policymakers face a trade-off.</div>
+<div class="g c2"><div><b>Expansionary policy</b><br>Raise G, cut taxes, increase money supply (raises AD). Result: unemployment down, inflation up.</div>
+<div><b>Contractionary policy</b><br>Cut G, raise taxes, reduce money supply (lowers AD). Result: unemployment up, inflation down.</div></div>
+<svg viewBox="0 0 340 250" role="img" aria-label="Short-run Phillips curve">
+<line x1="40" y1="15" x2="40" y2="215" stroke="#333"></line><line x1="40" y1="200" x2="320" y2="200" stroke="#333"></line>
+<path d="M112 20 L122 50 L136 68 L160 115 L200 156 L240 182 L295 198" fill="none" stroke="#3b5bdb" stroke-width="2.5" stroke-linejoin="round"></path>
+<g stroke="#d33" stroke-dasharray="4 3"><line x1="40" y1="68" x2="136" y2="68"></line><line x1="136" y1="68" x2="136" y2="200"></line><line x1="40" y1="156" x2="200" y2="156"></line><line x1="200" y1="156" x2="200" y2="200"></line></g>
+<circle cx="136" cy="68" r="4" fill="#d33"></circle><circle cx="200" cy="156" r="4" fill="#d33"></circle>
+<text x="144" y="62">B</text><text x="206" y="150">A</text><text x="22" y="72">6</text><text x="22" y="160">2</text><text x="133" y="214">3</text><text x="197" y="214">5</text>
+<text x="4" y="12">Inflation (%)</text><text x="180" y="240" text-anchor="middle">Unemployment rate (%)</text><text x="262" y="190">SRPC</text></svg>
+<p><b>Point A</b> (unemployment 5%, inflation 2%): slow growth or moderate demand; firms do not raise wages much, prices stay stable.<br><b>Point B</b> (unemployment 3%, inflation 6%): firms compete for workers, wages rise, production costs rise, inflation rises.</p>
+<p>Moving A to B: unemployment 5% to 3%, inflation 2% to 6%. Stimulating demand cuts unemployment but adds inflation pressure.</p>
+<div class="tip">Low unemployment = high inflation. Seesaw: one side down, other side up.</div>
+<h3>Lecture 6 recap</h3>
+<ul><li>Cyclical = actual minus natural; negative means overheating.</li><li>Costs: lost income, poverty, wasted labour, lower GDP, social harm, fiscal burden.</li><li>Bangladesh: rate about 4.63%, youth about 9.65%, 84% informal.</li><li>Phillips: short-run inverse relation, so policy trade-off.</li></ul>
+</section>
+</div>
+
+</main>
+<script>
+(function(){
+var nav=document.getElementById('nav'),btn=document.getElementById('menu'),cur=document.getElementById('cur'),h='';
+document.querySelectorAll('.lec').forEach(function(l){h+='<b>'+l.dataset.t+'</b>';l.querySelectorAll('section').forEach(function(s){h+='<a href="#'+s.id+'" data-id="'+s.id+'">'+s.dataset.t+'</a>'})});
+nav.innerHTML=h;
+function set(o){nav.classList.toggle('open',o);btn.setAttribute('aria-expanded',o)}
+btn.onclick=function(){set(!nav.classList.contains('open'))};
+nav.onclick=function(e){if(e.target.tagName=='A')set(false)};
+document.addEventListener('keydown',function(e){if(e.key=='Escape')set(false)});
+var links={};nav.querySelectorAll('a').forEach(function(a){links[a.dataset.id]=a});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){Object.values(links).forEach(function(a){a.classList.remove('on')});var a=links[e.target.id];a.classList.add('on');cur.textContent=a.textContent;if(matchMedia('(min-width:1000px)').matches)a.scrollIntoView({block:'nearest'})}})},{rootMargin:'-60px 0px -70% 0px'});
+document.querySelectorAll('section').forEach(function(s){io.observe(s)});
+})();
+</script>
+</body></html>
