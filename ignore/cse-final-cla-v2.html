@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DLD Study Guide: K-Maps, NAND/NOR, XOR, Decoders, Encoders, MUX, DEMUX</title>
+<style>
+:root{color-scheme:light;--ink:#1f2a44;--mut:#5b6785;--ac:#2563eb;--ln:#dbe3f1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:70px;background:#f4f7fc}
+body{margin:0;background:#f4f7fc;color:var(--ink);font:16px/1.65 system-ui,"Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(120deg,#2563eb,#0ea5e9);color:#fff;padding:34px 20px;text-align:center}
+header h1{margin:0 0 6px;font-size:1.8rem}header p{margin:0;opacity:.92}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:#fff;border-bottom:1px solid var(--ln);padding:8px 10px;display:flex;gap:6px;overflow-x:auto;z-index:5}
+nav a{white-space:nowrap;text-decoration:none;color:var(--ac);font-size:.85rem;padding:5px 10px;border-radius:99px;background:#eaf1ff}
+main{max-width:920px;margin:0 auto;padding:16px}
+section{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:6px 20px 18px;margin:18px 0}
+h2{color:var(--ac);border-bottom:2px solid #eaf1ff;padding-bottom:6px}h3{margin:22px 0 4px}
+.q{display:inline-block;background:#fde68a;color:#7a4b00;border-radius:6px;padding:0 8px;font-size:.78rem;font-weight:700;margin-right:6px;vertical-align:middle}
+.tip,.def{border-left:4px solid #f59e0b;background:#fff8e6;padding:8px 14px;border-radius:6px;margin:12px 0}
+.def{border-color:#2563eb;background:#eef4ff}
+.fig{overflow-x:auto;text-align:center;margin:10px 0}
+svg{max-width:100%;height:auto}svg text{font:13px system-ui,Arial,sans-serif;fill:#1f2a44}
+.w{fill:none;stroke:#1f2a44;stroke-width:1.6}.g{fill:#e8f1ff;stroke:#1f2a44;stroke-width:1.6}
+table{border-collapse:collapse;margin:10px auto;font-size:.92rem}
+th,td{border:1px solid #c5d0e6;padding:3px 9px;text-align:center}th{background:#eaf1ff}
+.tw{overflow-x:auto}code{background:#eef2fa;padding:1px 5px;border-radius:4px}
+.cap{text-align:center;color:var(--mut);font-size:.88rem;margin-top:-4px}
+li{margin:3px 0}
+</style></head><body>
+<header><h1>Digital Logic Design: Exam Study Guide</h1><p>CSE 2105 Chapter 3 (Gate-Level Minimization) + Chapter 4 (Combinational Logic). Light mode, plain English, SVG diagrams.</p></header>
+<nav><a href="#kmap">K-Maps</a><a href="#dc">Don't Care / POS</a><a href="#nand">NAND / NOR</a><a href="#xor">XOR / Parity</a><a href="#comb">Combinational</a><a href="#dec">Decoders</a><a href="#enc">Encoders</a><a href="#mux">MUX</a><a href="#muximp">MUX Implementation</a><a href="#demux">DEMUX</a><a href="#gloss">Glossary</a></nav>
+<main>
+
+<section id="kmap"><h2>1. Karnaugh Maps (K-Maps)</h2>
+<div class="def"><b>K-Map</b> = a picture of a truth table laid out in a grid so that neighbouring cells differ by exactly <b>one</b> variable. Grouping neighbouring 1s lets you cancel variables and get a shorter Boolean expression.</div>
+<p><b>Minterm</b> = an AND term containing every variable once (e.g. x′y′z). Each row of the truth table is one minterm, called m0, m1, m2 and so on (the number is the binary value of the row). <b>Literal</b> = one variable or its complement.</p>
+<h3>Three-variable map</h3>
+<div class="fig" data-f="k3layout"></div>
+<div class="tip"><b>Key trick:</b> columns go 00, 01, <b>11, 10</b> (Gray code, not normal binary). This guarantees neighbours differ by one bit. The left and right edges also count as neighbours (the map wraps around).</div>
+<h3>Example 1: F(A,B,C) = Σ(1,2,3,5,7)</h3>
+<div class="fig" data-f="k1"></div>
+<p class="cap">Blue group (column pair 01 and 11 in both rows) = C. Red group (m2, m3) = A′B. So <b>F = A′B + C</b>.</p>
+<h3>Example 2: F(x,y,z) = Σ(3,4,6,7), wrap-around</h3>
+<div class="fig" data-f="k2"></div>
+<p class="cap">m4 (100) and m6 (110) differ in one bit so they are neighbours across the edge. <b>F = YZ + XZ′</b>.</p>
+<h3>Four-variable map</h3>
+<div class="fig" data-f="k4layout"></div>
+<h3>Example 3: F(w,x,y,z) = Σ(0,1,2,4,5,6,8,9,12,13,14)</h3>
+<div class="fig" data-f="k3"></div>
+<p class="cap"><b>F = Y′ + W′Z′ + XZ′</b>. Y′ takes the 8 cells in columns 00 and 01. The two Z′ groups use the four corner/edge wrap-arounds.</p>
+<h3>Grouping rules</h3>
+<ul><li>Groups must be rectangles of size 1, 2, 4, 8, 16 (powers of 2).</li>
+<li>Make groups as <b>big</b> as possible and use as <b>few</b> groups as possible. Overlap is allowed.</li>
+<li>Every 1 must be in at least one group. Each group becomes one product term (keep variables that do not change inside the group).</li></ul>
+<div class="tw"><table><tr><th>Adjacent squares</th><th>1</th><th>2</th><th>4</th><th>8</th><th>16</th></tr><tr><td>Literals left (4 variables)</td><td>4</td><td>3</td><td>2</td><td>1</td><td>function = 1</td></tr></table></div>
+<h3>Five variables</h3>
+<p>Use two 4-variable maps stacked (A=0 and A=1). Cells in the same position of both maps are neighbours too. Slide result: F(A,B,C,D,E) = BE + AD′E + A′B′E′.</p>
+<p><b>Completely specified function</b> = output is defined for every input combination. <b>Incompletely specified</b> = some inputs have no defined output (see next section).</p>
+</section>
+
+<section id="dc"><h2>2. Don't-Care Conditions and Product-of-Sums</h2>
+<div class="def"><b>Don't care (X)</b> = an input combination that never happens or whose output does not matter. You may treat each X as 1 (if it helps make a bigger group) or as 0 (ignore it). Never make a group made only of X's.</div>
+<h3>Example: F = Σ(1,3,7,11,15), d = (0,2,5)</h3>
+<div class="fig" data-f="kdc"></div>
+<p class="cap">X's at m0 and m2 let the top row become one group of 4: <b>F = W′X′ + YZ</b>. (Using m5 instead gives F = W′Z + YZ, also valid and same cost.)</p>
+<h3>Product of Sums (POS)</h3>
+<p>Steps: (1) group the <b>0s</b> to get F′ as a sum of products; (2) complement F′ using DeMorgan's law to get F as a product of sums.</p>
+<div class="fig" data-f="kpos"></div>
+<p class="cap">F′ = AB + CD + BD′. Apply DeMorgan: F = (A′+B′)(C′+D′)(B′+D).</p>
+</section>
+
+<section id="nand"><h2>3. NAND and NOR Implementation</h2>
+<div class="def"><b>Universal gate</b> = a gate that alone can build AND, OR and NOT, hence any circuit. NAND and NOR are both universal. NAND = AND followed by NOT. NOR = OR followed by NOT.</div>
+<div class="fig" data-f="nanduni"></div>
+<p class="cap">NOT: tie both NAND inputs together. AND: NAND then NAND-as-NOT. OR: invert each input with a NAND, then NAND them: (x′y′)′ = x + y.</p>
+<h3>Easy technique: AND-OR becomes NAND-NAND</h3>
+<ol><li>Simplify to sum of products with a K-Map.</li><li>Complement the whole function twice, then use DeMorgan on the inner bar. Each product becomes a NAND, and the final OR becomes a NAND.</li></ol>
+<p>Example AB + CD becomes ((AB)′·(CD)′)′. Two-level AND-OR = two-level NAND-NAND (the double inverters cancel out).</p>
+<h3>Example: F(x,y,z) = Σ(1,2,3,4,5,7)</h3>
+<p>K-Map gives F = xy′ + x′y + z. Then F = ((xy′)′ (x′y)′ (z)′)′.</p>
+<div class="fig" data-f="nandex"></div>
+<h3>Multilevel NAND</h3>
+<p>If the function is not in sum-of-products form (e.g. F = A(CD + B) + BC′) you get 3+ levels. Rule: convert every AND/OR to NAND, and wherever a NAND feeds a gate that expects the opposite level, add an inverter. Alternating levels of AND-type and OR-type gates is the clean way to see it.</p>
+<h3>NOR implementation (the dual)</h3>
+<p>Everything is mirrored: NOR is the dual of NAND. Simplify to <b>product of sums</b> (group the 0s), then complement twice. Example: (A+B)(C+D)E becomes ((A+B)′ + (C+D)′ + E′)′. NOR as NOT: tie inputs. NOR-NOR gives OR-AND (product of sums).</p>
+</section>
+
+<section id="xor"><h2>4. Exclusive-OR (XOR), Odd/Even Functions and Parity</h2>
+<div class="def"><b>XOR</b>: output is 1 when the inputs are <b>different</b>. x⊕y = xy′ + x′y. <b>XNOR</b> (equivalence): output is 1 when inputs are the <b>same</b>: (x⊕y)′ = xy + x′y′.</div>
+<div class="tw" data-f="xtab"></div>
+<p><b>Identities:</b> x⊕0 = x; x⊕1 = x′; x⊕x = 0; x⊕x′ = 1; x⊕y′ = x′⊕y = (x⊕y)′. XOR is commutative (A⊕B = B⊕A) and associative ((A⊕B)⊕C = A⊕(B⊕C)).</p>
+<div class="fig" data-f="xorc"></div>
+<p class="cap">XOR built from 4 NAND gates (the shared first NAND saves gates).</p>
+<h3>Odd and Even functions</h3>
+<p>An <b>n-variable XOR is an odd function</b>: it equals 1 for the 2ⁿ/2 minterms that have an <b>odd number of 1s</b>. Three variables: A⊕B⊕C = Σ(1,2,4,7). Four variables: A⊕B⊕C⊕D = Σ(1,2,4,7,8,11,13,14). The <b>complement of an odd function is an even function</b>.</p>
+<div class="fig" data-f="kodd"></div>
+<p class="cap">Checkerboard pattern = odd function. No two 1s are adjacent, so a K-Map cannot simplify it.</p>
+<h3>Parity generation and checking</h3>
+<p>A <b>parity bit</b> is an extra bit added so the total count of 1s is always even (even parity), to catch single-bit errors.</p>
+<ul><li><b>Generator (3-bit message x,y,z):</b> P = x⊕y⊕z. P = 1 exactly when the message has an odd number of 1s, so the total becomes even.</li>
+<li><b>Checker (4 bits received x,y,z,P):</b> C = x⊕y⊕z⊕P. C = 1 means an odd number of 1s arrived, i.e. an error.</li></ul>
+<div class="tw" data-f="ptab"></div>
+</section>
+
+<section id="comb"><h2>5. Combinational Circuits (Chapter 4 basics)</h2>
+<div class="def"><b>Combinational circuit</b>: output depends <b>only on the present inputs</b> (no memory). <b>Sequential circuit</b>: also has storage elements, so output depends on inputs and stored state.</div>
+<p>A combinational block has <b>n inputs</b> and <b>m outputs</b>. <b>Analysis</b> = given a circuit, find its function (Boolean expression or truth table). <b>Design</b> = given a function, build the circuit.</p>
+<h3>Design procedure</h3>
+<ol><li>Find the number of inputs and outputs.</li><li>Write the truth table.</li><li>Simplify each output (K-Map).</li><li>Draw the circuit and verify.</li></ol>
+<h3>Example: BCD to Excess-3 converter</h3>
+<p>Input ABCD is a BCD digit (0 to 9), output wxyz = value + 3. Inputs 10 to 15 never occur, so they are don't-cares. K-Maps give:</p>
+<p><code>w = A + BC + BD</code> &nbsp; <code>x = B′C + B′D + BC′D′</code> &nbsp; <code>y = C′D′ + CD</code> &nbsp; <code>z = D′</code></p>
+<p>Example check: BCD 0101 (5) gives 1000 (8). Yes, 5 + 3 = 8.</p>
+</section>
+
+<section id="dec"><h2>6. Decoders</h2>
+<h3><span class="q">Q1</span>Decoder: definition and circuit</h3>
+<div class="def"><b>Decoder</b> = a combinational circuit that converts <b>n input lines</b> into up to <b>2ⁿ unique output lines</b>. For each input code <b>exactly one output is 1</b> (like one lamp lighting up). Each output is a <b>minterm</b> of the inputs.</div>
+<div class="fig" data-f="dec2b"></div>
+<div class="tw" data-f="dec2t"></div>
+<p><b>Circuit:</b> one AND gate per output. The inputs and their complements (made with NOT gates) feed the ANDs.</p>
+<div class="fig" data-f="dec2c"></div>
+<h3><span class="q">Q2</span>3-to-8 Decoder (very important)</h3>
+<p>3 inputs (I2 I1 I0), 8 outputs (Y0 to Y7). Output Yk is 1 only when the input binary number equals k. Block diagram, circuit and truth table:</p>
+<div class="fig" data-f="dec3b"></div>
+<div class="fig" data-f="dec3c"></div>
+<div class="tw" data-f="dec3t"></div>
+<div class="tip">Equations: Y0 = I2′I1′I0′, Y1 = I2′I1′I0, Y2 = I2′I1I0′, Y3 = I2′I1I0, Y4 = I2I1′I0′, Y5 = I2I1′I0, Y6 = I2I1I0′, Y7 = I2I1I0. Eight 3-input AND gates and 3 inverters.</div>
+<h3><span class="q">Q3</span>Enable control</h3>
+<div class="def"><b>Enable (E)</b> = an on/off switch for the decoder. If E = 0, <b>all outputs are 0</b> no matter what the inputs are. If E = 1, it works normally. Circuit change: add E as an extra input to every AND gate.</div>
+<div class="fig" data-f="decEb"></div>
+<div class="fig" data-f="decEc"></div>
+<div class="tw" data-f="decEt"></div>
+<p><b>Active-high vs active-low:</b> an active-high decoder makes the selected output 1 (others 0). An active-low decoder (built with NAND gates) makes the selected output <b>0</b> and all others 1. Same idea, inverted outputs.</p>
+<h3>Decoder expansion</h3>
+<p>Build a 3-to-8 from two 2-to-4 decoders with enable: I2 selects which one is on. Lower decoder gets E = I2′ (outputs Y0 to Y3), upper gets E = I2 (outputs Y4 to Y7). I1 and I0 go to both.</p>
+<div class="fig" data-f="decexp"></div>
+<h3>Implementing a function with a decoder</h3>
+<p>The decoder makes <b>every minterm</b>, so just OR the minterms you need. Full adder: S(x,y,z) = Σ(1,2,4,7) and C(x,y,z) = Σ(3,5,6,7). Use a 3-to-8 decoder with inputs x,y,z, feed Y1,Y2,Y4,Y7 into one OR gate (sum), and Y3,Y5,Y6,Y7 into another OR gate (carry).</p>
+</section>
+
+<section id="enc"><h2>7. Encoders</h2>
+<h3><span class="q">Q4</span>Encoder: definition and circuit</h3>
+<div class="def"><b>Encoder</b> = does the <b>reverse of a decoder</b>. It has 2ⁿ (or fewer) input lines and <b>n output lines</b>, and outputs the binary code of whichever input is active. Constraint: <b>only one input may be 1 at a time</b>.</div>
+<p>Each output is an OR gate collecting the inputs whose code has a 1 in that bit position.</p>
+<h3><span class="q">Q5</span>Octal-to-Binary encoder (8-to-3)</h3>
+<div class="fig" data-f="encb"></div>
+<div class="tw" data-f="enct"></div>
+<p><b>Y0 = I1 + I3 + I5 + I7</b> &nbsp; <b>Y1 = I2 + I3 + I6 + I7</b> &nbsp; <b>Y2 = I4 + I5 + I6 + I7</b></p>
+<div class="fig" data-f="encc"></div>
+<p class="cap">I0 is not connected: when all inputs are 0 the output is 000 anyway. (Problem: this cannot tell "I0 active" from "nothing active". Priority encoders fix this with a valid bit V.)</p>
+<h3>Priority encoder</h3>
+<p>If several inputs are 1 at once, the <b>highest-numbered input wins</b>. Extra output <b>V (valid)</b> = 1 if any input is 1.</p>
+<div class="tw" data-f="pet"></div>
+</section>
+
+<section id="mux"><h2>8. Multiplexers (MUX)</h2>
+<h3><span class="q">Q6</span>Multiplexer: definition, block diagram, circuit</h3>
+<div class="def"><b>Multiplexer (MUX, "data selector")</b> = a combinational circuit that selects <b>one of 2ⁿ input lines</b> and sends it to a <b>single output</b>. <b>n select lines</b> choose which input. Think of a railway switch with many tracks in and one track out.</div>
+<h3><span class="q">Q7</span>4-to-1 MUX: block diagram, truth table, circuit diagram</h3>
+<div class="fig" data-f="m4b"></div>
+<div class="tw" data-f="m4t"></div>
+<p><b>Y = S1′S0′I0 + S1′S0I1 + S1S0′I2 + S1S0I3</b>. Circuit: a 2-to-4 decoder on S1,S0 gates each data input through an AND, and an OR combines them.</p>
+<div class="fig" data-f="m4c"></div>
+<h3>MUX expansion</h3>
+<p>A 4-to-1 MUX from three 2-to-1 MUXes: two first-level MUXes (select S0) and one second-level MUX (select S1). Likewise an 8-to-1 MUX = two 4-to-1 MUXes + one 2-to-1 MUX (S2 picks which one).</p>
+<div class="fig" data-f="m4from2"></div>
+<p><b>Quad 2-to-1 MUX:</b> four 2-to-1 MUXes sharing one select line S, so you can pick between two whole 4-bit words (A3..A0 or B3..B0). A shared enable E can switch all outputs off.</p>
+<h3>Three-state (tri-state) gates</h3>
+<p>A tri-state buffer has a control C: C = 1 passes A to Y; C = 0 gives <b>Hi-Z</b> (high impedance, "disconnected"). Several tri-state outputs can share one wire if only one is enabled, which is another way to build a MUX.</p>
+</section>
+
+<section id="muximp"><h2>9. Implementing Functions with Multiplexers</h2>
+<div class="tip"><span class="q">Q8</span> Rule: an <b>(n+1)-variable</b> function fits a <b>2ⁿ-to-1 MUX</b>. Use n variables as <b>selectors</b> and the remaining variable (or 0, 1) on the <b>input lines</b>. There are <b>2 procedures</b>; learn both.</div>
+<h3>Procedure 1 (table method): F(A,B,C) = Σ(1,3,5,6)</h3>
+<p><b>Version a: B,C are selectors, A goes to input lines.</b></p>
+<ol><li>Write columns I0..I3 (= BC = 00,01,10,11).</li><li>Row 1: minterms where A′ (0,1,2,3). Row 2: minterms where A (4,5,6,7).</li><li>Circle the minterms of F.</li><li>For each column: none circled = <b>0</b>; both circled = <b>1</b>; only bottom circled = <b>A</b>; only top circled = <b>A′</b>.</li></ol>
+<div class="tw" data-f="p1t"></div>
+<div class="fig" data-f="p1d"></div>
+<p><b>Version b: A,B are selectors, C goes to input lines</b> (same function). Top row = C′ minterms (0,2,4,6), bottom = C minterms (1,3,5,7). Result: I0 = C, I1 = C, I2 = C, I3 = C′.</p>
+<div class="fig" data-f="p1e"></div>
+<h3>Procedure 2 (truth table method)</h3>
+<ol><li>Write the full truth table.</li><li>The <b>first n variables</b> (all except the last) go to the select lines.</li><li>For each select combination, see what F equals as a function of the <b>last</b> variable: it will be 0, 1, the variable, or its complement.</li><li>Connect those values to the data inputs in order.</li></ol>
+<p><b>Example A:</b> F(x,y) = Σ(0,1,3). Table F = 1,1,0,1 for xy = 00,01,10,11. Selectors x,y, inputs 1,1,0,1 (a 4-to-1 MUX with constants).</p>
+<div class="fig" data-f="p2a"></div>
+<p><b>Example B:</b> F(x,y,z) = Σ(1,2,6,7). Selectors x,y. For xy=00: F = z. xy=01: F = z′. xy=10: F = 0. xy=11: F = 1. Only a 4-to-1 MUX needed instead of 8-to-1.</p>
+<div class="fig" data-f="p2b"></div>
+<p><b>Example C:</b> F(A,B,C,D) = Σ(1,3,4,11,12,13,14,15). Selectors A,B,C (8-to-1 MUX), D on inputs. ABC=000: D; 001: D; 010: D′; 011: 0; 100: 0; 101: D; 110: 1; 111: 1.</p>
+<div class="fig" data-f="p2c"></div>
+<div class="tip"><b>Which one when?</b> Procedure 2 always uses the <b>last</b> variable on the input lines. If you need a <b>first or middle</b> variable on the input lines (like A in version a), use <b>Procedure 1</b>.</div>
+</section>
+
+<section id="demux"><h2>10. Demultiplexers (DEMUX)</h2>
+<h3><span class="q">Q9</span>Demultiplexer: 1 input to 2ⁿ outputs</h3>
+<div class="def"><b>Demultiplexer</b> = the reverse of a MUX. It takes <b>one input line</b> and directs it to <b>one of 2ⁿ output lines</b>, chosen by <b>n select lines</b>. The unselected outputs stay 0.</div>
+<div class="fig" data-f="dmb"></div>
+<div class="tw" data-f="dmt"></div>
+<h3><span class="q">Q10</span>DEMUX and Decoder: make both (they are the same circuit!)</h3>
+<p>A <b>decoder with an enable input</b> works as a demultiplexer: use the <b>enable E as the data input I</b> and the decoder inputs as the select lines S1,S0. When the data I = 1 it appears on the selected output; when I = 0 everything is 0.</p>
+<p><b>Circuit as a DEMUX (data I, selects S1 S0):</b></p>
+<div class="fig" data-f="dmc"></div>
+<p><b>Same circuit as a decoder with enable (inputs I1 I0, enable E):</b></p>
+<div class="fig" data-f="decEc"></div>
+<div class="tip">Remember: <b>Decoder + Enable = DEMUX</b>. Also remember MUX is many-to-one, DEMUX is one-to-many.</div>
+</section>
+
+<section id="gloss"><h2>Quick Glossary</h2>
+<ul><li><b>SOP</b>: sum of products (ANDs ORed together). <b>POS</b>: product of sums (ORs ANDed together).</li>
+<li><b>Dual</b>: swap AND with OR and 0 with 1. NOR is the dual of NAND.</li>
+<li><b>Select line</b>: input that chooses which data line is used. <b>Enable</b>: input that turns the circuit on or off.</li>
+<li><b>Hi-Z</b>: high impedance, the output is electrically disconnected.</li>
+<li><b>Sizes:</b> decoder n to 2ⁿ, encoder 2ⁿ to n, MUX 2ⁿ to 1 (n selects), DEMUX 1 to 2ⁿ (n selects).</li></ul>
+</section>
+</main>
+<script>
+const C='#1f2a44',sv=(w,h,c)=>`<svg viewBox="0 0 ${w} ${h}" width="${w}">${c}</svg>`,
+ln=p=>`<polyline class="w" points="${p}"/>`,
+tx=(x,y,s,a='middle',e='')=>`<text x="${x}" y="${y}" text-anchor="${a}" ${e}>${s}</text>`,
+dot=(x,y)=>`<circle cx="${x}" cy="${y}" r="3" fill="${C}"/>`,
+andp=(x,y,h)=>`<path class="g" d="M${x} ${y}h30a${h/2} ${h/2} 0 0 1 0 ${h}h-30z"/>`,
+orp=(x,y,h)=>`<path class="g" d="M${x} ${y}Q${x+30} ${y} ${x+48} ${y+h/2}Q${x+30} ${y+h} ${x} ${y+h}Q${x+14} ${y+h/2} ${x} ${y}z"/>`,
+bub=(x,y)=>`<circle class="g" cx="${x}" cy="${y}" r="4"/>`,
+nand=(x,y,h=36)=>andp(x,y,h)+bub(x+34+h/2,y+h/2),
+nn=(x,y)=>nand(x,y)+ln(`${x-8},${y+9} ${x},${y+9}`)+ln(`${x-8},${y+27} ${x},${y+27}`)+ln(`${x-8},${y+9} ${x-8},${y+27}`),
+tb=(h,r)=>`<table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(a=>`<tr>${a.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table>`,
+bin=(k,n)=>k.toString(2).padStart(n,'0').split('');
+function net(o){const V=o.V||70,nv=o.vars.length,X={};let s='',gx=60+V*nv+10;
+const hs=o.rows.map(r=>Math.max(36,16*(r.length+1))),ys=[];let y=54;hs.forEach(h=>{ys.push(y);y+=h+16});const H=y;
+o.vars.forEach((v,k)=>{const n=v.replace('!',''),xt=60+V*k;X[n]=xt;s+=tx(xt,14,n)+ln(`${xt},18 ${xt},${H}`);
+if(v==n){const xc=xt+30;X[n+"'"]=xc;s+=dot(xt,30)+ln(`${xt},30 ${xt+4},30`)+`<path class="g" d="M${xt+4} 22v16l14-8z"/>`+bub(xt+21,30)+ln(`${xt+25},30 ${xc},30 ${xc},${H}`)}});
+const outs=[];
+o.rows.forEach((r,i)=>{const h=hs[i],y0=ys[i],n=r.length;
+r.forEach((it,j)=>{const iy=y0+h*(j+1)/(n+1);
+if(it[0]=='>')s+=tx(6,iy+4,it.slice(1),'start')+ln(`30,${iy} ${gx},${iy}`);else s+=dot(X[it],iy)+ln(`${X[it]},${iy} ${gx},${iy}`)});
+const or=o.g=='or';s+=or?orp(gx,y0,h):andp(gx,y0,h);outs.push([or?gx+48:gx+30+h/2,y0+h/2])});
+let W=gx+140;
+if(o.or){const m=outs.length,oh=m*16+20,cy=(outs[0][1]+outs[m-1][1])/2,oy=cy-oh/2,ox=Math.max(...outs.map(p=>p[0]))+m*8+30;
+outs.forEach((p,i)=>{const iy=oy+oh*(i+1)/(m+1),ex=p[0]+12+i*8;s+=ln(`${p[0]},${p[1]} ${ex},${p[1]} ${ex},${iy} ${ox},${iy}`)});
+s+=orp(ox,oy,oh)+ln(`${ox+48},${cy} ${ox+80},${cy}`)+tx(ox+86,cy+4,o.or,'start');W=ox+130}
+else outs.forEach((p,i)=>s+=ln(`${p[0]},${p[1]} ${p[0]+30},${p[1]}`)+tx(p[0]+36,p[1]+4,o.outs[i],'start'));
+return sv(W,H+6,s)}
+const lits=(vs,k)=>{const b=bin(k,vs.length);return vs.map((v,i)=>b[i]=='1'?v:v+"'")};
+function mux(x,y,ins,sels,out,w=70){const n=ins.length,h=24*n+16;let s=`<path class="g" d="M${x} ${y}L${x+w} ${y+14}V${y+h-14}L${x} ${y+h}z"/>`+tx(x+w/2,y+h/2+4,'MUX');
+ins.forEach((v,i)=>{const iy=y+20+24*i;s+=ln(`${x-26},${iy} ${x},${iy}`)+tx(x-30,iy+4,v,'end')});
+s+=ln(`${x+w},${y+h/2} ${x+w+26},${y+h/2}`)+tx(x+w+30,y+h/2+4,out,'start');
+sels.forEach((v,j)=>{const sx=x+w*(j+1)/(sels.length+1),sy=y+h-14*(sx-x)/w;s+=ln(`${sx},${sy} ${sx},${y+h+18}`)+tx(sx,y+h+32,v)});return s}
+function box(x,y,w,h,t,ins,outs,bot){let s=`<rect class="g" x="${x}" y="${y}" width="${w}" height="${h}" rx="4"/>`+tx(x+w/2,y+h/2+4,t);
+ins.forEach((v,i)=>{const iy=y+h*(i+1)/(ins.length+1);s+=ln(`${x-24},${iy} ${x},${iy}`)+tx(x-28,iy+4,v,'end')});
+outs.forEach((v,i)=>{const oy=y+h*(i+1)/(outs.length+1);s+=ln(`${x+w},${oy} ${x+w+24},${oy}`)+tx(x+w+28,oy+4,v,'start')});
+(bot||[]).forEach((v,i)=>{const bx=x+w*(i+1)/(bot.length+1);s+=ln(`${bx},${y+h} ${bx},${y+h+20}`)+tx(bx,y+h+34,v)});return s}
+function kmap(o){const cl=['00','01','11','10'],cw=54,ch=40,ox=78,oy=40,R=o.rows.length;
+let s=tx(ox-40,oy-10,o.rv+' \\ '+o.cv,'middle','style="font-size:12px"');
+cl.forEach((c,i)=>s+=tx(ox+cw*i+cw/2,oy-10,c));o.rows.forEach((r,i)=>s+=tx(ox-10,oy+ch*i+ch/2+5,r,'end'));
+for(let r=0;r<R;r++)for(let c=0;c<4;c++){const v=o.v[r][c],x=ox+c*cw,y=oy+r*ch;
+s+=`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" fill="#fff" stroke="${C}"/>`+tx(x+5,y+12,parseInt(o.rows[r]+cl[c],2),'start','style="font-size:9px;fill:#8a94ad"')+tx(x+cw/2,y+ch/2+6,v,'middle',v===1?'style="font-weight:700;font-size:16px"':'style="font-size:15px;fill:#8a94ad"')}
+(o.gr||[]).forEach((g,i)=>{g.rs.forEach(([r,c,h,w])=>{const d=3+i*2;s+=`<rect x="${ox+c*cw+d}" y="${oy+r*ch+d}" width="${w*cw-2*d}" height="${h*ch-2*d}" rx="12" fill="${g.c}" fill-opacity=".13" stroke="${g.c}" stroke-width="2.4"/>`});
+s+=tx(ox+cw*4+16,oy+22+i*22,g.t,'start',`style="fill:${g.c};font-weight:700"`)});
+return sv(ox+cw*4+120,oy+ch*R+10,s)}
+const B='#2563eb',Rd='#dc2626',Gn='#16a34a',Or='#d97706',R2=['0','1'],R4=['00','01','11','10'];
+const tt=(n,e)=>{const r=[];for(let k=0;k<2**n;k++){const row=bin(k,n);for(let j=2**n-1;j>=0;j--)row.push(j==k?1:0);r.push(row)}return r};
+const F={
+k3layout:()=>kmap({rv:'x',cv:'yz',rows:R2,v:[['','','',''],['','','','']],gr:[]})+'<p class="cap">Small numbers in each cell are minterm numbers: 0,1,3,2 on the top row and 4,5,7,6 on the bottom.</p>',
+k4layout"></div>
+<h3>Example 3: F(w,x,y,z) = Σ(0,1,2,4,5,6,8,9,12,13,14)</h3>
+<div class="fig" data-f="k3"></div>
+<p class="cap"><b>F = Y′ + W′Z′ + XZ′</b>. Y′ takes the 8 cells in columns 00 and 01. The two Z′ groups use the four corner/edge wrap-arounds.</p>
+<h3>Grouping rules</h3>
+<ul><li>Groups must be rectangles of size 1, 2, 4, 8, 16 (powers of 2).</li>
+<li>Make groups as <b>big</b> as possible and use as <b>few</b> groups as possible. Overlap is allowed.</li>
+<li>Every 1 must be in at least one group. Each group becomes one product term (keep variables that do not change inside the group).</li></ul>
+<div class="tw"><table><tr><th>Adjacent squares</th><th>1</th><th>2</th><th>4</th><th>8</th><th>16</th></tr><tr><td>Literals left (4 variables)</td><td>4</td><td>3</td><td>2</td><td>1</td><td>function = 1</td></tr></table></div>
+<h3>Five variables</h3>
+<p>Use two 4-variable maps stacked (A=0 and A=1). Cells in the same position of both maps are neighbours too. Slide result: F(A,B,C,D,E) = BE + AD′E + A′B′E′.</p>
+<p><b>Completely specified function</b> = output is defined for every input combination. <b>Incompletely specified</b> = some inputs have no defined output (see next section).</p>
+</section>
+
+<section id="dc"><h2>2. Don't-Care Conditions and Product-of-Sums</h2>
+<div class="def"><b>Don't care (X)</b> = an input combination that never happens or whose output does not matter. You may treat each X as 1 (if it helps make a bigger group) or as 0 (ignore it). Never make a group made only of X's.</div>
+<h3>Example: F = Σ(1,3,7,11,15), d = (0,2,5)</h3>
+<div class="fig" data-f="kdc"></div>
+<p class="cap">X's at m0 and m2 let the top row become one group of 4: <b>F = W′X′ + YZ</b>. (Using m5 instead gives F = W′Z + YZ, also valid and same cost.)</p>
+<h3>Product of Sums (POS)</h3>
+<p>Steps: (1) group the <b>0s</b> to get F′ as a sum of products; (2) complement F′ using DeMorgan's law to get F as a product of sums.</p>
+<div class="fig" data-f="kpos"></div>
+<p class="cap">F′ = AB + CD + BD′. Apply DeMorgan: F = (A′+B′)(C′+D′)(B′+D).</p>
+</section>
+
+<section id="nand"><h2>3. NAND and NOR Implementation</h2>
+<div class="def"><b>Universal gate</b> = a gate that alone can build AND, OR and NOT, hence any circuit. NAND and NOR are both universal. NAND = AND followed by NOT. NOR = OR followed by NOT.</div>
+<div class="fig" data-f="nanduni"></div>
+<p class="cap">NOT: tie both NAND inputs together. AND: NAND then NAND-as-NOT. OR: invert each input with a NAND, then NAND them: (x′y′)′ = x + y.</p>
+<h3>Easy technique: AND-OR becomes NAND-NAND</h3>
+<ol><li>Simplify to sum of products with a K-Map.</li><li>Complement the whole function twice, then use DeMorgan on the inner bar. Each product becomes a NAND, and the final OR becomes a NAND.</li></ol>
+<p>Example AB + CD becomes ((AB)′·(CD)′)′. Two-level AND-OR = two-level NAND-NAND (the double inverters cancel out).</p>
+<h3>Example: F(x,y,z) = Σ(1,2,3,4,5,7)</h3>
+<p>K-Map gives F = xy′ + x′y + z. Then F = ((xy′)′ (x′y)′ (z)′)′.</p>
+<div class="fig" data-f="nandex"></div>
+<h3>Multilevel NAND</h3>
+<p>If the function is not in sum-of-products form (e.g. F = A(CD + B) + BC′) you get 3+ levels. Rule: convert every AND/OR to NAND, and wherever a NAND feeds a gate that expects the opposite level, add an inverter. Alternating levels of AND-type and OR-type gates is the clean way to see it.</p>
+<h3>NOR implementation (the dual)</h3>
+<p>Everything is mirrored: NOR is the dual of NAND. Simplify to <b>product of sums</b> (group the 0s), then complement twice. Example: (A+B)(C+D)E becomes ((A+B)′ + (C+D)′ + E′)′. NOR as NOT: tie inputs. NOR-NOR gives OR-AND (product of sums).</p>
+</section>
+
+<section id="xor"><h2>4. Exclusive-OR (XOR), Odd/Even Functions and Parity</h2>
+<div class="def"><b>XOR</b>: output is 1 when the inputs are <b>different</b>. x⊕y = xy′ + x′y. <b>XNOR</b> (equivalence): output is 1 when inputs are the <b>same</b>: (x⊕y)′ = xy + x′y′.</div>
+<div class="tw" data-f="xtab"></div>
+<p><b>Identities:</b> x⊕0 = x; x⊕1 = x′; x⊕x = 0; x⊕x′ = 1; x⊕y′ = x′⊕y = (x⊕y)′. XOR is commutative (A⊕B = B⊕A) and associative ((A⊕B)⊕C = A⊕(B⊕C)).</p>
+<div class="fig" data-f="xorc"></div>
+<p class="cap">XOR built from 4 NAND gates (the shared first NAND saves gates).</p>
+<h3>Odd and Even functions</h3>
+<p>An <b>n-variable XOR is an odd function</b>: it equals 1 for the 2ⁿ/2 minterms that have an <b>odd number of 1s</b>. Three variables: A⊕B⊕C = Σ(1,2,4,7). Four variables: A⊕B⊕C⊕D = Σ(1,2,4,7,8,11,13,14). The <b>complement of an odd function is an even function</b>.</p>
+<div class="fig" data-f="kodd"></div>
+<p class="cap">Checkerboard pattern = odd function. No two 1s are adjacent, so a K-Map cannot simplify it.</p>
+<h3>Parity generation and checking</h3>
+<p>A <b>parity bit</b> is an extra bit added so the total count of 1s is always even (even parity), to catch single-bit errors.</p>
+<ul><li><b>Generator (3-bit message x,y,z):</b> P = x⊕y⊕z. P = 1 exactly when the message has an odd number of 1s, so the total becomes even.</li>
+<li><b>Checker (4 bits received x,y,z,P):</b> C = x⊕y⊕z⊕P. C = 1 means an odd number of 1s arrived, i.e. an error.</li></ul>
+<div class="tw" data-f="ptab"></div>
+</section>
+
+<section id="comb"><h2>5. Combinational Circuits (Chapter 4 basics)</h2>
+<div class="def"><b>Combinational circuit</b>: output depends <b>only on the present inputs</b> (no memory). <b>Sequential circuit</b>: also has storage elements, so output depends on inputs and stored state.</div>
+<p>A combinational block has <b>n inputs</b> and <b>m outputs</b>. <b>Analysis</b> = given a circuit, find its function (Boolean expression or truth table). <b>Design</b> = given a function, build the circuit.</p>
+<h3>Design procedure</h3>
+<ol><li>Find the number of inputs and outputs.</li><li>Write the truth table.</li><li>Simplify each output (K-Map).</li><li>Draw the circuit and verify.</li></ol>
+<h3>Example: BCD to Excess-3 converter</h3>
+<p>Input ABCD is a BCD digit (0 to 9), output wxyz = value + 3. Inputs 10 to 15 never occur, so they are don't-cares. K-Maps give:</p>
+<p><code>w = A + BC + BD</code> &nbsp; <code>x = B′C + B′D + BC′D′</code> &nbsp; <code>y = C′D′ + CD</code> &nbsp; <code>z = D′</code></p>
+<p>Example check: BCD 0101 (5) gives 1000 (8). Yes, 5 + 3 = 8.</p>
+</section>
+
+<section id="dec"><h2>6. Decoders</h2>
+<h3><span class="q">Q1</span>Decoder: definition and circuit</h3>
+<div class="def"><b>Decoder</b> = a combinational circuit that converts <b>n input lines</b> into up to <b>2ⁿ unique output lines</b>. For each input code <b>exactly one output is 1</b> (like one lamp lighting up). Each output is a <b>minterm</b> of the inputs.</div>
+<div class="fig" data-f="dec2b"></div>
+<div class="tw" data-f="dec2t"></div>
+<p><b>Circuit:</b> one AND gate per output. The inputs and their complements (made with NOT gates) feed the ANDs.</p>
+<div class="fig" data-f="dec2c"></div>
+<h3><span class="q">Q2</span>3-to-8 Decoder (very important)</h3>
+<p>3 inputs (I2 I1 I0), 8 outputs (Y0 to Y7). Output Yk is 1 only when the input binary number equals k. Block diagram, circuit and truth table:</p>
+<div class="fig" data-f="dec3b"></div>
+<div class="fig" data-f="dec3c"></div>
+<div class="tw" data-f="dec3t"></div>
+<div class="tip">Equations: Y0 = I2′I1′I0′, Y1 = I2′I1′I0, Y2 = I2′I1I0′, Y3 = I2′I1I0, Y4 = I2I1′I0′, Y5 = I2I1′I0, Y6 = I2I1I0′, Y7 = I2I1I0. Eight 3-input AND gates and 3 inverters.</div>
+<h3><span class="q">Q3</span>Enable control</h3>
+<div class="def"><b>Enable (E)</b> = an on/off switch for the decoder. If E = 0, <b>all outputs are 0</b> no matter what the inputs are. If E = 1, it works normally. Circuit change: add E as an extra input to every AND gate.</div>
+<div class="fig" data-f="decEb"></div>
+<div class="fig" data-f="decEc"></div>
+<div class="tw" data-f="decEt"></div>
+<p><b>Active-high vs active-low:</b> an active-high decoder makes the selected output 1 (others 0). An active-low decoder (built with NAND gates) makes the selected output <b>0</b> and all others 1. Same idea, inverted outputs.</p>
+<h3>Decoder expansion</h3>
+<p>Build a 3-to-8 from two 2-to-4 decoders with enable: I2 selects which one is on. Lower decoder gets E = I2′ (outputs Y0 to Y3), upper gets E = I2 (outputs Y4 to Y7). I1 and I0 go to both.</p>
+<div class="fig" data-f="decexp"></div>
+<h3>Implementing a function with a decoder</h3>
+<p>The decoder makes <b>every minterm</b>, so just OR the minterms you need. Full adder: S(x,y,z) = Σ(1,2,4,7) and C(x,y,z) = Σ(3,5,6,7). Use a 3-to-8 decoder with inputs x,y,z, feed Y1,Y2,Y4,Y7 into one OR gate (sum), and Y3,Y5,Y6,Y7 into another OR gate (carry).</p>
+</section>
+
+<section id="enc"><h2>7. Encoders</h2>
+<h3><span class="q">Q4</span>Encoder: definition and circuit</h3>
+<div class="def"><b>Encoder</b> = does the <b>reverse of a decoder</b>. It has 2ⁿ (or fewer) input lines and <b>n output lines</b>, and outputs the binary code of whichever input is active. Constraint: <b>only one input may be 1 at a time</b>.</div>
+<p>Each output is an OR gate collecting the inputs whose code has a 1 in that bit position.</p>
+<h3><span class="q">Q5</span>Octal-to-Binary encoder (8-to-3)</h3>
+<div class="fig" data-f="encb"></div>
+<div class="tw" data-f="enct"></div>
+<p><b>Y0 = I1 + I3 + I5 + I7</b> &nbsp; <b>Y1 = I2 + I3 + I6 + I7</b> &nbsp; <b>Y2 = I4 + I5 + I6 + I7</b></p>
+<div class="fig" data-f="encc"></div>
+<p class="cap">I0 is not connected: when all inputs are 0 the output is 000 anyway. (Problem: this cannot tell "I0 active" from "nothing active". Priority encoders fix this with a valid bit V.)</p>
+<h3>Priority encoder</h3>
+<p>If several inputs are 1 at once, the <b>highest-numbered input wins</b>. Extra output <b>V (valid)</b> = 1 if any input is 1.</p>
+<div class="tw" data-f="pet"></div>
+</section>
+
+<section id="mux"><h2>8. Multiplexers (MUX)</h2>
+<h3><span class="q">Q6</span>Multiplexer: definition, block diagram, circuit</h3>
+<div class="def"><b>Multiplexer (MUX, "data selector")</b> = a combinational circuit that selects <b>one of 2ⁿ input lines</b> and sends it to a <b>single output</b>. <b>n select lines</b> choose which input. Think of a railway switch with many tracks in and one track out.</div>
+<h3><span class="q">Q7</span>4-to-1 MUX: block diagram, truth table, circuit diagram</h3>
+<div class="fig" data-f="m4b"></div>
+<div class="tw" data-f="m4t"></div>
+<p><b>Y = S1′S0′I0 + S1′S0I1 + S1S0′I2 + S1S0I3</b>. Circuit: a 2-to-4 decoder on S1,S0 gates each data input through an AND, and an OR combines them.</p>
+<div class="fig" data-f="m4c"></div>
+<h3>MUX expansion</h3>
+<p>A 4-to-1 MUX from three 2-to-1 MUXes: two first-level MUXes (select S0) and one second-level MUX (select S1). Likewise an 8-to-1 MUX = two 4-to-1 MUXes + one 2-to-1 MUX (S2 picks which one).</p>
+<div class="fig" data-f="m4from2"></div>
+<p><b>Quad 2-to-1 MUX:</b> four 2-to-1 MUXes sharing one select line S, so you can pick between two whole 4-bit words (A3..A0 or B3..B0). A shared enable E can switch all outputs off.</p>
+<h3>Three-state (tri-state) gates</h3>
+<p>A tri-state buffer has a control C: C = 1 passes A to Y; C = 0 gives <b>Hi-Z</b> (high impedance, "disconnected"). Several tri-state outputs can share one wire if only one is enabled, which is another way to build a MUX.</p>
+</section>
+
+<section id="muximp"><h2>9. Implementing Functions with Multiplexers</h2>
+<div class="tip"><span class="q">Q8</span> Rule: an <b>(n+1)-variable</b> function fits a <b>2ⁿ-to-1 MUX</b>. Use n variables as <b>selectors</b> and the remaining variable (or 0, 1) on the <b>input lines</b>. There are <b>2 procedures</b>; learn both.</div>
+<h3>Procedure 1 (table method): F(A,B,C) = Σ(1,3,5,6)</h3>
+<p><b>Version a: B,C are selectors, A goes to input lines.</b></p>
+<ol><li>Write columns I0..I3 (= BC = 00,01,10,11).</li><li>Row 1: minterms where A′ (0,1,2,3). Row 2: minterms where A (4,5,6,7).</li><li>Circle the minterms of F.</li><li>For each column: none circled = <b>0</b>; both circled = <b>1</b>; only bottom circled = <b>A</b>; only top circled = <b>A′</b>.</li></ol>
+<div class="tw" data-f="p1t"></div>
+<div class="fig" data-f="p1d"></div>
+<p><b>Version b: A,B are selectors, C goes to input lines</b> (same function). Top row = C′ minterms (0,2,4,6), bottom = C minterms (1,3,5,7). Result: I0 = C, I1 = C, I2 = C, I3 = C′.</p>
+<div class="fig" data-f="p1e"></div>
+<h3>Procedure 2 (truth table method)</h3>
+<ol><li>Write the full truth table.</li><li>The <b>first n variables</b> (all except the last) go to the select lines.</li><li>For each select combination, see what F equals as a function of the <b>last</b> variable: it will be 0, 1, the variable, or its complement.</li><li>Connect those values to the data inputs in order.</li></ol>
+<p><b>Example A:</b> F(x,y) = Σ(0,1,3). Table F = 1,1,0,1 for xy = 00,01,10,11. Selectors x,y, inputs 1,1,0,1 (a 4-to-1 MUX with constants).</p>
+<div class="fig" data-f="p2a"></div>
+<p><b>Example B:</b> F(x,y,z) = Σ(1,2,6,7). Selectors x,y. For xy=00: F = z. xy=01: F = z′. xy=10: F = 0. xy=11: F = 1. Only a 4-to-1 MUX needed instead of 8-to-1.</p>
+<div class="fig" data-f="p2b"></div>
+<p><b>Example C:</b> F(A,B,C,D) = Σ(1,3,4,11,12,13,14,15). Selectors A,B,C (8-to-1 MUX), D on inputs. ABC=000: D; 001: D; 010: D′; 011: 0; 100: 0; 101: D; 110: 1; 111: 1.</p>
+<div class="fig" data-f="p2c"></div>
+<div class="tip"><b>Which one when?</b> Procedure 2 always uses the <b>last</b> variable on the input lines. If you need a <b>first or middle</b> variable on the input lines (like A in version a), use <b>Procedure 1</b>.</div>
+</section>
+
+<section id="demux"><h2>10. Demultiplexers (DEMUX)</h2>
+<h3><span class="q">Q9</span>Demultiplexer: 1 input to 2ⁿ outputs</h3>
+<div class="def"><b>Demultiplexer</b> = the reverse of a MUX. It takes <b>one input line</b> and directs it to <b>one of 2ⁿ output lines</b>, chosen by <b>n select lines</b>. The unselected outputs stay 0.</div>
+<div class="fig" data-f="dmb"></div>
+<div class="tw" data-f="dmt"></div>
+<h3><span class="q">Q10</span>DEMUX and Decoder: make both (they are the same circuit!)</h3>
+<p>A <b>decoder with an enable input</b> works as a demultiplexer: use the <b>enable E as the data input I</b> and the decoder inputs as the select lines S1,S0. When the data I = 1 it appears on the selected output; when I = 0 everything is 0.</p>
+<p><b>Circuit as a DEMUX (data I, selects S1 S0):</b></p>
+<div class="fig" data-f="dmc"></div>
+<p><b>Same circuit as a decoder with enable (inputs I1 I0, enable E):</b></p>
+<div class="fig" data-f="decEc"></div>
+<div class="tip">Remember: <b>Decoder + Enable = DEMUX</b>. Also remember MUX is many-to-one, DEMUX is one-to-many.</div>
+</section>
+
+<section id="gloss"><h2>Quick Glossary</h2>
+<ul><li><b>SOP</b>: sum of products (ANDs ORed together). <b>POS</b>: product of sums (ORs ANDed together).</li>
+<li><b>Dual</b>: swap AND with OR and 0 with 1. NOR is the dual of NAND.</li>
+<li><b>Select line</b>: input that chooses which data line is used. <b>Enable</b>: input that turns the circuit on or off.</li>
+<li><b>Hi-Z</b>: high impedance, the output is electrically disconnected.</li>
+<li><b>Sizes:</b> decoder n to 2ⁿ, encoder 2ⁿ to n, MUX 2ⁿ to 1 (n selects), DEMUX 1 to 2ⁿ (n selects).</li></ul>
+</section>
+</main>
+<script>
+const C='#1f2a44',sv=(w,h,c)=>`<svg viewBox="0 0 ${w} ${h}" width="${w}">${c}</svg>`,
+ln=p=>`<polyline class="w" points="${p}"/>`,
+tx=(x,y,s,a='middle',e='')=>`<text x="${x}" y="${y}" text-anchor="${a}" ${e}>${s}</text>`,
+dot=(x,y)=>`<circle cx="${x}" cy="${y}" r="3" fill="${C}"/>`,
+andp=(x,y,h)=>`<path class="g" d="M${x} ${y}h30a${h/2} ${h/2} 0 0 1 0 ${h}h-30z"/>`,
+orp=(x,y,h)=>`<path class="g" d="M${x} ${y}Q${x+30} ${y} ${x+48} ${y+h/2}Q${x+30} ${y+h} ${x} ${y+h}Q${x+14} ${y+h/2} ${x} ${y}z"/>`,
+bub=(x,y)=>`<circle class="g" cx="${x}" cy="${y}" r="4"/>`,
+nand=(x,y,h=36)=>andp(x,y,h)+bub(x+34+h/2,y+h/2),
+nn=(x,y)=>nand(x,y)+ln(`${x-8},${y+9} ${x},${y+9}`)+ln(`${x-8},${y+27} ${x},${y+27}`)+ln(`${x-8},${y+9} ${x-8},${y+27}`),
+tb=(h,r)=>`<table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(a=>`<tr>${a.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table>`,
+bin=(k,n)=>k.toString(2).padStart(n,'0').split('');
+function net(o){const V=o.V||70,nv=o.vars.length,X={};let s='',gx=60+V*nv+10;
+const hs=o.rows.map(r=>Math.max(36,16*(r.length+1))),ys=[];let y=54;hs.forEach(h=>{ys.push(y);y+=h+16});const H=y;
+o.vars.forEach((v,k)=>{const n=v.replace('!',''),xt=60+V*k;X[n]=xt;s+=tx(xt,14,n)+ln(`${xt},18 ${xt},${H}`);
+if(v==n){const xc=xt+30;X[n+"'"]=xc;s+=dot(xt,30)+ln(`${xt},30 ${xt+4},30`)+`<path class="g" d="M${xt+4} 22v16l14-8z"/>`+bub(xt+21,30)+ln(`${xt+25},30 ${xc},30 ${xc},${H}`)}});
+const outs=[];
+o.rows.forEach((r,i)=>{const h=hs[i],y0=ys[i],n=r.length;
+r.forEach((it,j)=>{const iy=y0+h*(j+1)/(n+1);
+if(it[0]=='>')s+=tx(6,iy+4,it.slice(1),'start')+ln(`30,${iy} ${gx},${iy}`);else s+=dot(X[it],iy)+ln(`${X[it]},${iy} ${gx},${iy}`)});
+const or=o.g=='or';s+=or?orp(gx,y0,h):andp(gx,y0,h);outs.push([or?gx+48:gx+30+h/2,y0+h/2])});
+let W=gx+140;
+if(o.or){const m=outs.length,oh=m*16+20,cy=(outs[0][1]+outs[m-1][1])/2,oy=cy-oh/2,ox=Math.max(...outs.map(p=>p[0]))+m*8+30;
+outs.forEach((p,i)=>{const iy=oy+oh*(i+1)/(m+1),ex=p[0]+12+i*8;s+=ln(`${p[0]},${p[1]} ${ex},${p[1]} ${ex},${iy} ${ox},${iy}`)});
+s+=orp(ox,oy,oh)+ln(`${ox+48},${cy} ${ox+80},${cy}`)+tx(ox+86,cy+4,o.or,'start');W=ox+130}
+else outs.forEach((p,i)=>s+=ln(`${p[0]},${p[1]} ${p[0]+30},${p[1]}`)+tx(p[0]+36,p[1]+4,o.outs[i],'start'));
+return sv(W,H+6,s)}
+const lits=(vs,k)=>{const b=bin(k,vs.length);return vs.map((v,i)=>b[i]=='1'?v:v+"'")};
+function mux(x,y,ins,sels,out,w=70){const n=ins.length,h=24*n+16;let s=`<path class="g" d="M${x} ${y}L${x+w} ${y+14}V${y+h-14}L${x} ${y+h}z"/>`+tx(x+w/2,y+h/2+4,'MUX');
+ins.forEach((v,i)=>{const iy=y+20+24*i;s+=ln(`${x-26},${iy} ${x},${iy}`)+tx(x-30,iy+4,v,'end')});
+s+=ln(`${x+w},${y+h/2} ${x+w+26},${y+h/2}`)+tx(x+w+30,y+h/2+4,out,'start');
+sels.forEach((v,j)=>{const sx=x+w*(j+1)/(sels.length+1),sy=y+h-14*(sx-x)/w;s+=ln(`${sx},${sy} ${sx},${y+h+18}`)+tx(sx,y+h+32,v)});return s}
+function box(x,y,w,h,t,ins,outs,bot){let s=`<rect class="g" x="${x}" y="${y}" width="${w}" height="${h}" rx="4"/>`+tx(x+w/2,y+h/2+4,t);
+ins.forEach((v,i)=>{const iy=y+h*(i+1)/(ins.length+1);s+=ln(`${x-24},${iy} ${x},${iy}`)+tx(x-28,iy+4,v,'end')});
+outs.forEach((v,i)=>{const oy=y+h*(i+1)/(outs.length+1);s+=ln(`${x+w},${oy} ${x+w+24},${oy}`)+tx(x+w+28,oy+4,v,'start')});
+(bot||[]).forEach((v,i)=>{const bx=x+w*(i+1)/(bot.length+1);s+=ln(`${bx},${y+h} ${bx},${y+h+20}`)+tx(bx,y+h+34,v)});return s}
+function kmap(o){const cl=['00','01','11','10'],cw=54,ch=40,ox=78,oy=40,R=o.rows.length;
+let s=tx(ox-40,oy-10,o.rv+' \\ '+o.cv,'middle','style="font-size:12px"');
+cl.forEach((c,i)=>s+=tx(ox+cw*i+cw/2,oy-10,c));o.rows.forEach((r,i)=>s+=tx(ox-10,oy+ch*i+ch/2+5,r,'end'));
+for(let r=0;r<R;r++)for(let c=0;c<4;c++){const v=o.v[r][c],x=ox+c*cw,y=oy+r*ch;
+s+=`<rect x="${x}" y="${y}" width="${cw}" height="${ch}" fill="#fff" stroke="${C}"/>`+tx(x+5,y+12,parseInt(o.rows[r]+cl[c],2),'start','style="font-size:9px;fill:#8a94ad"')+tx(x+cw/2,y+ch/2+6,v,'middle',v===1?'style="font-weight:700;font-size:16px"':'style="font-size:15px;fill:#8a94ad"')}
+(o.gr||[]).forEach((g,i)=>{g.rs.forEach(([r,c,h,w])=>{const d=3+i*2;s+=`<rect x="${ox+c*cw+d}" y="${oy+r*ch+d}" width="${w*cw-2*d}" height="${h*ch-2*d}" rx="12" fill="${g.c}" fill-opacity=".13" stroke="${g.c}" stroke-width="2.4"/>`});
+s+=tx(ox+cw*4+16,oy+22+i*22,g.t,'start',`style="fill:${g.c};font-weight:700"`)});
+return sv(ox+cw*4+120,oy+ch*R+10,s)}
+const B='#2563eb',Rd='#dc2626',Gn='#16a34a',Or='#d97706',R2=['0','1'],R4=['00','01','11','10'];
+const tt=(n,e)=>{const r=[];for(let k=0;k<2**n;k++){const row=bin(k,n);for(let j=2**n-1;j>=0;j--)row.push(j==k?1:0);r.push(row)}return r};
+const F={
+k3layout:()=>kmap({rv:'x',cv:'yz',rows:R2,v:[['m0','m1','m3','m2'],['m4','m5','m7','m6']].map(r=>r.map(t=>'')),gr:[]}).replace(/<text[^>]*font-size:9px[^>]*>(\d+)<\/text>/g,'<text font-size="1"></text>')+'<p class="cap">Cell numbers (top-left of each cell) are the minterm numbers: 0,1,3,2 on the top row and 4,5,7,6 on the bottom.</p>',
+k4layout:()=>kmap({rv:'wx',cv:'yz',rows:R4,v:R4.map(()=>['','','','']),gr:[]})+'<p class="cap">Rows AND columns both use Gray order (00,01,11,10). Cell numbers are minterm numbers.</p>',
+k1:()=>kmap({rv:'A',cv:'BC',rows:R2,v:[[0,1,1,1],[0,1,1,0]],gr:[{c:B,t:'C',rs:[[0,1,2,2]]},{c:Rd,t:"A′B",rs:[[0,2,1,2]]}]}),
+k2:()=>kmap({rv:'x',cv:'yz',rows:R2,v:[[0,0,1,0],[1,0,1,1]],gr:[{c:B,t:'YZ',rs:[[0,2,2,1]]},{c:Rd,t:"XZ′ (wraps)",rs:[[1,0,1,1],[1,3,1,1]]}]}),
+k3:()=>kmap({rv:'wx',cv:'yz',rows:R4,v:[[1,1,0,1],[1,1,0,1],[1,1,0,1],[1,1,0,0]],gr:[{c:B,t:"Y′",rs:[[0,0,4,2]]},{c:Rd,t:"W′Z′",rs:[[0,0,2,1],[0,3,2,1]]},{c:Gn,t:"XZ′",rs:[[1,0,2,1],[1,3,2,1]]}]}),
+kdc:()=>kmap({rv:'wx',cv:'yz',rows:R4,v:[['X',1,1,'X'],[0,'X',1,0],[0,0,1,0],[0,0,1,0]],gr:[{c:B,t:"W′X′",rs:[[0,0,1,4]]},{c:Rd,t:'YZ',rs:[[0,2,4,1]]}]}),
+kpos:()=>kmap({rv:'AB',cv:'CD',rows:R4,v:[[1,1,0,1],[0,1,0,0],[0,0,0,0],[1,1,0,1]],gr:[{c:B,t:'AB (zeros)',rs:[[2,0,1,4]]},{c:Rd,t:'CD',rs:[[0,2,4,1]]},{c:Gn,t:"BD′",rs:[[1,0,2,1],[1,3,2,1]]}]}),
+kodd:()=>kmap({rv:'AB',cv:'CD',rows:R4,v:R4.map(r=>['00','01','11','10'].map(c=>(r+c).split('1').length%2==0?1:0)),gr:[]}),
+nanduni:()=>{let s=tx(10,22,'x','start')+ln('22,18 52,18')+nn(60,0)+ln('116,18 150,18')+tx(156,22,"x′",'start')+tx(260,22,'NOT');
+s+=tx(10,82,'x','start')+ln('22,78 60,69')+tx(10,100,'y','start')+ln('22,96 60,87')+nand(60,60)+ln('130,78 142,78')+nn(150,60)+ln('206,78 236,78')+tx(242,82,'xy','start')+tx(280,82,'AND','start');
+s+=tx(10,148,'x','start')+ln('22,148 52,148')+nn(60,130)+tx(10,208,'y','start')+ln('22,208 52,208')+nn(60,190)+ln('116,148 130,148 130,169 150,169')+ln('116,208 130,208 130,187 150,187')+nand(150,160)+ln('206,178 236,178')+tx(242,182,'x + y','start')+tx(300,182,'OR','start');
+return sv(340,244,s)},
+nandex:()=>{let s=tx(10,23,'x','start')+ln('22,19 90,19')+tx(10,41,"y′",'start')+ln('22,37 90,37')+nand(90,10)+tx(10,83,"x′",'start')+ln('22,79 90,79')+tx(10,101,'y','start')+ln('22,97 90,97')+nand(90,70)+tx(10,152,'z','start')+ln('22,148 52,148')+nn(90,130)+ln('52,148 82,148');
+s+=ln('146,28 170,28 170,64 200,64')+ln('146,88 200,78')+ln('146,148 170,148 170,92 200,92')+nand(200,50,56)+ln('266,78 296,78')+tx(302,82,'F','start');return sv(330,190,s)},
+xorc:()=>{let s=tx(10,23,'x','start')+ln('22,19 170,19')+dot(46,19)+ln('46,19 46,69 70,69')+tx(10,141,'y','start')+ln('22,137 170,137')+dot(56,137)+ln('56,137 56,87 70,87')+nand(70,60)+nand(170,10)+nand(170,110)+ln('126,78 140,78 140,37 170,37')+ln('140,78 140,119 170,119')+dot(140,78)+nand(270,60)+ln('226,28 250,28 250,69 270,69')+ln('226,128 250,128 250,87 270,87')+ln('326,78 356,78')+tx(362,82,'x ⊕ y','start');return sv(430,160,s)},
+xtab:()=>tb(['x','y','XOR x⊕y','XNOR (x⊕y)′'],[[0,0,0,1],[0,1,1,0],[1,0,1,0],[1,1,0,1]]),
+ptab:()=>{const a=[];for(let k=0;k<8;k++){const b=bin(k,3);a.push([...b,b.filter(x=>x=='1').length%2])}
+const c=[];for(let k=0;k<16;k++){const b=bin(k,4);c.push([...b,b.filter(x=>x=='1').length%2])}
+return '<div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center"><div><b>Even-parity generator</b>'+tb(['x','y','z','P'],a)+'</div><div><b>Even-parity checker</b>'+tb(['x','y','z','P','C'],c)+'</div></div>'},
+dec2b:()=>sv(260,130,box(70,10,110,100,'2 to 4 Decoder',['I1','I0'],['Y3','Y2','Y1','Y0'])),
+dec2t:()=>tb(['I1','I0','Y3','Y2','Y1','Y0'],tt(2)),
+dec2c:()=>net({vars:['I1','I0'],rows:[0,1,2,3].map(k=>lits(['I1','I0'],k)),outs:['Y0','Y1','Y2','Y3']}),
+dec3b:()=>sv(260,230,box(70,10,110,200,'3 to 8 Decoder',['I2','I1','I0'],['Y7','Y6','Y5','Y4','Y3','Y2','Y1','Y0'])),
+dec3c:()=>net({vars:['I2','I1','I0'],rows:[...Array(8).keys()].map(k=>lits(['I2','I1','I0'],k)),outs:[...Array(8).keys()].map(k=>'Y'+k)}),
+dec3t:()=>tb(['I2','I1','I0','Y7','Y6','Y5','Y4','Y3','Y2','Y1','Y0'],tt(3)),
+decEb:()=>sv(260,130,box(70,10,110,100,'2 to 4 Decoder',['I1','I0','E'],['Y3','Y2','Y1','Y0'])),
+decEc:()=>net({vars:['I1','I0','E!'],rows:[0,1,2,3].map(k=>[...lits(['I1','I0'],k),'E']),outs:['Y0','Y1','Y2','Y3']}),
+decEt:()=>tb(['E','I1','I0','Y3','Y2','Y1','Y0'],[[0,'x','x',0,0,0,0],...tt(2).map(r=>[1,...r])]),
+decexp:()=>sv(360,290,box(130,10,100,110,'2 to 4',['I0','I1','E = I2'],['Y7','Y6','Y5','Y4'])+box(130,160,100,110,'2 to 4',['I0','I1',"E = I2′"],['Y3','Y2','Y1','Y0'])),
+encb:()=>sv(260,230,box(70,10,110,200,'8 to 3 Encoder',['I7','I6','I5','I4','I3','I2','I1','I0'],['Y2','Y1','Y0'])),
+enct:()=>tb(['I7','I6','I5','I4','I3','I2','I1','I0','Y2','Y1','Y0'],[...Array(8).keys()].map(k=>{const r=[];for(let j=7;j>=0;j--)r.push(j==k?1:0);return [...r,...bin(k,3)]})),
+encc:()=>net({V:44,g:'or',vars:[1,2,3,4,5,6,7].map(k=>'I'+k+'!'),rows:[['I1','I3','I5','I7'],['I2','I3','I6','I7'],['I4','I5','I6','I7']],outs:['Y0','Y1','Y2']}),
+pet:()=>tb(['I3','I2','I1','I0','Y1','Y0','V'],[[0,0,0,0,'x','x',0],[0,0,0,1,0,0,1],[0,0,1,'x',0,1,1],[0,1,'x','x',1,0,1],[1,'x','x','x',1,1,1]]),
+m4b:()=>sv(260,170,mux(70,8,['I0','I1','I2','I3'],['S1','S0'],'Y')),
+m4t:()=>tb(['S1','S0','Y'],[[0,0,'I0'],[0,1,'I1'],[1,0,'I2'],[1,1,'I3']]),
+m4c:()=>net({vars:['S1','S0'],rows:[0,1,2,3].map(k=>[...lits(['S1','S0'],k),'>I'+k]),or:'Y'}),
+m4from2:()=>sv(370,215,mux(60,8,['I0','I1'],['S0'],'')+mux(60,108,['I2','I3'],['S0'],'')+ln('156,40 180,40 180,73 214,73')+ln('156,140 180,140 180,97 214,97')+mux(240,53,['',''],['S1'],'Y')),
+p1t:()=>tb(['','I0','I1','I2','I3'],[["A′",0,1,2,3],['A',4,5,6,7],['Circled F=1','none','both (1,5)','only 6 (bottom)','only 3 (top)'],['Input value',0,1,'A',"A′"]]),
+p1d:()=>sv(260,170,mux(70,8,['0','1','A',"A′"],['B','C'],'F')),
+p1e:()=>sv(260,170,mux(70,8,['C','C','C',"C′"],['A','B'],'F')),
+p2a:()=>sv(260,170,mux(70,8,['1','1','0','1'],['x','y'],'F')),
+p2b:()=>sv(260,170,mux(70,8,['z',"z′",'0','1'],['x','y'],'F')),
+p2c:()=>sv(260,262,mux(70,8,['D','D',"D′",'0','0','D','1','1'],['A','B','C'],'F'))
+};
+document.querySelectorAll('[data-f]').forEach(e=>e.innerHTML=F[e.dataset.f]());
+</script></body></html>
