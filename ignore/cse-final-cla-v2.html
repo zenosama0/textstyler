@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DLD Study Guide: K-Maps, NAND/NOR, XOR, Decoders, Encoders, MUX, DEMUX</title>
+<title>DLD Study Guide</title>
 <style>
 :root{color-scheme:light;--ink:#1f2a44;--mut:#5b6785;--ac:#2563eb;--ln:#dbe3f1;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:70px;background:#f4f7fc}
@@ -26,10 +26,10 @@ th,td{border:1px solid #c5d0e6;padding:3px 9px;text-align:center}th{background:#
 li{margin:3px 0}
 </style></head><body>
 <header><h1>Digital Logic Design: Exam Study Guide</h1><p>CSE 2105 Chapter 3 (Gate-Level Minimization) + Chapter 4 (Combinational Logic). Light mode, plain English, SVG diagrams.</p></header>
-<nav><a href="#kmap">K-Maps</a><a href="#dc">Don't Care / POS</a><a href="#nand">NAND / NOR</a><a href="#xor">XOR / Parity</a><a href="#comb">Combinational</a><a href="#dec">Decoders</a><a href="#enc">Encoders</a><a href="#mux">MUX</a><a href="#muximp">MUX Implementation</a><a href="#demux">DEMUX</a><a href="#gloss">Glossary</a></nav>
+<nav><!--<a href="#kmap">K-Maps</a><a href="#dc">Don't Care / POS</a><a href="#nand">NAND / NOR</a><a href="#xor">XOR / Parity</a>--><a href="#comb">Combinational</a><a href="#dec">Decoders</a><a href="#enc">Encoders</a><a href="#mux">MUX</a><a href="#muximp">MUX Implementation</a><a href="#demux">DEMUX</a><a href="#gloss">Glossary</a></nav>
 <main>
 
-<section id="kmap"><h2>1. Karnaugh Maps (K-Maps)</h2>
+<!--<section id="kmap"><h2>1. Karnaugh Maps (K-Maps)</h2>
 <div class="def"><b>K-Map</b> = a picture of a truth table laid out in a grid so that neighbouring cells differ by exactly <b>one</b> variable. Grouping neighbouring 1s lets you cancel variables and get a shorter Boolean expression.</div>
 <p><b>Minterm</b> = an AND term containing every variable once (e.g. x′y′z). Each row of the truth table is one minterm, called m0, m1, m2 and so on (the number is the binary value of the row). <b>Literal</b> = one variable or its complement.</p>
 <h3>Three-variable map</h3>
@@ -98,7 +98,7 @@ li{margin:3px 0}
 <ul><li><b>Generator (3-bit message x,y,z):</b> P = x⊕y⊕z. P = 1 exactly when the message has an odd number of 1s, so the total becomes even.</li>
 <li><b>Checker (4 bits received x,y,z,P):</b> C = x⊕y⊕z⊕P. C = 1 means an odd number of 1s arrived, i.e. an error.</li></ul>
 <div class="tw" data-f="ptab"></div>
-</section>
+</section>-->
 
 <section id="comb"><h2>5. Combinational Circuits (Chapter 4 basics)</h2>
 <div class="def"><b>Combinational circuit</b>: output depends <b>only on the present inputs</b> (no memory). <b>Sequential circuit</b>: also has storage elements, so output depends on inputs and stored state.</div>
