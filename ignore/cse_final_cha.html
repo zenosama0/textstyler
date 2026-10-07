@@ -1,0 +1,567 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Logic Exam Study Guide — Decoder, Encoder, MUX & DEMUX</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#ffffff; --text:#1d1f21; --muted:#62676d;
+    --accent:#ffd343; --accent2:#1f2937; --line:#d8dadd; --good:#216e39;
+    --shadow:0 8px 24px rgba(0,0,0,.07);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.62}
+  .wrap{max-width:1150px;margin:auto;padding:22px}
+  header{background:linear-gradient(135deg,#111827,#2b2f36);color:#fff;border-radius:20px;padding:30px 30px 26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  header:after{content:"";position:absolute;inset:auto -80px -100px auto;width:290px;height:290px;border-radius:50%;background:rgba(255,211,67,.13)}
+  h1{margin:0 0 8px;font-size:clamp(28px,4vw,42px);line-height:1.1}
+  h2{font-size:28px;line-height:1.2;margin:0 0 12px}
+  h3{font-size:20px;margin:24px 0 8px}
+  h4{margin:16px 0 6px}
+  p{margin:8px 0}
+  .sub{color:#d2d6dc;max-width:900px}
+  .pill{display:inline-block;background:var(--accent);color:#111827;font-weight:800;padding:6px 10px;border-radius:999px;margin:6px 7px 0 0;font-size:13px}
+  nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+  nav a{background:var(--card);border:1px solid var(--line);color:var(--text);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:650;font-size:14px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:var(--shadow)}
+  .topic-tag{font-size:12px;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.08em}
+  .key{border-left:5px solid var(--accent);padding:12px 14px;background:#fff9df;border-radius:0 12px 12px 0;margin:14px 0}
+  .exam{border-left:5px solid #111827;padding:12px 14px;background:#f3f4f6;border-radius:0 12px 12px 0}
+  .answer{background:#fbfbfb;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}
+  .card{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fff}
+  .formula{font-family:Consolas,Monaco,monospace;background:#111827;color:#f9fafb;border-radius:10px;padding:10px 12px;overflow:auto}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 9px;text-align:center}
+  th{background:#f2f3f5;font-weight:800}
+  .scroll{overflow-x:auto}
+  .diagram{border:1px solid var(--line);border-radius:14px;background:#fff;padding:12px;margin:14px 0;overflow-x:auto}
+  .caption{font-size:13px;color:var(--muted);margin-top:5px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .step{display:flex;gap:10px;margin:8px 0}
+  .num{flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent);font-weight:900;display:grid;place-items:center}
+  .small{font-size:13px;color:var(--muted)}
+  .danger{border-left-color:#b42318;background:#fff0ef}
+  .memory{background:#eef8f0;border-left:5px solid #379150;padding:12px 14px;border-radius:0 12px 12px 0}
+  .footer{text-align:center;color:var(--muted);font-size:13px;padding:18px}
+  .svgtext{font:600 15px Segoe UI,Arial,sans-serif;fill:#111827}
+  .svgsmall{font:500 13px Segoe UI,Arial,sans-serif;fill:#374151}
+  .gate{fill:#f8fafc;stroke:#111827;stroke-width:2}
+  .wire{stroke:#111827;stroke-width:2;fill:none}
+  .dot{fill:#111827}
+  @media(max-width:780px){.two{grid-template-columns:1fr}section{padding:20px}.wrap{padding:12px}}
+  @media print{
+    body{background:#fff;font-size:11pt}.wrap{max-width:none;padding:0}
+    header{box-shadow:none}.topic{page-break-before:always}section{box-shadow:none;break-inside:avoid}
+    nav{display:none}.diagram{break-inside:avoid}.footer{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="topic-tag" style="color:#f3f4f6">CSE / Digital Logic — Exam Night Guide</div>
+  <h1>Decoder, Encoder, Multiplexer & Demultiplexer</h1>
+  <p class="sub">A complete, exam-focused guide covering definitions, block diagrams, gate-level circuits, truth tables, enable control, and Boolean-function implementation using multiplexers.</p>
+  <span class="pill">Learn the definition</span>
+  <span class="pill">Draw the diagram</span>
+  <span class="pill">Memorize the truth table</span>
+  <span class="pill">Practice the implementation</span>
+</header>
+
+<nav>
+  <a href="#decoder">1. Decoder</a><a href="#decoder38">2. 3-to-8 Decoder</a><a href="#enable">3. Enable</a>
+  <a href="#encoder">4. Encoder</a><a href="#octal">5. 8-to-3 Encoder</a><a href="#mux">6. Multiplexer</a>
+  <a href="#mux41">7. 4-to-1 MUX</a><a href="#implementation">8. MUX Implementation</a>
+  <a href="#demux">9. Demultiplexer</a><a href="#both">10. Decoder vs DEMUX</a>
+</nav>
+
+<section id="decoder">
+  <div class="topic-tag">Question 1</div>
+  <h2>1. Decoder — Definition and Circuit</h2>
+  <div class="answer">
+    <strong>Definition:</strong> A decoder is a combinational logic circuit that converts <em>n input lines</em> into as many as <strong>2ⁿ output lines</strong>. For each valid binary input combination, exactly one output is activated (in the basic active-high version). Therefore, a decoder can be used to select one of many lines, generate minterms, or convert binary-coded information into one-of-many output form.
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 820 250" width="100%" role="img" aria-label="2 to 4 decoder block and gate idea">
+      <rect x="55" y="65" width="230" height="120" rx="16" class="gate"/>
+      <text x="170" y="110" text-anchor="middle" class="svgtext">2 → 4</text>
+      <text x="170" y="135" text-anchor="middle" class="svgtext">DECODER</text>
+      <text x="90" y="54" class="svgsmall">A</text><text x="145" y="54" class="svgsmall">B</text>
+      <path d="M90 55 V65" class="wire"/><path d="M145 55 V65" class="wire"/>
+      <path d="M285 82 H390" class="wire"/><path d="M285 113 H390" class="wire"/><path d="M285 145 H390" class="wire"/><path d="M285 176 H390" class="wire"/>
+      <text x="400" y="87" class="svgsmall">Y₀ = A'B'</text><text x="400" y="118" class="svgsmall">Y₁ = A'B</text>
+      <text x="400" y="150" class="svgsmall">Y₂ = AB'</text><text x="400" y="181" class="svgsmall">Y₃ = AB</text>
+      <rect x="545" y="58" width="185" height="132" rx="16" class="gate"/>
+      <text x="637" y="87" text-anchor="middle" class="svgtext">Gate-level idea</text>
+      <text x="563" y="116" class="svgsmall">NOT gates make A', B'</text>
+      <text x="563" y="140" class="svgsmall">AND gates form 4 minterms</text>
+      <text x="563" y="164" class="svgsmall">Only one minterm = 1</text>
+    </svg>
+    <div class="caption">Basic 2-to-4 decoder: the input combination selects exactly one output.</div>
+  </div>
+
+  <div class="key"><strong>Core fact to memorize:</strong> n inputs → up to 2ⁿ outputs. A decoder is essentially a minterm generator.</div>
+
+  <h3>How to draw a decoder in an exam</h3>
+  <div class="step"><span class="num">1</span><div>Draw the decoder block and label the input lines.</div></div>
+  <div class="step"><span class="num">2</span><div>Write the output count as 2ⁿ.</div></div>
+  <div class="step"><span class="num">3</span><div>For a gate circuit, create complements with NOT gates and feed the proper combinations into AND gates.</div></div>
+  <div class="step"><span class="num">4</span><div>Label each output with its minterm, such as Y₀=A'B'C', Y₁=A'B'C, etc.</div></div>
+</section>
+
+<section id="decoder38">
+  <div class="topic-tag">Very Important</div>
+  <h2>2. 3-to-8 Decoder</h2>
+  <p>A 3-to-8 decoder has <strong>3 input lines (A, B, C)</strong> and <strong>8 output lines (Y₀–Y₇)</strong>. Since 2³ = 8, every possible 3-bit input combination corresponds to exactly one output. This is one of the most important circuits to practice drawing.</p>
+
+  <div class="two">
+    <div class="diagram">
+      <svg viewBox="0 0 620 320" width="100%" role="img" aria-label="3 to 8 decoder block diagram">
+        <rect x="200" y="65" width="205" height="190" rx="18" class="gate"/>
+        <text x="302" y="113" text-anchor="middle" class="svgtext">3 → 8 DECODER</text>
+        <text x="238" y="52" class="svgsmall">A</text><text x="300" y="52" class="svgsmall">B</text><text x="360" y="52" class="svgsmall">C</text>
+        <path d="M240 52 V65" class="wire"/><path d="M302 52 V65" class="wire"/><path d="M362 52 V65" class="wire"/>
+        <g class="svgsmall">
+          <text x="430" y="82">Y₀</text><text x="430" y="106">Y₁</text><text x="430" y="130">Y₂</text><text x="430" y="154">Y₃</text>
+          <text x="430" y="178">Y₄</text><text x="430" y="202">Y₅</text><text x="430" y="226">Y₆</text><text x="430" y="250">Y₇</text>
+        </g>
+        <path d="M405 82 H425" class="wire"/><path d="M405 106 H425" class="wire"/><path d="M405 130 H425" class="wire"/><path d="M405 154 H425" class="wire"/>
+        <path d="M405 178 H425" class="wire"/><path d="M405 202 H425" class="wire"/><path d="M405 226 H425" class="wire"/><path d="M405 250 H425" class="wire"/>
+        <text x="106" y="141" class="svgsmall">8 mutually exclusive</text><text x="117" y="163" class="svgsmall">output lines</text>
+      </svg>
+      <div class="caption">Block diagram: 3 inputs select one of 8 outputs.</div>
+    </div>
+
+    <div class="diagram">
+      <svg viewBox="0 0 680 360" width="100%" role="img" aria-label="3 to 8 decoder gate circuit">
+        <text x="16" y="28" class="svgtext">Gate-level circuit (conceptual)</text>
+        <rect x="22" y="55" width="46" height="34" rx="8" class="gate"/><text x="45" y="78" text-anchor="middle" class="svgtext">A</text>
+        <rect x="22" y="125" width="46" height="34" rx="8" class="gate"/><text x="45" y="148" text-anchor="middle" class="svgtext">B</text>
+        <rect x="22" y="195" width="46" height="34" rx="8" class="gate"/><text x="45" y="218" text-anchor="middle" class="svgtext">C</text>
+        <path d="M68 72 H118 M68 142 H118 M68 212 H118" class="wire"/>
+        <circle cx="128" cy="72" r="10" fill="#fff" stroke="#111827" stroke-width="2"/><text x="128" y="76" text-anchor="middle" class="svgsmall">NOT</text>
+        <circle cx="128" cy="142" r="10" fill="#fff" stroke="#111827" stroke-width="2"/><text x="128" y="146" text-anchor="middle" class="svgsmall">NOT</text>
+        <circle cx="128" cy="212" r="10" fill="#fff" stroke="#111827" stroke-width="2"/><text x="128" y="216" text-anchor="middle" class="svgsmall">NOT</text>
+        <text x="153" y="60" class="svgsmall">A'</text><text x="153" y="130" class="svgsmall">B'</text><text x="153" y="200" class="svgsmall">C'</text>
+        <text x="153" y="84" class="svgsmall">A</text><text x="153" y="154" class="svgsmall">B</text><text x="153" y="224" class="svgsmall">C</text>
+        <line x1="150" y1="72" x2="238" y2="72" class="wire"/><line x1="150" y1="142" x2="238" y2="142" class="wire"/><line x1="150" y1="212" x2="238" y2="212" class="wire"/>
+        <line x1="185" y1="72" x2="185" y2="318" class="wire"/><line x1="215" y1="142" x2="215" y2="318" class="wire"/><line x1="245" y1="212" x2="245" y2="318" class="wire"/>
+        <g class="gate">
+          <path d="M285 55 h64 a22 22 0 0 1 0 44 h-64 z"/><path d="M285 97 h64 a22 22 0 0 1 0 44 h-64 z"/>
+          <path d="M285 139 h64 a22 22 0 0 1 0 44 h-64 z"/><path d="M285 181 h64 a22 22 0 0 1 0 44 h-64 z"/>
+          <path d="M385 55 h64 a22 22 0 0 1 0 44 h-64 z"/><path d="M385 97 h64 a22 22 0 0 1 0 44 h-64 z"/>
+          <path d="M385 139 h64 a22 22 0 0 1 0 44 h-64 z"/><path d="M385 181 h64 a22 22 0 0 1 0 44 h-64 z"/>
+        </g>
+        <g class="svgsmall">
+          <text x="317" y="82">AND</text><text x="317" y="124">AND</text><text x="317" y="166">AND</text><text x="317" y="208">AND</text>
+          <text x="417" y="82">AND</text><text x="417" y="124">AND</text><text x="417" y="166">AND</text><text x="417" y="208">AND</text>
+        </g>
+        <text x="472" y="81" class="svgsmall">Y₀</text><text x="472" y="123" class="svgsmall">Y₁</text><text x="472" y="165" class="svgsmall">Y₂</text><text x="472" y="207" class="svgsmall">Y₃</text>
+        <text x="568" y="81" class="svgsmall">Y₄</text><text x="568" y="123" class="svgsmall">Y₅</text><text x="568" y="165" class="svgsmall">Y₆</text><text x="568" y="207" class="svgsmall">Y₇</text>
+        <text x="500" y="260" class="svgsmall">Each AND gate corresponds</text><text x="500" y="281" class="svgsmall">to one minterm.</text>
+      </svg>
+      <div class="caption">Use the complements A', B', C' and eight 3-input AND gates to create Y₀–Y₇.</div>
+    </div>
+  </div>
+
+  <h3>3-to-8 Truth Table</h3>
+  <div class="scroll">
+  <table>
+    <tr><th>A</th><th>B</th><th>C</th><th>Y₀</th><th>Y₁</th><th>Y₂</th><th>Y₃</th><th>Y₄</th><th>Y₅</th><th>Y₆</th><th>Y₇</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  </table>
+  </div>
+
+  <div class="grid">
+    <div class="card"><strong>Y₀ = A'B'C'</strong><br>Input 000 activates Y₀.</div>
+    <div class="card"><strong>Y₁ = A'B'C</strong><br>Input 001 activates Y₁.</div>
+    <div class="card"><strong>Y₂ = A'BC'</strong><br>Input 010 activates Y₂.</div>
+    <div class="card"><strong>Y₃ = A'BC</strong><br>Input 011 activates Y₃.</div>
+    <div class="card"><strong>Y₄ = AB'C'</strong><br>Input 100 activates Y₄.</div>
+    <div class="card"><strong>Y₅ = AB'C</strong><br>Input 101 activates Y₅.</div>
+    <div class="card"><strong>Y₆ = ABC'</strong><br>Input 110 activates Y₆.</div>
+    <div class="card"><strong>Y₇ = ABC</strong><br>Input 111 activates Y₇.</div>
+  </div>
+
+  <div class="memory"><strong>Exam memory trick:</strong> Read ABC as a binary number. 000→0, 001→1, 010→2 … 111→7. The corresponding Y-output is the one that becomes 1.</div>
+</section>
+
+<section id="enable">
+  <div class="topic-tag">Question 3</div>
+  <h2>3. Enable Control</h2>
+  <div class="answer">
+    <strong>Definition:</strong> An enable control input allows a decoder or other combinational circuit to operate only when the enable condition is satisfied. In an <strong>active-high enable</strong>, E=1 enables normal operation, while E=0 forces all outputs inactive. Enable control is useful when several circuits share a system because it lets us turn a decoder on or off without changing its input data.
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 820 250" width="100%" role="img" aria-label="3 to 8 decoder with active high enable">
+      <rect x="310" y="54" width="225" height="140" rx="18" class="gate"/>
+      <text x="422" y="97" text-anchor="middle" class="svgtext">3 → 8 DECODER</text>
+      <text x="422" y="124" text-anchor="middle" class="svgsmall">with Enable</text>
+      <text x="345" y="44" class="svgsmall">A</text><text x="401" y="44" class="svgsmall">B</text><text x="457" y="44" class="svgsmall">C</text>
+      <path d="M350 44 V54 M406 44 V54 M462 44 V54" class="wire"/>
+      <text x="245" y="183" class="svgsmall">E</text>
+      <path d="M260 176 H310" class="wire"/><circle cx="275" cy="176" r="3" class="dot"/>
+      <path d="M535 76 H645 M535 94 H645 M535 112 H645 M535 130 H645 M535 148 H645 M535 166 H645 M535 184 H645 M535 202 H645" class="wire"/>
+      <text x="655" y="81" class="svgsmall">Y₀ … Y₇</text>
+      <text x="50" y="105" class="svgsmall">E=1 → decoder works normally</text>
+      <text x="50" y="135" class="svgsmall">E=0 → all outputs forced inactive</text>
+    </svg>
+    <div class="caption">Active-high enable example. Some real ICs use active-low enable; always copy the polarity shown in the question.</div>
+  </div>
+
+  <div class="key"><strong>One-line answer:</strong> Enable control is a control input that decides whether the decoder is active or disabled.</div>
+</section>
+
+<section id="encoder">
+  <div class="topic-tag">Question 4</div>
+  <h2>4. Encoder — Definition and Circuit</h2>
+  <div class="answer">
+    <strong>Definition:</strong> An encoder is a combinational logic circuit that performs the opposite type of operation to a decoder: it converts one active input out of many input lines into a smaller binary code at its output. For a basic encoder, <strong>2ⁿ input lines produce n output lines</strong>, assuming only one input is active at a time. Encoders are used in keyboards, interrupt systems, priority selection, and data coding.
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 820 260" width="100%" role="img" aria-label="Encoder block diagram">
+      <rect x="300" y="55" width="220" height="145" rx="18" class="gate"/>
+      <text x="410" y="104" text-anchor="middle" class="svgtext">ENCODER</text>
+      <text x="410" y="130" text-anchor="middle" class="svgsmall">Many inputs → Binary code</text>
+      <g class="svgsmall">
+        <text x="95" y="73">D₀</text><text x="95" y="94">D₁</text><text x="95" y="115">D₂</text><text x="95" y="136">D₃</text>
+        <text x="95" y="157">D₄</text><text x="95" y="178">D₅</text><text x="95" y="199">D₆</text><text x="95" y="220">D₇</text>
+      </g>
+      <path d="M120 70 H300 M120 91 H300 M120 112 H300 M120 133 H300 M120 154 H300 M120 175 H300 M120 196 H300 M120 217 H300" class="wire"/>
+      <text x="565" y="99" class="svgsmall">Y₂</text><text x="565" y="128" class="svgsmall">Y₁</text><text x="565" y="157" class="svgsmall">Y₀</text>
+      <path d="M520 95 H605 M520 124 H605 M520 153 H605" class="wire"/>
+      <text x="300" y="236" class="svgsmall">Only one input should be HIGH in a simple encoder.</text>
+    </svg>
+    <div class="caption">An encoder reduces many possible input lines to a compact binary representation.</div>
+  </div>
+
+  <div class="exam"><strong>Important difference:</strong> Decoder: few inputs → many outputs. Encoder: many inputs → few outputs.</div>
+</section>
+
+<section id="octal">
+  <div class="topic-tag">Question 5</div>
+  <h2>5. Octal-to-Binary Encoder (8-to-3)</h2>
+  <p>An octal-to-binary encoder has eight input lines labeled <strong>D₀ to D₇</strong> and three output lines <strong>A, B, C</strong>. Because octal digits are 0 through 7, three binary bits are enough to represent every input. When one input is HIGH, the corresponding 3-bit binary code appears at the output.</p>
+
+  <div class="two">
+    <div>
+      <h3>Truth Table</h3>
+      <div class="scroll">
+      <table>
+        <tr><th>Active input</th><th>A (MSB)</th><th>B</th><th>C (LSB)</th></tr>
+        <tr><td>D₀</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>D₁</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>D₂</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>D₃</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>D₄</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>D₅</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>D₆</td><td>1</td><td>1</td><td>0</td></tr>
+        <tr><td>D₇</td><td>1</td><td>1</td><td>1</td></tr>
+      </table>
+      </div>
+    </div>
+    <div class="diagram">
+      <svg viewBox="0 0 650 330" width="100%" role="img" aria-label="8 to 3 encoder OR gate circuit">
+        <text x="10" y="24" class="svgtext">Typical OR-gate implementation</text>
+        <g class="svgsmall">
+          <text x="20" y="60">D₀</text><text x="20" y="96">D₁</text><text x="20" y="132">D₂</text><text x="20" y="168">D₃</text>
+          <text x="20" y="204">D₄</text><text x="20" y="240">D₅</text><text x="20" y="276">D₆</text><text x="20" y="312">D₇</text>
+        </g>
+        <g class="wire">
+          <path d="M42 55 H120 M42 91 H160 M42 127 H120 M42 163 H160 M42 199 H120 M42 235 H160 M42 271 H120 M42 307 H160"/>
+          <path d="M120 55 V127 M120 127 V199 M120 199 V271 M120 271 V325"/>
+          <path d="M160 91 V163 M160 163 V235 M160 235 V307 M160 307 V325"/>
+        </g>
+        <path d="M120 325 H300" class="wire"/><path d="M160 325 H300" class="wire"/>
+        <path d="M300 285 h80 a35 35 0 0 1 0 70 h-80 q48 -35 0 -70z" class="gate"/>
+        <path d="M300 70 h80 a35 35 0 0 1 0 70 h-80 q48 -35 0 -70z" class="gate"/>
+        <path d="M300 177 h80 a35 35 0 0 1 0 70 h-80 q48 -35 0 -70z" class="gate"/>
+        <text x="338" y="112" text-anchor="middle" class="svgsmall">OR</text>
+        <text x="338" y="219" text-anchor="middle" class="svgsmall">OR</text>
+        <text x="338" y="326" text-anchor="middle" class="svgsmall">OR</text>
+        <text x="430" y="112" class="svgsmall">A = D₄+D₅+D₆+D₇</text>
+        <text x="430" y="219" class="svgsmall">B = D₂+D₃+D₆+D₇</text>
+        <text x="430" y="326" class="svgsmall">C = D₁+D₃+D₅+D₇</text>
+      </svg>
+      <div class="caption">The OR equations come directly from the truth table.</div>
+    </div>
+  </div>
+
+  <div class="memory"><strong>Pattern:</strong> A is 1 for inputs 4–7; B is 1 for 2,3,6,7; C is 1 for 1,3,5,7.</div>
+</section>
+
+<section id="mux">
+  <div class="topic-tag">Question 6</div>
+  <h2>6. Multiplexer (MUX) — Definition, Circuit and Block Diagram</h2>
+  <div class="answer">
+    <strong>Definition:</strong> A multiplexer is a combinational circuit that selects <strong>one of many input data lines</strong> and connects the selected input to a <strong>single output line</strong>. The selection is controlled by select lines. For a multiplexer with n select lines, the number of data inputs is <strong>2ⁿ</strong>. A MUX is therefore often described as a <em>data selector</em>.
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 850 280" width="100%" role="img" aria-label="Multiplexer block diagram">
+      <rect x="320" y="48" width="230" height="170" rx="18" class="gate"/>
+      <text x="435" y="95" text-anchor="middle" class="svgtext">MULTIPLEXER</text>
+      <text x="435" y="121" text-anchor="middle" class="svgsmall">Data selector</text>
+      <g class="svgsmall"><text x="165" y="75">I₀</text><text x="165" y="102">I₁</text><text x="165" y="129">I₂</text><text x="165" y="156">I₃</text></g>
+      <path d="M185 70 H320 M185 97 H320 M185 124 H320 M185 151 H320" class="wire"/>
+      <text x="585" y="107" class="svgsmall">Y (selected data)</text><path d="M550 110 H575" class="wire"/>
+      <text x="270" y="190" class="svgsmall">S₁</text><text x="270" y="215" class="svgsmall">S₀</text>
+      <path d="M285 184 H320 M285 209 H320" class="wire"/>
+      <text x="635" y="187" class="svgsmall">S₁S₀ chooses:</text>
+      <text x="635" y="210" class="svgsmall">00→I₀  01→I₁  10→I₂  11→I₃</text>
+    </svg>
+    <div class="caption">4 inputs require 2 select lines because 2²=4.</div>
+  </div>
+
+  <h3>General MUX equation</h3>
+  <div class="formula">For a 4:1 MUX:
+Y = I₀S₁'S₀' + I₁S₁'S₀ + I₂S₁S₀' + I₃S₁S₀</div>
+  <p>This equation is important because it shows that the selected input reaches the output while the unselected input terms become 0.</p>
+</section>
+
+<section id="mux41">
+  <div class="topic-tag">Question 7</div>
+  <h2>7. 4-to-1 Multiplexer — Circuit Diagram</h2>
+
+  <div class="diagram">
+    <svg viewBox="0 0 900 430" width="100%" role="img" aria-label="4 to 1 multiplexer gate level circuit">
+      <text x="18" y="25" class="svgtext">4-to-1 MUX gate-level circuit</text>
+      <text x="20" y="66" class="svgsmall">I₀</text><text x="20" y="150" class="svgsmall">I₁</text><text x="20" y="234" class="svgsmall">I₂</text><text x="20" y="318" class="svgsmall">I₃</text>
+      <path d="M40 60 H145 M40 144 H145 M40 228 H145 M40 312 H145" class="wire"/>
+      <g class="gate">
+        <path d="M145 38 h95 a28 28 0 0 1 0 44 h-95 z"/><path d="M145 122 h95 a28 28 0 0 1 0 44 h-95 z"/>
+        <path d="M145 206 h95 a28 28 0 0 1 0 44 h-95 z"/><path d="M145 290 h95 a28 28 0 0 1 0 44 h-95 z"/>
+      </g>
+      <text x="190" y="65" text-anchor="middle" class="svgsmall">AND</text><text x="190" y="149" text-anchor="middle" class="svgsmall">AND</text><text x="190" y="233" text-anchor="middle" class="svgsmall">AND</text><text x="190" y="317" text-anchor="middle" class="svgsmall">AND</text>
+
+      <text x="100" y="100" class="svgsmall">S₁'</text><text x="100" y="184" class="svgsmall">S₁'</text><text x="100" y="268" class="svgsmall">S₁</text><text x="100" y="352" class="svgsmall">S₁</text>
+      <text x="100" y="116" class="svgsmall">S₀'</text><text x="100" y="200" class="svgsmall">S₀</text><text x="100" y="284" class="svgsmall">S₀'</text><text x="100" y="368" class="svgsmall">S₀</text>
+
+      <path d="M130 98 H150 M130 182 H150 M130 266 H150 M130 350 H150" class="wire"/>
+      <path d="M112 112 H135 M112 196 H135 M112 280 H135 M112 364 H135" class="wire"/>
+
+      <path d="M240 60 H440 M240 144 H440 M240 228 H440 M240 312 H440" class="wire"/>
+      <path d="M440 60 V312" class="wire"/>
+      <path d="M440 60 H505 M440 144 H505 M440 228 H505 M440 312 H505" class="wire"/>
+
+      <path d="M505 42 h95 a48 48 0 0 1 0 108 h-95 q52 -54 0 -108 z" class="gate"/>
+      <text x="550" y="101" text-anchor="middle" class="svgtext">OR</text>
+      <path d="M600 96 H725" class="wire"/>
+      <text x="740" y="101" class="svgtext">Y</text>
+
+      <text x="505" y="190" class="svgsmall">Each AND term:</text>
+      <text x="505" y="212" class="svgsmall">I₀S₁'S₀'</text><text x="505" y="234" class="svgsmall">I₁S₁'S₀</text>
+      <text x="640" y="212" class="svgsmall">I₂S₁S₀'</text><text x="640" y="234" class="svgsmall">I₃S₁S₀</text>
+      <text x="505" y="273" class="svgsmall">NOT gates are used to obtain S₁' and S₀'.</text>
+    </svg>
+  </div>
+
+  <h3>4-to-1 selection table</h3>
+  <table>
+    <tr><th>S₁</th><th>S₀</th><th>Output Y</th></tr>
+    <tr><td>0</td><td>0</td><td>I₀</td></tr>
+    <tr><td>0</td><td>1</td><td>I₁</td></tr>
+    <tr><td>1</td><td>0</td><td>I₂</td></tr>
+    <tr><td>1</td><td>1</td><td>I₃</td></tr>
+  </table>
+
+  <div class="exam"><strong>Exam drawing order:</strong> draw I₀–I₃ → four AND gates → NOT gates for select complements → common S₁/S₀ lines → OR gate → output Y.</div>
+</section>
+
+<section id="implementation">
+  <div class="topic-tag">Question 8 — Important</div>
+  <h2>8. Boolean Function Implementation Using a MUX</h2>
+  <p>When a question asks you to <strong>implement a Boolean function using a multiplexer</strong>, the main idea is to use select lines for some variables and connect the MUX data inputs to constants or to a remaining variable. For a 4:1 MUX, there are two select lines and four data inputs.</p>
+
+  <h3>Type 1 — A and B are the selector lines</h3>
+  <p>Suppose the function has three variables <strong>A, B, C</strong> and we choose A and B as select lines. For each AB combination, inspect the function for C=0 and C=1. The required data input will become one of four forms: <strong>0, 1, C, or C'</strong>.</p>
+
+  <div class="card">
+    <strong>Worked example:</strong> F(A,B,C)=Σm(1,2,5,7)
+    <div class="scroll">
+    <table>
+      <tr><th>A B</th><th>Relevant minterms</th><th>F when C changes</th><th>Connect</th></tr>
+      <tr><td>00</td><td>m0,m1</td><td>0,1 → C</td><td>I₀=C</td></tr>
+      <tr><td>01</td><td>m2,m3</td><td>1,0 → C'</td><td>I₁=C'</td></tr>
+      <tr><td>10</td><td>m4,m5</td><td>0,1 → C</td><td>I₂=C</td></tr>
+      <tr><td>11</td><td>m6,m7</td><td>0,1 → C</td><td>I₃=C</td></tr>
+    </table>
+    </div>
+    <div class="formula">S₁=A, S₀=B
+I₀=C, I₁=C', I₂=C, I₃=C
+Therefore the MUX output Y = F(A,B,C).</div>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 840 340" width="100%" role="img" aria-label="4 to 1 MUX implementation with A and B as select lines">
+      <text x="18" y="27" class="svgtext">Type 1: A and B as select lines</text>
+      <rect x="320" y="65" width="230" height="185" rx="18" class="gate"/>
+      <text x="435" y="110" text-anchor="middle" class="svgtext">4 : 1 MUX</text>
+      <text x="255" y="95" class="svgsmall">C → I₀</text><path d="M290 90 H320" class="wire"/>
+      <text x="235" y="135" class="svgsmall">C' → I₁</text><path d="M290 130 H320" class="wire"/>
+      <text x="255" y="175" class="svgsmall">C → I₂</text><path d="M290 170 H320" class="wire"/>
+      <text x="255" y="215" class="svgsmall">C → I₃</text><path d="M290 210 H320" class="wire"/>
+      <text x="365" y="276" class="svgsmall">S₁=A</text><path d="M390 268 H390 V250" class="wire"/>
+      <text x="455" y="276" class="svgsmall">S₀=B</text><path d="M482 268 H482 V250" class="wire"/>
+      <path d="M550 155 H650" class="wire"/><text x="658" y="160" class="svgtext">F</text>
+      <rect x="65" y="86" width="95" height="62" rx="14" class="gate"/><text x="112" y="111" text-anchor="middle" class="svgsmall">NOT</text><text x="112" y="131" text-anchor="middle" class="svgsmall">C → C'</text>
+      <path d="M160 117 H225" class="wire"/>
+      <text x="65" y="200" class="svgsmall">Required inputs:</text><text x="65" y="223" class="svgsmall">I₀=C, I₁=C', I₂=C, I₃=C</text>
+    </svg>
+  </div>
+
+  <h3>Type 2 — One variable is used as the MUX data input line</h3>
+  <p>A second common implementation method is to use two other variables as selectors and leave <strong>B</strong> (for example) as the remaining data variable. Then each MUX input can again be <strong>0, 1, B, or B'</strong>. This is the same core idea, just with a different choice of selector variables.</p>
+
+  <div class="card">
+    <strong>Worked example:</strong> F(A,B,C)=Σm(1,2,6,7), choose A and C as selectors and B as the remaining input variable.
+    <div class="scroll">
+    <table>
+      <tr><th>A C</th><th>F for B=0, B=1</th><th>Connect</th></tr>
+      <tr><td>00</td><td>m0,m2 → 0,1</td><td>I₀=B</td></tr>
+      <tr><td>01</td><td>m1,m3 → 1,0</td><td>I₁=B'</td></tr>
+      <tr><td>10</td><td>m4,m6 → 0,1</td><td>I₂=B</td></tr>
+      <tr><td>11</td><td>m5,m7 → 0,1</td><td>I₃=B</td></tr>
+    </table>
+    </div>
+    <div class="formula">S₁=A, S₀=C
+I₀=B, I₁=B', I₂=B, I₃=B</div>
+  </div>
+
+  <div class="memory"><strong>Fast exam method:</strong> 1) Pick two variables as selectors. 2) List the four selector combinations. 3) Compare the function for the remaining variable =0 and =1. 4) Each row becomes 0, 1, X, or X'. 5) Wire those values to I₀–I₃.</div>
+</section>
+
+<section id="demux">
+  <div class="topic-tag">Question 9</div>
+  <h2>9. Demultiplexer — 2ⁿ Rule</h2>
+  <div class="answer">
+    <strong>Definition:</strong> A demultiplexer is a combinational circuit that takes <strong>one data input</strong> and routes it to <strong>one of many output lines</strong>, according to the select lines. If there are n select lines, the number of possible output lines is <strong>2ⁿ</strong>. Therefore, a 1-to-2 DEMUX has 1 select line, a 1-to-4 DEMUX has 2 select lines, and a 1-to-8 DEMUX has 3 select lines.
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 860 300" width="100%" role="img" aria-label="1 to 4 demultiplexer block diagram">
+      <rect x="320" y="58" width="220" height="160" rx="18" class="gate"/>
+      <text x="430" y="105" text-anchor="middle" class="svgtext">1 : 4 DEMUX</text>
+      <text x="430" y="132" text-anchor="middle" class="svgsmall">One input → one selected output</text>
+      <path d="M195 113 H320" class="wire"/><text x="158" y="118" class="svgsmall">D (data)</text>
+      <path d="M430 218 V254" class="wire"/><path d="M488 218 V254" class="wire"/>
+      <text x="407" y="274" class="svgsmall">S₁</text><text x="478" y="274" class="svgsmall">S₀</text>
+      <path d="M540 82 H650 M540 118 H650 M540 154 H650 M540 190 H650" class="wire"/>
+      <text x="660" y="87" class="svgsmall">Y₀</text><text x="660" y="123" class="svgsmall">Y₁</text><text x="660" y="159" class="svgsmall">Y₂</text><text x="660" y="195" class="svgsmall">Y₃</text>
+      <text x="44" y="208" class="svgsmall">Only the selected output receives D.</text>
+      <text x="44" y="230" class="svgsmall">All other outputs are 0.</text>
+    </svg>
+    <div class="caption">A 1-to-4 DEMUX has 1 data input, 2 select lines and 4 outputs.</div>
+  </div>
+
+  <h3>1-to-4 DEMUX truth table</h3>
+  <table>
+    <tr><th>S₁</th><th>S₀</th><th>Y₀</th><th>Y₁</th><th>Y₂</th><th>Y₃</th></tr>
+    <tr><td>0</td><td>0</td><td>D</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>D</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>D</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>D</td></tr>
+  </table>
+
+  <h3>Gate equations for a 1-to-4 DEMUX</h3>
+  <div class="formula">Y₀ = D·S₁'·S₀'
+Y₁ = D·S₁'·S₀
+Y₂ = D·S₁·S₀'
+Y₃ = D·S₁·S₀</div>
+  <p>Notice how these equations look like decoder minterms with an extra data input D. That observation leads directly to the decoder/DEMUX relationship below.</p>
+</section>
+
+<section id="both">
+  <div class="topic-tag">Question 10</div>
+  <h2>10. Decoder and Demultiplexer — How to Make Both</h2>
+
+  <div class="two">
+    <div class="card">
+      <h3>Make a 3-to-8 Decoder</h3>
+      <div class="step"><span class="num">1</span><div>Draw inputs A, B, C.</div></div>
+      <div class="step"><span class="num">2</span><div>Use NOT gates to create A', B', C'.</div></div>
+      <div class="step"><span class="num">3</span><div>Make eight 3-input AND gates.</div></div>
+      <div class="step"><span class="num">4</span><div>Connect one unique combination to each AND gate.</div></div>
+      <div class="step"><span class="num">5</span><div>Label outputs Y₀ through Y₇.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>Make a 1-to-4 DEMUX</h3>
+      <div class="step"><span class="num">1</span><div>Draw one data input D and select lines S₁, S₀.</div></div>
+      <div class="step"><span class="num">2</span><div>Use NOT gates to create S₁' and S₀'.</div></div>
+      <div class="step"><span class="num">3</span><div>Make four 3-input AND gates.</div></div>
+      <div class="step"><span class="num">4</span><div>Put D into every AND path.</div></div>
+      <div class="step"><span class="num">5</span><div>Connect the select combination for Y₀–Y₃ and label the outputs.</div></div>
+    </div>
+  </div>
+
+  <div class="diagram">
+    <svg viewBox="0 0 900 310" width="100%" role="img" aria-label="Decoder and demultiplexer relationship">
+      <rect x="45" y="78" width="235" height="125" rx="18" class="gate"/>
+      <text x="162" y="113" text-anchor="middle" class="svgtext">DECODER</text>
+      <text x="162" y="140" text-anchor="middle" class="svgsmall">n select/input lines</text>
+      <text x="162" y="165" text-anchor="middle" class="svgsmall">→ 2ⁿ one-hot outputs</text>
+
+      <text x="320" y="145" class="svgtext">+</text>
+
+      <rect x="375" y="78" width="235" height="125" rx="18" class="gate"/>
+      <text x="492" y="113" text-anchor="middle" class="svgtext">DATA INPUT D</text>
+      <text x="492" y="140" text-anchor="middle" class="svgsmall">AND D with each decoder minterm</text>
+      <text x="492" y="165" text-anchor="middle" class="svgsmall">→ DEMUX behavior</text>
+
+      <path d="M610 140 H695" class="wire"/><polygon points="695,140 682,133 682,147" fill="#111827"/>
+      <rect x="700" y="78" width="155" height="125" rx="18" class="gate"/>
+      <text x="778" y="113" text-anchor="middle" class="svgtext">DEMUX</text>
+      <text x="778" y="140" text-anchor="middle" class="svgsmall">1 data input</text>
+      <text x="778" y="165" text-anchor="middle" class="svgsmall">→ selected output</text>
+      <text x="55" y="244" class="svgsmall">Key idea: a DEMUX can be viewed as a decoder whose selected output is gated by D.</text>
+    </svg>
+  </div>
+
+  <div class="exam">
+    <strong>Very common exam statement:</strong> “A demultiplexer is similar to a decoder except that it has a data input.” This is a useful conceptual answer, because the DEMUX output equations are decoder minterms multiplied by D.
+  </div>
+</section>
+
+<section>
+  <div class="topic-tag">Last-minute revision</div>
+  <h2>One-Page Memory Sheet</h2>
+  <div class="grid">
+    <div class="card"><strong>Decoder</strong><br>n inputs → 2ⁿ outputs<br>One output active per input combination.</div>
+    <div class="card"><strong>3-to-8 Decoder</strong><br>3 inputs, 8 outputs<br>000→Y₀ … 111→Y₇.</div>
+    <div class="card"><strong>Enable</strong><br>Controls whether the circuit operates.</div>
+    <div class="card"><strong>Encoder</strong><br>2ⁿ inputs → n outputs<br>One active input → binary code.</div>
+    <div class="card"><strong>8-to-3 Encoder</strong><br>D₀…D₇ → A,B,C.</div>
+    <div class="card"><strong>MUX</strong><br>Many inputs → one output<br>Data selector; n selectors give 2ⁿ inputs.</div>
+    <div class="card"><strong>4:1 MUX</strong><br>4 data inputs + 2 selects + 1 output.</div>
+    <div class="card"><strong>DEMUX</strong><br>1 data input → 2ⁿ outputs<br>Select lines decide destination.</div>
+  </div>
+
+  <h3>Most likely theory questions</h3>
+  <div class="answer"><strong>Q:</strong> What is a decoder?<br><strong>A:</strong> A decoder is a combinational circuit that converts n binary inputs into up to 2ⁿ output lines, activating the output corresponding to the input code.</div>
+  <div class="answer"><strong>Q:</strong> Explain a 3-to-8 decoder.<br><strong>A:</strong> It has three inputs and eight outputs. Each of the eight possible 3-bit combinations activates exactly one output, so it can generate all eight minterms of three variables.</div>
+  <div class="answer"><strong>Q:</strong> What is an encoder?<br><strong>A:</strong> An encoder converts one active input among many input lines into a smaller binary code. A basic 8-to-3 encoder therefore converts one of eight active inputs into a three-bit binary number.</div>
+  <div class="answer"><strong>Q:</strong> What is a multiplexer?<br><strong>A:</strong> A multiplexer is a data-selector circuit that selects one input from several data inputs and connects the selected input to a single output according to the select-line combination.</div>
+  <div class="answer"><strong>Q:</strong> What is a demultiplexer?<br><strong>A:</strong> A demultiplexer accepts one data input and routes it to one of several outputs according to the select lines. With n select lines, it provides 2ⁿ possible output destinations.</div>
+  <div class="answer"><strong>Q:</strong> What is the main difference between a MUX and DEMUX?<br><strong>A:</strong> A MUX performs many-to-one selection, while a DEMUX performs one-to-many routing.</div>
+  <div class="answer"><strong>Q:</strong> How is a DEMUX related to a decoder?<br><strong>A:</strong> A decoder activates one output based on the select code; a DEMUX does the same routing operation but also has a data input. The selected DEMUX output carries D, while the other outputs remain 0.</div>
+
+  <div class="key"><strong>Tonight's priority:</strong> Practice the <u>3-to-8 decoder truth table + gate circuit</u>, <u>4-to-1 MUX circuit</u>, <u>8-to-3 encoder equations</u>, and <u>1-to-4 DEMUX equations</u>. Those give you the most reusable drawing patterns.</div>
+</section>
+
+<div class="footer">Prepared as a self-contained HTML study guide. Open in any browser; use Ctrl+P to print/save as PDF.</div>
+</div>
+</body>
+</html>
