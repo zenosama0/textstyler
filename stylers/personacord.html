@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Persona Chat</title>
+<style>
+:root{--bg:#313338;--side:#2b2d31;--dark:#1e1f22;--text:#dbdee1;--muted:#949ba4;--accent:#5865f2;--input:#383a40;--hover:#35373c}
+:root[data-theme=light]{--bg:#fff;--side:#f2f3f5;--dark:#e3e5e8;--text:#313338;--muted:#5c5e66;--input:#ebedef;--hover:#eef0f2}
+:root[data-theme=amoled]{--bg:#000;--side:#0a0a0a;--dark:#000;--text:#e6e6e6;--muted:#8a8a8a;--accent:#00a8fc;--input:#161616;--hover:#141414}
+:root[data-theme=forest]{--bg:#1f2a24;--side:#18211c;--dark:#111813;--text:#dfe9e2;--muted:#8fa498;--accent:#3ba55d;--input:#2a372f;--hover:#26332b}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:"gg sans","Noto Sans","Segoe UI",system-ui,sans-serif;background:var(--dark);color:var(--text);font-size:16px;overflow:hidden}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+#app{display:flex;height:100%;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#side{width:260px;background:var(--side);display:flex;flex-direction:column;flex-shrink:0;z-index:5;transition:transform .2s}
+#side h1{font-size:15px;margin:0;padding:14px 16px;border-bottom:1px solid var(--dark)}
+.lbl{font-size:12px;font-weight:700;color:var(--muted);padding:14px 16px 6px}
+#asRow{display:flex;gap:8px;padding:2px 14px 6px;flex-wrap:wrap}
+.chip{border-radius:50%;padding:2px;border:2px solid transparent}
+.chip.on{border-color:var(--accent)}
+#dms{flex:1;overflow:auto;padding:0 8px}
+.dm{display:flex;align-items:center;gap:10px;width:100%;padding:7px 8px;border-radius:6px;color:var(--muted);text-align:left}
+.dm:hover{background:var(--hover);color:var(--text)}
+.dm.on{background:var(--input);color:var(--text)}
+.dm b{flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badge{background:#f23f42;color:#fff;border-radius:10px;font-size:12px;font-weight:700;padding:0 6px;min-width:18px;text-align:center}
+#me{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--dark)}
+#me .nm{flex:1;min-width:0;font-size:14px;font-weight:600}
+#me small{display:block;color:var(--muted);font-weight:400;font-size:12px}
+.ic{width:34px;height:34px;border-radius:6px;display:grid;place-items:center;color:var(--muted);font-size:18px}
+.ic:hover{background:var(--hover);color:var(--text)}
+.av{border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:#fff;font-weight:700;background-size:cover;background-position:center;user-select:none}
+#main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg)}
+#head{display:flex;align-items:center;gap:10px;padding:0 12px;height:48px;border-bottom:1px solid var(--dark);box-shadow:0 1px 0 rgba(0,0,0,.1);flex-shrink:0}
+#head .t{flex:1;font-weight:700;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#burger{display:none}
+#swap{background:var(--accent);color:#fff;border-radius:6px;padding:6px 12px;font-size:14px;font-weight:600;white-space:nowrap}
+#msgs{flex:1;overflow-y:auto;padding:12px 0 8px}
+.m{display:flex;gap:14px;padding:2px 16px 2px 16px;position:relative}
+.m:hover{background:rgba(127,127,127,.07)}
+.m.first{margin-top:14px}
+.m .gut{width:40px;flex-shrink:0}
+.m .gut span{display:none;font-size:11px;color:var(--muted);line-height:22px}
+.m:hover .gut span{display:block}
+.m .nm{font-weight:600;margin-right:8px}
+.m .tm{font-size:12px;color:var(--muted)}
+.m .tx{white-space:pre-wrap;word-break:break-word;line-height:1.4}
+.m img.pic{display:block;max-width:min(320px,100%);max-height:320px;border-radius:8px;margin-top:4px;cursor:zoom-in}
+.m .del{display:none;position:absolute;right:12px;top:-4px;background:var(--side);border:1px solid var(--dark);border-radius:6px;padding:2px 8px;font-size:13px;color:var(--muted)}
+.m:hover .del{display:block}
+#typing{height:24px;padding:0 16px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.dots i{display:inline-block;width:6px;height:6px;margin-right:3px;border-radius:50%;background:var(--text);animation:b 1.2s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+#comp{display:flex;align-items:flex-end;gap:6px;margin:0 16px 16px;background:var(--input);border-radius:8px;padding:4px 8px;flex-shrink:0}
+#comp textarea{flex:1;background:none;border:0;outline:0;resize:none;max-height:140px;padding:10px 4px;line-height:1.35}
+#prev{margin:0 16px 8px;display:none}
+#prev img{height:80px;border-radius:6px}
+.empty{margin:auto;text-align:center;color:var(--muted);padding:30px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}
+.card{background:var(--bg);border-radius:10px;width:min(520px,100%);max-height:92%;overflow:auto;padding:18px}
+.card h2{margin:0 0 4px;font-size:20px}
+.card h3{margin:20px 0 8px;font-size:14px;color:var(--muted)}
+.row{display:flex;align-items:center;gap:10px;margin:6px 0}
+.row>span{flex:1}
+.field{background:var(--input);border:0;border-radius:6px;padding:9px 10px;outline:0;width:100%}
+.btn{background:var(--accent);color:#fff;border-radius:6px;padding:8px 14px;font-weight:600}
+.btn.g{background:var(--input);color:var(--text)}
+.btn.r{background:#da373c}
+input[type=color]{width:44px;height:32px;border:0;padding:0;background:none}
+input[type=number]{width:80px}
+#view{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;z-index:30;align-items:center;justify-content:center}
+#view img{max-width:96%;max-height:96%}
+@media(max-width:700px){
+ #side{position:fixed;inset:0 auto 0 0;transform:translateX(-100%);width:82%;padding-top:env(safe-area-inset-top,0px)}
+ #side.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.55)}
+ #burger{display:grid}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.si{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.ic.dng:hover{color:#f23f42}
+.ic.on{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:6px}
+.btn .si{width:16px;height:16px}
+.sh{display:flex;align-items:center;padding:0 8px 0 16px;height:48px;border-bottom:1px solid var(--dark);font-weight:700;font-size:15px;flex-shrink:0}
+.sh span{flex:1}
+.dm .cm{flex:1;min-width:0}
+.dm .cm b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dm .cm small{display:block;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#dms{padding-top:8px}
+#members{width:240px;background:var(--side);flex-shrink:0;display:none;flex-direction:column}
+#members.open{display:flex}
+#mhint{font-size:12px;color:var(--muted);padding:10px 16px 4px}
+#mlist{flex:1;overflow:auto;padding:4px 8px}
+.mem{cursor:pointer}
+.mem .tag{font-size:11px;background:var(--accent);color:#fff;border-radius:4px;padding:0 5px}
+.mem .ic{width:28px;height:28px}
+.m .bd{min-width:0;flex:1}
+.ref{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:3px;cursor:pointer;border-left:2px solid var(--muted);padding-left:8px;overflow:hidden;white-space:nowrap}
+.ref span{overflow:hidden;text-overflow:ellipsis}
+.ref:hover span{color:var(--text)}
+.acts{display:none;position:absolute;right:12px;top:-14px;background:var(--side);border:1px solid var(--dark);border-radius:6px;padding:2px;gap:2px;z-index:2}
+.m:hover .acts,.m.sel .acts{display:flex}
+.acts button{width:30px;height:28px;display:grid;place-items:center;color:var(--muted);border-radius:4px}
+.acts button:hover{background:var(--hover);color:var(--text)}
+.rx{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.pill{display:inline-flex;gap:5px;align-items:center;background:var(--input);border:1px solid transparent;border-radius:8px;padding:1px 8px;font-size:14px}
+.pill.on{background:color-mix(in srgb,var(--accent) 25%,transparent);border-color:var(--accent)}
+.pill b{font-size:13px;font-weight:600}
+.m.hl{background:rgba(250,166,26,.2)}
+#replybar{display:none;align-items:center;gap:8px;margin:0 16px;padding:4px 6px 4px 12px;background:var(--side);border-radius:8px 8px 0 0;font-size:13px;color:var(--muted)}
+#replybar .ex{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#pop{position:fixed;z-index:40;background:var(--side);border:1px solid var(--dark);border-radius:8px;padding:6px;display:grid;grid-template-columns:repeat(8,34px);gap:2px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+#pop button{height:34px;font-size:20px;border-radius:6px}
+#pop button:hover{background:var(--hover)}
+.card{position:relative}
+.card h2{padding-right:36px}
+.card>.mx{position:absolute;right:10px;top:10px}
+.empty .btn{margin-top:10px}
+@media(max-width:700px){
+ #members{display:flex;position:fixed;inset:0 0 0 auto;width:82%;transform:translateX(100%);transition:transform .2s;z-index:5;padding-top:env(safe-area-inset-top,0px)}
+ #members.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.55)}
+}
+</style>
+</head>
+<body>
+<div id="app">
+ <aside id="side">
+  <div class="sh"><span>Chats</span><button class="ic" id="newchat" data-i="chatplus" title="New chat" aria-label="New chat"></button></div>
+  <div id="dms"></div>
+  <div id="me"></div>
+ </aside>
+ <section id="main">
+  <div id="head">
+   <button id="burger" class="ic" data-i="menu" aria-label="Chats"></button>
+   <div id="hAv"></div><div class="t" id="hT"></div>
+   <button id="mtoggle" class="ic" data-i="users" title="Personas" aria-label="Personas"></button>
+  </div>
+  <div id="msgs"></div>
+  <div id="typing"></div>
+  <div id="prev"><img alt="Attached"></div>
+  <div id="replybar"></div>
+  <div id="comp">
+   <button class="ic" id="attach" data-i="image" aria-label="Attach image"></button>
+   <textarea id="inp" rows="1"></textarea>
+   <button class="ic" id="send" data-i="send" aria-label="Send" style="color:var(--accent)"></button>
+  </div>
+  <input type="file" id="file" accept="image/*" hidden>
+ </section>
+ <aside id="members">
+  <div class="sh"><span id="mcount"></span><button class="ic" id="newp" data-i="plus" title="New persona" aria-label="New persona"></button></div>
+  <div id="mhint">Tap a persona to chat as them</div>
+  <div id="mlist"></div>
+ </aside>
+</div>
+<div id="view"><img alt=""></div>
+<div id="modal"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const COLORS=['#5865f2','#eb459e','#3ba55d','#faa61a','#ed4245','#9b59b6','#1abc9c','#e67e22'];
+
+/* ---------- storage: IndexedDB with localStorage fallback ---------- */
+const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('personachat',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+async function dbGet(){try{const d=await idb();return await new Promise((res,rej)=>{const q=d.transaction('kv').objectStore('kv').get('s');q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}catch(e){try{return JSON.parse(localStorage.getItem('pc'))}catch(_){return null}}}
+async function dbSet(v){try{const d=await idb();await new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,'s');t.oncomplete=res;t.onerror=()=>rej(t.error)})}catch(e){try{localStorage.setItem('pc',JSON.stringify(v))}catch(_){}}}
+
+let S;
+const defaults=()=>({personas:[],msgs:[],chats:{},last:{},me:null,peer:null,settings:{min:1,max:6,theme:'discord',custom:{bg:'#1a1b26',side:'#16161e',text:'#c0caf5',accent:'#7aa2f7'}}});
+let saveT;const save=()=>{clearTimeout(saveT);saveT=setTimeout(()=>dbSet(JSON.parse(JSON.stringify(S))),150)};
+const P=id=>S.personas.find(p=>p.id===id);
+
+/* ---------- helpers ---------- */
+function avatar(p,size){
+  const d=document.createElement('div');d.className='av';d.style.width=d.style.height=size+'px';d.style.fontSize=size*.42+'px';
+  if(p&&p.img)d.style.backgroundImage=`url(${p.img})`;else{d.style.background=p?p.color:'#555';d.textContent=p?p.name.trim().charAt(0).toUpperCase():'?'}
+  return d;
+}
+function resize(file,max=1000){return new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.78))};im.src=r.result};r.readAsDataURL(file)})}
+const fmt=t=>new Date(t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+const eff=m=>m.delivered||m.t;
+
+/* ---------- theme ---------- */
+function applyTheme(){
+  const r=document.documentElement,st=S.settings;
+  ['--bg','--side','--dark','--text','--accent','--input','--hover','--muted'].forEach(v=>r.style.removeProperty(v));
+  if(st.theme==='custom'){const c=st.custom;r.dataset.theme='custom';
+    r.style.setProperty('--bg',c.bg);r.style.setProperty('--side',c.side);r.style.setProperty('--dark',c.side);
+    r.style.setProperty('--input',`color-mix(in srgb,${c.bg} 80%,${c.text})`);r.style.setProperty('--hover',`color-mix(in srgb,${c.bg} 90%,${c.text})`);
+    r.style.setProperty('--text',c.text);r.style.setProperty('--muted',`color-mix(in srgb,${c.text} 55%,${c.bg})`);r.style.setProperty('--accent',c.accent);
+  }else r.dataset.theme=st.theme;
+}
+
+/* ---------- delivery engine (typing simulation) ---------- */
+let run=0,typingWho=null;
+const pending=()=>S.msgs.filter(m=>m.from===S.peer&&m.to===S.me&&!m.delivered).sort((a,b)=>a.t-b.t);
+function typeTime(m){
+  const {min,max}=S.settings;let ms=m.text?m.text.length*55:900;if(m.img)ms+=900;
+  return Math.max(min*1000,Math.min(max*1000,ms))*(0.9+Math.random()*.2);
+}
+function startQueue(){
+  const tok=++run;setTyping(null);
+  (async()=>{
+    await sleep(500);
+    while(tok===run){
+      const p=pending();if(!p.length){setTyping(null);return}
+      setTyping(S.peer);
+      await sleep(typeTime(p[0]));
+      if(tok!==run)return;
+      p[0].delivered=Date.now();save();setTyping(null);renderMsgs();renderSide();
+      await sleep(350+Math.random()*700);
+    }
+  })();
+}
+function setTyping(id){
+  typingWho=id;const el=$('#typing');
+  el.innerHTML=id?`<span class="dots"><i></i><i></i><i></i></span><b>${esc(P(id).name)}</b> is typing...`:'';
+  if(id){const b=$('#msgs');b.scrollTop=b.scrollHeight}
+}
+
+/* ---------- icons ---------- */
+const ICONS={
+ menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+ users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ chatplus:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v6M9 10h6"/>',
+ send:'<path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/>',
+ image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+ reply:'<path d="M9 14 4 9l5-5"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/>',
+ smile:'<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>',
+ trash:'<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>',
+ x:'<path d="M18 6 6 18M6 6l12 12"/>',
+ edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+ down:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+ up:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>'
+};
+const ico=n=>`<svg class="si" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
+const EMOJI=['👍','❤️','😂','😮','😢','😡','🎉','🔥','👀','🙏','💯','😍','🤔','😭','😅','👏','✅','❌','😎','🥺','💀','🤝','😴','🤣','😊','😘','🙌','💔','👎','🤷','🥳','😬'];
+
+/* ---------- chat model ---------- */
+let replyTo=null,membersOpen=innerWidth>900;
+const mob=()=>innerWidth<=700;
+const chatsOf=id=>(S.chats[id]=S.chats[id]||[]);
+const hasChat=(a,b)=>chatsOf(a).some(c=>c.id===b);
+const addChat=(a,b)=>{if(a&&b&&a!==b&&!hasChat(a,b))chatsOf(a).push({id:b,t:Date.now()})};
+const between=(a,b)=>S.msgs.filter(m=>(m.from===a&&m.to===b)||(m.from===b&&m.to===a));
+const vis=(a,b)=>between(a,b).filter(m=>m.from===a||m.delivered).sort((x,y)=>eff(x)-eff(y));
+const unread=(a,b)=>S.msgs.filter(m=>m.from===b&&m.to===a&&!m.delivered).length;
+const act=(a,b)=>between(a,b).reduce((t,m)=>Math.max(t,eff(m)),0);
+const excerpt=m=>m?(m.text?m.text.slice(0,80):'Attachment'):'';
+function migrate(){
+  S.settings=Object.assign(defaults().settings,S.settings||{});
+  S.chats=S.chats||{};S.last=S.last||{};
+  if(P(S.me)&&P(S.peer)&&S.me!==S.peer)addChat(S.me,S.peer);
+  S.msgs.forEach(m=>{addChat(m.from,m.to);addChat(m.to,m.from)});
+  Object.keys(S.chats).forEach(k=>{if(!P(k))delete S.chats[k];else S.chats[k]=S.chats[k].filter(c=>P(c.id))});
+  if(!P(S.me))S.me=S.personas[0]?S.personas[0].id:null;
+  if(!S.me||!P(S.peer)||!hasChat(S.me,S.peer))S.peer=null;
+}
+
+/* ---------- rendering ---------- */
+function renderSide(){
+  const box=$('#dms');box.innerHTML='';const me=S.me;
+  const list=me?chatsOf(me).filter(c=>P(c.id)).map(c=>({c,a:act(me,c.id)||c.t})).sort((x,y)=>y.a-x.a):[];
+  if(!list.length)box.innerHTML='<div class="empty" style="font-size:14px">No chats yet. Use the new chat icon above.</div>';
+  list.forEach(({c})=>{
+    const p=P(c.id),v=vis(me,c.id),last=v[v.length-1],n=unread(me,c.id);
+    const b=document.createElement('button');b.className='dm'+(c.id===S.peer?' on':'');
+    b.appendChild(avatar(p,36));
+    b.insertAdjacentHTML('beforeend',`<div class="cm"><b>${esc(p.name)}</b><small>${last?esc((last.from===me?'You: ':'')+(last.text||'Image')):'No messages yet'}</small></div>`+(n?`<span class="badge">${n}</span>`:''));
+    b.onclick=()=>openChat(c.id);box.appendChild(b);
+  });
+  const el=$('#me');el.innerHTML='';const mp=P(me);
+  if(mp){el.appendChild(avatar(mp,34));el.insertAdjacentHTML('beforeend',`<div class="nm">${esc(mp.name)}<small>Your persona</small></div>`)}
+  else el.innerHTML='<div class="nm">No persona<small>Create one first</small></div>';
+  const g=document.createElement('button');g.className='ic';g.innerHTML=ico('gear');g.title='Settings';g.setAttribute('aria-label','Settings');g.onclick=openSettings;el.appendChild(g);
+}
+function renderMembers(){
+  $('#mcount').textContent='Personas - '+S.personas.length;
+  const box=$('#mlist');box.innerHTML='';
+  S.personas.forEach(p=>{
+    const d=document.createElement('div');d.className='dm mem'+(p.id===S.me?' on':'');
+    d.appendChild(avatar(p,32));
+    d.insertAdjacentHTML('beforeend',`<b style="color:${p.color}">${esc(p.name)}</b>`+(p.id===S.me?'<span class="tag">You</span>':''));
+    const e=document.createElement('button');e.className='ic';e.innerHTML=ico('edit');e.title='Edit persona';
+    e.onclick=ev=>{ev.stopPropagation();editPersona(p.id)};d.appendChild(e);
+    d.onclick=()=>setMe(p.id);box.appendChild(d);
+  });
+}
+function renderHead(){
+  const q=P(S.peer),h=$('#hAv');h.innerHTML='';
+  if(q){h.appendChild(avatar(q,28));$('#hT').textContent=q.name;$('#inp').placeholder=`Message @${q.name} as ${P(S.me).name}`}
+  else $('#hT').textContent='Chats';
+  $('#comp').style.display=q?'':'none';
+  renderReply();
+}
+function renderReply(){
+  const b=$('#replybar'),o=replyTo&&S.msgs.find(x=>x.id===replyTo);
+  if(!o||!P(S.peer)){replyTo=null;b.style.display='none';return}
+  const p=P(o.from);b.style.display='flex';
+  b.innerHTML=`<span>Replying to <b style="color:${p.color}">${esc(p.name)}</b></span><span class="ex">${esc(excerpt(o))}</span><button class="ic" aria-label="Cancel reply">${ico('x')}</button>`;
+  b.querySelector('button').onclick=()=>{replyTo=null;renderReply()};
+}
+function jump(id){
+  const el=$('#msgs [data-id="'+id+'"]');if(!el)return;
+  el.scrollIntoView({block:'center',behavior:'smooth'});el.classList.add('hl');setTimeout(()=>el.classList.remove('hl'),1500);
+}
+function renderMsgs(force){
+  const box=$('#msgs'),st=box.scrollTop,near=box.scrollHeight-box.scrollTop-box.clientHeight<120;box.innerHTML='';
+  if(!P(S.peer)){
+    const me=P(S.me),d=document.createElement('div');d.className='empty';
+    d.innerHTML=`<p>${me?esc(me.name)+' has no open chat yet.':'Create a persona to get started.'}</p>`;
+    const b=document.createElement('button');b.className='btn';b.innerHTML=me?ico('chatplus')+' New chat':ico('plus')+' New persona';
+    b.onclick=me?newChat:()=>editPersona();d.appendChild(b);box.appendChild(d);return;
+  }
+  const list=vis(S.me,S.peer);
+  if(!list.length)box.innerHTML=`<div class="empty">This is the start of the chat between ${esc(P(S.me).name)} and ${esc(P(S.peer).name)}.</div>`;
+  let prev=null;
+  list.forEach(m=>{
+    const p=P(m.from),t=eff(m),first=!prev||prev.from!==m.from||t-eff(prev)>300000||!!m.replyTo;prev=m;
+    const d=document.createElement('div');d.className='m'+(first?' first':'');d.dataset.id=m.id;
+    const g=document.createElement('div');g.className='gut';
+    if(first)g.appendChild(avatar(p,40));else g.innerHTML=`<span>${fmt(t)}</span>`;
+    const b=document.createElement('div');b.className='bd';
+    b.innerHTML=(first?`<div><span class="nm" style="color:${p.color}">${esc(p.name)}</span><span class="tm">${fmt(t)}</span></div>`:'')
+      +(m.text?`<div class="tx">${esc(m.text)}</div>`:'')+(m.img?`<img class="pic" src="${m.img}" alt="Image">`:'');
+    if(m.replyTo){
+      const o=S.msgs.find(x=>x.id===m.replyTo),r=document.createElement('div');r.className='ref';
+      if(o){const op=P(o.from);r.appendChild(avatar(op,16));r.insertAdjacentHTML('beforeend',`<b style="color:${op.color}">${esc(op.name)}</b><span>${esc(excerpt(o))}</span>`);r.onclick=()=>jump(o.id)}
+      else r.textContent='Original message was deleted';
+      b.prepend(r);
+    }
+    const rx=m.reacts?Object.entries(m.reacts).filter(([,a])=>a.length):[];
+    if(rx.length){
+      const r=document.createElement('div');r.className='rx';
+      rx.forEach(([e,a])=>{const pb=document.createElement('button');pb.className='pill'+(a.includes(S.me)?' on':'');
+        pb.title=a.map(i=>P(i)?P(i).name:'?').join(', ');pb.innerHTML=`${e}<b>${a.length}</b>`;
+        pb.onclick=ev=>{ev.stopPropagation();toggleReact(m,e)};r.appendChild(pb)});
+      b.appendChild(r);
+    }
+    const ac=document.createElement('div');ac.className='acts';
+    ac.innerHTML=`<button data-a="r" title="Add reaction" aria-label="Add reaction">${ico('smile')}</button><button data-a="p" title="Reply" aria-label="Reply">${ico('reply')}</button><button data-a="d" title="Delete" aria-label="Delete">${ico('trash')}</button>`;
+    ac.onclick=e=>{
+      const bt=e.target.closest('button');if(!bt)return;e.stopPropagation();
+      if(bt.dataset.a==='r')pickEmoji(bt,emo=>toggleReact(m,emo));
+      else if(bt.dataset.a==='p'){replyTo=m.id;renderReply();$('#inp').focus()}
+      else{S.msgs=S.msgs.filter(z=>z.id!==m.id);if(replyTo===m.id)replyTo=null;save();renderSide();renderReply();renderMsgs()}
+    };
+    d.append(g,b,ac);
+    d.onclick=e=>{
+      if(e.target.closest('button,img,.ref'))return;
+      const was=d.classList.contains('sel');document.querySelectorAll('.m.sel').forEach(x=>x.classList.remove('sel'));if(!was)d.classList.add('sel');
+    };
+    const im=b.querySelector('.pic');if(im)im.onclick=()=>{$('#view img').src=m.img;$('#view').style.display='flex'};
+    box.appendChild(d);
+  });
+  if(force||near)box.scrollTop=box.scrollHeight;else box.scrollTop=st;
+}
+function applyPanels(){$('#members').classList.toggle('open',membersOpen);$('#mtoggle').classList.toggle('on',membersOpen)}
+function renderAll(){applyTheme();renderSide();renderMembers();renderHead();renderMsgs(true);applyPanels()}
+
+/* ---------- reactions ---------- */
+function toggleReact(m,e){
+  m.reacts=m.reacts||{};const a=m.reacts[e]=m.reacts[e]||[],i=a.indexOf(S.me);
+  if(i<0)a.push(S.me);else a.splice(i,1);
+  if(!a.length)delete m.reacts[e];
+  save();renderMsgs();
+}
+function closePop(){const p=$('#pop');if(p)p.remove()}
+function pickEmoji(anchor,cb){
+  closePop();
+  const p=document.createElement('div');p.id='pop';p.innerHTML=EMOJI.map(e=>`<button>${e}</button>`).join('');
+  document.body.appendChild(p);
+  const r=anchor.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;
+  p.style.left=Math.max(8,Math.min(innerWidth-w-8,r.right-w))+'px';
+  p.style.top=(r.bottom+h+8>innerHeight?Math.max(8,r.top-h-4):r.bottom+4)+'px';
+  p.onclick=e=>{const b=e.target.closest('button');if(b){cb(b.textContent);closePop()}};
+  setTimeout(()=>document.addEventListener('click',closePop,{once:true}),0);
+}
+
+/* ---------- actions ---------- */
+function openChat(id){
+  S.peer=id;S.last[S.me]=id;replyTo=null;$('#side').classList.remove('open');
+  save();renderAll();startQueue();
+}
+function setMe(id){
+  if(id===S.me)return;
+  const old=S.me;S.last[old]=S.peer;S.me=id;replyTo=null;
+  const cs=chatsOf(id).filter(c=>P(c.id)),has=x=>cs.some(c=>c.id===x);
+  let pick=null;
+  if(old&&has(old)&&unread(id,old))pick=old;
+  else if(S.last[id]&&has(S.last[id]))pick=S.last[id];
+  else if(old&&has(old))pick=old;
+  else if(cs.length)pick=cs.map(c=>({id:c.id,a:act(id,c.id)||c.t})).sort((x,y)=>y.a-x.a)[0].id;
+  S.peer=pick;
+  if(mob()){membersOpen=false;$('#side').classList.remove('open')}
+  save();renderAll();startQueue();
+}
+function newChat(){
+  const me=P(S.me);if(!me){editPersona();return}
+  const av=S.personas.filter(p=>p.id!==me.id&&!hasChat(me.id,p.id));
+  const m=modal(`<h2>New chat</h2><h3>Who should ${esc(me.name)} message?</h3><div id="nl"></div>`);
+  const l=m.querySelector('#nl');
+  if(!av.length){
+    l.innerHTML=`<div class="row"><span>${esc(me.name)} already has a chat with every persona. Add another persona to start a new one.</span></div>`;
+    const b=document.createElement('button');b.className='btn';b.innerHTML=ico('plus')+' New persona';b.onclick=()=>editPersona();l.appendChild(b);return;
+  }
+  av.forEach(p=>{
+    const b=document.createElement('button');b.className='dm';b.appendChild(avatar(p,32));
+    b.insertAdjacentHTML('beforeend',`<b>${esc(p.name)}</b>`);
+    b.onclick=()=>{addChat(me.id,p.id);closeModal();openChat(p.id)};l.appendChild(b);
+  });
+}
+$('#newchat').onclick=newChat;
+$('#newp').onclick=()=>editPersona();
+$('#mtoggle').onclick=()=>{membersOpen=!membersOpen;applyPanels()};
+$('#burger').onclick=()=>$('#side').classList.toggle('open');
+$('#main').addEventListener('click',e=>{
+  if(!mob()||e.target.closest('#head'))return;
+  $('#side').classList.remove('open');if(membersOpen){membersOpen=false;applyPanels()}
+});
+$('#view').onclick=()=>$('#view').style.display='none';
+
+let attached=null;
+$('#attach').onclick=()=>$('#file').click();
+$('#file').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;attached=await resize(f);$('#prev img').src=attached;$('#prev').style.display='block'};
+function sendMsg(){
+  const v=$('#inp').value.trim();
+  if(!P(S.me)||!P(S.peer)||(!v&&!attached))return;
+  S.msgs.push({id:uid(),from:S.me,to:S.peer,t:Date.now(),text:v,img:attached,delivered:null,replyTo:replyTo||null,reacts:{}});
+  addChat(S.me,S.peer);addChat(S.peer,S.me);
+  attached=null;replyTo=null;$('#prev').style.display='none';$('#inp').value='';$('#inp').style.height='auto';
+  save();renderSide();renderReply();renderMsgs(true);
+}
+$('#send').onclick=sendMsg;
+$('#inp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!/Mobi|Android/i.test(navigator.userAgent)){e.preventDefault();sendMsg()}});
+$('#inp').addEventListener('input',e=>{e.target.style.height='auto';e.target.style.height=Math.min(140,e.target.scrollHeight)+'px'});
+
+/* ---------- modals ---------- */
+function closeModal(){$('#modal').innerHTML=''}
+function modal(html){
+  const m=$('#modal');m.innerHTML=`<div class="modal"><div class="card"><button class="ic mx" aria-label="Close">${ico('x')}</button>${html}</div></div>`;
+  m.firstChild.onmousedown=e=>{if(e.target===m.firstChild)closeModal()};
+  m.querySelector('.mx').onclick=closeModal;return m;
+}
+function editPersona(id,back){
+  const ex=id?P(id):null;let img=ex?ex.img:null,color=ex?ex.color:COLORS[S.personas.length%COLORS.length];
+  const done=()=>back?openSettings():closeModal();
+  const m=modal(`<h2>${ex?'Edit':'New'} persona</h2><h3>Name</h3><input class="field" id="pn" maxlength="32" value="${ex?esc(ex.name):''}" placeholder="Persona name">
+   <h3>Avatar</h3><div class="row"><div id="pa"></div><button class="btn g" id="pu">${ico('up')} Upload image</button><button class="btn g" id="pr">Remove</button></div>
+   <h3>Name color</h3><div class="row"><input type="color" id="pc" value="${color}"></div>
+   <div class="row" style="margin-top:20px"><span></span><button class="btn g" id="px">Cancel</button><button class="btn" id="ps">Save</button></div>
+   <input type="file" id="pf" accept="image/*" hidden>`);
+  const draw=()=>{const h=m.querySelector('#pa');h.innerHTML='';h.appendChild(avatar({name:m.querySelector('#pn').value||'?',img,color},56))};draw();
+  m.querySelector('#pn').oninput=draw;
+  m.querySelector('#pc').oninput=e=>{color=e.target.value;draw()};
+  m.querySelector('#pu').onclick=()=>m.querySelector('#pf').click();
+  m.querySelector('#pr').onclick=()=>{img=null;draw()};
+  m.querySelector('#pf').onchange=async e=>{const f=e.target.files[0];if(f){img=await resize(f,256);draw()}};
+  m.querySelector('#px').onclick=done;
+  m.querySelector('#ps').onclick=()=>{
+    const name=m.querySelector('#pn').value.trim();if(!name){m.querySelector('#pn').focus();return}
+    if(ex)Object.assign(ex,{name,img,color});
+    else{const p={id:uid(),name,img,color};S.personas.push(p);if(!S.me)S.me=p.id}
+    save();renderAll();startQueue();done();
+  };
+}
+function openSettings(){
+  const st=S.settings,c=st.custom;
+  const m=modal(`<h2>Settings</h2>
+  <h3>Personas</h3>${S.personas.map(p=>`<div class="row" data-id="${p.id}"><span class="av-slot" style="flex:0 0 auto"></span><span>${esc(p.name)}</span><button class="ic" data-e="${p.id}" title="Edit" aria-label="Edit">${ico('edit')}</button><button class="ic dng" data-d="${p.id}" title="Delete" aria-label="Delete">${ico('trash')}</button></div>`).join('')||'<div class="row"><span>No personas yet.</span></div>'}
+  <div class="row"><button class="btn" id="np">${ico('plus')} Add persona</button></div>
+  <h3>Typing time (seconds)</h3>
+  <div class="row"><span>Minimum</span><input class="field" type="number" id="tmin" min="0" max="30" step="0.5" value="${st.min}"></div>
+  <div class="row"><span>Maximum</span><input class="field" type="number" id="tmax" min="0" max="60" step="0.5" value="${st.max}"></div>
+  <h3>Theme</h3>
+  <div class="row"><select class="field" id="th">${[['discord','Discord dark'],['light','Light'],['amoled','Amoled black'],['forest','Forest'],['custom','Custom']].map(([k,n])=>`<option value="${k}"${st.theme===k?' selected':''}>${n}</option>`).join('')}</select></div>
+  <div id="cu" style="display:${st.theme==='custom'?'block':'none'}">
+   ${[['bg','Chat background'],['side','Sidebars'],['text','Text'],['accent','Accent']].map(([k,n])=>`<div class="row"><span>${n}</span><input type="color" data-c="${k}" value="${c[k]}"></div>`).join('')}
+  </div>
+  <h3>Data (saved on this device only)</h3>
+  <div class="row" style="flex-wrap:wrap"><button class="btn g" id="ex">${ico('down')} Export</button><button class="btn g" id="im">${ico('up')} Import</button><button class="btn r" id="cl">${ico('trash')} Clear messages</button></div>
+  <input type="file" id="imf" accept="application/json" hidden>
+  <div class="row" style="margin-top:20px"><span></span><button class="btn" id="done">Done</button></div>`);
+  m.querySelectorAll('.av-slot').forEach(s=>s.appendChild(avatar(P(s.parentNode.dataset.id),32)));
+  m.querySelector('#np').onclick=()=>editPersona(null,true);
+  m.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>editPersona(b.dataset.e,true));
+  m.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{
+    if(!confirm('Delete this persona and its messages?'))return;const id=b.dataset.d;
+    S.personas=S.personas.filter(p=>p.id!==id);S.msgs=S.msgs.filter(x=>x.from!==id&&x.to!==id);
+    S.msgs.forEach(x=>{if(x.replyTo&&!S.msgs.some(y=>y.id===x.replyTo))x.replyTo=null;if(x.reacts)for(const k in x.reacts){x.reacts[k]=x.reacts[k].filter(i=>i!==id);if(!x.reacts[k].length)delete x.reacts[k]}});
+    delete S.chats[id];delete S.last[id];
+    if(S.me===id){S.me=S.personas[0]?S.personas[0].id:null;S.peer=null}
+    migrate();save();renderAll();startQueue();openSettings();
+  });
+  const num=(id,k)=>m.querySelector(id).onchange=e=>{st[k]=Math.max(0,+e.target.value||0);if(st.min>st.max){st.max=st.min;m.querySelector('#tmax').value=st.max}save()};
+  num('#tmin','min');num('#tmax','max');
+  m.querySelector('#th').onchange=e=>{st.theme=e.target.value;m.querySelector('#cu').style.display=st.theme==='custom'?'block':'none';save();applyTheme()};
+  m.querySelectorAll('[data-c]').forEach(i=>i.oninput=e=>{c[i.dataset.c]=e.target.value;save();applyTheme()});
+  m.querySelector('#ex').onclick=()=>{
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));
+    a.download='persona-chat-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  };
+  m.querySelector('#im').onclick=()=>m.querySelector('#imf').click();
+  m.querySelector('#imf').onchange=async e=>{
+    const f=e.target.files[0];if(!f)return;
+    try{const d=JSON.parse(await f.text());if(!Array.isArray(d.personas)||!Array.isArray(d.msgs))throw 0;
+      if(!confirm('Importing replaces everything currently saved on this device. Continue?'))return;
+      S=Object.assign(defaults(),d);migrate();save();renderAll();startQueue();openSettings();
+    }catch(_){alert('That file is not a valid Persona Chat export.')}
+  };
+  m.querySelector('#cl').onclick=()=>{if(confirm('Delete all messages?')){S.msgs=[];replyTo=null;save();renderAll();startQueue()}};
+  m.querySelector('#done').onclick=closeModal;
+}
+
+/* ---------- init ---------- */
+(async()=>{
+  document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=ico(e.dataset.i));
+  const d=await dbGet();
+  S=d&&Array.isArray(d.personas)?Object.assign(defaults(),d):defaults();
+  if(!S.personas.length){
+    S.personas=[{id:uid(),name:'Alex',img:null,color:COLORS[0]},{id:uid(),name:'Sam',img:null,color:COLORS[1]}];
+    S.me=S.personas[0].id;S.peer=S.personas[1].id;
+  }
+  migrate();save();renderAll();startQueue();
+})();
+</script>
+</body>
+</html>
