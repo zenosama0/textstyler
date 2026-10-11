@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Probability & Statistics - Exam Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181c26;
+    --surface2: #1e2333;
+    --border: #2a3048;
+    --accent: #4f8ef7;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --muted: #8892a4;
+    --code-bg: #131720;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100%;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(15,17,23,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: .04em;
+    white-space: nowrap;
+    padding: .75rem 1rem .75rem 0;
+    border-right: 1px solid var(--border);
+    margin-right: .75rem;
+    flex-shrink: 0;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: .75rem .6rem;
+    transition: color .15s;
+    flex-shrink: 0;
+  }
+  nav a:hover { color: var(--text); }
+
+  /* LAYOUT */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 5rem;
+  }
+
+  /* HERO */
+  .hero {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 2rem 2rem 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+  .hero h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text);
+  }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: .6rem;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: 1.25rem;
+  }
+  .badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent2);
+    padding: .25rem .6rem;
+  }
+
+  /* SECTION CARD */
+  .section-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--accent);
+    color: #0f1117;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: .15rem .45rem;
+    flex-shrink: 0;
+  }
+  .section-num.purple { background: var(--accent2); }
+  .section-num.green { background: var(--green); }
+  .section-num.yellow { background: var(--yellow); }
+  .section-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .section-body { padding: 1.5rem; }
+  .section-body > * + * { margin-top: 1.25rem; }
+
+  /* TOPIC BLOCKS */
+  .topic { }
+  .topic-title {
+    font-size: .8rem;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .4rem;
+  }
+  .topic p { color: var(--text); font-size: 14px; }
+  .topic p + p { margin-top: .6rem; }
+
+  /* DEFINITION BOX */
+  .def-box {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: .9rem 1.1rem;
+    font-size: 14px;
+  }
+  .def-box.purple { border-color: var(--accent2); }
+  .def-box.green { border-color: var(--green); }
+  .def-box.yellow { border-color: var(--yellow); }
+  .def-box strong { color: var(--accent); }
+  .def-box.purple strong { color: var(--accent2); }
+  .def-box.green strong { color: var(--green); }
+  .def-box.yellow strong { color: var(--yellow); }
+
+  /* FORMULA */
+  .formula {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .85rem 1.1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* STEPS */
+  .steps { list-style: none; }
+  .steps li {
+    display: flex;
+    gap: .85rem;
+    font-size: 14px;
+    padding-bottom: .85rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .steps li:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-num {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    margin-top: .15rem;
+  }
+  .steps li div { flex: 1; }
+  .steps li strong { color: var(--yellow); }
+
+  /* EXAMPLE */
+  .example {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 1rem 1.1rem;
+    font-size: 14px;
+  }
+  .example-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+  .example p + p { margin-top: .4rem; }
+  .calc {
+    background: var(--code-bg);
+    border-radius: 4px;
+    padding: .4rem .7rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--green);
+    margin: .5rem 0;
+    display: block;
+    overflow-x: auto;
+  }
+  .answer {
+    font-weight: 600;
+    color: var(--accent2);
+  }
+
+  /* RULE TABLE */
+  .rule-table { font-size: 13.5px; }
+  .rule-row {
+    display: flex;
+    gap: 1rem;
+    padding: .55rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .rule-row:last-child { border-bottom: none; }
+  .rule-label {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+    flex-shrink: 0;
+    width: 80px;
+    font-size: 12px;
+    padding-top: .05rem;
+  }
+  .rule-row.purple .rule-label { color: var(--accent2); }
+  .rule-row.green .rule-label { color: var(--green); }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+  /* REMEMBER BOX */
+  .remember {
+    background: rgba(251,191,36,.07);
+    border: 1px solid rgba(251,191,36,.25);
+    border-radius: 6px;
+    padding: .8rem 1rem;
+    font-size: 13.5px;
+    color: var(--text);
+  }
+  .remember::before {
+    content: "★ remember: ";
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    display: block;
+    margin-bottom: .3rem;
+  }
+
+  @media (max-width: 500px) {
+    main { padding: 1.5rem .9rem 5rem; }
+    .hero { padding: 1.25rem 1rem; }
+    .section-body { padding: 1rem; }
+    .hero h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Stats Exam</span>
+  <a href="#s52">5.2</a>
+  <a href="#s53">5.3</a>
+  <a href="#s62">6.2</a>
+  <a href="#s63">6.3</a>
+  <a href="#s71">7.1</a>
+  <a href="#s72">7.2</a>
+  <a href="#s82">8.2</a>
+  <a href="#s83">8.3</a>
+</nav>
+
+<main>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Probability & Statistics</div>
+    <h1>Exam Study Guide</h1>
+    <p class="hero-sub">Sections 5.2, 5.3, 6.2, 6.3, 7.1, 7.2, 8.2, 8.3 - everything you need, nothing you don't.</p>
+    <div class="hero-badges">
+      <span class="badge">Mean / Variance</span>
+      <span class="badge">Binomial Dist.</span>
+      <span class="badge">Normal Dist.</span>
+      <span class="badge">z-scores</span>
+      <span class="badge">Confidence Intervals</span>
+      <span class="badge">t-distribution</span>
+      <span class="badge">z-test</span>
+      <span class="badge">t-test</span>
+    </div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="section-card" id="s52">
+    <div class="section-header">
+      <span class="section-num">5.2</span>
+      <h2>Mean, Variance & Standard Deviation of a Probability Distribution</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">What is the Mean (Expected Value)?</div>
+        <p>The <strong>mean</strong> of a probability distribution - also called the <strong>expected value</strong> - tells you the theoretical average outcome if you repeated the experiment an infinite number of times. It is NOT the average of the x-values alone. You must weight each x-value by how likely it is to happen. Think of it as a weighted balance point: outcomes that are more probable pull the average toward them more strongly. It is written as μ (mu) or E(X).</p>
+      </div>
+
+      <div class="def-box">
+        <strong>Formula - Mean:</strong><br>
+        μ = Σ [ X · P(X) ]<br><br>
+        Multiply each outcome by its probability, then add everything up.
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">What is Variance and Standard Deviation?</div>
+        <p>Variance measures how spread out the outcomes are around the mean. A high variance means outcomes are scattered far from the mean; a low variance means they cluster closely around it. Standard deviation is just the square root of the variance - it puts the spread back into the same units as the original data, making it easier to interpret.</p>
+      </div>
+
+      <div class="def-box purple">
+        <strong>Formula - Variance:</strong><br>
+        σ² = Σ [ X² · P(X) ] - μ²<br><br>
+        <strong>Formula - Standard Deviation:</strong><br>
+        σ = √σ²
+      </div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Rolling a die (outcomes 1-6, each P = 1/6, μ = 3.5)</div>
+        <p><strong>Step 1 - Find σ²:</strong> Square each outcome, multiply by its probability, add them all up, then subtract μ².</p>
+        <span class="calc">σ² = (1²·1/6 + 2²·1/6 + 3²·1/6 + 4²·1/6 + 5²·1/6 + 6²·1/6) - (3.5)²
+   = (1 + 4 + 9 + 16 + 25 + 36)/6 - 12.25
+   = 91/6 - 12.25
+   = 15.167 - 12.25 = 2.917 ≈ 2.9</span>
+        <p><strong>Step 2 - Find σ:</strong></p>
+        <span class="calc">σ = √2.9 ≈ 1.7</span>
+        <p class="answer">σ² = 2.9, σ = 1.7</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="section-card" id="s53">
+    <div class="section-header">
+      <span class="section-num green">5.3</span>
+      <h2>The Binomial Distribution</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">What is a Binomial Experiment?</div>
+        <p>A <strong>binomial experiment</strong> is a special type of probability experiment that has exactly four properties that must ALL be true at the same time. First, there must be a fixed number of trials - you decide in advance how many times you will repeat the experiment. Second, each trial can only have two possible outcomes, which we call "success" and "failure" (success does NOT mean something positive happened - it just means the outcome you are counting). Third, the trials must be independent, meaning the result of one trial does not affect any other. Fourth, the probability of success must stay the same for every single trial.</p>
+      </div>
+
+      <div class="def-box green">
+        <strong>4 Requirements (memorize these):</strong><br>
+        1. Fixed number of trials (n)<br>
+        2. Each trial = only 2 outcomes (success / failure)<br>
+        3. Trials are independent<br>
+        4. Probability of success (p) is the same each trial
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Key Symbols</div>
+      </div>
+
+      <div class="rule-table">
+        <div class="rule-row green"><div class="rule-label">n</div><div>Number of trials</div></div>
+        <div class="rule-row green"><div class="rule-label">X</div><div>Number of successes (can be 0, 1, 2, ... n)</div></div>
+        <div class="rule-row green"><div class="rule-label">p</div><div>Probability of success on any one trial</div></div>
+        <div class="rule-row green"><div class="rule-label">q</div><div>Probability of failure = 1 - p</div></div>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Binomial Probability Formula</div>
+      </div>
+
+      <div class="formula">P(X) = [ n! / ((n-X)! · X!) ] · p^X · q^(n-X)</div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Survey on Employment</div>
+        <p>30% of teens get spending money from part-time jobs. 5 teens selected. Find P(at least 3 have part-time jobs).</p>
+        <p><strong>"At least 3"</strong> means X = 3, 4, or 5. Calculate each and add.</p>
+        <p><strong>n = 5, p = 0.30, q = 0.70</strong></p>
+        <span class="calc">P(3) = [5! / (2!3!)] · (0.30)³ · (0.70)² = 10 · 0.027 · 0.49 = 0.132
+P(4) = [5! / (1!4!)] · (0.30)⁴ · (0.70)¹ = 5 · 0.0081 · 0.70 = 0.028
+P(5) = [5! / (0!5!)] · (0.30)⁵ · (0.70)⁰ = 1 · 0.00243 · 1 = 0.002
+
+P(X ≥ 3) = 0.132 + 0.028 + 0.002 = 0.162</span>
+        <p class="answer">There is a 16.2% chance that at least 3 of the 5 teens have part-time jobs.</p>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Mean, Variance & SD for Binomial - Much Easier Formulas!</div>
+      </div>
+
+      <div class="def-box green">
+        <strong>Mean:</strong> μ = n · p<br>
+        <strong>Variance:</strong> σ² = n · p · q<br>
+        <strong>Standard Deviation:</strong> σ = √(n · p · q)
+      </div>
+
+      <div class="example">
+        <div class="example-label">Example - Coin tossed 4 times</div>
+        <p>n = 4, p = 0.5, q = 0.5</p>
+        <span class="calc">μ = 4 × 0.5 = 2
+σ² = 4 × 0.5 × 0.5 = 1
+σ = √1 = 1</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6.2 -->
+  <div class="section-card" id="s62">
+    <div class="section-header">
+      <span class="section-num">6.2</span>
+      <h2>Standard Normal Distribution - Finding Areas</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">What is the Normal Distribution?</div>
+        <p>The <strong>normal distribution</strong> is a continuous, bell-shaped, symmetric curve that describes how many real-world variables are distributed - things like heights, test scores, and blood pressure. It is described entirely by two numbers: its mean (μ), which controls where the center of the bell sits, and its standard deviation (σ), which controls how wide or narrow the bell is. A larger σ makes the curve wider and flatter; a smaller σ makes it taller and more narrow. The total area under the curve always equals 1 (or 100%), and the mean, median, and mode are all equal and sit at the center.</p>
+        <p>The <strong>standard normal distribution</strong> is a special version with μ = 0 and σ = 1. We use it by converting any normal variable into a z-score.</p>
+      </div>
+
+      <div class="def-box">
+        <strong>Key Properties:</strong><br>
+        - Bell-shaped, symmetric about the mean<br>
+        - Mean = Median = Mode (all at center)<br>
+        - Total area under curve = 1.00 (100%)<br>
+        - Curve never touches the x-axis<br>
+        - 68% of data within 1σ, 95% within 2σ, 99.7% within 3σ
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">The z-score Formula</div>
+        <p>A <strong>z-score</strong> tells you how many standard deviations a value is above or below the mean. A positive z means above the mean; a negative z means below the mean. Once you have a z-score, you look up the area (probability) in Table E.</p>
+      </div>
+
+      <div class="formula">z = (X - μ) / σ</div>
+
+      <div class="topic">
+        <div class="topic-title">3 Cases for Finding Areas (Table E always gives LEFTWARD area)</div>
+      </div>
+
+      <div class="rule-table">
+        <div class="rule-row"><div class="rule-label">Case 1</div><div><strong>Area to the LEFT of z</strong> - just look up z in Table E. That value is your answer.</div></div>
+        <div class="rule-row"><div class="rule-label">Case 2</div><div><strong>Area to the RIGHT of z</strong> - look up z in Table E, then subtract from 1.0000.</div></div>
+        <div class="rule-row"><div class="rule-label">Case 3</div><div><strong>Area BETWEEN two z values</strong> - look up both z values in Table E, then subtract the smaller area from the larger area.</div></div>
+      </div>
+
+      <div class="example">
+        <div class="example-label">Case 1 - Left of z = 2.09</div>
+        <p>Look up 2.0 in left column, 0.09 in top row.</p>
+        <span class="calc">Table E gives: 0.9817</span>
+        <p class="answer">98.17% of the area is to the left of z = 2.09.</p>
+      </div>
+
+      <div class="example">
+        <div class="example-label">Case 2 - Right of z = -1.14</div>
+        <span class="calc">Table E for z = -1.14 gives: 0.1271
+Right area = 1.0000 - 0.1271 = 0.8729</span>
+        <p class="answer">87.29% of the area is to the right of z = -1.14.</p>
+      </div>
+
+      <div class="example">
+        <div class="example-label">Case 3 - Between z = -1.35 and z = 1.62</div>
+        <span class="calc">Table E for z = 1.62 gives: 0.9474
+Table E for z = -1.35 gives: 0.0885
+Area between = 0.9474 - 0.0885 = 0.8589</span>
+        <p class="answer">85.89% of the area falls between these two z values.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6.3 -->
+  <div class="section-card" id="s63">
+    <div class="section-header">
+      <span class="section-num purple">6.3</span>
+      <h2>Applications of the Normal Distribution</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">Converting a Real-World Value to a z-score</div>
+        <p>Most real-world variables are NOT the standard normal (they have means and standard deviations other than 0 and 1). To use Table E, you must first convert the raw value (X) into a z-score using the formula. Then you work with the z-score exactly as in Section 6.2.</p>
+      </div>
+
+      <div class="def-box purple">
+        <strong>3-Step Procedure for Any Normal Curve Problem:</strong><br>
+        Step 1 - Draw the normal curve and shade the area you want<br>
+        Step 2 - Convert X to z using z = (X - μ) / σ<br>
+        Step 3 - Find the area using Table E (apply Case 1, 2, or 3)
+      </div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Blood Volume</div>
+        <p>Adults average 5.2 liters of blood, σ = 0.3. What percent have LESS than 5.4 liters?</p>
+        <p><strong>Step 1:</strong> Shade area to the LEFT of X = 5.4 (that's Case 1).</p>
+        <p><strong>Step 2:</strong> Convert to z.</p>
+        <span class="calc">z = (5.4 - 5.2) / 0.3 = 0.2 / 0.3 = 0.67</span>
+        <p><strong>Step 3:</strong> Look up z = 0.67 in Table E.</p>
+        <span class="calc">Table E → 0.7486</span>
+        <p class="answer">74.86% of adults have less than 5.4 liters of blood.</p>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Working Backwards - Finding X from a Probability</div>
+        <p>Sometimes the exam gives you the area (probability) and asks you to find the actual X value. You reverse the process: look up the area in Table E to find the z-score, then use the rearranged formula to find X.</p>
+      </div>
+
+      <div class="def-box purple">
+        <strong>Reverse Formula (finding X from z):</strong><br>
+        X = z · σ + μ
+      </div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Police Academy</div>
+        <p>Candidates must score in TOP 10%. Test: μ = 200, σ = 20. Find lowest qualifying score.</p>
+        <p><strong>Step 1:</strong> Top 10% means 90% to the LEFT. Find z for area 0.9000 in Table E.</p>
+        <span class="calc">Closest area in Table E: 0.8997 → z = 1.28</span>
+        <p><strong>Step 2:</strong> Find X.</p>
+        <span class="calc">X = 1.28 × 20 + 200 = 25.6 + 200 = 225.6</span>
+        <p class="answer">A candidate must score at least 226 to qualify.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 7.1 -->
+  <div class="section-card" id="s71">
+    <div class="section-header">
+      <span class="section-num yellow">7.1</span>
+      <h2>Confidence Intervals for the Mean (σ Known)</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">What is a Confidence Interval?</div>
+        <p>A <strong>confidence interval</strong> is a range of values that we believe contains the true population mean, with a certain level of confidence. Instead of saying "the mean is exactly 54," we say "we are 95% confident the true mean is somewhere between 52.3 and 55.7." This is more honest because we know our sample is not perfect. The confidence level (typically 90%, 95%, or 99%) tells you: if you repeated this sampling process many times, that percentage of the resulting intervals would actually capture the true population mean. A higher confidence level means a wider interval - you are trading precision for certainty.</p>
+        <p>A <strong>point estimate</strong> is a single number that estimates the population mean - the sample mean (X̄). But it says nothing about how accurate it is, which is why we prefer confidence intervals.</p>
+      </div>
+
+      <div class="def-box yellow">
+        <strong>Formula for Confidence Interval (σ known):</strong><br>
+        X̄ - z(α/2) · (σ/√n)  &lt;  μ  &lt;  X̄ + z(α/2) · (σ/√n)<br><br>
+        <strong>z(α/2) critical values:</strong><br>
+        90% confidence → z = 1.65<br>
+        95% confidence → z = 1.96<br>
+        99% confidence → z = 2.58
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Margin of Error (E)</div>
+        <p>The margin of error is the "± part" of a confidence interval. It tells you the maximum likely difference between your sample mean and the true population mean.</p>
+      </div>
+
+      <div class="formula">E = z(α/2) · (σ / √n)</div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Days to Sell a Car</div>
+        <p>Sample of 50 cars, X̄ = 54 days, σ = 6.0. Find 95% CI.</p>
+        <span class="calc">E = 1.96 × (6.0 / √50) = 1.96 × 0.849 = 1.66 ≈ 1.7
+
+Lower: 54 - 1.7 = 52.3
+Upper: 54 + 1.7 = 55.7
+
+CI: 52.3 &lt; μ &lt; 55.7</span>
+        <p class="answer">We are 95% confident the true mean is between 52.3 and 55.7 days.</p>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Finding Minimum Sample Size</div>
+        <p>Use this formula when you need to know how large your sample must be to achieve a certain margin of error E. Always round UP to the next whole number.</p>
+      </div>
+
+      <div class="formula">n = ( z(α/2) · σ / E )²</div>
+
+      <div class="example">
+        <div class="example-label">Example - River Depth (99% CI, E = 2 feet, σ = 4.33)</div>
+        <span class="calc">n = (2.58 × 4.33 / 2)² = (5.57)² = 31.0 → round UP → n = 32</span>
+        <p class="answer">Need at least 32 measurements.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 7.2 -->
+  <div class="section-card" id="s72">
+    <div class="section-header">
+      <span class="section-num yellow">7.2</span>
+      <h2>Confidence Intervals for the Mean (σ Unknown) - t-distribution</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">Why Use the t-distribution?</div>
+        <p>In real life, you almost never know the true population standard deviation (σ). When σ is unknown, you must use the sample standard deviation (s) instead. However, substituting s for σ introduces extra uncertainty, which means your critical values need to be slightly larger to compensate. This is where the <strong>t-distribution</strong> comes in. It looks like the normal bell curve but has heavier tails (wider spread), especially for small samples. As the sample size grows, the t-distribution approaches the standard normal distribution. The exact shape depends on <strong>degrees of freedom</strong>, which equals n - 1.</p>
+      </div>
+
+      <div class="def-box yellow">
+        <strong>When to use t instead of z:</strong><br>
+        σ is UNKNOWN → use t-distribution with s in the formula<br><br>
+        <strong>Degrees of Freedom:</strong> d.f. = n - 1<br><br>
+        <strong>Formula:</strong><br>
+        X̄ - t(α/2) · (s/√n)  &lt;  μ  &lt;  X̄ + t(α/2) · (s/√n)
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">How to Find t(α/2) from Table F</div>
+      </div>
+
+      <ul class="steps">
+        <li><div class="step-num">1</div><div>Calculate degrees of freedom: <strong>d.f. = n - 1</strong></div></li>
+        <li><div class="step-num">2</div><div>Find d.f. in the LEFT column of Table F</div></li>
+        <li><div class="step-num">3</div><div>Find the correct <strong>confidence level %</strong> in the top row labeled "Confidence Intervals"</div></li>
+        <li><div class="step-num">4</div><div>The number at the intersection is your t(α/2) value</div></li>
+      </ul>
+
+      <div class="remember">If d.f. falls between two table values (e.g., 68 falls between 65 and 70), always round DOWN to the smaller value. This is the conservative approach.</div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Infant Growth</div>
+        <p>Sample of 10 children, X̄ = 9.8 inches, s = 0.96 inches. Find 95% CI.</p>
+        <p>d.f. = 10 - 1 = 9. Look up 9 d.f. at 95% in Table F → t = 2.262.</p>
+        <span class="calc">E = 2.262 × (0.96 / √10) = 2.262 × 0.3036 = 0.687 ≈ 0.69
+
+Lower: 9.8 - 0.69 = 9.11
+Upper: 9.8 + 0.69 = 10.49
+
+CI: 9.11 &lt; μ &lt; 10.49</span>
+        <p class="answer">We are 95% confident the true mean first-year growth is between 9.11 and 10.49 inches.</p>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Quick Decision: z or t?</div>
+      </div>
+
+      <div class="rule-table">
+        <div class="rule-row yellow"><div class="rule-label">σ known</div><div>Use <strong>z</strong> with σ in the formula (Section 7.1)</div></div>
+        <div class="rule-row yellow"><div class="rule-label">σ unknown, n ≥ 30</div><div>Use <strong>t</strong> with s in the formula</div></div>
+        <div class="rule-row yellow"><div class="rule-label">σ unknown, n &lt; 30</div><div>Use <strong>t</strong> with s, AND the population must be approximately normal</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 8.2 -->
+  <div class="section-card" id="s82">
+    <div class="section-header">
+      <span class="section-num">8.2</span>
+      <h2>z Test for a Mean</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">What is Hypothesis Testing?</div>
+        <p>Hypothesis testing is a formal method for deciding whether a claim about a population is supported by sample data. You start with a <strong>null hypothesis</strong> (H₀), which is the "status quo" - the assumption that nothing unusual has happened. You also form an <strong>alternative hypothesis</strong> (H₁), which is the claim you are testing. You then collect data and calculate a test statistic. If the test statistic is extreme enough (falls in the critical region), you reject the null hypothesis. If not, you fail to reject it. You can NEVER prove H₀ true - you can only say there is or is not enough evidence against it.</p>
+      </div>
+
+      <div class="def-box">
+        <strong>H₀ (Null):</strong> The claim being tested, assumed true initially (uses =)<br>
+        <strong>H₁ (Alternative):</strong> The claim you want to support (uses &gt;, &lt;, or ≠)<br><br>
+        <strong>The z test is used when σ is KNOWN.</strong><br><br>
+        <strong>z = (X̄ - μ) / (σ / √n)</strong>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Critical Values for z Tests</div>
+      </div>
+
+      <div class="rule-table">
+        <div class="rule-row"><div class="rule-label">Two-tailed</div><div>H₁: μ ≠ value → critical values are ±z(α/2)</div></div>
+        <div class="rule-row"><div class="rule-label">Right-tailed</div><div>H₁: μ &gt; value → critical value is +z(α)</div></div>
+        <div class="rule-row"><div class="rule-label">Left-tailed</div><div>H₁: μ &lt; value → critical value is -z(α)</div></div>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">Common Critical Values</div>
+      </div>
+
+      <div class="rule-table">
+        <div class="rule-row"><div class="rule-label">α = 0.05</div><div>Two-tailed: ±1.96 | Right: +1.65 | Left: -1.65</div></div>
+        <div class="rule-row"><div class="rule-label">α = 0.01</div><div>Two-tailed: ±2.58 | Right: +2.33 | Left: -2.33</div></div>
+        <div class="rule-row"><div class="rule-label">α = 0.10</div><div>Two-tailed: ±1.65 | Right: +1.28 | Left: -1.28</div></div>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">5-Step Process (Traditional Method)</div>
+      </div>
+
+      <ul class="steps">
+        <li><div class="step-num">1</div><div><strong>State H₀ and H₁</strong> - identify which is the claim</div></li>
+        <li><div class="step-num">2</div><div><strong>Find the critical value(s)</strong> - based on α and whether it is one-tailed or two-tailed</div></li>
+        <li><div class="step-num">3</div><div><strong>Compute the test value</strong> - z = (X̄ - μ) / (σ/√n)</div></li>
+        <li><div class="step-num">4</div><div><strong>Make the decision</strong> - if the test value falls IN the critical region, REJECT H₀. If not, do NOT reject H₀.</div></li>
+        <li><div class="step-num">5</div><div><strong>Summarize</strong> - state in plain words whether there is or is not enough evidence to support the claim</div></li>
+      </ul>
+
+      <div class="example">
+        <div class="example-label">Worked Example - IQ Test (Right-tailed, α = 0.05)</div>
+        <p>Claim: local students have higher IQ than state average of 101.5. Sample: n = 30, X̄ = 106.4, σ = 15.</p>
+        <p><strong>Step 1:</strong> H₀: μ = 101.5 | H₁: μ &gt; 101.5 (claim)</p>
+        <p><strong>Step 2:</strong> Right-tailed, α = 0.05 → critical value = +1.65</p>
+        <p><strong>Step 3:</strong></p>
+        <span class="calc">z = (106.4 - 101.5) / (15 / √30) = 4.9 / 2.739 = 1.79</span>
+        <p><strong>Step 4:</strong> 1.79 &gt; 1.65, so it IS in the critical region → <span class="answer">REJECT H₀</span></p>
+        <p><strong>Step 5:</strong> There IS enough evidence to support the claim that local students have a higher IQ.</p>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">P-value Method (alternative approach)</div>
+        <p>The <strong>P-value</strong> is the probability of getting a sample result at least as extreme as the one observed, assuming H₀ is true. If the P-value is very small (smaller than α), it means your result would be very unlikely under H₀, so you reject H₀. If P-value is large, you fail to reject.</p>
+      </div>
+
+      <div class="def-box">
+        <strong>Decision rule:</strong><br>
+        If P-value ≤ α → REJECT H₀<br>
+        If P-value &gt; α → Do NOT reject H₀<br><br>
+        <strong>For right-tailed:</strong> P-value = 1 - (Table E area for z)<br>
+        <strong>For left-tailed:</strong> P-value = Table E area for z<br>
+        <strong>For two-tailed:</strong> P-value = 2 × (tail area)
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 8.3 -->
+  <div class="section-card" id="s83">
+    <div class="section-header">
+      <span class="section-num purple">8.3</span>
+      <h2>t Test for a Mean (σ Unknown)</h2>
+    </div>
+    <div class="section-body">
+
+      <div class="topic">
+        <div class="topic-title">When Do You Use the t Test?</div>
+        <p>Use the <strong>t test</strong> instead of the z test whenever the population standard deviation (σ) is unknown - which is most of the time in real life. When σ is unknown, you use the sample standard deviation (s) in the formula. The t-distribution has slightly heavier tails than the normal distribution, so the critical values from Table F are slightly larger than z critical values. The shape of the t-distribution depends on degrees of freedom (d.f. = n - 1): the smaller the sample, the heavier the tails and the larger the critical values required.</p>
+      </div>
+
+      <div class="def-box purple">
+        <strong>t Test Formula:</strong><br>
+        t = (X̄ - μ) / (s / √n)<br><br>
+        <strong>Degrees of freedom:</strong> d.f. = n - 1<br><br>
+        Use this when: σ is unknown AND (n ≥ 30 OR population is approximately normal)
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">5-Step Process (same structure as z test)</div>
+      </div>
+
+      <ul class="steps">
+        <li><div class="step-num">1</div><div><strong>State H₀ and H₁</strong> - identify which contains the claim</div></li>
+        <li><div class="step-num">2</div><div><strong>Find critical t value(s)</strong> from Table F using d.f. = n - 1 and the correct column for α and tail type</div></li>
+        <li><div class="step-num">3</div><div><strong>Compute t test value</strong> → t = (X̄ - μ) / (s/√n). If given raw data, calculate X̄ and s first.</div></li>
+        <li><div class="step-num">4</div><div><strong>Make decision</strong> - if test t falls IN critical region, REJECT H₀</div></li>
+        <li><div class="step-num">5</div><div><strong>Summarize</strong> the result in plain language</div></li>
+      </ul>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Hospital Infections (Two-tailed, α = 0.05)</div>
+        <p>Claim: average infections per week = 16.3. Sample: n = 10, X̄ = 17.7, s = 1.8.</p>
+        <p><strong>Step 1:</strong> H₀: μ = 16.3 (claim) | H₁: μ ≠ 16.3</p>
+        <p><strong>Step 2:</strong> d.f. = 9, two-tailed, α = 0.05 → Table F gives t = ±2.262</p>
+        <p><strong>Step 3:</strong></p>
+        <span class="calc">t = (17.7 - 16.3) / (1.8 / √10) = 1.4 / 0.569 = 2.460</span>
+        <p><strong>Step 4:</strong> 2.460 &gt; 2.262, so it IS in the critical region → <span class="answer">REJECT H₀</span></p>
+        <p><strong>Step 5:</strong> There IS enough evidence to reject the claim that the mean number of infections is 16.3.</p>
+      </div>
+
+      <div class="example">
+        <div class="example-label">Worked Example - Nurse Salaries (Left-tailed, α = 0.10)</div>
+        <p>Claim: starting salary for nurse practitioners is LESS than $79,500. n = 8, X̄ = $75,150, s = $6,937.68</p>
+        <p><strong>Step 1:</strong> H₀: μ = $79,500 | H₁: μ &lt; $79,500 (claim)</p>
+        <p><strong>Step 2:</strong> d.f. = 7, left-tailed, α = 0.10 → Table F gives t = -1.415</p>
+        <p><strong>Step 3:</strong></p>
+        <span class="calc">t = (75,150 - 79,500) / (6937.68 / √8) = -4350 / 2452.6 = -1.773</span>
+        <p><strong>Step 4:</strong> -1.773 &lt; -1.415, so it IS in the critical region → <span class="answer">REJECT H₀</span></p>
+        <p><strong>Step 5:</strong> There IS enough evidence to support the claim that the starting salary is less than $79,500.</p>
+      </div>
+
+      <div class="topic">
+        <div class="topic-title">z vs. t - Quick Decision Chart</div>
+      </div>
+
+      <div class="rule-table">
+        <div class="rule-row purple"><div class="rule-label">σ known</div><div>Use <strong>z test</strong> regardless of sample size (as long as n ≥ 30 or population is normal)</div></div>
+        <div class="rule-row purple"><div class="rule-label">σ unknown, n ≥ 30</div><div>Use <strong>t test</strong> with s in the formula</div></div>
+        <div class="rule-row purple"><div class="rule-label">σ unknown, n &lt; 30</div><div>Use <strong>t test</strong>, but population MUST be approximately normally distributed</div></div>
+      </div>
+
+      <div class="remember">The structure of both the z test and the t test is identical - same 5 steps, same decision rule. The only difference is which table you use (Table E for z, Table F for t) and which formula you plug into. Master the 5 steps and you can handle both.</div>
+
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
