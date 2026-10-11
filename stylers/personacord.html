@@ -135,14 +135,12 @@ img.pic{display:block;max-width:min(320px,100%);max-height:320px;border-radius:1
 #mbody{padding-bottom:16px}
 /* modals */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:30;padding:12px}
-.card{background:var(--bg);border-radius:12px;width:min(520px,100%);max-height:92%;overflow:auto;padding:18px;position:relative}
+.card{background:var(--side);border-radius:12px;width:min(520px,100%);max-height:92%;overflow:auto;padding:18px;position:relative}
 .card h2{margin:0 0 4px;font-size:20px;padding-right:36px}
 .card h3{margin:18px 0 8px;font-size:13px;color:var(--muted)}
 .card>.mx{position:absolute;right:10px;top:10px}
 .row{display:flex;align-items:center;gap:10px;margin:6px 0}
 .row>span{flex:1}
-.sheet .card{background:var(--side);border-radius:16px 16px 0 0;padding:10px 12px calc(14px + env(safe-area-inset-bottom,0px))}
-.modal.sheet{align-items:flex-end;padding:0}
 .qr{display:flex;gap:6px;padding:6px 4px 10px;justify-content:space-between}
 .qr button{width:44px;height:44px;border-radius:50%;background:var(--input);font-size:22px;display:grid;place-items:center;color:var(--muted)}
 .it{display:flex;align-items:center;gap:14px;width:100%;padding:13px 12px;border-radius:10px;font-weight:500;text-align:left}
@@ -192,7 +190,25 @@ input[type=color]{width:44px;height:32px;border:0;padding:0;background:none}
  #members{display:flex;position:fixed;inset:0 0 0 auto;width:86%;transform:translateX(100%);transition:transform .2s;z-index:5;padding-top:env(safe-area-inset-top,0px)}
  #members.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.55)}
 }
-@media(min-width:701px){.modal.sheet{align-items:center;padding:12px}.sheet .card{border-radius:14px;width:min(380px,100%)}}
+@media(min-width:701px){.sheet .card{width:min(380px,100%)}}
+.grp{background:var(--bg);border-radius:12px;margin:8px 0;overflow:hidden}
+.grp .it{border-radius:0}
+.grp .it+.it{border-top:1px solid var(--side)}
+.m.pr{background:rgba(127,127,127,.18)}
+.m.pinned{box-shadow:inset 3px 0 0 #faa61a;background:rgba(250,166,26,.07)}
+#popbg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:39}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--dark);color:var(--text);padding:8px 16px;border-radius:20px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+@keyframes up{from{transform:translateY(100%)}}
+@media(pointer:coarse){.m{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}}
+@media(max-width:700px){
+ .modal{align-items:flex-end;padding:0}
+ .card{width:100%;max-width:none;border-radius:16px 16px 0 0;max-height:90%;padding:10px 16px calc(18px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
+ .card::before{content:"";display:block;width:36px;height:4px;border-radius:2px;background:var(--muted);opacity:.5;margin:0 auto 12px}
+ .card>.mx{display:none}
+ .card h2{padding-right:0}
+ #pop{left:0!important;right:0;top:auto!important;bottom:0;grid-template-columns:repeat(8,1fr);border-radius:16px 16px 0 0;padding:14px 12px calc(14px + env(safe-area-inset-bottom,0px));max-height:50%;overflow:auto;border:0}
+ #pop button{height:42px}
+}
 </style>
 </head>
 <body>
@@ -230,6 +246,7 @@ input[type=color]{width:44px;height:32px;border:0;padding:0;background:none}
   <div class="sh"><span>Personas</span></div>
   <div id="macts">
    <button id="ma-s"><span class="bi" data-i="search" data-s="24"></span>Search</button>
+   <button id="ma-p"><span class="bi" data-i="pin" data-s="24"></span>Pins</button>
    <button id="ma-e"><span class="bi" data-i="edit" data-s="24"></span>Edit</button>
    <button id="ma-g"><span class="bi" data-i="gear" data-s="24"></span>Settings</button>
   </div>
@@ -237,7 +254,7 @@ input[type=color]{width:44px;height:32px;border:0;padding:0;background:none}
  </aside>
 </div>
 <div id="view"><img alt=""></div>
-<div id="modal"></div>
+<div id="modal"></div><div id="modal2"></div><div id="toast"></div>
 <div id="settings"></div>
 
 <script>
@@ -286,6 +303,9 @@ const ICONS={
  userplus:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>',
  access:'<circle cx="12" cy="4" r="2"/><path d="M5 8h14M12 8v6m0 0-3 6m3-6 3 6"/>',
  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ pin:'<path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>',
+ fwd:'<path d="m15 14 5-5-5-5"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/>',
  clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'
 };
 const ico=(n,s)=>`<svg class="si" viewBox="0 0 24 24" aria-hidden="true"${s?` style="width:${s}px;height:${s}px"`:''}>${ICONS[n]}</svg>`;
@@ -487,7 +507,7 @@ function renderMsgs(force){
     const p=P(m.from),t=eff(m),newDay=!prev||new Date(t).toDateString()!==new Date(eff(prev)).toDateString();
     if(newDay&&s.seps)box.insertAdjacentHTML('beforeend',`<div class="sepd">${new Date(t).toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'})}</div>`);
     const first=!prev||newDay||prev.from!==m.from||t-eff(prev)>300000||!!m.replyTo;prev=m;
-    const d=document.createElement('div');d.className='m'+(first?' first':'');d.dataset.id=m.id;
+    const d=document.createElement('div');d.className='m'+(first?' first':'')+(m.pinned?' pinned':'');d.dataset.id=m.id;
     if(m.replyTo){
       const o=S.msgs.find(x=>x.id===m.replyTo),r=document.createElement('div');r.className='ref';
       if(o){const op=P(o.from);r.appendChild(avatar(op,16));r.insertAdjacentHTML('beforeend',`<b>${esc(op.name)}</b><span>${esc(excerpt(o))}</span>`);r.onclick=e=>{e.stopPropagation();jump(o.id)}}
@@ -499,7 +519,7 @@ function renderMsgs(force){
     if(first)g.appendChild(avatar(p,40));else g.innerHTML=`<span>${tstr(t,false)}</span>`;
     const b=document.createElement('div');b.className='bd';
     b.innerHTML=(first?`<div><span class="nm"${s.cnames?` style="color:${p.color}"`:''}>${esc(p.name)}</span>${s.tfmt!=='off'?`<span class="tm">${tstr(t,true)}</span>`:''}</div>`:'')
-      +(m.text?`<div class="tx">${rich(m.text)}${m.edited?'<span class="ed">(edited)</span>':''}</div>`:'')+(m.img?`<img class="pic" src="${m.img}" alt="Image">`:'');
+      +(m.fwd?'<div class="ed" style="margin:0">Forwarded</div>':'')+(m.text?`<div class="tx">${rich(m.text)}${m.edited?'<span class="ed">(edited)</span>':''}</div>`:'')+(m.img?`<img class="pic" src="${m.img}" alt="Image">`:'');
     const rx=m.reacts?Object.entries(m.reacts).filter(([,a])=>a.length):[];
     if(rx.length){
       const r=document.createElement('div');r.className='rx';
@@ -509,7 +529,7 @@ function renderMsgs(force){
       b.appendChild(r);
     }
     row.append(g,b);d.appendChild(row);
-    d.onclick=e=>{if(e.target.closest('a,img,.pill')||String(getSelection()))return;actionSheet(m)};
+    bindPress(d,m);
     const im=b.querySelector('.pic');if(im)im.onclick=e=>{e.stopPropagation();$('#view img').src=m.img;$('#view').style.display='flex'};
     box.appendChild(d);
   });
@@ -526,9 +546,10 @@ function toggleReact(m,e){
   if(!a.length)delete m.reacts[e];
   save();renderMsgs();
 }
-function closePop(){const p=$('#pop');if(p)p.remove()}
+function closePop(){const p=$('#pop');if(p)p.remove();const b=$('#popbg');if(b)b.remove()}
 function pickEmoji(anchor,cb){
   closePop();
+  if(mob()){const bg=document.createElement('div');bg.id='popbg';document.body.appendChild(bg)}
   const p=document.createElement('div');p.id='pop';p.innerHTML=EMOJI.map(e=>`<button>${e}</button>`).join('');
   document.body.appendChild(p);
   const r=anchor.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;
@@ -537,13 +558,28 @@ function pickEmoji(anchor,cb){
   p.onclick=e=>{const b=e.target.closest('button');if(b){cb(b.textContent);closePop()}};
   setTimeout(()=>document.addEventListener('click',closePop,{once:true}),0);
 }
+/* press and hold on a message opens the sheet */
+let lpT=null,lastLP=0;
+function bindPress(d,m){
+  let sx=0,sy=0;
+  const stop=()=>{clearTimeout(lpT);d.classList.remove('pr')};
+  d.addEventListener('pointerdown',e=>{
+    if(e.button>0||e.target.closest('a,.pill,.ref'))return;
+    sx=e.clientX;sy=e.clientY;d.classList.add('pr');clearTimeout(lpT);
+    lpT=setTimeout(()=>{d.classList.remove('pr');lastLP=Date.now();try{navigator.vibrate&&navigator.vibrate(12)}catch(_){}actionSheet(m)},450);
+  });
+  d.addEventListener('pointermove',e=>{if(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10)stop()});
+  ['pointerup','pointercancel','pointerleave'].forEach(t=>d.addEventListener(t,stop));
+  d.addEventListener('contextmenu',e=>{e.preventDefault();if(Date.now()-lastLP>700){lastLP=Date.now();stop();actionSheet(m)}});
+}
+$('#msgs').addEventListener('click',e=>{if(Date.now()-lastLP<700){e.stopPropagation();e.preventDefault()}},true);
 function actionSheet(m){
   const mine=m.from===S.me;
+  const it=(a,i,l,c)=>`<button class="it${c?' '+c:''}" data-a="${a}">${ico(i)}${l}</button>`;
   const mo=modal(`<div class="qr">${['👍','❤️','😂','😮','😢','🙏'].map(e=>`<button data-e="${e}">${e}</button>`).join('')}<button data-e="+" aria-label="More reactions">${ico('smile')}</button></div>
-   <button class="it" data-a="reply">${ico('reply')}Reply</button>
-   ${m.text?`<button class="it" data-a="copy">${ico('copy')}Copy text</button>`:''}
-   ${mine&&m.text?`<button class="it" data-a="edit">${ico('edit')}Edit message</button>`:''}
-   <button class="it dng" data-a="del">${ico('trash')}Delete message</button>`,'sheet');
+   <div class="grp">${it('reply','reply','Reply')}${it('fwd','fwd','Forward')}</div>
+   <div class="grp">${m.text?it('copy','copy','Copy Text'):''}${m.img?it('save','down','Save Image'):''}${mine&&m.text?it('edit','edit','Edit Message'):''}${it('pin','pin',m.pinned?'Unpin Message':'Pin Message')}</div>
+   <div class="grp">${it('info','info','Message Info')}${it('del','trash','Delete Message','dng')}</div>`,'sheet');
   mo.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{
     if(b.dataset.e==='+')pickEmoji(b,e=>{closeModal();toggleReact(m,e)});
     else{closeModal();toggleReact(m,b.dataset.e)}
@@ -551,28 +587,53 @@ function actionSheet(m){
   mo.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
     const a=b.dataset.a;closeModal();
     if(a==='reply'){replyTo=m.id;editing=null;renderReply();$('#inp').focus()}
-    else if(a==='copy'){try{navigator.clipboard.writeText(m.text)}catch(e){}}
+    else if(a==='fwd')forward(m);
+    else if(a==='copy'){try{navigator.clipboard.writeText(m.text);toast('Copied')}catch(e){}}
+    else if(a==='save'){const l=document.createElement('a');l.href=m.img;l.download='image.jpg';l.click();toast('Image saved')}
     else if(a==='edit'){editing=m.id;replyTo=null;const i=$('#inp');i.value=m.text;renderReply();i.focus();i.style.height='auto';i.style.height=Math.min(140,i.scrollHeight)+'px'}
-    else if(!S.settings.confirm||confirm('Delete this message?')){
-      S.msgs=S.msgs.filter(z=>z.id!==m.id);if(replyTo===m.id)replyTo=null;if(editing===m.id)cancelEdit();
-      save();renderSide();renderReply();renderMsgs();
+    else if(a==='pin'){m.pinned=!m.pinned;save();renderMsgs();toast(m.pinned?'Message pinned':'Message unpinned')}
+    else if(a==='info')msgInfo(m);
+    else{
+      const go=()=>{S.msgs=S.msgs.filter(z=>z.id!==m.id);if(replyTo===m.id)replyTo=null;if(editing===m.id)cancelEdit();save();renderSide();renderReply();renderMsgs()};
+      if(S.settings.confirm)ask('Delete message','This message will be permanently deleted.','Delete',go);else go();
     }
   });
 }
+function forward(m){
+  const o=S.personas.filter(p=>p.id!==S.me);
+  if(!o.length){toast('No other personas');return}
+  pickSheet('Forward to',o.map(p=>[p.id,p.name,`<i class="sdot ${p.status}"></i>`]),null,id=>{
+    S.msgs.push({id:uid(),from:S.me,to:id,t:Date.now(),text:m.text,img:m.img,delivered:null,replyTo:null,reacts:{},fwd:true});
+    addChat(S.me,id);addChat(id,S.me);save();renderSide();renderRail();renderMsgs(true);toast('Forwarded to '+P(id).name);
+  });
+}
+function msgInfo(m){
+  const f=t=>t?new Date(t).toLocaleString([],{dateStyle:'medium',timeStyle:'medium'}):'Not yet';
+  const row=(a,b)=>`<div class="ctl"><div>${a}<small>${b}</small></div></div>`;
+  modal(`<h2>Message info</h2><div class="grp">${row('From',esc(P(m.from).name))}${row('To',esc(P(m.to).name))}${row('Sent',f(m.t))}${row('Delivered',f(m.delivered))}${m.edited?row('Edited','Yes'):''}</div>`);
+}
+function resRow(x){
+  const b=document.createElement('button');b.className='it';
+  b.innerHTML=`<div style="min-width:0"><b>${esc(P(x.from).name)}</b> <small style="color:var(--muted)">${tstr(eff(x),true)}</small><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc((x.text||'Image').slice(0,120))}</div></div>`;
+  b.onclick=()=>{closeModal();jump(x.id)};return b;
+}
 function searchMsgs(){
   if(!P(S.peer))return;
-  const m=modal('<h2>Search messages</h2><div class="row"><input class="field" id="sq2" placeholder="Search this chat" autocomplete="off"></div><div id="sr"></div>');
+  const m=modal('<h2>Search messages</h2><div class="row"><input class="field" id="sq2" placeholder="Search this chat" autocomplete="off"></div><div id="sr" class="grp"></div>');
   const inp=m.querySelector('#sq2'),out=m.querySelector('#sr');
   inp.oninput=()=>{
-    const q=inp.value.trim().toLowerCase();out.innerHTML='';if(!q)return;
-    vis(S.me,S.peer).filter(x=>x.text&&x.text.toLowerCase().includes(q)).reverse().slice(0,50).forEach(x=>{
-      const b=document.createElement('button');b.className='it';
-      b.innerHTML=`<div style="min-width:0"><b>${esc(P(x.from).name)}</b> <small style="color:var(--muted)">${tstr(eff(x),true)}</small><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.text.slice(0,120))}</div></div>`;
-      b.onclick=()=>{closeModal();jump(x.id)};out.appendChild(b);
-    });
-    if(!out.children.length)out.innerHTML='<div class="empty">No results.</div>';
+    const q=inp.value.trim().toLowerCase();out.innerHTML='';
+    if(q)vis(S.me,S.peer).filter(x=>x.text&&x.text.toLowerCase().includes(q)).reverse().slice(0,50).forEach(x=>out.appendChild(resRow(x)));
+    out.style.display=out.children.length?'':'none';
   };
-  inp.focus();
+  out.style.display='none';inp.focus();
+}
+function showPins(){
+  if(!P(S.peer))return;
+  const l=vis(S.me,S.peer).filter(x=>x.pinned).reverse();
+  const m=modal('<h2>Pinned messages</h2><div id="pl2"></div>'),out=m.querySelector('#pl2');
+  if(!l.length)out.innerHTML='<div class="empty">Nothing pinned in this chat yet. Press and hold a message to pin it.</div>';
+  else{out.className='grp';l.forEach(x=>out.appendChild(resRow(x)))}
 }
 
 /* ---------- actions ---------- */
@@ -612,6 +673,7 @@ $('#newchat').onclick=newChat;
 $('#dmq').oninput=e=>{dmq=e.target.value;renderSide()};
 $('#msearch').onclick=searchMsgs;
 $('#ma-s').onclick=searchMsgs;
+$('#ma-p').onclick=showPins;
 $('#ma-e').onclick=()=>{if(S.me)editPersona(S.me)};
 $('#ma-g').onclick=()=>openSettings();
 $('#mtoggle').onclick=()=>{membersOpen=!membersOpen;applyPanels()};
@@ -649,14 +711,29 @@ $('#inp').addEventListener('keydown',e=>{
 $('#inp').addEventListener('input',e=>{e.target.style.height='auto';e.target.style.height=Math.min(140,e.target.scrollHeight)+'px'});
 
 /* ---------- modals ---------- */
-function closeModal(){$('#modal').innerHTML=''}
-function modal(html,cls){
-  const m=$('#modal');
+function closeModal(h){$(h||'#modal').innerHTML=''}
+function modal(html,cls,host){
+  host=host||'#modal';const m=$(host);
   m.innerHTML=`<div class="modal ${cls||''}"><div class="card">${cls==='sheet'?'':`<button class="ic mx" aria-label="Close">${ico('x')}</button>`}${html}</div></div>`;
-  m.firstChild.onmousedown=e=>{if(e.target===m.firstChild)closeModal()};
-  const x=m.querySelector('.mx');if(x)x.onclick=closeModal;
+  m.firstChild.onmousedown=e=>{if(e.target===m.firstChild)closeModal(host)};
+  const x=m.querySelector('.mx');if(x)x.onclick=()=>closeModal(host);
   return m;
 }
+function pickSheet(title,opts,cur,cb){
+  const m=modal(`<h2>${esc(title)}</h2><div class="grp" id="pl"></div>`,'','#modal2'),l=m.querySelector('#pl');
+  opts.forEach(([v,n,x])=>{
+    const b=document.createElement('button');b.className='it';
+    b.innerHTML=(x||'')+`<span style="flex:1">${esc(n)}</span>`+(String(v)===String(cur)?`<span style="color:var(--accent)">${ico('check')}</span>`:'');
+    b.onclick=()=>{closeModal('#modal2');cb(v)};l.appendChild(b);
+  });
+}
+function ask(title,text,label,fn,danger){
+  const m=modal(`<h2>${esc(title)}</h2><p style="color:var(--muted);margin:6px 0 16px">${esc(text)}</p><div class="row" style="justify-content:flex-end">${fn?'<button class="btn g" id="an">Cancel</button>':''}<button class="btn${danger===false?'':' r'}" id="ay">${esc(label)}</button></div>`,'','#modal2');
+  const n=m.querySelector('#an');if(n)n.onclick=()=>closeModal('#modal2');
+  m.querySelector('#ay').onclick=()=>{closeModal('#modal2');if(fn)fn()};
+}
+let toastT;
+function toast(t){const e=$('#toast');e.textContent=t;e.style.opacity=1;clearTimeout(toastT);toastT=setTimeout(()=>e.style.opacity=0,1800)}
 function editPersona(id){
   const ex=id?P(id):null;
   const d=Object.assign({name:'',handle:'',bio:'',cs:'',status:'online',img:null,color:COLORS[S.personas.length%COLORS.length],banner:null},ex||{});
@@ -666,7 +743,7 @@ function editPersona(id){
    <h3>Username</h3><input class="field" id="ph" maxlength="32" value="${esc(d.handle)}" placeholder="username">
    <h3>About me</h3><textarea class="field" id="pb" rows="2" maxlength="190" placeholder="Shown on the profile card">${esc(d.bio)}</textarea>
    <h3>Custom status</h3><input class="field" id="pcs" maxlength="60" value="${esc(d.cs)}" placeholder="Shown under the name in lists">
-   <h3>Status</h3><select class="field" id="pst">${STATUS.map(([k,n])=>`<option value="${k}"${d.status===k?' selected':''}>${n}</option>`).join('')}</select>
+   <h3>Status</h3><button class="it" id="pst" style="background:var(--dark)"></button>
    <h3>Avatar</h3><div class="row"><div id="pa"></div><button class="btn g" id="pu">${ico('up')} Upload</button><button class="btn g" id="pr">Remove</button></div>
    <div class="row"><span>Avatar and name color</span><input type="color" id="pc" value="${d.color}"></div>
    <div class="row"><span>Profile banner color</span><input type="color" id="pbn" value="${d.banner}"></div>
@@ -675,6 +752,8 @@ function editPersona(id){
   const q=s=>m.querySelector(s);
   const draw=()=>{const h=q('#pa');h.innerHTML='';h.appendChild(avatar({name:q('#pn').value||'?',img:d.img,color:d.color},56))};draw();
   q('#pn').oninput=draw;
+  const stb=()=>{q('#pst').innerHTML=`<i class="sdot ${d.status}"></i><span style="flex:1">${statusLabel(d.status)}</span>${ico('chev',18)}`};stb();
+  q('#pst').onclick=()=>pickSheet('Status',STATUS.map(([k,n])=>[k,n,`<i class="sdot ${k}"></i>`]),d.status,v=>{d.status=v;stb()});
   q('#pc').oninput=e=>{d.color=e.target.value;draw()};
   q('#pu').onclick=()=>q('#pf').click();
   q('#pr').onclick=()=>{d.img=null;draw()};
@@ -682,7 +761,7 @@ function editPersona(id){
   q('#px').onclick=closeModal;
   q('#ps').onclick=()=>{
     const name=q('#pn').value.trim();if(!name){q('#pn').focus();return}
-    const v={name,handle:q('#ph').value.trim(),bio:q('#pb').value.trim(),cs:q('#pcs').value.trim(),status:q('#pst').value,img:d.img,color:d.color,banner:q('#pbn').value};
+    const v={name,handle:q('#ph').value.trim(),bio:q('#pb').value.trim(),cs:q('#pcs').value.trim(),status:d.status,img:d.img,color:d.color,banner:q('#pbn').value};
     if(ex)Object.assign(ex,v);
     else{const p=Object.assign({id:uid(),created:Date.now()},v);S.personas.push(p);if(!S.me)S.me=p.id}
     save();closeModal();renderAll();startQueue();renderSettings();
@@ -749,8 +828,9 @@ function ctl(c){
     row.innerHTML=lab+`<button class="sw${s[c.k]?' on':''}" role="switch" aria-checked="${!!s[c.k]}" aria-label="${esc(c.l)}"></button>`;
     row.style.cursor='pointer';row.onclick=()=>{setS(c.k,!s[c.k]);renderSettings()};
   }else if(c.t==='select'){
-    row.innerHTML=lab+`<select class="field">${c.o.map(([v,n])=>`<option value="${v}"${String(s[c.k])===String(v)?' selected':''}>${n}</option>`).join('')}</select>`;
-    row.querySelector('select').onchange=e=>{setS(c.k,c.num?+e.target.value:e.target.value);renderSettings()};
+    const cur=(c.o.find(([v])=>String(v)===String(s[c.k]))||c.o[0])[1];
+    row.innerHTML=lab+`<span class="v" style="color:var(--muted);display:flex;align-items:center;gap:6px">${esc(cur)}${ico('chev',18)}</span>`;
+    row.style.cursor='pointer';row.onclick=()=>pickSheet(c.l,c.o,s[c.k],v=>{setS(c.k,v);renderSettings()});
   }else if(c.t==='range'){
     const f=v=>c.pct?Math.round(v*100)+'%':v+(c.u||'');
     row.innerHTML=lab+`<input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${s[c.k]}"><span style="min-width:52px;text-align:right;color:var(--muted)">${f(s[c.k])}</span>`;
@@ -820,14 +900,13 @@ function renderSettings(){
       const r=document.createElement('div');r.className='ctl';r.appendChild(av(p,40,true));
       r.insertAdjacentHTML('beforeend',`<div>${esc(p.name)}<small>@${esc(p.handle||p.name.toLowerCase())}</small></div><button class="ic" data-e aria-label="Edit">${ico('edit')}</button><button class="ic" data-d aria-label="Delete" style="color:#f23f42">${ico('trash')}</button>`);
       r.querySelector('[data-e]').onclick=()=>editPersona(p.id);
-      r.querySelector('[data-d]').onclick=()=>{
-        if(!confirm('Delete '+p.name+' and all of their messages?'))return;
+      r.querySelector('[data-d]').onclick=()=>ask('Delete '+p.name+'?','This also removes all of their messages.','Delete',()=>{
         const id=p.id;S.personas=S.personas.filter(x=>x.id!==id);S.msgs=S.msgs.filter(x=>x.from!==id&&x.to!==id);
         S.msgs.forEach(x=>{if(x.replyTo&&!S.msgs.some(y=>y.id===x.replyTo))x.replyTo=null;if(x.reacts)for(const k in x.reacts){x.reacts[k]=x.reacts[k].filter(i=>i!==id);if(!x.reacts[k].length)delete x.reacts[k]}});
         delete S.chats[id];delete S.last[id];
         if(S.me===id){S.me=S.personas[0]?S.personas[0].id:null;S.peer=null}
         migrate();save();renderAll();startQueue();renderSettings();
-      };
+      });
       w.appendChild(r);
     });
     const a=document.createElement('div');a.className='ctl';a.innerHTML=`<button class="btn">${ico('plus')} Add persona</button>`;a.querySelector('button').onclick=()=>editPersona();w.appendChild(a);
@@ -842,13 +921,11 @@ function renderSettings(){
     w.querySelector('#im').onclick=()=>w.querySelector('#imf').click();
     w.querySelector('#imf').onchange=async e=>{
       const f=e.target.files[0];if(!f)return;
-      try{const d=JSON.parse(await f.text());if(!Array.isArray(d.personas)||!Array.isArray(d.msgs))throw 0;
-        if(!confirm('Importing replaces everything currently saved on this device. Continue?'))return;
-        S=Object.assign(defaults(),d);migrate();save();renderAll();startQueue();renderSettings();
-      }catch(_){alert('That file is not a valid Persona Chat export.')}
+      let d;try{d=JSON.parse(await f.text());if(!Array.isArray(d.personas)||!Array.isArray(d.msgs))throw 0}catch(_){ask('Import failed','That file is not a valid Persona Chat export.','OK',null,false);return}
+      ask('Replace all data?','Importing replaces everything currently saved on this device.','Import',()=>{S=Object.assign(defaults(),d);migrate();save();renderAll();startQueue();renderSettings()});
     };
-    w.querySelector('#cl').onclick=()=>{if(confirm('Delete all messages?')){S.msgs=[];replyTo=null;editing=null;save();renderAll();startQueue();renderSettings()}};
-    w.querySelector('#rs').onclick=()=>{if(confirm('Delete all personas, messages and settings?')){S=defaults();seed();migrate();replyTo=null;editing=null;save();renderAll();startQueue();renderSettings()}};
+    w.querySelector('#cl').onclick=()=>ask('Clear messages?','All messages in every chat will be deleted.','Clear',()=>{S.msgs=[];replyTo=null;editing=null;save();renderAll();startQueue();renderSettings()});
+    w.querySelector('#rs').onclick=()=>ask('Reset everything?','All personas, messages and settings will be deleted.','Reset',()=>{S=defaults();seed();migrate();replyTo=null;editing=null;save();renderAll();startQueue();renderSettings()});
   }else if(stPage==='about'){
     w.innerHTML='<div class="ctl"><div>Persona Chat<small>Everything is stored in this browser on this device. Nothing is sent to a server. Use Export to move your data elsewhere.</small></div></div>';
   }else{
