@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <title>Persona Chat</title>
 <style>
 :root{--bg:#313338;--side:#2b2d31;--dark:#1e1f22;--text:#dbdee1;--muted:#949ba4;--accent:#5865f2;--input:#383a40;--hover:#35373c;--avr:50%;--sp:1;--mg:14px;--rad:12px;--rads:8px;--gw:40px}
@@ -19,7 +19,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .si{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
 .bi{display:block;line-height:0}
 body.reduce *{animation:none!important;transition:none!important}
-#app{display:flex;height:100%;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#app{display:flex;position:fixed;left:0;right:0;top:var(--vt,0px);height:var(--vh,100%);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--muted);flex-shrink:0;position:relative}
 .ic:hover{background:var(--hover);color:var(--text)}
 .ic.on{color:var(--text)}
@@ -241,6 +241,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .pf .pn{font-size:1.4em;font-weight:700;margin:8px 4px 0}
 .pf .ph{color:var(--muted);font-size:.9em;margin:0 4px}
 .pf .pcs{margin:8px 4px 0}
+html,body{overscroll-behavior:none}
+.modal,#settings{top:var(--vt,0px);bottom:auto;height:var(--vh,100%)}
+@media(max-width:700px){
+ #left,#members{top:var(--vt,0px);bottom:auto;height:var(--vh,100%)}
+}
 </style>
 </head>
 <body>
@@ -842,6 +847,15 @@ function sendGif(url){
 $('#emo').onmousedown=e=>e.preventDefault();
 $('#emo').onclick=()=>{if(epOpen)closeEP(true);else openEP()};
 $('#inp').addEventListener('focus',()=>closeEP(false));
+/* keep the app exactly over the visible area when the keyboard opens */
+let stickBottom=true;
+function fitViewport(){
+  const vv=window.visualViewport;if(!vv)return;
+  const r=document.documentElement.style;r.setProperty('--vh',vv.height+'px');r.setProperty('--vt',vv.offsetTop+'px');
+  if(document.activeElement===$('#inp')&&stickBottom){const b=$('#msgs');b.scrollTop=b.scrollHeight}
+}
+$('#inp').addEventListener('focus',()=>{const b=$('#msgs');stickBottom=b.scrollHeight-b.scrollTop-b.clientHeight<150});
+if(window.visualViewport){visualViewport.addEventListener('resize',fitViewport);visualViewport.addEventListener('scroll',fitViewport);fitViewport()}
 document.addEventListener('click',e=>{
   if(!epOpen||Date.now()-lastLP<700)return;
   if(e.target.closest('#epanel,#emo,.modal,#toast,#attach,#send,#unatt,#pop,#popbg,#replybar,#settings'))return;
