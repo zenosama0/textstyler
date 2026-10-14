@@ -235,6 +235,12 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .epm{text-align:center;color:var(--muted);font-size:13px;padding:20px 12px}
 .epm .btn{margin-top:4px}
 @media(max-width:700px){#scrim{display:block}#left,#members{touch-action:pan-y}}
+.mc{color:var(--muted);font-weight:400;font-size:.72em;white-space:nowrap}
+.pf .ban{height:84px;border-radius:var(--rad)}
+.pf .big{--sdb:var(--side);margin:-40px 0 0 14px;width:max-content;border:6px solid var(--side);border-radius:50%;background:var(--side)}
+.pf .pn{font-size:1.4em;font-weight:700;margin:8px 4px 0}
+.pf .ph{color:var(--muted);font-size:.9em;margin:0 4px}
+.pf .pcs{margin:8px 4px 0}
 </style>
 </head>
 <body>
@@ -270,11 +276,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
   <input type="file" id="file" accept="image/*" hidden>
  </section>
  <aside id="members">
-  <div class="sh"><span>Personas</span></div>
+  <div class="sh"><span id="mtitle">Members</span></div>
   <div id="macts">
    <button id="ma-s"><span class="bi" data-i="search" data-s="24"></span>Search</button>
    <button id="ma-p"><span class="bi" data-i="pin" data-s="24"></span>Pins</button>
-   <button id="ma-e"><span class="bi" data-i="edit" data-s="24"></span>Edit</button>
+   <button id="ma-e" style="display:none"><span class="bi" data-i="edit" data-s="24"></span>Group</button>
    <button id="ma-g"><span class="bi" data-i="gear" data-s="24"></span>Settings</button>
   </div>
   <div id="mbody"></div>
@@ -299,7 +305,7 @@ async function dbGet(){try{const d=await idb();return await new Promise((res,rej
 async function dbSet(v){try{const d=await idb();await new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,'s');t.oncomplete=res;t.onerror=()=>rej(t.error)})}catch(e){try{localStorage.setItem('pc',JSON.stringify(v))}catch(_){}}}
 
 const defSettings=()=>({min:1,max:6,speed:55,pause:350,typing:true,instant:false,theme:'discord',custom:{bg:'#1a1b26',side:'#16161e',text:'#c0caf5',accent:'#7aa2f7'},accent:'',fs:16,compact:false,shape:'circle',tfmt:'full',h24:false,seps:true,cnames:false,links:true,md:true,q:.78,maxDim:1000,sound:false,vol:.5,badges:true,reduce:false,enter:true,confirm:true,dots:true,wall:null,dim:.5,density:'cozy',msgGap:'normal',avsz:40,corner:'default',scards:true,provider:'giphy',giphyKey:'',klipyKey:'',rating:'pg-13',gifN:30});
-const defaults=()=>({personas:[],msgs:[],chats:{},last:{},recent:[],me:null,peer:null,settings:defSettings()});
+const defaults=()=>({personas:[],msgs:[],chats:{},last:{},recent:[],groups:[],me:null,peer:null,settings:defSettings()});
 let S;
 let saveT;const save=()=>{clearTimeout(saveT);saveT=setTimeout(()=>dbSet(JSON.parse(JSON.stringify(S))),150)};
 const P=id=>S.personas.find(p=>p.id===id);
@@ -355,7 +361,7 @@ function resize(file,max,q){
   max=max||S.settings.maxDim;q=q||S.settings.q;
   return new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',q))};im.src=r.result};r.readAsDataURL(file)});
 }
-const eff=m=>m.delivered||m.t;
+const eff=m=>m.t;
 function tstr(t,full){
   const s=S.settings,d=new Date(t),tm=d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit',hour12:!s.h24});
   return(!full||s.tfmt==='time')?tm:d.toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'})+' '+tm;
@@ -396,7 +402,7 @@ function applyTheme(){
 
 /* ---------- delivery engine (typing simulation) ---------- */
 let run=0;
-const pending=()=>S.msgs.filter(m=>m.from===S.peer&&m.to===S.me&&!m.delivered).sort((a,b)=>a.t-b.t);
+const pending=()=>pendingFor(S.me,S.peer).sort((a,b)=>a.t-b.t);
 function typeTime(m){
   const s=S.settings;if(s.instant)return 0;
   const ms=(m.text?m.text.length*s.speed:900)+(m.img?900:0);
@@ -409,10 +415,10 @@ function startQueue(){
     while(tok===run){
       const p=pending();if(!p.length){setTyping(null);return}
       const s=S.settings;
-      if(s.typing&&!s.instant)setTyping(S.peer);
+      if(s.typing&&!s.instant)setTyping(p[0].from);
       await sleep(typeTime(p[0]));
       if(tok!==run)return;
-      p[0].delivered=Date.now();save();setTyping(null);renderMsgs();renderSide();renderRail();
+      p[0].dl=p[0].dl||{};p[0].dl[S.me]=Date.now();save();setTyping(null);renderMsgs();renderSide();renderRail();
       if(s.sound)beep();
       await sleep(s.instant?0:s.pause*(0.7+Math.random()*.6));
     }
@@ -427,28 +433,40 @@ function setTyping(id){
 /* ---------- chat model ---------- */
 let replyTo=null,editing=null,dmq='',membersOpen=innerWidth>900,attached=null;
 const mob=()=>innerWidth<=700;
+const G=id=>(S.groups||[]).find(g=>g.id===id);
+const T=id=>P(id)||G(id);
+const isG=id=>!!G(id);
+const gname=g=>g.name||g.members.filter(i=>i!==S.me).map(i=>P(i)?P(i).name:'').filter(Boolean).join(', ')||'Group';
+const tname=id=>{const g=G(id);return g?gname(g):(P(id)?P(id).name:'')};
 const chatsOf=id=>(S.chats[id]=S.chats[id]||[]);
 const hasChat=(a,b)=>chatsOf(a).some(c=>c.id===b);
-const addChat=(a,b)=>{if(a&&b&&a!==b&&!hasChat(a,b))chatsOf(a).push({id:b,t:Date.now()})};
-const between=(a,b)=>S.msgs.filter(m=>(m.from===a&&m.to===b)||(m.from===b&&m.to===a));
-const vis=(a,b)=>between(a,b).filter(m=>m.from===a||m.delivered).sort((x,y)=>eff(x)-eff(y));
-const unread=(a,b)=>S.msgs.filter(m=>m.from===b&&m.to===a&&!m.delivered).length;
-const totalUnread=id=>S.msgs.filter(m=>m.to===id&&!m.delivered).length;
-const act=(a,b)=>between(a,b).reduce((t,m)=>Math.max(t,eff(m)),0);
-const excerpt=m=>m?(m.text?m.text.slice(0,80):'Attachment'):'';
+const addChat=(a,b)=>{if(a&&b&&a!==b&&!isG(a)&&!isG(b)&&!hasChat(a,b))chatsOf(a).push({id:b,t:Date.now()})};
+const between=(a,b)=>S.msgs.filter(m=>isG(b)?m.to===b:((m.from===a&&m.to===b)||(m.from===b&&m.to===a)));
+const seen=(m,a)=>m.from===a||!!(m.dl&&m.dl[a]);
+const vis=(a,b)=>between(a,b).filter(m=>seen(m,a)).sort((x,y)=>x.t-y.t);
+const pendingFor=(a,b)=>between(a,b).filter(m=>!seen(m,a));
+const unread=(a,b)=>pendingFor(a,b).length;
+const totalUnread=id=>chatsOf(id).reduce((n,c)=>n+(T(c.id)?unread(id,c.id):0),0);
+const act=(a,b)=>between(a,b).reduce((t,m)=>Math.max(t,m.t),0);
+const excerpt=m=>m?(m.text?m.text.slice(0,80):(m.gif?'GIF':'Attachment')):'';
 function seed(){
   const mk=(name,i)=>({id:uid(),name,handle:name.toLowerCase(),bio:'',cs:'',status:'online',img:null,color:COLORS[i],banner:COLORS[i],created:Date.now()});
   S.personas=[mk('Alex',0),mk('Sam',1)];S.me=S.personas[0].id;S.peer=S.personas[1].id;
 }
 function migrate(){
   S.settings=Object.assign(defSettings(),S.settings||{});
-  S.chats=S.chats||{};S.last=S.last||{};S.recent=S.recent||[];
+  S.chats=S.chats||{};S.last=S.last||{};S.recent=S.recent||[];S.groups=S.groups||[];
   S.personas.forEach(p=>{p.status=p.status||'online';p.created=p.created||Date.now();p.banner=p.banner||p.color||'#5865f2';p.handle=p.handle||'';p.bio=p.bio||'';p.cs=p.cs||''});
-  if(P(S.me)&&P(S.peer)&&S.me!==S.peer)addChat(S.me,S.peer);
-  S.msgs.forEach(m=>{addChat(m.from,m.to);addChat(m.to,m.from)});
-  Object.keys(S.chats).forEach(k=>{if(!P(k))delete S.chats[k];else S.chats[k]=S.chats[k].filter(c=>P(c.id))});
+  S.groups.forEach(g=>{g.members=(g.members||[]).filter(i=>P(i));g.color=g.color||'#f0b232';g.img=g.img||null;g.name=g.name||''});
+  S.groups=S.groups.filter(g=>g.members.length>=2);
+  S.msgs=S.msgs.filter(m=>P(m.from)&&(P(m.to)||G(m.to)));
+  S.msgs.forEach(m=>{if(!m.dl)m.dl=(m.delivered&&P(m.to))?{[m.to]:m.delivered}:{}});
+  if(P(S.me)&&T(S.peer)&&S.me!==S.peer)addChat(S.me,S.peer);
+  S.msgs.forEach(m=>{if(!isG(m.to)){addChat(m.from,m.to);addChat(m.to,m.from)}});
+  S.groups.forEach(g=>g.members.forEach(i=>{if(!hasChat(i,g.id))chatsOf(i).push({id:g.id,t:g.created||Date.now()})}));
+  Object.keys(S.chats).forEach(k=>{if(!P(k))delete S.chats[k];else S.chats[k]=S.chats[k].filter(c=>P(c.id)||(G(c.id)&&G(c.id).members.includes(k)))});
   if(!P(S.me))S.me=S.personas[0]?S.personas[0].id:null;
-  if(!S.me||!P(S.peer)||!hasChat(S.me,S.peer))S.peer=null;
+  if(!S.me||!T(S.peer)||!hasChat(S.me,S.peer))S.peer=null;
 }
 
 /* ---------- rendering ---------- */
@@ -466,45 +484,62 @@ function renderRail(){
   const a=document.createElement('button');a.className='rb add';a.title='New persona';a.setAttribute('aria-label','New persona');a.innerHTML=ico('plus',24);a.onclick=()=>editPersona();r.appendChild(a);
   const n=S.me&&S.settings.badges?totalUnread(S.me):0,bg=$('#burger .badge');bg.textContent=n;bg.style.display=n?'':'none';
 }
-function dmRow(p,existing){
-  const me=S.me,v=vis(me,p.id),last=v[v.length-1],n=existing&&S.settings.badges?unread(me,p.id):0;
-  const b=document.createElement('button');b.className='dm'+(p.id===S.peer?' on':'')+(n?' un':'');
-  b.appendChild(av(p,40,true));
-  const sub=existing&&last?(last.from===me?'You: ':'')+(last.text||'Image'):(p.cs||'');
-  b.insertAdjacentHTML('beforeend',`<div class="cm"><b>${esc(p.name)}</b>${sub?`<small>${esc(sub)}</small>`:''}</div>`+(n?`<span class="badge">${n}</span>`:''));
-  b.onclick=()=>{if(!existing)addChat(me,p.id);dmq='';$('#dmq').value='';openChat(p.id)};
+function gavatar(g,size){
+  const d=document.createElement('div');d.className='av';d.style.width=d.style.height=size+'px';
+  if(g.img)d.style.backgroundImage=`url(${g.img})`;else{d.style.background=g.color||'#f0b232';d.innerHTML=ico('users',Math.round(size*.5))}
+  return d;
+}
+function tav(t,size,dot){
+  if(!t.members)return av(t,size,dot);
+  const w=document.createElement('div');w.className='avw';w.style.width=w.style.height=size+'px';w.appendChild(gavatar(t,size));return w;
+}
+function dmRow(t,existing){
+  const me=S.me,g=!!t.members,v=vis(me,t.id),last=v[v.length-1],n=existing&&S.settings.badges?unread(me,t.id):0;
+  const b=document.createElement('button');b.className='dm'+(t.id===S.peer?' on':'')+(n?' un':'');
+  b.appendChild(tav(t,40,true));
+  let sub=g?t.members.length+' Members':(t.cs||'');
+  if(existing&&last)sub=(last.from===me?'You: ':(g&&P(last.from)?P(last.from).name+': ':''))+(last.text||(last.gif?'GIF':'Image'));
+  b.insertAdjacentHTML('beforeend',`<div class="cm"><b>${esc(tname(t.id))}</b>${sub?`<small>${esc(sub)}</small>`:''}</div>`+(n?`<span class="badge">${n}</span>`:''));
+  b.onclick=()=>{if(!existing)addChat(me,t.id);dmq='';$('#dmq').value='';openChat(t.id)};
   return b;
 }
 function renderSide(){
   const box=$('#dms');box.innerHTML='';const me=S.me,q=dmq.trim().toLowerCase();
-  let list=me?chatsOf(me).filter(c=>P(c.id)).map(c=>({c,a:act(me,c.id)||c.t})).sort((x,y)=>y.a-x.a).map(x=>x.c):[];
-  if(q)list=list.filter(c=>P(c.id).name.toLowerCase().includes(q));
-  list.forEach(c=>box.appendChild(dmRow(P(c.id),true)));
+  const names=t=>(tname(t.id)+' '+(t.members?t.members.map(i=>P(i)?P(i).name:'').join(' '):'')).toLowerCase();
+  let list=me?chatsOf(me).filter(c=>T(c.id)).map(c=>({c,a:act(me,c.id)||c.t})).sort((x,y)=>y.a-x.a).map(x=>x.c):[];
+  if(q)list=list.filter(c=>names(T(c.id)).includes(q));
+  list.forEach(c=>box.appendChild(dmRow(T(c.id),true)));
   if(q){
     const more=S.personas.filter(p=>p.id!==me&&!hasChat(me,p.id)&&p.name.toLowerCase().includes(q));
     if(more.length){box.insertAdjacentHTML('beforeend','<div class="lbl">Start a conversation</div>');more.forEach(p=>box.appendChild(dmRow(p,false)))}
   }
-  if(!box.children.length)box.innerHTML='<div class="empty">'+(q?'No matching personas.':'No chats yet. Use the new chat icon above.')+'</div>';
+  if(!box.children.length)box.innerHTML='<div class="empty">'+(q?'No matching chats.':'No chats yet. Use the new chat icon above.')+'</div>';
   const el=$('#me');el.innerHTML='';const mp=P(me);
   if(mp){el.appendChild(av(mp,36,true));el.insertAdjacentHTML('beforeend',`<div class="nm2"><b>${esc(mp.name)}</b><small>${esc(mp.cs||statusLabel(mp.status))}</small></div>`)}
   else el.innerHTML='<div class="nm2"><b>No persona</b><small>Create one first</small></div>';
   const g=document.createElement('button');g.className='ic';g.innerHTML=ico('gear');g.title='Settings';g.setAttribute('aria-label','Settings');g.onclick=()=>openSettings();el.appendChild(g);
 }
 function renderMembers(){
-  const box=$('#mbody');box.innerHTML='';
-  const c=document.createElement('button');c.className='cr';c.innerHTML=`<span class="cc">${ico('userplus',22)}</span>Create Persona`;c.onclick=()=>editPersona();box.appendChild(c);
-  box.insertAdjacentHTML('beforeend',`<div class="lbl" style="padding-left:16px">Personas - ${S.personas.length}</div>`);
-  S.personas.forEach(p=>{
-    const d=document.createElement('div');d.className='dm mem'+(p.id===S.me?' on':'');
+  const t=T(S.peer),box=$('#mbody');box.innerHTML='';
+  $('#mtitle').textContent=t?tname(t.id):'Members';
+  $('#ma-e').style.display=t&&t.members?'':'none';
+  const c=document.createElement('button');c.className='cr';c.innerHTML=`<span class="cc">${ico('userplus',22)}</span>Create Group DM`;c.onclick=()=>groupEditor();box.appendChild(c);
+  const list=t?(t.members?t.members.map(P).filter(Boolean):[P(S.me),t].filter(Boolean)):[];
+  box.insertAdjacentHTML('beforeend',`<div class="lbl" style="padding-left:16px">Members - ${list.length}</div>`);
+  list.forEach(p=>{
+    const d=document.createElement('div');d.className='dm mem';
     d.appendChild(av(p,40,true));
     d.insertAdjacentHTML('beforeend',`<div class="cm"><b>${esc(p.name)}</b>${p.cs?`<small>${esc(p.cs)}</small>`:''}</div>`+(p.id===S.me?'<span class="tag">You</span>':''));
-    d.onclick=()=>setMe(p.id);box.appendChild(d);
+    d.onclick=()=>profileSheet(p.id);box.appendChild(d);
   });
 }
 function renderHead(){
-  const q=P(S.peer),h=$('#hT');
-  if(q){h.innerHTML=`<span>${esc(q.name)}</span>`+(S.settings.dots?`<i class="sd ${q.status||'online'}"></i>`:'');$('#inp').placeholder='Message '+q.name}
-  else h.innerHTML='<span>Direct Messages</span>';
+  const q=T(S.peer),h=$('#hT');
+  if(q){
+    const g=!!q.members;
+    h.innerHTML=`<span>${esc(tname(q.id))}</span>`+(g?`<small class="mc">${q.members.length} members</small>`:(S.settings.dots?`<i class="sd ${q.status||'online'}"></i>`:''));
+    $('#inp').placeholder='Message '+tname(q.id);
+  }else h.innerHTML='<span>Direct Messages</span>';
   $('#cbar').style.display=q?'':'none';$('#msearch').style.display=q?'':'none';
   renderReply();
 }
@@ -515,7 +550,7 @@ function renderReply(){
     editing=null;
   }
   const o=replyTo&&S.msgs.find(x=>x.id===replyTo);
-  if(!o||!P(S.peer)){replyTo=null;b.style.display='none';return}
+  if(!o||!T(S.peer)){replyTo=null;b.style.display='none';return}
   const p=P(o.from);b.style.display='flex';
   b.innerHTML=`<span class="ex">Replying to <b>${esc(p.name)}</b> ${esc(excerpt(o))}</span><button class="ic" aria-label="Cancel reply">${ico('x',16)}</button>`;
   b.querySelector('button').onclick=()=>{replyTo=null;renderReply()};
@@ -528,14 +563,14 @@ function jump(id){
 }
 function renderMsgs(force){
   const box=$('#msgs'),st=box.scrollTop,near=box.scrollHeight-box.scrollTop-box.clientHeight<120;box.innerHTML='';
-  if(!P(S.peer)){
+  if(!T(S.peer)){
     const me=P(S.me),d=document.createElement('div');d.className='empty';
     d.innerHTML=`<p>${me?esc(me.name)+' has no open chat yet.':'Create a persona to get started.'}</p>`;
     const b=document.createElement('button');b.className='btn';b.innerHTML=me?ico('chatplus')+' New chat':ico('plus')+' New persona';
     b.onclick=me?newChat:()=>editPersona();d.appendChild(b);box.appendChild(d);return;
   }
   const list=vis(S.me,S.peer),s=S.settings;
-  if(!list.length)box.innerHTML=`<div class="empty">This is the start of the chat between ${esc(P(S.me).name)} and ${esc(P(S.peer).name)}.</div>`;
+  if(!list.length)box.innerHTML=`<div class="empty">${isG(S.peer)?'This is the start of '+esc(tname(S.peer))+'.':'This is the start of the chat between '+esc(P(S.me).name)+' and '+esc(tname(S.peer))+'.'}</div>`;
   let prev=null;
   list.forEach(m=>{
     const p=P(m.from),t=eff(m),newDay=!prev||new Date(t).toDateString()!==new Date(eff(prev)).toDateString();
@@ -550,7 +585,7 @@ function renderMsgs(force){
     }
     const row=document.createElement('div');row.className='mr';
     const g=document.createElement('div');g.className='gut';
-    if(first)g.appendChild(avatar(p,s.avsz));else g.innerHTML=`<span>${tstr(t,false)}</span>`;
+    if(first){const a0=avatar(p,s.avsz);a0.style.cursor='pointer';a0.onclick=e=>{e.stopPropagation();profileSheet(p.id)};g.appendChild(a0)}else g.innerHTML=`<span>${tstr(t,false)}</span>`;
     const b=document.createElement('div');b.className='bd';
     b.innerHTML=(first?`<div><span class="nm"${s.cnames?` style="color:${p.color}"`:''}>${esc(p.name)}</span>${s.tfmt!=='off'?`<span class="tm">${tstr(t,true)}</span>`:''}</div>`:'')
       +(m.fwd?'<div class="ed" style="margin:0">Forwarded</div>':'')+(m.text?`<div class="tx">${rich(m.text)}${m.edited?'<span class="ed">(edited)</span>':''}</div>`:'')+(m.img?`<img class="pic" src="${esc(m.img)}" alt="${m.gif?'GIF':'Image'}">`:'');
@@ -636,17 +671,19 @@ function actionSheet(m){
   });
 }
 function forward(m){
-  const o=S.personas.filter(p=>p.id!==S.me);
-  if(!o.length){toast('No other personas');return}
-  pickSheet('Forward to',o.map(p=>[p.id,p.name,`<i class="sdot ${p.status}"></i>`]),null,id=>{
-    S.msgs.push({id:uid(),from:S.me,to:id,t:Date.now(),text:m.text,img:m.img,delivered:null,replyTo:null,reacts:{},fwd:true});
-    addChat(S.me,id);addChat(id,S.me);save();renderSide();renderRail();renderMsgs(true);toast('Forwarded to '+P(id).name);
+  const o=S.personas.filter(p=>p.id!==S.me).map(p=>[p.id,p.name,`<i class="sdot ${p.status}"></i>`]);
+  S.groups.filter(g=>g.members.includes(S.me)).forEach(g=>o.push([g.id,gname(g),ico('users',18)]));
+  if(!o.length){toast('No other chats');return}
+  pickSheet('Forward to',o,null,id=>{
+    S.msgs.push({id:uid(),from:S.me,to:id,t:Date.now(),text:m.text,img:m.img,gif:m.gif,dl:{},replyTo:null,reacts:{},fwd:true});
+    addChat(S.me,id);addChat(id,S.me);save();renderSide();renderRail();renderMsgs(true);toast('Forwarded to '+tname(id));
   });
 }
 function msgInfo(m){
   const f=t=>t?new Date(t).toLocaleString([],{dateStyle:'medium',timeStyle:'medium'}):'Not yet';
   const row=(a,b)=>`<div class="ctl"><div>${a}<small>${b}</small></div></div>`;
-  modal(`<h2>Message info</h2><div class="grp">${row('From',esc(P(m.from).name))}${row('To',esc(P(m.to).name))}${row('Sent',f(m.t))}${row('Delivered',f(m.delivered))}${m.edited?row('Edited','Yes'):''}</div>`);
+  const rec=isG(m.to)?G(m.to).members.filter(i=>i!==m.from):[m.to];
+  modal(`<h2>Message info</h2><div class="grp">${row('From',esc(P(m.from).name))}${row('To',esc(tname(m.to)))}${row('Sent',f(m.t))}${rec.map(i=>row('Delivered to '+esc(P(i)?P(i).name:'?'),f(m.dl&&m.dl[i]))).join('')}${m.edited?row('Edited','Yes'):''}</div>`);
 }
 function resRow(x){
   const b=document.createElement('button');b.className='it';
@@ -654,7 +691,7 @@ function resRow(x){
   b.onclick=()=>{closeModal();jump(x.id)};return b;
 }
 function searchMsgs(){
-  if(!P(S.peer))return;
+  if(!T(S.peer))return;
   const m=modal('<h2>Search messages</h2><div class="row"><input class="field" id="sq2" placeholder="Search this chat" autocomplete="off"></div><div id="sr" class="grp"></div>');
   const inp=m.querySelector('#sq2'),out=m.querySelector('#sr');
   inp.oninput=()=>{
@@ -665,7 +702,7 @@ function searchMsgs(){
   out.style.display='none';inp.focus();
 }
 function showPins(){
-  if(!P(S.peer))return;
+  if(!T(S.peer))return;
   const l=vis(S.me,S.peer).filter(x=>x.pinned).reverse();
   const m=modal('<h2>Pinned messages</h2><div id="pl2"></div>'),out=m.querySelector('#pl2');
   if(!l.length)out.innerHTML='<div class="empty">Nothing pinned in this chat yet. Press and hold a message to pin it.</div>';
@@ -680,7 +717,7 @@ function openChat(id){
 function setMe(id){
   if(id===S.me)return;
   const old=S.me;S.last[old]=S.peer;S.me=id;replyTo=null;editing=null;clearInp();
-  const cs=chatsOf(id).filter(c=>P(c.id)),has=x=>cs.some(c=>c.id===x);
+  const cs=chatsOf(id).filter(c=>T(c.id)),has=x=>cs.some(c=>c.id===x);
   let pick=null;
   if(old&&has(old)&&unread(id,old))pick=old;
   else if(S.last[id]&&has(S.last[id]))pick=S.last[id];
@@ -693,7 +730,8 @@ function setMe(id){
 function newChat(){
   const me=P(S.me);if(!me){editPersona();return}
   const av2=S.personas.filter(p=>p.id!==me.id&&!hasChat(me.id,p.id));
-  const m=modal(`<h2>New chat</h2><h3>Who should ${esc(me.name)} message?</h3><div id="nl"></div>`);
+  const m=modal(`<h2>New chat</h2><div class="grp" id="ngp" style="margin-top:12px"></div><h3>Message ${esc(me.name)} to...</h3><div id="nl"></div>`);
+  const gb=document.createElement('button');gb.className='cr';gb.innerHTML=`<span class="cc">${ico('users',22)}</span>New Group DM`;gb.onclick=()=>groupEditor();m.querySelector('#ngp').appendChild(gb);
   const l=m.querySelector('#nl');
   if(!av2.length){
     l.innerHTML=`<div class="row"><span>${esc(me.name)} already has a chat with every persona. Add another persona to start a new one.</span></div>`;
@@ -710,7 +748,7 @@ $('#dmq').oninput=e=>{dmq=e.target.value;renderSide()};
 $('#msearch').onclick=searchMsgs;
 $('#ma-s').onclick=searchMsgs;
 $('#ma-p').onclick=showPins;
-$('#ma-e').onclick=()=>{if(S.me)editPersona(S.me)};
+$('#ma-e').onclick=()=>{if(isG(S.peer))groupEditor(S.peer)};
 $('#ma-g').onclick=()=>openSettings();
 $('#mtoggle').onclick=()=>{membersOpen=!membersOpen;applyPanels()};
 $('#burger').onclick=()=>setLeft(!$('#left').classList.contains('open'));
@@ -796,8 +834,8 @@ async function loadGifs(q){
   }catch(err){if(my===gifSeq&&$('#epb'))$('#epb').innerHTML='<div class="epm">Could not load GIFs. Check your API key in Settings, then GIFs.</div>'}
 }
 function sendGif(url){
-  if(!P(S.me)||!P(S.peer))return;
-  S.msgs.push({id:uid(),from:S.me,to:S.peer,t:Date.now(),text:'',img:url,gif:true,delivered:null,replyTo:replyTo||null,reacts:{}});
+  if(!P(S.me)||!T(S.peer))return;
+  S.msgs.push({id:uid(),from:S.me,to:S.peer,t:Date.now(),text:'',img:url,gif:true,dl:{},replyTo:replyTo||null,reacts:{}});
   addChat(S.me,S.peer);addChat(S.peer,S.me);replyTo=null;closeEP(false);
   save();renderSide();renderRail();renderReply();renderMsgs(true);
 }
@@ -809,7 +847,7 @@ document.addEventListener('click',e=>{
   if(e.target.closest('#epanel,#emo,.modal,#toast,#attach,#send,#unatt,#pop,#popbg,#replybar,#settings'))return;
   const inChat=e.target.closest('#msgs,#typing');
   closeEP(false);
-  if(inChat&&P(S.peer))$('#inp').focus({preventScroll:true});
+  if(inChat&&T(S.peer))$('#inp').focus({preventScroll:true});
 },true);
 
 /* ---------- sending (keeps the keyboard open) ---------- */
@@ -820,8 +858,8 @@ function sendCore(){
     if(o&&v&&v!==o.text){o.text=v;o.edited=true}
     editing=null;clearInp();save();renderSide();renderReply();renderMsgs();return;
   }
-  if(!P(S.me)||!P(S.peer)||(!v&&!attached))return;
-  S.msgs.push({id:uid(),from:S.me,to:S.peer,t:Date.now(),text:v,img:attached,delivered:null,replyTo:replyTo||null,reacts:{}});
+  if(!P(S.me)||!T(S.peer)||(!v&&!attached))return;
+  S.msgs.push({id:uid(),from:S.me,to:S.peer,t:Date.now(),text:v,img:attached,dl:{},replyTo:replyTo||null,reacts:{}});
   addChat(S.me,S.peer);addChat(S.peer,S.me);
   attached=null;replyTo=null;$('#prev').style.display='none';clearInp();
   save();renderSide();renderRail();renderReply();renderMsgs(true);
@@ -878,6 +916,43 @@ swipe($('#members'),{dir:'right',can:mob,size:()=>$('#members').offsetWidth,
   start:()=>dragStart('#members'),
   move(d){$('#members').style.transform=`translateX(${d}px)`;$('#scrim').style.opacity=Math.max(0,1-d/$('#members').offsetWidth)},
   close(){finishDrag('#members');membersOpen=false;applyPanels()},reset(){finishDrag('#members')}});
+
+[['#left','left'],['#members','right']].forEach(([sel,dir])=>{
+  swipe($('#scrim'),{dir,can:()=>mob()&&(sel==='#left'?$('#left').classList.contains('open'):membersOpen),size:()=>$(sel).offsetWidth,
+    start:()=>dragStart(sel),
+    move(d){$(sel).style.transform=`translateX(${dir==='left'?-d:d}px)`;$('#scrim').style.opacity=Math.max(0,1-d/$(sel).offsetWidth)},
+    close(){finishDrag(sel);if(sel==='#left')setLeft(false);else{membersOpen=false;applyPanels()}},reset(){finishDrag(sel)}});
+});
+(function(){
+  const main=$('#main');let sx=0,sy=0,act=false,drag=false,mode='',cur=0,pts=[];
+  const elOf=()=>$(mode==='left'?'#left':'#members');
+  main.addEventListener('touchstart',e=>{
+    if(!mob()||e.touches.length!==1||e.target.closest('#cbar,#epanel,input,textarea')||$('#left').classList.contains('open')||membersOpen){act=false;return}
+    act=true;drag=false;sx=e.touches[0].clientX;sy=e.touches[0].clientY;pts=[[Date.now(),sx]];
+  },{passive:true});
+  main.addEventListener('touchmove',e=>{
+    if(!act)return;
+    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(!drag){
+      if(Math.abs(dx)<10&&Math.abs(dy)<10)return;
+      if(Math.abs(dy)>=Math.abs(dx)){act=false;return}
+      mode=dx>0?'left':'right';drag=true;
+      elOf().style.transition='none';$('#scrim').style.transition='none';$('#scrim').classList.add('show');
+    }
+    if(e.cancelable)e.preventDefault();
+    const el=elOf(),W=el.offsetWidth;cur=Math.min(W,Math.abs(dx));
+    pts.push([Date.now(),t.clientX]);if(pts.length>6)pts.shift();
+    el.style.transform=`translateX(${mode==='left'?-W+cur:W-cur}px)`;$('#scrim').style.opacity=W?cur/W:1;
+  },{passive:false});
+  const end=()=>{
+    if(!act||!drag){act=false;return}
+    act=false;drag=false;
+    const W=elOf().offsetWidth,a=pts[0],b=pts[pts.length-1],v=(mode==='left'?b[1]-a[1]:a[1]-b[1])/Math.max(1,b[0]-a[0]);
+    finishDrag(mode==='left'?'#left':'#members');
+    if(cur>W*.35||v>.5){if(mode==='left')setLeft(true);else{membersOpen=true;applyPanels()}}else syncScrim();
+  };
+  main.addEventListener('touchend',end);main.addEventListener('touchcancel',end);
+})();
 $('#inp').addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(editing)cancelEdit();else if(replyTo){replyTo=null;renderReply()}}
   if(e.key==='Enter'&&!e.shiftKey&&S.settings.enter&&!/Mobi|Android/i.test(navigator.userAgent)){e.preventDefault();sendMsg()}
@@ -885,7 +960,7 @@ $('#inp').addEventListener('keydown',e=>{
 $('#inp').addEventListener('input',e=>{e.target.style.height='auto';e.target.style.height=Math.min(140,e.target.scrollHeight)+'px'});
 
 /* ---------- modals ---------- */
-function closeModal(h){$(h||'#modal').innerHTML=''}
+function closeModal(h){$(typeof h==='string'?h:'#modal').innerHTML=''}
 function modal(html,cls,host){
   host=host||'#modal';const m=$(host);
   m.innerHTML=`<div class="modal ${cls||''}"><div class="card">${cls==='sheet'?'':`<button class="ic mx" aria-label="Close">${ico('x')}</button>`}${html}</div></div>`;
@@ -948,6 +1023,74 @@ function editPersona(id){
     else{const p=Object.assign({id:uid(),created:Date.now()},v);S.personas.push(p);if(!S.me)S.me=p.id}
     save();closeModal();renderAll();startQueue();renderSettings();
   };
+}
+
+/* ---------- group DMs and profiles ---------- */
+function groupEditor(gid){
+  const ex=gid?G(gid):null;
+  const d={name:ex?ex.name:'',img:ex?ex.img:null,members:ex?ex.members.slice():[S.me]};
+  if(!ex&&P(S.peer)&&!d.members.includes(S.peer))d.members.push(S.peer);
+  const m=modal(`<h2>${ex?'Edit group':'New group DM'}</h2>
+   <div class="row" style="margin-top:12px"><div id="ga"></div><button class="btn g" id="gu">${ico('up')} Image</button><button class="btn g" id="gr">Remove</button></div>
+   <h3>Group name</h3><input class="field" id="gn" maxlength="40" value="${esc(d.name)}" placeholder="Optional, defaults to member names">
+   <h3>Members</h3><div class="grp" id="gm"></div>
+   <div class="row" style="margin-top:16px">${ex?`<button class="btn r" id="gd">${ico('trash')} Delete</button>`:''}<span></span><button class="btn g" id="gx">Cancel</button><button class="btn" id="gs">${ex?'Save':'Create'}</button></div>
+   <input type="file" id="gf" accept="image/*" hidden>`);
+  const q=x=>m.querySelector(x);
+  const draw=()=>{const h=q('#ga');h.innerHTML='';h.appendChild(gavatar({img:d.img,color:ex?ex.color:'#f0b232'},56))};draw();
+  const list=()=>{
+    const l=q('#gm');l.innerHTML='';
+    S.personas.forEach(p=>{
+      const on=d.members.includes(p.id),locked=p.id===S.me;
+      const b=document.createElement('button');b.className='it';b.appendChild(av(p,32,true));
+      b.insertAdjacentHTML('beforeend',`<span style="flex:1">${esc(p.name)}${locked?' (you)':''}</span><span style="color:var(--accent);width:20px">${on?ico('check'):''}</span>`);
+      b.onclick=()=>{if(locked)return;if(on)d.members=d.members.filter(i=>i!==p.id);else d.members.push(p.id);list()};
+      l.appendChild(b);
+    });
+  };list();
+  q('#gu').onclick=()=>q('#gf').click();
+  q('#gr').onclick=()=>{d.img=null;draw()};
+  q('#gf').onchange=async e=>{const f=e.target.files[0];if(f){d.img=await resize(f,256,.85);draw()}};
+  q('#gx').onclick=()=>closeModal();
+  if(ex)q('#gd').onclick=()=>ask('Delete group?','The group and all of its messages will be removed for everyone.','Delete',()=>{
+    S.msgs=S.msgs.filter(x=>x.to!==ex.id);S.groups=S.groups.filter(x=>x.id!==ex.id);
+    Object.keys(S.chats).forEach(k=>{S.chats[k]=S.chats[k].filter(c=>c.id!==ex.id)});
+    Object.keys(S.last).forEach(k=>{if(S.last[k]===ex.id)delete S.last[k]});
+    if(S.peer===ex.id)S.peer=null;
+    save();closeModal();renderAll();startQueue();
+  });
+  q('#gs').onclick=()=>{
+    if(d.members.length<2){toast('Pick at least one other persona');return}
+    const name=q('#gn').value.trim();
+    if(ex){
+      const added=d.members.filter(i=>!ex.members.includes(i)),removed=ex.members.filter(i=>!d.members.includes(i));
+      ex.name=name;ex.img=d.img;ex.members=d.members;
+      added.forEach(i=>{if(!hasChat(i,ex.id))chatsOf(i).push({id:ex.id,t:Date.now()})});
+      removed.forEach(i=>{S.chats[i]=chatsOf(i).filter(c=>c.id!==ex.id)});
+      save();closeModal();renderAll();startQueue();
+    }else{
+      const g={id:uid(),name,img:d.img,color:'#f0b232',members:d.members,created:Date.now()};
+      S.groups.push(g);g.members.forEach(i=>chatsOf(i).push({id:g.id,t:g.created}));
+      save();closeModal();openChat(g.id);
+    }
+  };
+}
+function profileSheet(id){
+  const p=P(id);if(!p)return;
+  const mine=id===S.me,days=Math.max(0,Math.floor((Date.now()-(p.created||Date.now()))/864e5));
+  const it=(a,i,l)=>`<button class="it" data-a="${a}">${ico(i)}${l}</button>`;
+  const mo=modal(`<div class="pf"><div class="ban" style="background:${esc(p.banner||p.color)}"></div><div class="big"></div><div class="pn">${esc(p.name)}</div><div class="ph">@${esc(p.handle||p.name.toLowerCase().replace(/\s+/g,''))}</div>${p.cs?`<div class="pcs">${esc(p.cs)}</div>`:''}</div>
+   ${p.bio?`<div class="grp"><div class="ctl"><div>About me<small style="color:var(--text)">${esc(p.bio)}</small></div></div></div>`:''}
+   <div class="grp"><div class="ctl"><div>Persona created<small>${days} day${days===1?'':'s'} ago</small></div></div></div>
+   <div class="grp">${mine?it('edit','edit','Edit Profile')+it('status','smile','Set Status'):it('msg','chat','Message')+it('as','users','Chat as '+esc(p.name))}</div>`,'sheet');
+  mo.querySelector('.big').appendChild(av(p,80,true));
+  mo.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
+    const a=b.dataset.a;
+    if(a==='edit'){closeModal();editPersona(id)}
+    else if(a==='status')pickSheet('Status',STATUS.map(([k,n])=>[k,n,`<i class="sdot ${k}"></i>`]),p.status,v=>{p.status=v;save();refresh();profileSheet(id)});
+    else if(a==='msg'){closeModal();if(S.peer!==id){addChat(S.me,id);openChat(id)}}
+    else if(a==='as'){closeModal();setMe(id)}
+  });
 }
 
 /* ---------- settings ---------- */
@@ -1115,7 +1258,7 @@ function renderSettings(){
       r.querySelector('[data-d]').onclick=()=>ask('Delete '+p.name+'?','This also removes all of their messages.','Delete',()=>{
         const id=p.id;S.personas=S.personas.filter(x=>x.id!==id);S.msgs=S.msgs.filter(x=>x.from!==id&&x.to!==id);
         S.msgs.forEach(x=>{if(x.replyTo&&!S.msgs.some(y=>y.id===x.replyTo))x.replyTo=null;if(x.reacts)for(const k in x.reacts){x.reacts[k]=x.reacts[k].filter(i=>i!==id);if(!x.reacts[k].length)delete x.reacts[k]}});
-        delete S.chats[id];delete S.last[id];
+        S.groups.forEach(g=>{g.members=g.members.filter(i=>i!==id)});S.groups.filter(g=>g.members.length<2).forEach(g=>{S.msgs=S.msgs.filter(x=>x.to!==g.id)});S.groups=S.groups.filter(g=>g.members.length>=2);delete S.chats[id];delete S.last[id];
         if(S.me===id){S.me=S.personas[0]?S.personas[0].id:null;S.peer=null}
         migrate();save();renderAll();startQueue();renderSettings();
       });
