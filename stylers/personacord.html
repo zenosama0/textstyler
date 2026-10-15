@@ -246,10 +246,13 @@ html,body{overscroll-behavior:none}
 @media(max-width:700px){
  #left,#members{top:var(--vt,0px);bottom:auto;height:var(--vh,100%)}
 }
+.hold>*{visibility:hidden}
+#scrim{top:var(--vt,0px);bottom:auto;height:var(--vh,100%)}
 </style>
 </head>
 <body>
 <div id="app">
+ <div id="scrim"></div>
  <div id="left">
   <nav id="rail" aria-label="Personas"></nav>
   <aside id="side">
@@ -292,7 +295,7 @@ html,body{overscroll-behavior:none}
  </aside>
 </div>
 <div id="view"><img alt=""></div>
-<div id="modal"></div><div id="modal2"></div><div id="toast"></div><div id="scrim"></div>
+<div id="modal"></div><div id="modal2"></div><div id="toast"></div>
 <div id="settings"></div>
 
 <script>
@@ -772,18 +775,37 @@ const EMO_CATS=[
 let epOpen=false,epTab='emoji',gifT=null,gifSeq=0,kbH=0,maxInner=innerHeight;
 if(window.visualViewport)visualViewport.addEventListener('resize',()=>{maxInner=Math.max(maxInner,innerHeight);const d=maxInner-visualViewport.height;if(d>150)kbH=d});
 const epH=()=>Math.min(380,Math.max(260,kbH||300));
+const touchy=()=>('ontouchstart' in window)||navigator.maxTouchPoints>0;
+let epClosing=false,epCloseT=null,vfRaf=0;
+const fullH=()=>Math.max(maxInner,innerHeight,window.visualViewport?visualViewport.height:0);
 function openEP(){
   const b=$('#msgs'),near=b.scrollHeight-b.scrollTop-b.clientHeight<120;
-  epOpen=true;$('#inp').blur();
-  const p=$('#epanel');p.classList.add('open');p.style.height=epH()+'px';
+  epOpen=true;epClosing=false;clearTimeout(epCloseT);
+  const p=$('#epanel');p.classList.remove('hold');p.classList.add('open');p.style.height=epH()+'px';
   $('#emo').innerHTML=ico('kbd',22);renderEP();
+  fitViewport(true);          /* grow to full height first so nothing moves while the keyboard slides away */
+  $('#inp').blur();
   if(near)b.scrollTop=b.scrollHeight;
 }
-function closeEP(focus){
+function finishClose(){
+  if(!epClosing)return;
+  epClosing=false;clearTimeout(epCloseT);
+  $('#epanel').classList.remove('open','hold');fitViewport(true);
+}
+/* mode: true = focus the input, 'native' = input is already getting focus, false = just close */
+function closeEP(mode){
   if(!epOpen)return;
-  epOpen=false;clearTimeout(gifT);gifSeq++;
-  $('#epanel').classList.remove('open');$('#emo').innerHTML=ico('smile',22);
-  if(focus)$('#inp').focus({preventScroll:true});
+  epOpen=false;clearTimeout(gifT);gifSeq++;$('#emo').innerHTML=ico('smile',22);
+  const p=$('#epanel');
+  if(mode&&touchy()){
+    epClosing=true;p.classList.add('hold');   /* keep the space reserved until the keyboard is up */
+    if(mode===true)$('#inp').focus({preventScroll:true});
+    clearTimeout(epCloseT);epCloseT=setTimeout(finishClose,600);
+  }else{
+    p.classList.remove('open','hold');
+    if(mode===true)$('#inp').focus({preventScroll:true});
+    fitViewport(true);
+  }
 }
 function insertEmoji(e){
   const i=$('#inp'),a=i.selectionStart==null?i.value.length:i.selectionStart,z=i.selectionEnd==null?a:i.selectionEnd;
@@ -846,22 +868,30 @@ function sendGif(url){
 }
 $('#emo').onmousedown=e=>e.preventDefault();
 $('#emo').onclick=()=>{if(epOpen)closeEP(true);else openEP()};
-$('#inp').addEventListener('focus',()=>closeEP(false));
+$('#inp').addEventListener('focus',()=>closeEP('native'));
 /* keep the app exactly over the visible area when the keyboard opens */
 let stickBottom=true;
-function fitViewport(){
-  const vv=window.visualViewport;if(!vv)return;
-  const r=document.documentElement.style;r.setProperty('--vh',vv.height+'px');r.setProperty('--vt',vv.offsetTop+'px');
+function applyVP(){
+  vfRaf=0;const vv=window.visualViewport;if(!vv)return;
+  maxInner=Math.max(maxInner,innerHeight);
+  const hold=epOpen||epClosing,full=fullH();
+  const r=document.documentElement.style;
+  r.setProperty('--vh',(hold?full:vv.height)+'px');r.setProperty('--vt',(hold?0:vv.offsetTop)+'px');
+  if(epClosing&&vv.height<full-120)finishClose();
   if(document.activeElement===$('#inp')&&stickBottom){const b=$('#msgs');b.scrollTop=b.scrollHeight}
 }
+function fitViewport(now){
+  if(now===true){cancelAnimationFrame(vfRaf);applyVP()}
+  else if(!vfRaf)vfRaf=requestAnimationFrame(applyVP);
+}
 $('#inp').addEventListener('focus',()=>{const b=$('#msgs');stickBottom=b.scrollHeight-b.scrollTop-b.clientHeight<150});
-if(window.visualViewport){visualViewport.addEventListener('resize',fitViewport);visualViewport.addEventListener('scroll',fitViewport);fitViewport()}
+if(window.visualViewport){visualViewport.addEventListener('resize',()=>fitViewport());visualViewport.addEventListener('scroll',()=>fitViewport());fitViewport(true)}
+addEventListener('scroll',()=>{if(window.scrollY||window.scrollX)window.scrollTo(0,0)});
 document.addEventListener('click',e=>{
   if(!epOpen||Date.now()-lastLP<700)return;
   if(e.target.closest('#epanel,#emo,.modal,#toast,#attach,#send,#unatt,#pop,#popbg,#replybar,#settings'))return;
   const inChat=e.target.closest('#msgs,#typing');
-  closeEP(false);
-  if(inChat&&T(S.peer))$('#inp').focus({preventScroll:true});
+  closeEP(!!(inChat&&T(S.peer)));
 },true);
 
 /* ---------- sending (keeps the keyboard open) ---------- */
