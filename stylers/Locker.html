@@ -7,28 +7,33 @@
 <style type="text/css">
 :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
-body { background: #008080; margin: 0; padding: 4px; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 14px; color: #000000; }
-.win { background: #c0c0c0; border: 2px outset #ffffff; width: 100%; max-width: 460px; }
+body { background: #008080; margin: 0; padding: 4px; box-sizing: border-box; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 14px; color: #000000; }
+.win { background: #c0c0c0; border: 2px outset #ffffff; width: 100%; box-sizing: border-box; -moz-box-sizing: border-box; }
 .title { background: #000080; color: #ffffff; font-weight: bold; padding: 3px 4px; font-size: 14px; }
 .tb { background: #c0c0c0; border: 2px outset #ffffff; padding: 0 2px; line-height: 12px; }
 .pane { padding: 6px; }
 .lbl { padding: 4px 0 2px 0; }
-textarea, input.txt { width: 96%; font-family: "Courier New", Courier, monospace; font-size: 14px; border: 2px inset #ffffff; background: #ffffff; color: #000000; }
+textarea, input.txt { width: 100%; box-sizing: border-box; -moz-box-sizing: border-box; overflow: auto; font-family: "Courier New", Courier, monospace; font-size: 14px; border: 2px inset #ffffff; background: #ffffff; color: #000000; }
 .btn { background: #c0c0c0; color: #000000; border: 2px outset #ffffff; padding: 3px 10px; margin: 2px; cursor: pointer; }
 .btn:active { border: 2px inset #ffffff; }
 .status { border: 2px inset #ffffff; padding: 3px; font-size: 13px; margin-top: 6px; min-height: 22px; }
 .hr { border-top: 2px groove #ffffff; margin: 6px 0; height: 0; }
+.tiny .pane { padding: 3px; }
+.tiny .lbl { padding: 1px 0; }
+.tiny .hr { margin: 2px 0; }
+.tiny .btn { padding: 1px 6px; margin: 1px; }
+.tiny .status { min-height: 0; margin-top: 2px; }
 </style>
 </head>
 <body>
-<table class="win" cellpadding="0" cellspacing="0" border="0" width="100%">
+<table class="win" id="win" cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr><td class="title">
 <table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
 <td><span class="ic" data-i="lock" data-s="16"></span> Locker.exe</td>
 <td align="right"><span class="tb"><span class="ic" data-i="min" data-s="12"></span></span><span class="tb"><span class="ic" data-i="max" data-s="12"></span></span><span class="tb"><span class="ic" data-i="cls" data-s="12"></span></span></td>
 </tr></table>
 </td></tr>
-<tr><td class="pane">
+<tr><td class="pane" valign="top" height="100%">
 
 <div class="lbl"><span class="ic" data-i="note" data-s="24"></span></div>
 <textarea id="inp" rows="6" cols="28" title="text"></textarea>
@@ -61,9 +66,8 @@ textarea, input.txt { width: 96%; font-family: "Courier New", Courier, monospace
 <button type="button" class="btn" onclick="clearAll()" title="clear all"><span class="ic" data-i="trash"></span></button>
 </div>
 
-<div class="status" id="st"></div>
-
 </td></tr>
+<tr><td class="pane" valign="bottom"><div class="status" id="st"></div></td></tr>
 </table>
 
 <script type="text/javascript">
@@ -259,8 +263,48 @@ $("inp").onkeyup = liveRun;
 $("key").oninput = liveRun;
 $("key").onkeyup = liveRun;
 
+function padOf(side) {
+  try { return parseInt(window.getComputedStyle(document.documentElement)[side], 10) || 0; } catch (e) { return 0; }
+}
+
+function availH() {
+  var h = window.innerHeight || document.documentElement.clientHeight || 300;
+  return h - 8 - padOf("paddingTop") - padOf("paddingBottom");
+}
+
+function setRows(r) {
+  var a = [$("inp"), $("out")], i;
+  for (i = 0; i < 2; i++) {
+    a[i].rows = r;
+    a[i].setAttribute("wrap", r > 1 ? "soft" : "off");
+    a[i].style.whiteSpace = r > 1 ? "pre-wrap" : "pre";
+    a[i].style.overflow = "auto";
+  }
+}
+
+function fits() { return $("win").offsetHeight <= availH(); }
+
+function fit() {
+  var r, t, ok = false, w = $("win");
+  w.style.height = "auto";
+  for (t = 0; t < 2 && !ok; t++) {
+    document.body.className = t ? "tiny" : "";
+    for (r = 4; r >= 1; r--) {
+      setRows(r);
+      if (fits()) { ok = true; break; }
+    }
+  }
+  if (!ok) { setRows(1); }
+  if (fits()) { w.style.height = availH() + "px"; }
+}
+
+window.onresize = fit;
+window.onorientationchange = fit;
+window.onload = fit;
+
 initIcons();
 status("monitor", "");
+fit();
 </script>
 </body>
 </html>
