@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Locker</title>
+<style type="text/css">
+:root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+body { background: #008080; margin: 0; padding: 4px; font-family: Tahoma, Verdana, Arial, sans-serif; font-size: 14px; color: #000000; }
+.win { background: #c0c0c0; border: 2px outset #ffffff; width: 100%; max-width: 460px; }
+.title { background: #000080; color: #ffffff; font-weight: bold; padding: 3px 4px; font-size: 14px; }
+.tb { background: #c0c0c0; border: 2px outset #ffffff; padding: 0 2px; line-height: 12px; }
+.pane { padding: 6px; }
+.lbl { padding: 4px 0 2px 0; }
+textarea, input.txt { width: 96%; font-family: "Courier New", Courier, monospace; font-size: 14px; border: 2px inset #ffffff; background: #ffffff; color: #000000; }
+.btn { background: #c0c0c0; color: #000000; border: 2px outset #ffffff; padding: 3px 10px; margin: 2px; cursor: pointer; }
+.btn:active { border: 2px inset #ffffff; }
+.status { border: 2px inset #ffffff; padding: 3px; font-size: 13px; margin-top: 6px; min-height: 22px; }
+.hr { border-top: 2px groove #ffffff; margin: 6px 0; height: 0; }
+</style>
+</head>
+<body>
+<table class="win" cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr><td class="title">
+<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td><span class="ic" data-i="lock" data-s="16"></span> Locker.exe</td>
+<td align="right"><span class="tb"><span class="ic" data-i="min" data-s="12"></span></span><span class="tb"><span class="ic" data-i="max" data-s="12"></span></span><span class="tb"><span class="ic" data-i="cls" data-s="12"></span></span></td>
+</tr></table>
+</td></tr>
+<tr><td class="pane">
+
+<div class="lbl"><span class="ic" data-i="note" data-s="24"></span></div>
+<textarea id="inp" rows="6" cols="28" title="text"></textarea>
+
+<div class="hr"></div>
+
+<div class="lbl"><span class="ic" data-i="key" data-s="24"></span></div>
+<input id="key" class="txt" type="text" value="" title="key" autocomplete="off" autocapitalize="off">
+<div>
+<button type="button" class="btn" onclick="suggestKey()" title="suggest key"><span class="ic" data-i="dice"></span></button>
+<button type="button" class="btn" onclick="clearKey()" title="clear key"><span class="ic" data-i="x"></span></button>
+<button type="button" class="btn" onclick="copyKey()" title="copy key"><span class="ic" data-i="copy"></span></button>
+</div>
+
+<div class="hr"></div>
+
+<div align="center">
+<button type="button" class="btn" onclick="doLock()" title="encrypt"><span class="ic" data-i="lock"></span><span class="ic" data-i="arrow"></span></button>
+<button type="button" class="btn" onclick="doUnlock()" title="decrypt"><span class="ic" data-i="unlock"></span><span class="ic" data-i="arrow"></span></button>
+<button type="button" class="btn" id="livebtn" onclick="toggleLive()" title="live mode"><span class="ic" data-i="bolt"></span></button>
+</div>
+
+<div class="hr"></div>
+
+<div class="lbl"><span class="ic" data-i="out" data-s="24"></span></div>
+<textarea id="out" rows="6" cols="28" readonly="readonly" title="result"></textarea>
+<div>
+<button type="button" class="btn" onclick="copyOut()" title="copy result"><span class="ic" data-i="copy"></span></button>
+<button type="button" class="btn" onclick="moveUp()" title="result to input"><span class="ic" data-i="swap"></span></button>
+<button type="button" class="btn" onclick="clearAll()" title="clear all"><span class="ic" data-i="trash"></span></button>
+</div>
+
+<div class="status" id="st"></div>
+
+</td></tr>
+</table>
+
+<script type="text/javascript">
+var B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+var KEYCH = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+var pool = 0;
+
+var R = function (x, y, w, h, f) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + f + '"/>'; };
+var SH = R(4, 1, 8, 1, "#404040") + R(4, 2, 2, 5, "#404040") + R(10, 2, 2, 5, "#404040");
+var SHO = R(4, 0, 8, 1, "#404040") + R(4, 1, 2, 6, "#404040") + R(10, 1, 2, 2, "#404040");
+var BODY = R(3, 7, 10, 7, "#000") + R(4, 8, 8, 5, "#ffff00") + R(7, 9, 2, 3, "#000");
+var I = {
+  lock: SH + BODY,
+  unlock: SHO + BODY,
+  arrow: '<polygon points="2,6 9,6 9,3 14,8 9,13 9,10 2,10" fill="#000080" stroke="#000" stroke-width="1"/>',
+  key: R(1, 4, 6, 6, "#000") + R(2, 5, 4, 4, "#ffff00") + R(3, 6, 2, 2, "#fff") + R(7, 6, 8, 2, "#000") + R(12, 8, 1, 3, "#000") + R(14, 8, 1, 2, "#000"),
+  dice: R(2, 2, 12, 12, "#000") + R(3, 3, 10, 10, "#fff") + R(4, 4, 2, 2, "#000") + R(10, 4, 2, 2, "#000") + R(7, 7, 2, 2, "#000") + R(4, 10, 2, 2, "#000") + R(10, 10, 2, 2, "#000"),
+  x: '<path d="M3 3L13 13M13 3L3 13" stroke="#f00" stroke-width="2" fill="none"/>',
+  copy: R(2, 3, 9, 11, "#000") + R(3, 4, 7, 9, "#ffff00") + R(4, 2, 5, 2, "#808080") + R(6, 6, 8, 9, "#000") + R(7, 7, 6, 7, "#fff") + R(8, 9, 4, 1, "#000") + R(8, 11, 4, 1, "#000"),
+  note: R(2, 1, 12, 14, "#000") + R(3, 2, 10, 12, "#fff") + R(3, 2, 10, 2, "#000080") + R(4, 5, 8, 1, "#000080") + R(4, 7, 8, 1, "#000080") + R(4, 9, 8, 1, "#000080") + R(4, 11, 8, 1, "#000080"),
+  out: R(1, 11, 14, 3, "#000") + R(1, 9, 2, 3, "#000") + R(13, 9, 2, 3, "#000") + '<polygon points="8,1 13,6 10,6 10,10 6,10 6,6 3,6" fill="#008000" stroke="#000" stroke-width="1"/>',
+  swap: '<polygon points="2,3 10,3 10,1 15,4 10,7 10,5 2,5" fill="#000"/><polygon points="14,10 6,10 6,8 1,11 6,14 6,12 14,12" fill="#000"/>',
+  trash: R(6, 1, 4, 2, "#000") + R(3, 3, 10, 2, "#000") + R(4, 5, 8, 9, "#000") + R(5, 6, 6, 7, "#c0c0c0") + R(6, 7, 1, 5, "#000") + R(9, 7, 1, 5, "#000"),
+  ok: '<path d="M3 8L7 12L13 3" stroke="#008000" stroke-width="3" fill="none"/>',
+  err: '<path d="M3 3L13 13M13 3L3 13" stroke="#f00" stroke-width="3" fill="none"/>',
+  ban: '<circle cx="8" cy="8" r="6" stroke="#f00" stroke-width="2" fill="none"/><path d="M4 12L12 4" stroke="#f00" stroke-width="2"/>',
+  q: '<path d="M5 5Q5 2 8 2Q11 2 11 5Q11 7 8 8L8 10" stroke="#000080" stroke-width="2" fill="none"/>' + R(7, 12, 2, 2, "#000080"),
+  monitor: R(1, 2, 14, 9, "#000") + R(2, 3, 12, 7, "#008080") + R(6, 11, 4, 2, "#808080") + R(4, 13, 8, 1, "#000"),
+  bolt: '<polygon points="10,1 3,9 7,9 5,15 13,6 9,6" fill="#ffff00" stroke="#000" stroke-width="1"/>',
+  min: R(3, 11, 8, 2, "#000"),
+  max: R(3, 3, 10, 10, "#000") + R(4, 5, 8, 7, "#c0c0c0"),
+  cls: '<path d="M4 4L12 12M12 4L4 12" stroke="#000" stroke-width="2" fill="none"/>'
+};
+
+function ico(n, s) {
+  return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 16 16" shape-rendering="crispEdges" style="vertical-align:middle">' + I[n] + '</svg>';
+}
+
+function initIcons() {
+  var s = document.getElementsByTagName("span"), i;
+  for (i = 0; i < s.length; i++) {
+    if (s[i].className === "ic") { s[i].innerHTML = ico(s[i].getAttribute("data-i"), s[i].getAttribute("data-s") || 20); }
+  }
+}
+
+function mix() { pool = (pool * 31 + new Date().getTime() + Math.floor(Math.random() * 1000000)) % 4294967296; }
+document.onmousemove = mix;
+document.onkeydown = mix;
+document.onclick = mix;
+
+function $(id) { return document.getElementById(id); }
+
+function status(names, msg) {
+  var a = names.split(" "), h = "", i;
+  for (i = 0; i < a.length; i++) { h += ico(a[i], 18); }
+  $("st").innerHTML = h + (msg ? " " + msg : "");
+}
+
+function utf8Bytes(s) {
+  var e = unescape(encodeURIComponent(s)), a = [], i;
+  for (i = 0; i < e.length; i++) { a[a.length] = e.charCodeAt(i); }
+  return a;
+}
+
+function bytesUtf8(a) {
+  var s = "", i;
+  for (i = 0; i < a.length; i++) { s += String.fromCharCode(a[i]); }
+  return decodeURIComponent(escape(s));
+}
+
+function toB64(a) {
+  var out = "", i, n, b0, b1, b2;
+  for (i = 0; i < a.length; i += 3) {
+    b0 = a[i]; b1 = (i + 1 < a.length) ? a[i + 1] : 0; b2 = (i + 2 < a.length) ? a[i + 2] : 0;
+    n = (b0 << 16) | (b1 << 8) | b2;
+    out += B64.charAt((n >> 18) & 63) + B64.charAt((n >> 12) & 63);
+    if (i + 1 < a.length) { out += B64.charAt((n >> 6) & 63); }
+    if (i + 2 < a.length) { out += B64.charAt(n & 63); }
+  }
+  return out;
+}
+
+function fromB64(s) {
+  var a = [], i, n = 0, bits = 0, v;
+  for (i = 0; i < s.length; i++) {
+    v = B64.indexOf(s.charAt(i));
+    if (v < 0) { continue; }
+    n = (n << 6) | v; bits += 6;
+    if (bits >= 8) { bits -= 8; a[a.length] = (n >> bits) & 255; n = n & ((1 << bits) - 1); }
+  }
+  return a;
+}
+
+function makeStream(keyBytes, salt) {
+  var kb = keyBytes.concat(salt), S = [], i, j = 0, r, t, st;
+  for (i = 0; i < 256; i++) { S[i] = i; }
+  for (r = 0; r < 64; r++) {
+    for (i = 0; i < 256; i++) {
+      j = (j + S[i] + kb[i % kb.length] + r) & 255;
+      t = S[i]; S[i] = S[j]; S[j] = t;
+    }
+  }
+  st = { S: S, i: 0, j: 0 };
+  for (r = 0; r < 1024; r++) { nextByte(st); }
+  return st;
+}
+
+function nextByte(st) {
+  var t;
+  st.i = (st.i + 1) & 255;
+  st.j = (st.j + st.S[st.i]) & 255;
+  t = st.S[st.i]; st.S[st.i] = st.S[st.j]; st.S[st.j] = t;
+  return st.S[(st.S[st.i] + st.S[st.j]) & 255];
+}
+
+function randByte() { mix(); return (Math.floor(Math.random() * 256) ^ (pool & 255) ^ ((pool >> 8) & 255)) & 255; }
+
+function suggestKey() {
+  var k = "", i, idx;
+  for (i = 0; i < 16; i++) {
+    mix();
+    idx = (Math.floor(Math.random() * 65536) ^ (pool & 65535)) % KEYCH.length;
+    k += KEYCH.charAt(idx);
+  }
+  $("key").value = k;
+  status("dice key", "16");
+}
+
+function clearKey() { $("key").value = ""; status("x key", ""); }
+
+function sel(el) {
+  el.focus();
+  try { el.select(); } catch (e) {}
+  try { el.setSelectionRange(0, 99999); } catch (e2) {}
+  try { return document.execCommand("copy"); } catch (e3) { return false; }
+}
+
+function copyKey() { var ok = sel($("key")); status(ok ? "copy ok" : "copy q", ""); }
+function copyOut() { var ok = sel($("out")); status(ok ? "copy ok" : "copy q", ""); }
+
+function moveUp() { $("inp").value = $("out").value; $("out").value = ""; status("swap", ""); }
+
+function clearAll() { $("inp").value = ""; $("out").value = ""; $("key").value = ""; status("trash", ""); }
+
+var live = false, dir = "lock", liveSalt = null;
+
+function doLock(keep) {
+  var txt = $("inp").value, key = $("key").value, salt = [], i, st, data, out = [];
+  dir = "lock";
+  if (txt === "") { status("err note", ""); return; }
+  if (key === "") { if (keep) { status("err key", ""); return; } suggestKey(); key = $("key").value; }
+  if (keep && liveSalt) { salt = liveSalt; } else { for (i = 0; i < 4; i++) { salt[i] = randByte(); } liveSalt = salt; }
+  data = [77, 33].concat(utf8Bytes(txt));
+  st = makeStream(utf8Bytes(key), salt);
+  for (i = 0; i < data.length; i++) { out[i] = data[i] ^ nextByte(st); }
+  $("out").value = toB64(salt.concat(out));
+  status("lock ok", ico("key", 16) + " " + key.length);
+}
+
+function doUnlock() {
+  dir = "unlock";
+  var txt = $("inp").value, key = $("key").value, raw, salt, body, st, i, plain = [], res;
+  if (txt === "") { status("err note", ""); return; }
+  if (key === "") { status("err key", ""); return; }
+  raw = fromB64(txt);
+  if (raw.length < 7) { status("err ban", ""); return; }
+  salt = raw.slice(0, 4);
+  body = raw.slice(4);
+  st = makeStream(utf8Bytes(key), salt);
+  for (i = 0; i < body.length; i++) { plain[i] = body[i] ^ nextByte(st); }
+  if (plain[0] !== 77 || plain[1] !== 33) { $("out").value = ""; status("err key q", ""); return; }
+  try { res = bytesUtf8(plain.slice(2)); } catch (e) { $("out").value = ""; status("err key q", ""); return; }
+  $("out").value = res;
+  status("unlock ok", "");
+}
+
+function liveRun() {
+  if (!live) { return; }
+  if (dir === "unlock") { doUnlock(); } else { doLock(true); }
+}
+
+function toggleLive() {
+  var b = $("livebtn");
+  live = !live;
+  liveSalt = null;
+  b.style.border = live ? "2px inset #ffffff" : "2px outset #ffffff";
+  b.style.background = live ? "#e0e0e0" : "#c0c0c0";
+  if (live) { liveRun(); } else { status("bolt x", ""); }
+}
+
+$("inp").oninput = liveRun;
+$("inp").onkeyup = liveRun;
+$("key").oninput = liveRun;
+$("key").onkeyup = liveRun;
+
+initIcons();
+status("monitor", "");
+</script>
+</body>
+</html>
